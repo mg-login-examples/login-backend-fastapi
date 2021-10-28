@@ -22,5 +22,6 @@ PythonPath:
     - ConfTest.py: https://stackoverflow.com/questions/34466027/in-pytest-what-is-the-use-of-conftest-py-files
     - Logging: https://stackoverflow.com/questions/4673373/logging-within-pytest-tests
 - PyTest Report: https://pytest-html.readthedocs.io/en/latest/user_guide.html
+- Pytest-Watch + Pytest-Testmon: https://stackoverflow.com/questions/35097577/pytest-run-only-the-changed-file/35101867 
 
 TOML

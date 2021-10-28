@@ -24,3 +24,6 @@ archive.zip
 # vim temporary files
 *~
 .*.sw?
+
+/frontend
+/db/mysql_pwd.txt
