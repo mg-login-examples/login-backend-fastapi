@@ -83,7 +83,7 @@ services:
     ports: 
       - 8019:8080
 
-  vueapp_test_e2e_dev:
+  vueapp_test_e2e:
     profiles:
       - fullstack-e2e-test
     networks:
@@ -93,7 +93,9 @@ services:
     build:
       context: ./frontend
       dockerfile: ./cypress.Dockerfile
-      target: test-e2e-dev-stage
+      target: test-e2e-stage
+    environment:
+      - VUE_APP_BACKEND_URL=http://fastapi_serve:8018
     volumes:
       - ./frontend/src:/app/src # live reload
       - ./frontend/tests:/app/tests # live reload

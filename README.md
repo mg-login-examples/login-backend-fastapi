@@ -1,8 +1,8 @@
 
-# Intro
-This app is a demo login Api supporting the frontend demo login app. It is built using FastAPI, a Python web framework.
+# About
+This app is a demo login Api supporting the [frontend demo login app](https://github.com/mg-login-examples/login-frontend-vue). It is built using [FastAPI](https://fastapi.tiangolo.com/), a Python web framework.
 
-# Features
+### Features
 - Docker (including for development with live reload)
 - FastAPI Framework
 - Interactive API Documentation
@@ -10,43 +10,84 @@ This app is a demo login Api supporting the frontend demo login app. It is built
 - CORS (Cross Origin Resource Sharing)
 
 
-# Requirements
-## Docker Based
-Docker
-## Without Docker
-Python3
+## Requirements
+**Docker Based**
+- Docker
 
+**Without Docker**
+- Python3
+- MySQL
+
+
+<br/><br/> 
 
 # Quickstart (Local Development)
 ## Docker Based
-1. Launch app: 
-    - ```docker compose -p backend --profile backend-serve up --build```
-        - App base url: htpp://localhost:8018
-        - FastAPI interactive **API documentation** available at:
-            - http://localhost:8018/docs
-            - http://localhost:8018/redoc
-2. To do *Test Driver Development* (run new tests or tests relevant to new code with live reload):
-    - ```docker compose -p backend --profile backend-test run fastapi_test ptw -- --testmon```
-2. To run all API tests:
-    - ```docker compose -p backend --profile backend-test up --build --abort-on-container-exit```
-3. To run E2E tests with frontend login app:
-    - 1. Clone repo inside project directory: ```git clone https://github.com/mg-login-examples/login-frontend-vue.git```
-    - 2. Run fullstack E2E tests: ```docker compose -p backend --profile fullstack-e2e-test up --build```
-4. To run fullstack app: ```docker compose -p backend --profile fullstack-serve up --build```
+Ensure you have [docker](https://docs.docker.com/engine/install/) installed on your machine
+
+- To **launch api** (accessible at htpp://localhost:8018): 
+    - Build & Start containers with live reload:
+        - ```docker compose -p backend --profile backend-serve up --build```
+            - FastAPI interactive **API documentation** available at:
+                - http://localhost:8018/docs
+                - http://localhost:8018/redoc
+    - Stop containers:
+        - ```CTRL+C```
+    - Delete containers:
+        - ```docker compose -p backend --profile backend-serve down```
+- To **do Test Driver Development** with live reload and run new/affected tests:
+    - Build & Start containers with live reload: 
+        - ```docker compose -p backend --profile backend-test run fastapi_test ptw -- --testmon```
+    - Stop containers:
+        - ```CTRL+C```
+    - Delete containers:
+        - ```docker compose -p backend --profile backend-test down```
+- To **run all Api tests**:
+    - Build & Start containers and run backend pytest tests:
+        - ```docker compose -p backend --profile backend-test up --build --abort-on-container-exit```
+    - Stop containers:
+        - ```CTRL+C```
+    - Delete containers:
+        - ```docker compose -p backend --profile backend-test down```
+- To **run E2E fullstack tests** with frontend login app:
+    - **PREREQUISITES**
+        - Clone repo inside project directory: ```git clone https://github.com/mg-login-examples/login-frontend-vue.git```
+    - Build & Start containers and run end-to-end cypress tests:
+        - ```docker compose -p backend --profile fullstack-e2e-test up --build```
+    - Stop containers:
+        - ```CTRL+C```
+    - Delete containers:
+        - ```docker compose -p backend --profile fullstack-e2e-test down```
+- To **launch fullstack app**: ```docker compose -p backend --profile fullstack-serve up --build```
+    - **PREREQUISITES**
+        - Clone repo inside project directory: ```git clone https://github.com/mg-login-examples/login-frontend-vue.git```
+    - Start containers with live reload for frontend & backend:
+        - ```docker compose -p backend --profile fullstack-serve up --build```
+    - Stop containers:
+        - ```CTRL+C```
+    - Delete containers:
+        - ```docker compose -p backend --profile fullstack-serve down```
 
 ## Without Docker
 1. Install Python3
 2. Navigate to code directory: ```cd src```
 2. Install Python dependencies: ```pip install -r requirements.txt```
-3. 
-    - Launch app: ```uvicorn main:app --reload```
-        - App base url: htpp://localhost:8000
-        - FastAPI interactive **API documentation** available at:
-            - http://localhost:8000/docs
-            - http://localhost:8000/redoc
-    - Run tests locally with live reload: ```ptw -- --testmon```
+3. Launch App
+    - without MySQL
+        - **Launch app** (accessible at htpp://localhost:8018): 
+            - ```uvicorn main:app --reload```
+            - FastAPI interactive **API documentation** available at:
+                - http://localhost:8018/docs
+                - http://localhost:8018/redoc
+        - Do **Test Driver Development** (Run tests locally with live reload):
+            - ```ptw -- --testmon```
+    - with MySQL
+        - **Launch app** (accessible at htpp://localhost:8018): 
+            - ```TODO```
 
 # Advanced
+## Logging
+[Coloredlogs](https://pypi.org/project/coloredlogs/) is used for logging.
 ## CICD / Git Workflow
 ### Develop a new feature / Fix a bug
 - 1. Fork a branch from *main*
