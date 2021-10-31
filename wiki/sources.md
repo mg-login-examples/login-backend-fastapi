@@ -4,8 +4,9 @@
 ### Python Specific Configurations
 - PythonPath: 
 - Logging: 
-    - Python https://docs.python.org/3/howto/logging.html
-    - Unify Python & Uvicorn Logging: https://pawamoy.github.io/posts/unify-logging-for-a-gunicorn-uvicorn-app/
+    - For Standard Python https://docs.python.org/3/howto/logging.html
+    - Disable Uvicorn default loggin: https://github.com/tiangolo/fastapi/issues/1508#issuecomment-723457712
+    - Colored Logging: https://pypi.org/project/coloredlogs/
 - PyTest Logging: https://stackoverflow.com/questions/4673373/logging-within-pytest-tests
 
 ## Backend App Creation
@@ -15,6 +16,7 @@
 ## Docker
 - Dockerfile for FastApi code: https://docs.docker.com/language/python/
 - Docker-compose for code and database: https://docs.docker.com/language/python/
+- Colorised logging: https://github.com/docker/compose/issues/2231
 ### Development with Docker
 - Live reload on code change: https://docs.docker.com/language/python/develop/
 - Debugging: https://www.docker.com/blog/containerized-python-development-part-3/

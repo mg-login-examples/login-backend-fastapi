@@ -58,7 +58,7 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
         - ```CTRL+C```
     - Delete containers:
         - ```docker compose -p backend --profile fullstack-e2e-test down```
-- To **launch fullstack app**: ```docker compose -p backend --profile fullstack-serve up --build```
+- To **launch fullstack app**:
     - **PREREQUISITES**
         - Clone repo inside project directory: ```git clone https://github.com/mg-login-examples/login-frontend-vue.git```
     - Start containers with live reload for frontend & backend:
