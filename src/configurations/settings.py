@@ -13,6 +13,5 @@ class Settings(BaseSettings):
     database_user: str = ''
     database_password: str = ''
 
-
 ENV_FILE = os.getenv("ENV_FILE", ".env")
 settings = Settings(_env_file=ENV_FILE)

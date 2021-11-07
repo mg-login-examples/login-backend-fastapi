@@ -1,8 +1,12 @@
-from appFactory import create_app
-from core.settings import settings
-import uvicorn
 import logging
+
+import uvicorn
 import coloredlogs
+
+from configurations.settings import settings
+from appFactory import create_app
+from data.database.dbManager import db_manager
+from data.database import dbUtils
 
 
 coloredlogs.install(
@@ -15,6 +19,7 @@ logger.info(f"Log level set: {settings.log_level}")
 app = create_app()
 
 if __name__ == "__main__":
+    dbUtils.create_all_tables(db_manager.engine)
     uvicorn.run(
         "main:app",
         host=settings.server_host,

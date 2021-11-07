@@ -25,5 +25,7 @@ archive.zip
 *~
 .*.sw?
 
+.testmondata
+
 /frontend
 /db/mysql_pwd.txt

@@ -35,16 +35,16 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
         - ```CTRL+C```
     - Delete containers:
         - ```docker compose -p backend --profile backend-serve down```
-- To **do Test Driver Development** with live reload and run new/affected tests:
+- To **run new/affected tests with live reload** for Test Driver Development:
     - Build & Start containers with live reload: 
-        - ```docker compose -p backend --profile backend-test run fastapi_test ptw -- --testmon```
+        - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
         - ```docker compose -p backend --profile backend-test down```
 - To **run all Api tests**:
     - Build & Start containers and run backend pytest tests:
-        - ```docker compose -p backend --profile backend-test up --build --abort-on-container-exit```
+        - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test up --build --abort-on-container-exit```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
@@ -53,7 +53,7 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
     - **PREREQUISITES**
         - Clone repo inside project directory: ```git clone https://github.com/mg-login-examples/login-frontend-vue.git```
     - Build & Start containers and run end-to-end cypress tests:
-        - ```docker compose -p backend --profile fullstack-e2e-test up --build```
+        - ```docker compose -f docker-compose.test.yml -p backend --profile fullstack-e2e-test up --build```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
