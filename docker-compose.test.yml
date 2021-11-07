@@ -21,6 +21,8 @@ services:
       - ./src:/app
     secrets:
       - mysql-password
+    tty: true # enables colored log
+    stdin_open: false # enables colored log 
 
   fastapi_test:
     profiles:
@@ -40,6 +42,8 @@ services:
       - ./src:/app
     secrets:
       - mysql-password
+    tty: true # enables colored log
+    stdin_open: false # enables colored log 
 
   mysqldb:
     profiles:
