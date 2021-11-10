@@ -3,9 +3,9 @@ from typing import List
 
 import requests
 
-from test.fixtures.client import test_client
-from test.fixtures.items import created_item, created_5_items, generate_random_item_to_create
-from test.fixtures.dbutils import setup_db
+from test.integration_tests.fixtures.client import test_client
+from test.integration_tests.fixtures.items import created_item, created_5_items, generate_random_item_to_create
+from test.integration_tests.fixtures.dbutils import setup_db
 from data.schemas.items import Item
 
 logger = logging.getLogger(__name__)

@@ -3,7 +3,7 @@ import logging
 from fastapi.applications import FastAPI
 
 from main import app
-from test.fixtures.dbutils import setup_db
+from test.integration_tests.fixtures.dbutils import setup_db
 
 logger = logging.getLogger(__name__)
 

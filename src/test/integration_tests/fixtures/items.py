@@ -6,7 +6,7 @@ import string
 import pytest
 import requests
 
-from test.fixtures.client import test_client
+from test.integration_tests.fixtures.client import test_client
 from data.schemas import items as itemSchemas
 
 logger = logging.getLogger(__name__)

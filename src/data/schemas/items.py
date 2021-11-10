@@ -2,7 +2,6 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-
 class ItemBase(BaseModel):
     name: str
     description: Optional[str] = None

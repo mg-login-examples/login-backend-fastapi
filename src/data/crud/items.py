@@ -3,24 +3,21 @@ from sqlalchemy.orm import Session
 
 from data.schemas import items as itemsSchemas
 from data.database.models.item import Item as ItemModel
+from data.crud import base as baseCrud
 
 
 def get_item(db: Session, item_id: int) -> ItemModel:
-    return db.query(ItemModel).filter(ItemModel.id == item_id).first()
+    return baseCrud.get_object(db, ItemModel, item_id)
 
 def get_items(db: Session, skip: int = 0, limit: int = 100) -> List[ItemModel]:
-    return db.query(ItemModel).offset(skip).limit(limit).all()
+    return baseCrud.get_all_objects(db, ItemModel, skip = skip, limit = limit)
 
 def create_item(db: Session, item: itemsSchemas.ItemCreate) -> ItemModel:
     db_item = ItemModel(**item.dict())
-    db.add(db_item)
-    db.commit()
-    db.refresh(db_item)
-    return db_item
+    return baseCrud.create_object(db, db_item)
 
 def delete_item(db: Session, item_id: int):
-    db.query(ItemModel).filter(ItemModel.id == item_id).delete()
-    db.commit()
+    baseCrud.delete_object(db, ItemModel, item_id)
 
 # def create_user_item(db: Session, item: itemsSchemas.ItemCreate, user_id: int) -> ItemModel:
 #     db_item = ItemModel(**item.dict(), owner_id=user_id)

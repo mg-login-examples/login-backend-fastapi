@@ -1,10 +1,6 @@
 import logging
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from configurations.settings import settings
-from data.database.models import base
+from data.database.models.base import Base as BaseModel
 
 logger = logging.getLogger(__name__)
 
@@ -12,4 +8,4 @@ logger.info("Setting up SQL Alchemy")
 
 def create_all_tables(engine):
     logger.info("Creating all tables")
-    base.Base.metadata.create_all(bind=engine)
+    BaseModel.metadata.create_all(bind=engine)

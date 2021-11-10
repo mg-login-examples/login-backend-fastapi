@@ -4,8 +4,8 @@ import logging
 import requests
 from fastapi.testclient import TestClient
 
-from appFactory import create_app
-from test.fixtures.dbutils import setup_db
+from app_factory import create_app
+from test.integration_tests.fixtures.dbutils import setup_db
 
 logger = logging.getLogger(__name__)
 

@@ -1,11 +1,11 @@
 import pytest
 import logging
 
-from data.database.dbManager import db_manager
+from app_configurations import app_db_manager
 from data.database import dbUtils
 
 logger = logging.getLogger(__name__)
 
 @pytest.fixture
 def setup_db():
-    dbUtils.create_all_tables(db_manager.engine)
+    dbUtils.create_all_tables(app_db_manager.engine)

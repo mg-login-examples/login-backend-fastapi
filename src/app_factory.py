@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import logging
 
-from configurations.cors_settings import add_cors
+from settings.cors_settings import add_cors
 from api.routes import router
 
 logger = logging.getLogger(__name__)
