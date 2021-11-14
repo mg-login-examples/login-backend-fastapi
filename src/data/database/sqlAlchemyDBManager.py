@@ -22,8 +22,8 @@ class SQLAlchemyDBManager():
         self.Session = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
 
     def db_session(self):
-        db = self.Session()
+        session = self.Session()
         try:
-            yield db
+            yield session
         finally:
-            db.close()
+            session.close()

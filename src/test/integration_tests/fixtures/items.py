@@ -28,7 +28,7 @@ def created_item(test_client: requests.Session) -> itemSchemas.Item:
 @pytest.fixture
 def created_5_items(test_client: requests.Session) -> List[itemSchemas.Item]:
     items = []
-    for i in range(5):
+    for _ in range(5):
         item = generate_random_item_to_create()
         response = test_client.post("/api/items/", json=item.dict())
         assert response.status_code == 200

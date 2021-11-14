@@ -26,7 +26,7 @@ This app is a demo login Api supporting the [frontend demo login app](https://gi
 Ensure you have [docker](https://docs.docker.com/engine/install/) installed on your machine
 
 - To **launch api** (accessible at htpp://localhost:8018): 
-    - Build & Start containers with live reload:
+    - Build & Start containers and launch app with live reload:
         - ```docker compose -p backend --profile backend-serve up --build```
             - FastAPI interactive **API documentation** available at:
                 - http://localhost:8018/docs
@@ -36,14 +36,16 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
     - Delete containers:
         - ```docker compose -p backend --profile backend-serve down```
 - To **run new/affected tests with live reload** for Test Driver Development:
-    - Build & Start containers with live reload: 
+    - Build & Start containers and run tests with live reload: 
         - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon```
+    - Build & Start containers and run Unit tests only with live reload: 
+        - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon test/unit_tests```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
         - ```docker compose -p backend --profile backend-test down```
 - To **run all Api tests**:
-    - Build & Start containers and run backend pytest tests:
+    - Build & Start containers and run all (unit + integration) pytest tests:
         - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test up --build --abort-on-container-exit```
     - Stop containers:
         - ```CTRL+C```

@@ -1,7 +1,10 @@
 import os
+import logging
 
 from settings.environment_settings import Settings
 from data.database.sqlAlchemyDBManager import SQLAlchemyDBManager
+
+logger = logging.getLogger(__name__)
 
 ENV_FILE = os.getenv("ENV_FILE", ".env")
 app_settings = Settings(_env_file=ENV_FILE)
