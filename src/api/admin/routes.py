@@ -7,6 +7,6 @@ from data.database.models import user as userModel
 from data.schemas import items as itemSchemas
 from data.schemas import users as userSchemas
 
-router = APIRouter(prefix="/api")
+router = APIRouter(prefix="/admin")
 
 router.include_router(get_admin_router_for_model("items", itemSchemas.Item, itemSchemas.ItemCreate, itemModel.Item))

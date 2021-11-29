@@ -151,5 +151,16 @@
         - Only Staging can be merged into Master
         - Should be merged only after current Frontend has been tested with it
 
+
+## Admin App
+Admin app must be cloned inside folder: ```src/admin_app```
+
+To build a new admin_app:
+    - cd into vue project folder: ```cd src/admin_app/vue_admin```
+    - build static app: ```npm run build``` (or ```npm run build -- --mode development --watch``` to build in development and watch)
+
+The app will be built inside folder: ```src/admin_app/vue_admin_html```, from where FastAPI will mount the static files and serve to: ```<https://your-fastapi-domain.com>/admin```
+
 ## Frontend
+
 

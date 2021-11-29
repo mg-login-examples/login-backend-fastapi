@@ -9,6 +9,7 @@ def get_resource_item(db: Session, ResourceModel: BaseModel, item_id: int) -> Ba
     return db.query(ResourceModel).filter(ResourceModel.id == item_id).first()
 
 def get_resource_item_by_attribute(db: Session, ResourceModel: BaseModel, ResourceModel_attribute: any, attribute_value: any):
+    output = db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value)
     return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).first()
 
 def get_resource_items(db: Session, ResourceModel: BaseModel, skip: int = 0, limit: int = 100) -> List[BaseModel]:

@@ -34,7 +34,7 @@ def get_admin_router_for_model(url_tag: str, ResourceSchema: BaseSchema, Resourc
     def update_item(item_id: int, item: ResourceSchema, db: Session = Depends(app_db_manager.db_session)) -> ResourceSchema:
         if item_id != item.id:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Item id in request body different from path parameter")
-        if not crudBase.get_resource_item_by_attribute(db, ResourceModel, "id", item_id):
+        if not crudBase.get_resource_item_by_attribute(db, ResourceModel, ResourceModel.id, item_id):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
         return crudBase.update_resource_item(db, ResourceModel, item.dict())
 

@@ -27,6 +27,7 @@ archive.zip
 
 .testmondata
 
+vue_admin
 /frontend
 /db/mysql_pwd.txt
 sql_app.db
