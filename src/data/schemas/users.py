@@ -1,21 +1,18 @@
-# from typing import List
-# from pydantic import BaseModel
+from typing import List
+from pydantic import BaseModel
 
-# from database.models.item import Item
-
-
-# class UserBase(BaseModel):
-#     email: str
+class UserBase(BaseModel):
+    email: str
 
 
-# class UserCreate(UserBase):
-#     password: str
+class UserCreate(UserBase):
+    password: str
 
 
-# class User(UserBase):
-#     id: int
-#     is_active: bool
-#     items: List[Item] = []
+class User(UserBase):
+    id: int
+    is_active: bool
+    # items: List[Item] = []
 
-#     class Config:
-#         orm_mode = True
+    class Config:
+        orm_mode = True

@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from data.schemas import items as itemsSchemas
 from data.database.models.base import Base as BaseModel
 
+def get_resource_items_count(db: Session, ResourceModel: BaseModel) -> int:
+    return db.query(ResourceModel).count()
 
 def get_resource_item(db: Session, ResourceModel: BaseModel, item_id: int) -> BaseModel:
     return db.query(ResourceModel).filter(ResourceModel.id == item_id).first()

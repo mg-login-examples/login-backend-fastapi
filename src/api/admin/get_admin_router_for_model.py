@@ -4,15 +4,24 @@ from fastapi import APIRouter, status, HTTPException
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from starlette.responses import Response
-from pydantic import BaseModel as BaseSchema
 
+from api.admin.adminResourceModel import AdminResourceModel
 from app_configurations import app_db_manager
 from data.crud import base as crudBase
-from data.database.models.base import Base as BaseORMModel
 
 
-def get_admin_router_for_model(url_tag: str, ResourceSchema: BaseSchema, ResourceCreateSchema: BaseSchema, ResourceModel: BaseORMModel):
-    router = APIRouter(prefix=f"/{url_tag}")
+def get_admin_router_for_model(resource: AdminResourceModel):
+    router = APIRouter(prefix=f"/resource/{resource.url_id}")
+
+    ResourceSchema = resource.ResourceSchema
+    ResourceCreateSchema = resource.ResourceCreateSchema
+    customResourceCreateSchemaToResourceModel = resource.customResourceCreateSchemaToResourceModel
+    ResourceModel = resource.ResourceModel
+
+    @router.get("/count/", response_model=int)
+    def get_resource_items_count(db: Session = Depends(app_db_manager.db_session)) -> int:
+        totalItemsCount = crudBase.get_resource_items_count(db, ResourceModel)
+        return totalItemsCount
 
     @router.get("/{item_id}/", response_model=ResourceSchema)
     def get_resource_item(item_id: int, db: Session = Depends(app_db_manager.db_session)) -> ResourceSchema:
@@ -27,7 +36,10 @@ def get_admin_router_for_model(url_tag: str, ResourceSchema: BaseSchema, Resourc
 
     @router.post("/", response_model=ResourceSchema)
     def create_item(item: ResourceCreateSchema, db: Session = Depends(app_db_manager.db_session)) -> ResourceSchema:
-        db_item = ResourceModel(**item.dict())
+        if customResourceCreateSchemaToResourceModel:
+            db_item = customResourceCreateSchemaToResourceModel(item)
+        else:
+            db_item = ResourceModel(**item.dict())
         return crudBase.create_resource_item(db, db_item)
 
     @router.put("/{item_id}/", response_model=ResourceSchema)
