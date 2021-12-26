@@ -16,6 +16,7 @@ def get_admin_router_for_model(resource: AdminResourceModel):
     ResourceSchema = resource.ResourceSchema
     ResourceCreateSchema = resource.ResourceCreateSchema
     customResourceCreateSchemaToResourceModel = resource.customResourceCreateSchemaToResourceModel
+    customResourceUpdateSchemaToResourceSchemaDict = resource.customResourceUpdateSchemaToResourceSchemaDict
     ResourceModel = resource.ResourceModel
 
     @router.get("/count/", response_model=int)
@@ -37,18 +38,19 @@ def get_admin_router_for_model(resource: AdminResourceModel):
     @router.post("/", response_model=ResourceSchema)
     def create_item(item: ResourceCreateSchema, db: Session = Depends(app_db_manager.db_session)) -> ResourceSchema:
         if customResourceCreateSchemaToResourceModel:
-            db_item = customResourceCreateSchemaToResourceModel(item)
-        else:
-            db_item = ResourceModel(**item.dict())
-        return crudBase.create_resource_item(db, db_item)
+            item = customResourceCreateSchemaToResourceModel(item)
+        return crudBase.create_resource_item(db, ResourceModel, item)
 
     @router.put("/{item_id}/", response_model=ResourceSchema)
     def update_item(item_id: int, item: ResourceSchema, db: Session = Depends(app_db_manager.db_session)) -> ResourceSchema:
         if item_id != item.id:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Item id in request body different from path parameter")
-        if not crudBase.get_resource_item_by_attribute(db, ResourceModel, ResourceModel.id, item_id):
+        if customResourceUpdateSchemaToResourceSchemaDict:
+            item = customResourceUpdateSchemaToResourceSchemaDict(item)
+        db_item = crudBase.update_resource_item(db, ResourceModel, item)
+        if not db_item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
-        return crudBase.update_resource_item(db, ResourceModel, item.dict())
+        return db_item
 
     @router.delete("/{item_id}/", status_code=status.HTTP_204_NO_CONTENT)
     def delete_item(item_id: int, db: Session = Depends(app_db_manager.db_session)):
