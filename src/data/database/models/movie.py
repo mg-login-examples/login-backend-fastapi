@@ -12,8 +12,3 @@ class Movie(Base):
     duration = Column(Integer)
     book_id = Column(Integer, ForeignKey("books.id"))
     book = relationship("Book", back_populates="movies")
-
-from .book import Book
-
-print("*****************")
-print(getattr(Book, "movies").property.mapper.class_)

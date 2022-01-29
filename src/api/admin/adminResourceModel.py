@@ -11,12 +11,12 @@ class AdminResourceModel:
         ResourceSchema: BaseSchema,
         ResourceCreateSchema: BaseSchema,
         ResourceModel: BaseORMModel,
-        customResourceCreateSchemaToResourceModel: Callable = None,
-        customResourceUpdateSchemaToResourceSchemaDict: Callable = None,
+        customEndUserCreateSchemaToDbSchema: Callable = None,
+        customEndUserUpdateSchemaToDbSchema: Callable = None,
     ):
         self.url_id = url_id
         self.ResourceSchema = ResourceSchema
         self.ResourceCreateSchema = ResourceCreateSchema
         self.ResourceModel = ResourceModel
-        self.customResourceCreateSchemaToResourceModel = customResourceCreateSchemaToResourceModel
-        self.customResourceUpdateSchemaToResourceSchemaDict = customResourceUpdateSchemaToResourceSchemaDict
+        self.customEndUserCreateSchemaToDbSchema = customEndUserCreateSchemaToDbSchema
+        self.customEndUserUpdateSchemaToDbSchema = customEndUserUpdateSchemaToDbSchema

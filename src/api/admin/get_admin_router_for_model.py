@@ -15,8 +15,8 @@ def get_admin_router_for_model(resource: AdminResourceModel):
 
     ResourceSchema = resource.ResourceSchema
     ResourceCreateSchema = resource.ResourceCreateSchema
-    customResourceCreateSchemaToResourceModel = resource.customResourceCreateSchemaToResourceModel
-    customResourceUpdateSchemaToResourceSchemaDict = resource.customResourceUpdateSchemaToResourceSchemaDict
+    customEndUserCreateSchemaToDbSchema = resource.customEndUserCreateSchemaToDbSchema
+    customEndUserUpdateSchemaToDbSchema = resource.customEndUserUpdateSchemaToDbSchema
     ResourceModel = resource.ResourceModel
 
     @router.get("/count/", response_model=int)
@@ -37,17 +37,17 @@ def get_admin_router_for_model(resource: AdminResourceModel):
 
     @router.post("/", response_model=ResourceSchema)
     def create_item(item: ResourceCreateSchema, db: Session = Depends(app_db_manager.db_session)) -> ResourceSchema:
-        if customResourceCreateSchemaToResourceModel:
-            item = customResourceCreateSchemaToResourceModel(item)
+        if customEndUserCreateSchemaToDbSchema:
+            item = customEndUserCreateSchemaToDbSchema(item)
         return crudBase.create_resource_item(db, ResourceModel, item)
 
     @router.put("/{item_id}/", response_model=ResourceSchema)
     def update_item(item_id: int, item: ResourceSchema, db: Session = Depends(app_db_manager.db_session)) -> ResourceSchema:
         if item_id != item.id:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Item id in request body different from path parameter")
-        if customResourceUpdateSchemaToResourceSchemaDict:
-            item = customResourceUpdateSchemaToResourceSchemaDict(item)
-        db_item = crudBase.update_resource_item(db, ResourceModel, item)
+        if customEndUserUpdateSchemaToDbSchema:
+            item = customEndUserUpdateSchemaToDbSchema(item)
+        db_item = crudBase.update_resource_item_full(db, ResourceModel, item)
         if not db_item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
         return db_item
