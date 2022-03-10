@@ -20,6 +20,7 @@ def get_all_resources():
             "createSchema": resourceConfiguration.ResourceCreateSchema.schema(),
         }
         add_resource_url_ids_to_schema_properties(info["updateSchema"], resourceConfiguration, resourcesConfigurations)
+        add_resource_url_ids_to_schema_properties(info["createSchema"], resourceConfiguration, resourcesConfigurations)
         infos.append(info)
     return infos
 

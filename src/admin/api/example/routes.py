@@ -8,23 +8,23 @@ from admin.api.add_resource_url_ids_to_schema_properties import add_resource_url
 from app_configurations import app_db_manager
 
 from data.database.models.examples.user import User as UserModel
-from data.schemas.examples.users.userDeep import User as UserSchema
-from data.schemas.examples.users.userCreate import UserCreate as UserCreateSchema
-from data.endUserSchemasToDbSchemas.examples.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
+from admin.data.schemas.examples.users.userDeep import User as UserSchema
+from admin.data.schemas.examples.users.userCreate import UserCreate as UserCreateSchema
+from admin.data.endUserSchemasToDbSchemas.examples.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
 
 from data.database.models.examples.book import Book as BookModel
-from data.schemas.examples.books.bookDeep import Book as BookSchema
-from data.schemas.examples.books.bookCreate import BookCreate as BookCreateSchema
-from data.endUserSchemasToDbSchemas.examples.book import updateSchemaToDbSchema as bookUpdateSchemaToDbSchema
+from admin.data.schemas.examples.books.bookDeep import Book as BookSchema
+from admin.data.schemas.examples.books.bookCreate import BookCreate as BookCreateSchema
+from admin.data.endUserSchemasToDbSchemas.examples.book import updateSchemaToDbSchema as bookUpdateSchemaToDbSchema
 
 from data.database.models.examples.movie import Movie as MovieModel
-from data.schemas.examples.movies.movieDeep import Movie as MovieSchema
-from data.schemas.examples.movies.movieCreate import MovieCreate as MovieCreateSchema
-from data.endUserSchemasToDbSchemas.examples.movie import updateSchemaToDbSchema as movieUpdateSchemaToDbSchema
+from admin.data.schemas.examples.movies.movieDeep import Movie as MovieSchema
+from admin.data.schemas.examples.movies.movieCreate import MovieCreate as MovieCreateSchema
+from admin.data.endUserSchemasToDbSchemas.examples.movie import updateSchemaToDbSchema as movieUpdateSchemaToDbSchema
 
 from data.database.models.examples.author import Author as AuthorModel
-from data.schemas.examples.authors.authorDeep import Author as AuthorSchema
-from data.schemas.examples.authors.authorCreate import AuthorCreate as AuthorCreateSchema
+from admin.data.schemas.examples.authors.authorDeep import Author as AuthorSchema
+from admin.data.schemas.examples.authors.authorCreate import AuthorCreate as AuthorCreateSchema
 
 
 router = APIRouter(prefix="/admin")

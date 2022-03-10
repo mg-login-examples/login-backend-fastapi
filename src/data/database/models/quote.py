@@ -8,7 +8,7 @@ class Quote(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     text = Column(String, index=True)
-    author_id = Column(Integer, ForeignKey("users.id"))
+    author_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     author = relationship("User", back_populates="quotes")
     liked_by_users = relationship(
         "User",
