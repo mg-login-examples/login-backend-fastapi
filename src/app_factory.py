@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 from settings.cors_settings import add_cors
 from api.routes import router
-from admin_app.mount_admin_app import mount_admin_app
+from admin.view.mount_admin_app import mount_admin_app
 
 logger = logging.getLogger(__name__)
 
