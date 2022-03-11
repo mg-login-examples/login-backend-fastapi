@@ -1,22 +1,14 @@
 import logging
 from typing import List
-import random
-import string
 
 import pytest
 import requests
 
+from test.integration_tests.utils.fake_user import generate_random_user_to_create
 from test.integration_tests.fixtures.client import test_client
-from admin.data.schemas.users.userCreate import UserCreate
 from admin.data.schemas.users.userDeep import User as UserDeep
 
 logger = logging.getLogger(__name__)
-
-def generate_random_user_to_create() -> UserCreate:
-    user_email = ''.join(random.choices(string.ascii_uppercase + string.digits, k=3))
-    user_password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=3))
-    user = UserCreate(email=user_email, password=user_password)
-    return user
 
 @pytest.fixture
 def created_user_by_admin(test_client: requests.Session) -> UserDeep:

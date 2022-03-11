@@ -1,0 +1,27 @@
+# Available Tests
+- *Pytest Unit*
+    - Unit & Integration Backend Tests
+    - Tests on backend code directly
+    - Required integration:
+        - Database
+- *API E2E*
+    - E2E Backend tests
+    - Tests on deployed API
+    - Required integration:
+        - Backend stack
+- *Vue Component*
+    - Unit & Component Frontend Tests
+    - Tests on frontend code directly
+    - Required integration:
+        - None
+- *Vue Cypress E2E*
+    - E2E Frontend tests
+    - Tests on frontend code directly
+    - Required integration:
+        - Backend stack
+- *Cypress E2E*
+    - E2E Frontend tests
+    - Tests on a served Frontend
+    - Required integration:
+        - Frontend stack
+        - Backend stack

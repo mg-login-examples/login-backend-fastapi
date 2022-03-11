@@ -10,4 +10,8 @@ pytest-watch
 pytest-html
 coverage
 pytest-testmon
-sqlalchemy
+SQLAlchemy
+SQLAlchemy-Utils
+typing-extensions
+email-validator
+faker

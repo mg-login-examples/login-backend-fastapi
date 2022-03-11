@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 # Test that a user can be fetched by id
 def test_get_user(test_client: requests.Session, created_user_by_admin: UserDeep):
     response = test_client.get(f"/api/admin/resource/users/{created_user_by_admin.id}/")
-    user = UserDeep(**response.json())
     assert response.status_code == 200
+    user = UserDeep(**response.json())
     assert user.id == created_user_by_admin.id
     assert user == created_user_by_admin
 
