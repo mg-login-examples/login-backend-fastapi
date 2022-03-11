@@ -1,7 +1,7 @@
 from typing import List
 
-from admin.data.schemas.users.user import User as UserShallow
-from admin.data.schemas.quotes.quote import Quote
+from data.schemas.users.user import User as UserShallow
+from data.schemas.quotes.quote import Quote
 
 class User(UserShallow):
     quotes: List[Quote]
