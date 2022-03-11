@@ -1,6 +1,6 @@
 from typing import Optional
 
-from admin.data.schemas.examples.movies.movie import Movie as MovieShallow
+from data.schemas.examples.movies.movie import Movie as MovieShallow
 
 class MovieAsModel(MovieShallow):
     id: int

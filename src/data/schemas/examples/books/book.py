@@ -1,4 +1,4 @@
-from admin.data.schemas.examples.books.bookBase import BookBase
+from data.schemas.examples.books.bookBase import BookBase
 
 class Book(BookBase):
     id: int

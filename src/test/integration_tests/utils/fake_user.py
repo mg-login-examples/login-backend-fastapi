@@ -3,7 +3,7 @@ import string
 
 from faker import Faker
 
-from admin.data.schemas.users.userCreate import UserCreate
+from data.schemas.users.userCreate import UserCreate
 
 fake = Faker()
 

@@ -1,7 +1,7 @@
 from typing import Optional
 
-from admin.data.schemas.examples.movies.movie import Movie as MovieShallow
-from admin.data.schemas.examples.books.book import Book
+from data.schemas.examples.movies.movie import Movie as MovieShallow
+from data.schemas.examples.books.book import Book
 
 class Movie(MovieShallow):
     id: int

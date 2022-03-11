@@ -1,5 +1,5 @@
-from admin.data.schemas.examples.users.userCreate import UserCreate as UserCreateSchema
-from admin.data.schemas.examples.users.userCreateAsModel import UserCreateAsModel as UserCreateAsModelSchema
+from data.schemas.examples.users.userCreate import UserCreate as UserCreateSchema
+from data.schemas.examples.users.userCreateAsModel import UserCreateAsModel as UserCreateAsModelSchema
 
 def createSchemaToDbSchema(user: UserCreateSchema) -> UserCreateAsModelSchema:
     fake_hashed_password = user.password + "notreallyhashed"

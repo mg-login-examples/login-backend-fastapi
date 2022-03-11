@@ -6,9 +6,9 @@ import string
 import pytest
 import requests
 
-from admin.data.schemas.quotes.quoteCreate import QuoteCreate
-from admin.data.schemas.quotes.quoteDeep import Quote as QuoteDeep
-from admin.data.schemas.users.userDeep import User as UserDeep
+from data.schemas.quotes.quoteCreate import QuoteCreate
+from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
+from data.schemas.users.userDeep import User as UserDeep
 from test.integration_tests.fixtures.client import test_client
 from test.integration_tests.fixtures.users import created_user
 

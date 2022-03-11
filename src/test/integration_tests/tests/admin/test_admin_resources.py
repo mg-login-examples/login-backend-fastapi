@@ -5,7 +5,7 @@ import requests
 import pytest
 
 from admin.api.resources import resourcesConfigurations
-from admin.data.schemas.users.userDeep import User as UserDeep
+from data.schemas.users.userDeep import User as UserDeep
 from test.integration_tests.fixtures.client import test_client
 from test.integration_tests.fixtures.users_admin import created_user_by_admin, created_n_users_by_admin, generate_random_user_to_create
 from test.integration_tests.fixtures.dbutils import setup_db

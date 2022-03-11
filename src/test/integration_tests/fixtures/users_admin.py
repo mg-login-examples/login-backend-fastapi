@@ -6,7 +6,7 @@ import requests
 
 from test.integration_tests.utils.fake_user import generate_random_user_to_create
 from test.integration_tests.fixtures.client import test_client
-from admin.data.schemas.users.userDeep import User as UserDeep
+from data.schemas.users.userDeep import User as UserDeep
 
 logger = logging.getLogger(__name__)
 

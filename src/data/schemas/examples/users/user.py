@@ -1,4 +1,4 @@
-from admin.data.schemas.examples.users.userBase import UserBase
+from data.schemas.examples.users.userBase import UserBase
 
 class User(UserBase):
     id: int

@@ -1,7 +1,7 @@
 from typing import List
 
-from admin.data.schemas.examples.authors.author import Author as AuthorShallow
-from admin.data.schemas.examples.books.book import Book
+from data.schemas.examples.authors.author import Author as AuthorShallow
+from data.schemas.examples.books.book import Book
 
 class Author(AuthorShallow):
     id: int

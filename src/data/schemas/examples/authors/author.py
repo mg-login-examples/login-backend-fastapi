@@ -1,4 +1,4 @@
-from admin.data.schemas.examples.authors.authorBase import AuthorBase
+from data.schemas.examples.authors.authorBase import AuthorBase
 
 class Author(AuthorBase):
     id: int

@@ -4,9 +4,9 @@ from typing import List
 import requests
 import pytest
 
-from admin.data.schemas.quotes.quoteDeep import Quote as QuoteDeep
-from admin.data.schemas.users.userDeep import User as UserDeep
-from admin.data.schemas.users.user import User
+from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
+from data.schemas.users.userDeep import User as UserDeep
+from data.schemas.users.user import User
 from test.integration_tests.fixtures.client import test_client
 from test.integration_tests.fixtures.quotes_admin import created_quote_by_admin, created_n_quotes_by_admin, generate_random_quote_to_create
 from test.integration_tests.fixtures.users_admin import created_user_by_admin, created_n_users_by_admin

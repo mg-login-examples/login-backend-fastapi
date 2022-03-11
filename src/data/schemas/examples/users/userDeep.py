@@ -1,7 +1,7 @@
 from typing import List
 
-from admin.data.schemas.examples.users.user import User as UserShallow
-from admin.data.schemas.examples.books.book import Book
+from data.schemas.examples.users.user import User as UserShallow
+from data.schemas.examples.books.book import Book
 
 class User(UserShallow):
     books: List[Book]
