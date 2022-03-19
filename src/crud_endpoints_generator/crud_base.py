@@ -11,11 +11,14 @@ def get_resource_items_count(db: Session, ResourceModel) -> int:
 def get_resource_item(db: Session, ResourceModel, item_id: int) -> BaseModel:
     return db.query(ResourceModel).filter(ResourceModel.id == item_id).first()
 
-def get_resource_item_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any):
+def get_resource_item_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any) -> BaseModel:
     return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).first()
 
 def get_resource_items(db: Session, ResourceModel, skip: int = 0, limit: int = 100) -> List[BaseModel]:
     return db.query(ResourceModel).offset(skip).limit(limit).all()
+
+def get_resource_items_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+    return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).offset(skip).limit(limit).all()
 
 def create_resource_item(db: Session, ResourceModel, item_to_create: BaseSchema) -> BaseModel:
     db_item = ResourceModel(**item_to_create.dict())

@@ -30,13 +30,25 @@ def test_create_quote(test_client: requests.Session, created_user: User):
 # Test that multiple quotes can be fetched
 @pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
 def test_get_quotes(test_client: requests.Session, created_n_quotes: List[QuoteDeep]):
-    response = test_client.get(f"/api/quotes/?skip=0&limit=4")
+    response = test_client.get("/api/quotes/?skip=0&limit=4")
     assert response.status_code == 200
     assert isinstance(response.json(), List)
     quotes = [QuoteDeep(**quote_json) for quote_json in response.json()]
     assert len(quotes) == 4
     for quote in quotes:
         assert quote.id is not None
+
+# Test that multiple user quotes can be fetched
+@pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
+def test_get_user_quotes(test_client: requests.Session, created_user: User, created_n_quotes: List[QuoteDeep]):
+    response = test_client.get(f"/api/users/{created_user.id}/quotes/?skip=0&limit=4")
+    assert response.status_code == 200
+    assert isinstance(response.json(), List)
+    quotes = [QuoteDeep(**quote_json) for quote_json in response.json()]
+    assert len(quotes) == 4
+    for quote in quotes:
+        assert quote.id is not None
+        assert quote.author.id == created_user.id
 
 # Test that a quote can be deleted by id
 def test_delete_quote(test_client: requests.Session, created_quote: QuoteDeep):

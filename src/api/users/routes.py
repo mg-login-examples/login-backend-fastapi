@@ -6,6 +6,7 @@ from data.schemas.users.userCreate import UserCreate as UserCreateSchema
 from data.database.models.user import User as UserModel
 from data.endUserSchemasToDbSchemas.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
 from app_configurations import app_db_manager
+from .get_user_quotes import generate_endpoint
 
 user_resource_configurations = ResourceConfigurations(
     "users",
@@ -19,5 +20,11 @@ endpoints_required = Endpoints().require_get_item().require_post_item()
 router = get_resource_endpoints_router(
     endpoints_required,
     user_resource_configurations,
+    app_db_manager.db_session
+)
+
+generate_endpoint(
+    user_resource_configurations.resource_endpoints_url_prefix,
+    router,
     app_db_manager.db_session
 )

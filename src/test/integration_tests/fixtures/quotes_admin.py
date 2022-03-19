@@ -11,14 +11,9 @@ from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.users.userDeep import User as UserDeep
 from test.integration_tests.fixtures.client import test_client
 from test.integration_tests.fixtures.users import created_user
-
+from test.integration_tests.utils.fake_quote import generate_random_quote_to_create
 
 logger = logging.getLogger(__name__)
-
-def generate_random_quote_to_create(user: UserDeep) -> QuoteCreate:
-    quote_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=3))
-    quote = QuoteCreate(text=quote_text, author=user)
-    return quote
 
 @pytest.fixture
 def created_quote_by_admin(test_client: requests.Session, created_user_by_admin: UserDeep) -> QuoteDeep:

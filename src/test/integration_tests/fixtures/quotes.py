@@ -11,14 +11,10 @@ from data.schemas.quotes.quote import Quote
 from data.schemas.users.user import User
 from test.integration_tests.fixtures.client import test_client
 from test.integration_tests.fixtures.users import created_user
+from test.integration_tests.utils.fake_quote import generate_random_quote_to_create
 
 
 logger = logging.getLogger(__name__)
-
-def generate_random_quote_to_create(user: User) -> QuoteCreate:
-    quote_text = ''.join(random.choices(string.ascii_uppercase + string.digits, k=3))
-    quote = QuoteCreate(text=quote_text, author=user)
-    return quote
 
 @pytest.fixture
 def created_quote(test_client: requests.Session, created_user: User) -> Quote:

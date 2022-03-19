@@ -3,6 +3,7 @@ from typing import List
 
 import requests
 import pytest
+from faker import Faker
 
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.users.userDeep import User as UserDeep
@@ -14,6 +15,8 @@ from test.integration_tests.fixtures.dbutils import setup_db
 from test.integration_tests.utils import asserts
 
 logger = logging.getLogger(__name__)
+
+fake = Faker(locale='en')
 
 # Test that a quote can be fetched by id
 def test_get_quote(test_client: requests.Session, created_quote_by_admin: QuoteDeep):
@@ -47,7 +50,7 @@ def test_get_quotes(test_client: requests.Session, created_n_quotes_by_admin: Li
 # Test that a quote can be updated
 @pytest.mark.parametrize("created_n_users_by_admin", [1], indirect=True)
 def test_put_quote(test_client: requests.Session, created_n_users_by_admin: List[UserDeep], created_quote_by_admin: QuoteDeep):
-    new_text = "new text"
+    new_text = fake.sentence(nb_words=50, variable_nb_words=True)
     assert created_quote_by_admin.text != new_text
     created_quote_by_admin.text = new_text
     assert created_quote_by_admin.author.id != created_n_users_by_admin[0].id
