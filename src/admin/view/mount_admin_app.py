@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from starlette.staticfiles import StaticFiles, Scope, Response
 
-
 class SPAStaticFiles(StaticFiles):
     async def get_response(self, path: str, scope: Scope) -> Response:
         response = await super().get_response(path, scope)
