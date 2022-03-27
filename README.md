@@ -35,6 +35,16 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
         - ```CTRL+C```
     - Delete containers:
         - ```docker compose -p backend --profile backend-serve down```
+- To **launch api with sqlite** (accessible at htpp://localhost:8018): 
+    - Build & Start containers and launch app with live reload:
+        - ```docker compose -p backend --profile backend-serve-sqlite up --build```
+            - FastAPI interactive **API documentation** available at:
+                - http://localhost:8018/docs
+                - http://localhost:8018/redoc
+    - Stop containers:
+        - ```CTRL+C```
+    - Delete containers:
+        - ```docker compose -p backend --profile backend-serve down```
 - To **run new/affected tests with live reload** for Test Driver Development:
     - Build & Start containers and run tests with live reload: 
         - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon```
@@ -76,7 +86,7 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
 2. Install Python dependencies: ```pip install -r requirements.txt```
 3. Launch App
     - without MySQL
-        - **Launch app** (accessible at htpp://localhost:8018): 
+        - **Launch app** (accessible at htpp://localhost:8018):
             - ```uvicorn main:app --reload```
             - FastAPI interactive **API documentation** available at:
                 - http://localhost:8018/docs
@@ -86,6 +96,9 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
     - with MySQL
         - **Launch app** (accessible at htpp://localhost:8018): 
             - ```TODO```
+        - **Launch Tests**:
+            - ```pytest```
+
 
 # Advanced
 ## Logging

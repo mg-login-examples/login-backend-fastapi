@@ -23,7 +23,31 @@ services:
     secrets:
       - mysql-password
     tty: true # enables colored log
-    stdin_open: false # enables colored log 
+    stdin_open: false # enables colored log
+
+  fastapi_serve_sqlite:
+    profiles:
+      - backend-serve-sqlite
+    networks:
+      - backend
+    build:
+      context: ./src/
+      target: serve-stage
+    restart: always
+    ports:
+      - 8018:8018
+    volumes:
+      - ./src:/app
+    tty: true # enables colored log
+    stdin_open: false # enables colored log
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
 
   mysqldb:
     profiles:
