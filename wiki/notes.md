@@ -82,6 +82,49 @@ To build a new admin_app:
 
 The app will be built inside folder: ```src/admin_app/vue_admin_html```, from where FastAPI will mount the static files and serve to: ```<https://your-fastapi-domain.com>/admin```
 
-## Frontend
 
 
+
+
+## Splitting docker scripts
+- Goal
+    - To have single line docker compose scripts to build docker container(s) and execute following tasks
+    - Following tasks require a script:
+        - Run backend tests
+            - Allow db type, db credentials to be passed through docker environment variables
+            - Build python app container, db container, network
+            - Run tests
+                - For each test
+                    - Cleanup db
+                    - Run test
+            - Make test results accessible
+            - Make test logs accessible
+        - Launch api
+            - Allow db type, db credentials to be passed through docker environment variables
+            - Build python app container, db container, network
+            - Make logs accessible
+
+Scripts by workflow
+- During development
+    - Docker launch api locally with live reload
+        - Command examples:
+            - docker compose up                      <- no env
+            - APP_DB_TYPE=mysql docker compose -p backend up --build           <- db type provided, default url, username, password
+            - APP_DB_TYPE=sqlite APP_DB_URL='some/url' APP_DB_USER='some user' docker up --build           <- dy type, url, username, password provided
+        - Info
+            - Docker compose should accept app environment variables
+                - API_DB_TYPE  (sqlite, mysql, postgresql)
+                - API_DB_URL  (db url)
+                - API_DB_USERNAME  (db username)
+                - API_DB_PASSWORD_FILE_PATH  (text file containing db password)
+                - API_APP_PORT  (port on which fastapi will run)
+            - If env variables not set, docker compose will read .env file found at project root directory
+    - Docker run tests locally
+        - Command examples
+            - docker compose -f docker-compose.test.yml up --build            <- no env
+            - APP_DB_TYPE=mysql docker compose -f docker-compose.test.yml up --build       <- db type provided, default url, username, password
+            - APP_DB_TYPE=sqlite APP_DB_URL='some/url' APP_DB_USER='some user' docker -f docker-compose.test.yml up --build           <- dy type, url, username, password provided
+            -                   <- with live reload
+
+    - Python launch api
+        - Command

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  fastapi_serve_base:
+    build:
+      context: ./src/
+      target: serve-stage
+    restart: always
+    volumes:
+      - ./src:/app
+    tty: true # enables colored log
+    stdin_open: false # enables colored log
+
+  fastapi_serve_base_compact:
+    extends:
+      service: fastapi_serve_base
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+

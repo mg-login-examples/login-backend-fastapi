@@ -3,74 +3,43 @@ version: '3.8'
 services:
 
   fastapi_serve:
+    extends:
+      file: fastapi.service.yml
+      service: fastapi_serve_base
     profiles:
       - backend-serve
       - fullstack-serve
     networks:
       - fullstack
       - backend
-    build:
-      context: ./src/
-      target: serve-stage
-    restart: always
     depends_on:
       mysqldb:
         condition: service_healthy
     ports:
       - 8018:8018
-    volumes:
-      - ./src:/app
     secrets:
       - mysql-password
-    tty: true # enables colored log
-    stdin_open: false # enables colored log
 
   fastapi_serve_sqlite:
+    extends:
+      file: fastapi.service.yml
+      service: fastapi_serve_base_compact
     profiles:
       - backend-serve-sqlite
     networks:
       - backend
-    build:
-      context: ./src/
-      target: serve-stage
-    restart: always
     ports:
       - 8018:8018
-    volumes:
-      - ./src:/app
-    tty: true # enables colored log
-    stdin_open: false # enables colored log
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 256M
-        reservations:
-          cpus: '0.25'
-          memory: 128M
 
   mysqldb:
+    extends:
+      file: mysql.service.yml
+      service: mysqldb_base
     profiles:
       - backend-serve
       - fullstack-serve
     networks:
       - backend
-    image: mysql
-    command: '--default-authentication-plugin=mysql_native_password'
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_DATABASE=login
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-password
-    volumes:
-      - mysql-data:/var/lib/mysql
-    secrets:
-      - mysql-password
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
 
   vueapp_serve_dev:
     profiles:
