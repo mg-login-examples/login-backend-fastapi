@@ -1,12 +1,18 @@
-from fastapi import APIRouter
+from typing import Callable
+from fastapi import APIRouter, FastAPI
 
-from admin.api import routes as admin_routes
-from api.users import routes as user_routes
-from api.quotes import routes as quote_routes
+from admin.api.routes import add_all_admin_resources_routes
+from api.users.routes import add_resource_users_routes
+from api.quotes.routes import add_resource_quotes_routes
 
-router = APIRouter(prefix="/api")
+def add_routes(app: FastAPI, get_db_session: Callable, add_admin_app: bool) -> FastAPI:
+    api_router = APIRouter(prefix="/api")
 
-router.include_router(admin_routes.router)
+    if add_admin_app:
+        add_all_admin_resources_routes(api_router, get_db_session)
 
-router.include_router(user_routes.router)
-router.include_router(quote_routes.router)
+    add_resource_users_routes(api_router, get_db_session)
+    add_resource_quotes_routes(api_router, get_db_session)
+
+    app.include_router(api_router)
+    return app

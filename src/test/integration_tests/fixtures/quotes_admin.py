@@ -9,7 +9,7 @@ import requests
 from data.schemas.quotes.quoteCreate import QuoteCreate
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.users.userDeep import User as UserDeep
-from test.integration_tests.fixtures.client import test_client
+from test.integration_tests.fixtures.app import test_client
 from test.integration_tests.fixtures.users import created_user
 from test.integration_tests.utils.fake_quote import generate_random_quote_to_create
 

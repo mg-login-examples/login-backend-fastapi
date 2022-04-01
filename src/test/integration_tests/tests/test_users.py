@@ -1,13 +1,10 @@
 import logging
-from typing import List
 
 import requests
 
 from data.schemas.users.user import User
-from test.integration_tests.fixtures.client import test_client
+from test.integration_tests.fixtures.app import test_settings, test_app_db_manager, setup_db, test_client
 from test.integration_tests.fixtures.users import created_user, generate_random_user_to_create
-from test.integration_tests.fixtures.dbutils import setup_db
-
 
 logger = logging.getLogger(__name__)
 

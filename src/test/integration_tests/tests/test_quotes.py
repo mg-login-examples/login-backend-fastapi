@@ -8,10 +8,9 @@ import pytest
 from data.schemas.users.user import User
 from data.schemas.quotes.quote import Quote
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
-from test.integration_tests.fixtures.client import test_client
+from test.integration_tests.fixtures.app import test_settings, test_app_db_manager, setup_db, test_client
 from test.integration_tests.fixtures.users import created_user
 from test.integration_tests.fixtures.quotes import created_quote, created_n_quotes, generate_random_quote_to_create
-from test.integration_tests.fixtures.dbutils import setup_db
 from test.integration_tests.utils import asserts
 
 logger = logging.getLogger(__name__)
