@@ -13,7 +13,7 @@ services:
     environment:
       - ENV_FILE=.test.env
     depends_on:
-      mysqldb:
+      mysql_db:
         condition: service_healthy
     secrets:
       - mysql-password
@@ -27,7 +27,7 @@ services:
     networks:
       - backend
     depends_on:
-      mysqldb:
+      mysql_db:
         condition: service_healthy
     secrets:
       - mysql-password

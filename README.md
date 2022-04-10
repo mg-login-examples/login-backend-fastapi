@@ -27,58 +27,65 @@ Ensure you have [docker](https://docs.docker.com/engine/install/) installed on y
 
 - To **launch api** (accessible at htpp://localhost:8018): 
     - Build & Start containers and launch app with live reload:
-        - ```docker compose -p backend --profile backend-serve up --build```
+        - ```docker-compose -p backend --profile backend-serve up --build```
             - FastAPI interactive **API documentation** available at:
                 - http://localhost:8018/docs
                 - http://localhost:8018/redoc
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
-        - ```docker compose -p backend --profile backend-serve down```
+        - ```docker-compose -p backend --profile backend-serve down```
 - To **launch api with sqlite** (accessible at htpp://localhost:8018): 
     - Build & Start containers and launch app with live reload:
-        - ```docker compose -p backend --profile backend-serve-sqlite up --build```
+        - ```docker-compose -p backend --profile backend-serve-sqlite up --build```
             - FastAPI interactive **API documentation** available at:
                 - http://localhost:8018/docs
                 - http://localhost:8018/redoc
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
-        - ```docker compose -p backend --profile backend-serve down```
+        - ```docker-compose -p backend --profile backend-serve down```
 - To **run new/affected tests with live reload** for Test Driver Development:
     - Build & Start containers and run tests with live reload: 
-        - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon```
+        - ```docker-compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon```
     - Build & Start containers and run Unit tests only with live reload: 
-        - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon test/unit_tests```
+        - ```docker-compose -f docker-compose.test.yml -p backend --profile backend-test run fastapi_test ptw -- --testmon test/unit_tests```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
-        - ```docker compose -p backend --profile backend-test down```
-- To **run all Api tests**:
+        - ```docker-compose -p backend --profile backend-test down```
+- To **run all API tests**:
     - Build & Start containers and run all (unit + integration) pytest tests:
-        - ```docker compose -f docker-compose.test.yml -p backend --profile backend-test up --build --abort-on-container-exit```
+        - ```docker-compose -f docker-compose.test.yml -p backend --profile backend-test up --build --abort-on-container-exit```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
-        - ```docker compose -p backend --profile backend-test down```
+        - ```docker-compose -p backend --profile backend-test down```
+- To **run all API tests with sqlite**:
+    - Build & Start containers and run all (unit + integration) pytest tests:
+        - ```docker-compose -f docker-compose.test.yml -p backend --profile backend-test-sqlite up --build --abort-on-container-exit```
+    - Stop containers:
+        - ```CTRL+C```
+    - Delete containers:
+        - ```docker-compose -p backend --profile backend-test down```
 - To **run E2E fullstack tests** with frontend login app:
     - **PREREQUISITES**
         - Clone repo inside project directory: ```git clone https://github.com/mg-login-examples/login-frontend-vue.git```
     - Build & Start containers and run end-to-end cypress tests:
-        - ```docker compose -f docker-compose.test.yml -p backend --profile fullstack-e2e-test up --build```
+        - ```docker-compose -f docker-compose.test.yml -p backend --profile fullstack-e2e-test up --build```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
-        - ```docker compose -p backend --profile fullstack-e2e-test down```
+        - ```docker-compose -p backend --profile fullstack-e2e-test down```
 - To **launch fullstack app**:
     - **PREREQUISITES**
         - Clone repo inside project directory: ```git clone https://github.com/mg-login-examples/login-frontend-vue.git```
     - Start containers with live reload for frontend & backend:
-        - ```docker compose -p backend --profile fullstack-serve up --build```
+        - ```docker-compose -p backend --profile fullstack-serve up --build```
     - Stop containers:
         - ```CTRL+C```
     - Delete containers:
-        - ```docker compose -p backend --profile fullstack-serve down```
+        - ```docker-compose -p backend --profile fullstack-serve down```
 
 ## Without Docker
 1. Install Python3
