@@ -27,4 +27,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script: sudo docker-compose -p backend --profile backend-serve-sqlite up --build
+          script: cd ${{ secrets.TARGET_DIR }} && sudo docker-compose -p backend --profile backend-serve-sqlite up --build
