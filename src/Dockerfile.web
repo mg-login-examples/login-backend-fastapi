@@ -1,3 +1,5 @@
+# Heroku dockerfile
+
 # Pull base image
 FROM python:3.9 as install-stage
 # working directory in the container
@@ -7,8 +9,6 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 # copy code
 COPY . .
-# expose port
-# EXPOSE 8018    <- Port set automatically by Heroku. Used in line 15 $PORT
 
 # launch app
 FROM install-stage as serve-stage

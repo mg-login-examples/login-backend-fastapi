@@ -1,15 +1,19 @@
 version: '3.8'
 
 services:
-  fastapi_serve_base:
-    build:
-      context: ./src/
-      target: serve-stage
+  fastapi_base:
     restart: always
     volumes:
       - ./src:/app
     tty: true # enables colored log
     stdin_open: false # enables colored log
+
+  fastapi_serve_base:
+    extends:
+      service: fastapi_base
+    build:
+      context: ./src/
+      target: serve-stage
 
   fastapi_serve_base_compact:
     extends:
@@ -23,3 +27,11 @@ services:
           cpus: '0.25'
           memory: 128M
 
+  fastapi_test_base:
+    extends:
+      service: fastapi_base
+    build:
+      context: ./src/
+      target: test-stage
+    environment:
+      - ENV_FILE=.test.env

@@ -1,10 +1,9 @@
 version: '3.8'
 
 services:
-
   fastapi_serve:
     extends:
-      file: fastapi.service.yml
+      file: compose.fastapi.service.yml
       service: fastapi_serve_base
     profiles:
       - backend-serve
@@ -16,25 +15,25 @@ services:
       mysqldb:
         condition: service_healthy
     ports:
-      - 8018:8018
+      - ${API_SERVER_PORT}:${SERVER_PORT}
     secrets:
       - mysql-password
 
   fastapi_serve_sqlite:
     extends:
-      file: fastapi.service.yml
+      file: compose.fastapi.service.yml
       service: fastapi_serve_base_compact
     profiles:
       - backend-serve-sqlite
     networks:
       - backend
     ports:
-      - 8018:8018
+      - ${API_SERVER_PORT}:${SERVER_PORT}
 
-  mysqldb:
+  mysql_db:
     extends:
-      file: mysql.service.yml
-      service: mysqldb_base
+      file: compose.mysql.service.yml
+      service: mysql_db_base
     profiles:
       - backend-serve
       - fullstack-serve

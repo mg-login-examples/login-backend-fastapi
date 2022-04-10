@@ -8,10 +8,12 @@ requests
 pytest
 pytest-watch
 pytest-html
-coverage
 pytest-testmon
+allure-pytest
+coverage
 SQLAlchemy
 SQLAlchemy-Utils
 typing-extensions
 email-validator
 faker
+pre-commit
