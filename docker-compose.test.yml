@@ -24,8 +24,6 @@ services:
       - backend-test-sqlite
     networks:
       - backend
-    secrets:
-      - mysql-password
 
   mysql_db:
     extends:
