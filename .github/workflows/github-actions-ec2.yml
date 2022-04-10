@@ -14,7 +14,7 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v2
       - name: Run unit tests
-        run: sudo docker-compose -f docker-compose.test.yml -p backend --profile backend-test-sqlite up --build --abort-on-container-exit
+        run: docker-compose -f docker-compose.test.yml -p backend --profile backend-test-sqlite up --build --abort-on-container-exit
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
