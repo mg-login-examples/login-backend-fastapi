@@ -2,22 +2,6 @@ version: '3.8'
 
 services:
 
-  fastapi_serve:
-    extends:
-      file: compose.fastapi.service.yml
-      service: fastapi_serve_base
-    profiles:
-      - fullstack-e2e-test
-    networks:
-      - fullstack
-    environment:
-      - ENV_FILE=.test.env
-    depends_on:
-      mysql_db:
-        condition: service_healthy
-    secrets:
-      - mysql-password
-
   fastapi_test:
     extends:
       file: compose.fastapi.service.yml
@@ -53,25 +37,7 @@ services:
     networks:
       - backend
 
-  vueapp_test_e2e:
-    profiles:
-      - fullstack-e2e-test
-    networks:
-      - fullstack
-    depends_on:
-      - fastapi_serve
-    build:
-      context: ./frontend
-      dockerfile: ./cypress.Dockerfile
-      target: test-e2e-stage
-    environment:
-      - VUE_APP_BACKEND_URL=http://fastapi_serve:8018
-    volumes:
-      - ./frontend/src:/app/src # live reload
-      - ./frontend/tests:/app/tests # live reload
-
 networks:
-  fullstack:
   backend:
 
 volumes:
