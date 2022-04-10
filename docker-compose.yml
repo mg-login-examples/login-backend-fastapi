@@ -12,10 +12,10 @@ services:
       - fullstack
       - backend
     depends_on:
-      mysqldb:
+      mysql_db:
         condition: service_healthy
     ports:
-      - ${API_SERVER_PORT}:${SERVER_PORT}
+      - ${API_SERVER_PORT:-8018}:${SERVER_PORT:-8018}
     secrets:
       - mysql-password
 
@@ -28,7 +28,7 @@ services:
     networks:
       - backend
     ports:
-      - ${API_SERVER_PORT}:${SERVER_PORT}
+      - ${API_SERVER_PORT:-8018}:${SERVER_PORT:-8018}
 
   mysql_db:
     extends:
