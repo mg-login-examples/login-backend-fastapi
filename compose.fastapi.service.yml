@@ -3,8 +3,6 @@ version: '3.8'
 services:
   fastapi_base:
     restart: always
-    volumes:
-      - ./src:/app
     tty: true # enables colored log
     stdin_open: false # enables colored log
 
