@@ -17,6 +17,25 @@ jobs:
         run: echo "password" >> db/mysql_pwd.txt
       - name: Run backend tests
         run: sudo ./script.sh run-api-tests
+      - name: Delete previous allure-results folder
+        if: success() || failure()
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: sudo rm -rf /home/ubuntu/allure-docker/projects/backend/results
+      - name: Add reports to allure
+        if: success() || failure()
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          source: "src/test/allure-results"
+          target: "/home/ubuntu/allure-docker/projects/backend/results"
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
@@ -24,7 +43,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-      - name: executing remote ssh commands using ssh key
+      - name: Restart app - build new containers
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_DNS }}
