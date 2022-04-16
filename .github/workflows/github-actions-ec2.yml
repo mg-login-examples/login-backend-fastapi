@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: Checkout the files
         uses: actions/checkout@v2
-      - name: Run unit tests
-        run: docker-compose -f docker-compose.test.yml -p backend --profile backend-test-sqlite up --build --abort-on-container-exit
+      - name: Run backend tests
+        run: sudo ./script.sh run-api-tests
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
@@ -29,4 +29,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script: cd ${{ secrets.TARGET_DIR }} && sudo docker-compose -p backend --profile backend-serve-sqlite up --build --detach
+          script: cd ${{ secrets.TARGET_DIR }} && sudo ./script.sh launch-app

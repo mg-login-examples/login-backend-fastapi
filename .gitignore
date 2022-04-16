@@ -31,3 +31,4 @@ vue_admin
 /frontend
 /db/mysql_pwd.txt
 sql_app.db
+allure-results

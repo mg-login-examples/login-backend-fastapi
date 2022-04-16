@@ -2,7 +2,6 @@ import logging
 
 from fastapi import FastAPI
 
-from core.settings import Settings
 from app_settings.cors_settings import add_cors
 from api.routes import add_routes
 from admin.view.mount_admin_app import mount_admin_app

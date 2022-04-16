@@ -128,3 +128,9 @@ Scripts by workflow
 
     - Python launch api
         - Command
+
+
+Before deploying:
+Start EC2 server
+Update github mg-login organization secrets server IP address:
+- https://github.com/organizations/mg-login-examples/settings/secrets/actions

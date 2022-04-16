@@ -9,7 +9,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(EmailType, unique=True, index=True)
-    hashed_password = Column(String)
+    hashed_password = Column(String(128))
     is_active = Column(Boolean, default=True)
     quotes = relationship("Quote", back_populates="author")
     liked_quotes = relationship(

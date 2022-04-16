@@ -5,18 +5,20 @@ import os
 import requests
 from fastapi.testclient import TestClient
 
+from core.environment_settings import get_environment_settings
 from core.settings import Settings
 from core.db_manager import get_db_manager
 from data.database.sqlAlchemyDBManager import SQLAlchemyDBManager
 from data.database import dbUtils
-from app_factory import create_app
+from core.app_factory import create_app
 
 logger = logging.getLogger(__name__)
 
 @pytest.fixture
 def test_settings() -> Settings:
-    ENV_FILE = os.getenv("ENV_FILE", ".env")
-    SETTINGS = Settings(_env_file=ENV_FILE)
+    dot_env_file = os.getenv("ENV_FILE", ".env")
+    SETTINGS = get_environment_settings(dot_env_file=dot_env_file)
+    logger.info(f".env file selected: {dot_env_file}")
     return SETTINGS
 
 @pytest.fixture
