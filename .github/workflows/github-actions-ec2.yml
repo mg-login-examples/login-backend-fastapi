@@ -18,10 +18,8 @@ jobs:
       - name: Run backend tests
         run: sudo ./script.sh run-api-tests
       - name: Zip allure reports
-        uses: montudor/action-zip@v1
         if: success() || failure()
-        with:
-          args: zip -qq -r results.zip src/test/allure-results
+        run: cd src/test && zip -r results.zip allure-results
       - name: Copy zipped reports to allure server
         if: success() || failure()
         uses: appleboy/scp-action@master
@@ -30,7 +28,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          source: "results.zip"
+          source: "src/test/results.zip"
           target: "/home/ubuntu/allure-docker/projects/backend/"
       - name: Delete previous allure-results folder, unzip new one and delete zipped after
         if: success() || failure()
