@@ -30,6 +30,7 @@ jobs:
           port: 22
           source: "src/test/results.zip"
           target: "/home/ubuntu/allure-docker/projects/backend/"
+          strip_components: 2
       - name: Delete previous allure-results folder, unzip new one and delete zipped after
         if: success() || failure()
         uses: appleboy/ssh-action@master
@@ -38,7 +39,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script: sudo rm -rf /home/ubuntu/allure-docker/projects/backend/results && unzip /home/ubuntu/allure-docker/projects/backend/results.zip -d /home/ubuntu/allure-docker/projects/backend/  && rm /home/ubuntu/allure-docker/projects/backend/results.zip
+          script: cd /home/ubuntu/allure-docker/projects/backend && sudo rm -rf results && unzip results.zip && rm results.zip
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
