@@ -17,16 +17,12 @@ jobs:
         run: echo "password" >> db/mysql_pwd.txt
       - name: Run backend tests
         run: sudo ./script.sh run-api-tests
-      - name: Delete previous allure-results folder
+      - name: Zip allure reports
+        uses: montudor/action-zip@v1
         if: success() || failure()
-        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST_DNS }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script: sudo rm -rf /home/ubuntu/allure-docker/projects/backend/results
-      - name: Add reports to allure
+          args: zip -qq -r results.zip src/test/allure-results
+      - name: Copy zipped reports to allure server
         if: success() || failure()
         uses: appleboy/scp-action@master
         with:
@@ -34,8 +30,17 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          source: "src/test/allure-results"
-          target: "/home/ubuntu/allure-docker/projects/backend/results"
+          source: "results.zip"
+          target: "/home/ubuntu/allure-docker/projects/backend/"
+      - name: Delete previous allure-results folder, unzip new one and delete zipped after
+        if: success() || failure()
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: sudo rm -rf /home/ubuntu/allure-docker/projects/backend/results && unzip /home/ubuntu/allure-docker/projects/backend/results.zip && rm results.zip
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
