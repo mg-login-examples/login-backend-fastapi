@@ -7,7 +7,6 @@ services:
     stdin_open: false # enables colored log # docker run -i
     build:
       context: ./src/
-      target: serve-stage
     profiles:
       - backend-serve
       - backend-test
