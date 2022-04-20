@@ -4,7 +4,7 @@ version: '3.8'
 services:
   vueapp_serve_dev:
     profiles:
-      - fullstack-serve
+      - fullstack
     networks:
       - fullstack
     depends_on:

@@ -8,10 +8,8 @@ services:
     build:
       context: ./src/
     profiles:
-      - backend-serve
-      - backend-test
-      - fullstack-serve
-      - fullstack-e2e-test
+      - backend
+      - fullstack
     networks:
       - backend
     depends_on:
