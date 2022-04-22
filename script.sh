@@ -21,7 +21,7 @@ then
    echo "Launching backend api & `mysql` container"
 #    export DATABASE_URL="todo-for-prod"
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend up --build
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend up --build -d
 else
    echo "no option passed"
    echo "available options are:
