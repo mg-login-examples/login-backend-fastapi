@@ -54,4 +54,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script: cd ${{ secrets.TARGET_DIR }} && git pull origin main && sudo ./script.sh launch-app
+          script: cd ${{ secrets.TARGET_DIR }} &&
+                  cd .. &&
+                  cd
+                  # git pull origin main &&
+                  # sudo ./script.sh launch-app
