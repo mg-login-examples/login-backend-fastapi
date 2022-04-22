@@ -2,13 +2,13 @@
 version: '3.8'
 
 services:
-  vueapp_serve_dev:
+  vueapp:
     profiles:
       - fullstack
     networks:
       - fullstack
     depends_on:
-      - fastapi_serve
+      - fastapi
     build:
       context: ./frontend
       # dockerfile: ./cypress.Dockerfile
