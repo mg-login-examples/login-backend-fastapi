@@ -62,5 +62,5 @@ jobs:
             cp backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/ &&
             sudo rm -rf backend-fastapi-old &&
             cd backend-fastapi &&
-            ./script launch-app-dev-env
+            ./script.sh launch-app-dev-env
 # sudo ./script.sh launch-app
