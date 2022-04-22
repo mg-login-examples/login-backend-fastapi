@@ -56,10 +56,11 @@ jobs:
           port: 22
           script: >-
             cd /home/ubuntu && 
-            rm -rf backend-fastapi-old && 
+            sudo rm -rf backend-fastapi-old && 
             mv backend-fastapi backend-fastapi-old &&
             git clone -b main https://github.com/mg-login-examples/login-backend-fastapi.git backend-fastapi &&
-            mv backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/ &&
+            cp backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/ &&
+            sudo rm -rf backend-fastapi-old &&
             cd backend-fastapi &&
             ./script launch-app-dev-env
 # sudo ./script.sh launch-app
