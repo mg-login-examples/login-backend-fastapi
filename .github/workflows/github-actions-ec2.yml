@@ -62,6 +62,6 @@ jobs:
             cp backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/ &&
             sudo rm -rf backend-fastapi-old &&
             cd backend-fastapi &&
-            git clone -b main https://github.com/mg-login-examples/login-frontend-vueapp.git frontend &&
+            git clone -b main https://github.com/mg-login-examples/login-frontend-vue.git frontend &&
             ./script.sh launch-app-dev-env
 # sudo ./script.sh launch-app
