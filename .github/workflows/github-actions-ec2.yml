@@ -59,5 +59,7 @@ jobs:
             rm -rf backend-fastapi-old && 
             mv backend-fastapi backend-fastapi-old &&
             git clone -b main https://github.com/mg-login-examples/login-backend-fastapi.git backend-fastapi &&
-            mv backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/
+            mv backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/ &&
+            cd backend-fastapi &&
+            ./script launch-app-dev-env
 # sudo ./script.sh launch-app
