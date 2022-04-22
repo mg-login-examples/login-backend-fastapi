@@ -54,8 +54,10 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script: cd ${{ secrets.TARGET_DIR }} &&
-                  cd .. &&
-                  cd
-                  # git pull origin main &&
-                  # sudo ./script.sh launch-app
+          script: >-
+            cd /home/ubuntu && 
+            rm -rf backend-fastapi-old && 
+            mv backend-fastapi backend-fastapi-old &&
+            git clone -b main https://github.com/mg-login-examples/login-backend-fastapi.git backend-fastapi &&
+            mv backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/
+# sudo ./script.sh launch-app
