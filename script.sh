@@ -22,6 +22,10 @@ then
 #    export DATABASE_URL="todo-for-prod"
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend up --build -d
+elif [ $case = "stop" ]
+then
+   # Stop all backend project's containers
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
 else
    echo "no option passed"
    echo "available options are:

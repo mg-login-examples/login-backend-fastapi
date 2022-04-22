@@ -2,3 +2,4 @@ version: '3.8'
 
 networks:
   backend:
+  fullstack:
