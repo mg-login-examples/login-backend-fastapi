@@ -6,9 +6,9 @@ import requests
 from fastapi.testclient import TestClient
 
 from core.environment_settings import get_environment_settings
-from core.settings import Settings
+from core.helper_classes.settings import Settings
 from core.db_manager import get_db_manager
-from data.database.sqlAlchemyDBManager import SQLAlchemyDBManager
+from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
 from data.database import dbUtils
 from core.app_factory import create_app
 

@@ -1,4 +1,4 @@
-from data.database.sqlAlchemyDBManager import SQLAlchemyDBManager
+from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
 
 def get_db_manager(database_url: str, database_user: str, database_password: str) -> SQLAlchemyDBManager:
     app_db_manager = SQLAlchemyDBManager(

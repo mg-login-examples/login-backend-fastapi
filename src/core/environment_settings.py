@@ -1,7 +1,7 @@
 import os
 import sec
 
-from core.settings import Settings
+from core.helper_classes.settings import Settings
 
 def get_environment_settings(dot_env_file: str = ".env"):
     docker_mysql_secret = sec.load("mysql-password")

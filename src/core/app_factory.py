@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from app_settings.cors_settings import add_cors
 from api.routes import add_routes
 from admin.view.mount_admin_app import mount_admin_app
-from data.database.sqlAlchemyDBManager import SQLAlchemyDBManager
+from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
 
 logger = logging.getLogger(__name__)
 
