@@ -8,7 +8,6 @@ from data.database.models.quote import Quote as QuoteModel
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 
 def generate_endpoint(
-    url_prefix: str,
     router: APIRouter,
     get_db_session: Callable
 ):

@@ -8,7 +8,7 @@ from data.schemas.users.user import User as UserSchema
 from data.schemas.users.userCreate import UserCreate as UserCreateSchema
 from data.database.models.user import User as UserModel
 from data.endUserSchemasToDbSchemas.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
-from .get_user_quotes import generate_endpoint
+from .get_user_quotes_endpoint import generate_endpoint
 
 def add_resource_users_routes(parent_router: APIRouter, get_db_session: Callable) -> APIRouter:
     user_resource_configurations = ResourceConfigurations(
@@ -27,7 +27,6 @@ def add_resource_users_routes(parent_router: APIRouter, get_db_session: Callable
     )
 
     generate_endpoint(
-        user_resource_configurations.resource_endpoints_url_prefix,
         router,
         get_db_session
     )
