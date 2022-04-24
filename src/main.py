@@ -7,7 +7,7 @@ from core.environment_settings import get_environment_settings
 from core.logging_settings import set_logging_settings
 from core.db_manager import get_db_manager
 from core.app_factory import create_app
-from data.database import dbUtils
+from utils.db import dbUtils
 
 logger = logging.getLogger(__name__)
 

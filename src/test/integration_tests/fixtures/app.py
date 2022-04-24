@@ -9,7 +9,7 @@ from core.environment_settings import get_environment_settings
 from core.helper_classes.settings import Settings
 from core.db_manager import get_db_manager
 from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
-from data.database import dbUtils
+from utils.db import dbUtils
 from core.app_factory import create_app
 
 logger = logging.getLogger(__name__)
