@@ -13,6 +13,7 @@ services:
       - fullstack-e2e
     networks:
       - backend
+      - fullstack
     depends_on:
       mysql_db:
         condition: service_healthy
