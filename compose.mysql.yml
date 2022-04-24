@@ -19,6 +19,7 @@ services:
     profiles:
       - backend
       - fullstack
+      - fullstack-e2e
     networks:
       - backend
     volumes:

@@ -22,6 +22,19 @@ then
 #    export DATABASE_URL="todo-for-prod"
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend up --build -d
+elif [ $case = "launch-fullstack-local" ]
+then
+   # Stop all backend project's containers and build and start full stack
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend --profile fullstack up --build
+elif [ $case = "run-e2e-tests" ]
+then
+   # Stop all backend project's containers
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend --profile fullstack-e2e build
+   export CYPRESS_ENV_FILE=.env.ci_e2e
+   # export CYPRESS_VIDEO=false
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend --profile fullstack-e2e run vueapp_test_e2e npm run test:e2e -- --headless --mode ci_e2e
 elif [ $case = "stop" ]
 then
    # Stop all backend project's containers

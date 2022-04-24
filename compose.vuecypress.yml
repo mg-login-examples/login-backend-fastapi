@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  vueapp_test_e2e:
+    profiles:
+      - fullstack-e2e
+    networks:
+      - fullstack # internally connects to backend for e2e tests
+    build:
+      context: ./frontend
+      dockerfile: ./cypress.Dockerfile
+    environment:
+      - CYPRESS_VIDEO=${CYPRESS_VIDEO-true}
+      - CYPRESS_VIDEO=${CYPRESS_TAGS}
+    depends_on:
+      - fastapi
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/tests:/app/tests
+      - ./frontend/cypress.json:/app/cypress.json

@@ -5,18 +5,22 @@ services:
   vueapp:
     profiles:
       - fullstack
-    networks:
-      - fullstack
     depends_on:
       - fastapi
     build:
       context: ./frontend
-      # dockerfile: ./cypress.Dockerfile
-      target: serve-dev-stage
+      target: serve-local-stage
     volumes:
       - ./frontend/src:/app/src # live reload
       - ./frontend/tests:/app/tests # live reload
     ports:
       - 8019:8080
-    environment:
-      - VUE_APP_BACKEND_URL=http://fastapi_serve:8018
+
+  vueapp_serve_prod:
+    profiles:
+      - frontend-prod
+    build:
+      context: ./frontend
+      target: serve-prod-stage
+    ports:
+      - 8010:80
