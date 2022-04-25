@@ -1,4 +1,8 @@
-from utils.security.access_token_utils import parse_access_token, check_access_tokens_are_equal, check_access_token_is_not_expired
+import logging
+
+from utils.security.access_token_utils import parse_access_token, check_access_tokens_are_equal, check_access_token_is_expired
+
+logger = logging.getLogger(__name__)
 
 USER_ID_TO_ACCESS_TOKENS = {}
 
@@ -17,7 +21,8 @@ def check_if_access_token_is_valid(access_token):
     # TODO Check token format is correct
     token_user_id = parse_access_token(access_token, "user_id")
     is_token_valid = False
-    if check_access_token_is_not_expired(access_token):
+    if not check_access_token_is_expired(access_token):
+        is_token_valid = True
         if token_user_id in USER_ID_TO_ACCESS_TOKENS:
             for user_access_token in USER_ID_TO_ACCESS_TOKENS[token_user_id]:
                 if check_access_tokens_are_equal(access_token, user_access_token):

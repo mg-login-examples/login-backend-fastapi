@@ -1,5 +1,10 @@
+import logging
 import secrets
 from datetime import datetime
+
+from fastapi import HTTPException, status
+
+logger = logging.getLogger(__name__)
 
 def generate_access_token(user_id, expiry_time_seconds):
     expiry_datetime_timestamp = int(datetime.now().timestamp()) + expiry_time_seconds
@@ -9,7 +14,7 @@ def generate_access_token(user_id, expiry_time_seconds):
 def parse_access_token(access_token, value: str = None):
     access_token_random_id = access_token.split('--')[0]
     access_token_user_id = access_token.split('--')[1]
-    access_token_expiry_timestamp = access_token.split('--')[1]
+    access_token_expiry_timestamp = float(access_token.split('--')[2])
     if not value:
         return access_token_random_id, access_token_user_id, access_token_expiry_timestamp
     if value == "random_id":
@@ -22,8 +27,8 @@ def parse_access_token(access_token, value: str = None):
 def check_access_tokens_are_equal(access_token_1, access_token_2):
     return secrets.compare_digest(access_token_1, access_token_2)
 
-def check_access_token_is_not_expired(access_token):
+def check_access_token_is_expired(access_token):
     expiry_timestamp = parse_access_token(access_token, "expiry_timestamp")
-    if datetime.now().timestamp() > expiry_timestamp:
+    if datetime.now().timestamp() < expiry_timestamp:
         return False
     return True
