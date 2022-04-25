@@ -1,4 +1,3 @@
-import os
 import sec
 
 from core.helper_classes.settings import Settings

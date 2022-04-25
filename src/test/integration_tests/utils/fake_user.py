@@ -1,14 +1,18 @@
 import random
 import string
+import logging
 
 from faker import Faker
+from mimesis import Person
 
 from data.schemas.users.userCreate import UserCreate
+
+logger = logging.getLogger(__name__)
 
 fake = Faker()
 
 def generate_random_user_to_create() -> UserCreate:
-    user_email = fake.email()
+    user_email = Person().email(domains=['fakegmail.com', 'fakeyahoo.com'])
     user_password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
     user = UserCreate(email=user_email, password=user_password)
     return user
