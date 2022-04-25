@@ -8,6 +8,7 @@ requests
 SQLAlchemy
 SQLAlchemy-Utils
 mysqlclient
+passlib[bcrypt]
 python-dotenv
 coloredlogs
 pytest
