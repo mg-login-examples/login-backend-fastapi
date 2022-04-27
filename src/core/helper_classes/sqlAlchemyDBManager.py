@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 class SQLAlchemyDBManager():
 
     def __init__(self, database_url: str, database_user: str, database_password: str):
-        logger.info("Setting up SQLAlchemy")
+        logger.debug("Setting up SQLAlchemy")
 
         if "sqlite" in database_url:
             self.URL_CONFIG = make_url(database_url)

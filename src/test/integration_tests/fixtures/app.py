@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 def test_settings() -> Settings:
     dot_env_file = os.getenv("ENV_FILE", ".env")
     SETTINGS = get_environment_settings(dot_env_file=dot_env_file)
-    logger.info(f".env file selected: {dot_env_file}")
+    logger.info(f"Test environment file selected: {dot_env_file}")
     return SETTINGS
 
 @pytest.fixture
@@ -29,7 +29,6 @@ def test_app_db_manager(test_settings: Settings):
 @pytest.fixture
 def setup_db(test_app_db_manager: SQLAlchemyDBManager):
     dbUtils.create_all_tables(test_app_db_manager.engine)
-
 
 @pytest.fixture
 def test_client(test_settings: Settings, test_app_db_manager: SQLAlchemyDBManager, setup_db) -> requests.Session:

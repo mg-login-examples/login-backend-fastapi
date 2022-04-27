@@ -1,11 +1,13 @@
 from typing import Optional
+import logging
 
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import HTTPException
 from fastapi.security.utils import get_authorization_scheme_param
-from starlette.requests import Request
+from fastapi.requests import Request
 from starlette.status import HTTP_403_FORBIDDEN
 
+logger = logging.getLogger(__name__)
 
 class CookieExtractorWithOpenApiSecuritySchemeForOAuth2PasswordBearer(OAuth2PasswordBearer):
     """OAuth2 password flow with token in a httpOnly cookie.
@@ -38,6 +40,8 @@ class CookieExtractorWithOpenApiSecuritySchemeForOAuth2PasswordBearer(OAuth2Pass
             authorization = False
 
         if not authorization:
+            logger.error("Improper authorization error:")
+            logger.error(f"Endpoint accessed: {request.url}")
             raise HTTPException(
                 status_code=HTTP_403_FORBIDDEN, detail="Not authenticated"
             )

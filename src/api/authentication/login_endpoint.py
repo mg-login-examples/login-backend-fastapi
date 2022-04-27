@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from helpers.classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
 
-from .helper_classes.loginResponseModel import LoginResponseModel
+from data.schemas.login.login_response import LoginResponse
 from crud_endpoints_generator import crud_base
 from data.database.models.user import User as UserModel
 from data.in_memory_db.access_tokens import add_access_token
@@ -18,15 +18,13 @@ def generate_endpoint(
     router: APIRouter,
     get_db_session: Callable
 ):
-    @router.post("/login/", response_model=LoginResponseModel)
+    @router.post("/login/", response_model=LoginResponse)
     def login_user(
         response: Response,
         form_data: OAuth2PasswordRequestFormExtended = Depends(),
         db: Session = Depends(get_db_session)
     ):
         user = crud_base.get_resource_item_by_attribute(db, UserModel, UserModel.email, form_data.username)
-        logger.info(user.email)
-        logger.info(user.hashed_password)
         try:
             if user and verify_password(form_data.password, user.hashed_password):
                 token_expiry_seconds = 30*24*60*60 if form_data.remember_me else 24*60*60
@@ -36,7 +34,7 @@ def generate_endpoint(
                 else:
                     response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True)
                 add_access_token(user.id, access_token)
-                return LoginResponseModel(
+                return LoginResponse(
                     id=user.id,
                     email=user.email,
                     access_token=access_token,

@@ -17,7 +17,6 @@ pytest-html
 pytest-testmon
 allure-pytest
 coverage
-faker
 mimesis
 pre-commit
 sec

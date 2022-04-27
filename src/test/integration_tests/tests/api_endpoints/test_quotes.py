@@ -6,21 +6,16 @@ import requests
 import pytest
 
 from data.schemas.users.user import User
-from data.schemas.quotes.quote import Quote
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
-from test.integration_tests.fixtures.app import test_settings, test_app_db_manager, setup_db, test_client
-from test.integration_tests.fixtures.users import created_user
-from test.integration_tests.fixtures.quotes import created_quote, created_n_quotes, generate_random_quote_to_create
-from test.integration_tests.utils import asserts
+from test.integration_tests.utils.fake_quote import generate_random_quote_to_create
+from test.utils.api import quotes as quotes_api
 
 logger = logging.getLogger(__name__)
 
 # Test that a quote can be created
 def test_create_quote(test_client: requests.Session, created_user: User):
     quote = generate_random_quote_to_create(created_user)
-    response = test_client.post("/api/quotes/", json=quote.dict())
-    assert response.status_code == 200
-    created_quote = QuoteDeep(**response.json())
+    created_quote = quotes_api.create_quote(test_client, quote)
     assert created_quote.text == quote.text
     assert created_quote.author.id == quote.author.id
     assert created_quote.id is not None
@@ -29,10 +24,7 @@ def test_create_quote(test_client: requests.Session, created_user: User):
 # Test that multiple quotes can be fetched
 @pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
 def test_get_quotes(test_client: requests.Session, created_n_quotes: List[QuoteDeep]):
-    response = test_client.get("/api/quotes/?skip=0&limit=4")
-    assert response.status_code == 200
-    assert isinstance(response.json(), List)
-    quotes = [QuoteDeep(**quote_json) for quote_json in response.json()]
+    quotes = quotes_api.get_quotes(test_client, limit=4)
     assert len(quotes) == 4
     for quote in quotes:
         assert quote.id is not None
@@ -40,10 +32,7 @@ def test_get_quotes(test_client: requests.Session, created_n_quotes: List[QuoteD
 # Test that multiple user quotes can be fetched
 @pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
 def test_get_user_quotes(test_client: requests.Session, created_user: User, created_n_quotes: List[QuoteDeep]):
-    response = test_client.get(f"/api/users/{created_user.id}/quotes/?skip=0&limit=4")
-    assert response.status_code == 200
-    assert isinstance(response.json(), List)
-    quotes = [QuoteDeep(**quote_json) for quote_json in response.json()]
+    quotes = quotes_api.get_user_quotes(test_client, created_user.id, limit=4)
     assert len(quotes) == 4
     for quote in quotes:
         assert quote.id is not None
@@ -51,5 +40,4 @@ def test_get_user_quotes(test_client: requests.Session, created_user: User, crea
 
 # Test that a quote can be deleted by id
 def test_delete_quote(test_client: requests.Session, created_quote: QuoteDeep):
-    response = test_client.delete(f"/api/quotes/{created_quote.id}/")
-    assert response.status_code == 204
+    quotes_api.delete_quote(test_client, created_quote.id)

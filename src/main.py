@@ -17,7 +17,7 @@ SETTINGS = get_environment_settings(dot_env_file=dot_env_file)
 
 # Set logging
 set_logging_settings(SETTINGS.log_level)
-logger.info(f".env file selected: {dot_env_file}")
+logger.info(f"Environment file selected: {dot_env_file}")
 
 # Create db manager
 app_db_manager = get_db_manager(SETTINGS.database_url, SETTINGS.database_user, SETTINGS.database_password)

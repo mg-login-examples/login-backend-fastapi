@@ -2,14 +2,12 @@ import random
 import string
 import logging
 
-from faker import Faker
 from mimesis import Person
 
 from data.schemas.users.userCreate import UserCreate
 
 logger = logging.getLogger(__name__)
 
-fake = Faker()
 person = Person()
 
 def generate_random_user_to_create() -> UserCreate:
