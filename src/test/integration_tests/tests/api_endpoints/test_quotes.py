@@ -23,8 +23,8 @@ def test_create_quote(test_client_logged_in: requests.Session, logged_in_user: U
 
 # Test that multiple quotes can be fetched
 @pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
-def test_get_quotes(test_client_logged_in: requests.Session, created_n_quotes: List[QuoteDeep]):
-    quotes = quotes_api.get_quotes(test_client_logged_in, limit=4)
+def test_get_quotes(test_client: requests.Session, created_n_quotes: List[QuoteDeep]):
+    quotes = quotes_api.get_quotes(test_client, limit=4)
     assert len(quotes) == 4
     for quote in quotes:
         assert quote.id is not None

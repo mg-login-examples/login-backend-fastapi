@@ -4,7 +4,7 @@ from admin.api.resources import resourcesConfigurations
 from api_dependencies.helper_classes.dependencies import Dependencies
 
 from crud_endpoints_generator.crud_endpoints_generator import generate_router_with_resource_endpoints
-from crud_endpoints_generator.endpoints_required import Endpoints
+from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 from admin.api.add_resource_url_ids_to_schema_properties import add_resource_url_ids_to_schema_properties
 
 def add_all_admin_resources_routes(parent_router: APIRouter, dependencies: Dependencies) -> APIRouter:
@@ -34,13 +34,14 @@ def _create_get_admin_resources_endpoints(router: APIRouter):
         return infos
 
 def _create_crud_endpoints_for_all_admin_resources(router: APIRouter, route_dependencies: Dependencies):
-    endpoints_required = Endpoints().require_all()
+    endpoints_required = EndpointsConfigs().require_all()
     for resourceConfiguration in resourcesConfigurations:
         router.include_router(
             generate_router_with_resource_endpoints(
                 endpoints_required,
                 resourceConfiguration,
-                route_dependencies
+                route_dependencies.db,
+                route_dependencies=[route_dependencies.validated_access_token]
             ),
             prefix="/resource"
         )

@@ -3,7 +3,7 @@ from typing import Callable
 
 from admin.api.example.resources import resourcesConfigurations
 from crud_endpoints_generator.crud_endpoints_generator import get_resource_endpoints_router
-from crud_endpoints_generator.endpoints_required import Endpoints
+from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 from admin.api.add_resource_url_ids_to_schema_properties import add_resource_url_ids_to_schema_properties
 
 def add_all_admin_resources_routes(parent_router: APIRouter, get_db_session: Callable) -> APIRouter:
@@ -34,7 +34,7 @@ def _create_get_admin_resources_endpoints(router: APIRouter):
 
 
 def _create_crud_endpoints_for_all_admin_resources(router: APIRouter, get_db_session: Callable):
-    endpoints_required = Endpoints().require_all()
+    endpoints_required = EndpointsConfigs().require_all()
     for resourceConfiguration in resourcesConfigurations:
         router.include_router(
             get_resource_endpoints_router(
