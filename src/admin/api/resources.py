@@ -31,5 +31,5 @@ resourcesConfigurations: List[ResourceConfigurations] = [
     ),
 ]
 
-if not len({resourceConfiguration.resource_endpoints_url_prefix for resourceConfiguration in resourcesConfigurations}) == len(resourcesConfigurations):
+if len({resourceConfiguration.resource_endpoints_url_prefix for resourceConfiguration in resourcesConfigurations}) != len(resourcesConfigurations):
     raise ValueError("2 or more Admin resources have the same url prefix! Ensure all url prefix are unique.")

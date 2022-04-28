@@ -1,16 +1,19 @@
-from typing import Callable
 from fastapi import APIRouter
 
-from crud_endpoints_generator.crud_endpoints_generator import get_resource_endpoints_router
+from crud_endpoints_generator.crud_endpoints_generator import generate_router_with_resource_endpoints
 from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 from crud_endpoints_generator.endpoints_required import Endpoints
 from data.schemas.users.user import User as UserSchema
 from data.schemas.users.userCreate import UserCreate as UserCreateSchema
 from data.database.models.user import User as UserModel
 from data.endUserSchemasToDbSchemas.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
-from .get_user_quotes_endpoint import generate_endpoint
+from api_dependencies.helper_classes.dependencies import Dependencies
+from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
 
-def add_resource_users_routes(parent_router: APIRouter, get_db_session: Callable) -> APIRouter:
+def add_resource_users_routes(
+    parent_router: APIRouter,
+    route_dependencies: Dependencies
+) -> APIRouter:
     user_resource_configurations = ResourceConfigurations(
         "users",
         UserSchema,
@@ -18,17 +21,18 @@ def add_resource_users_routes(parent_router: APIRouter, get_db_session: Callable
         UserModel,
         customEndUserCreateSchemaToDbSchema = userCreateSchemaToDbSchema
     )
-    endpoints_required = Endpoints().require_get_item().require_post_item()
+    endpoints_required = Endpoints().require_get_item()
 
-    router = get_resource_endpoints_router(
+    router = generate_router_with_resource_endpoints(
         endpoints_required,
         user_resource_configurations,
-        get_db_session
+        route_dependencies
     )
 
-    generate_endpoint(
+    generate_user_quotes_endpoint(
         router,
-        get_db_session
+        route_dependencies.current_user,
+        route_dependencies.db
     )
 
     parent_router.include_router(router)

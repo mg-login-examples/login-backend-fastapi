@@ -1,4 +1,3 @@
-from typing import Callable
 import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Response
@@ -16,13 +15,13 @@ logger = logging.getLogger(__name__)
 
 def generate_endpoint(
     router: APIRouter,
-    get_db_session: Callable
+    db_as_dependency: Session
 ):
     @router.post("/login/", response_model=LoginResponse)
     def login_user(
         response: Response,
         form_data: OAuth2PasswordRequestFormExtended = Depends(),
-        db: Session = Depends(get_db_session)
+        db: Session = db_as_dependency
     ):
         user = crud_base.get_resource_item_by_attribute(db, UserModel, UserModel.email, form_data.username)
         try:
