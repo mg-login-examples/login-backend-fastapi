@@ -10,3 +10,4 @@ class Settings(BaseSettings):
     database_password: str = ''
 
     add_admin_app: bool = True
+    cors_origins_set: str = "Development"

@@ -22,7 +22,7 @@ logger.info(f"Environment file selected: {dot_env_file}")
 # Create db manager
 app_db_manager = get_db_manager(SETTINGS.database_url, SETTINGS.database_user, SETTINGS.database_password)
 # Create fastapi webapp
-app = create_app(app_db_manager, SETTINGS.add_admin_app)
+app = create_app(app_db_manager, SETTINGS)
 
 if __name__ == "__main__":
     dbUtils.create_all_tables(app_db_manager.engine)
