@@ -1,4 +1,3 @@
-from typing import Callable
 from fastapi import APIRouter
 
 from api_dependencies.helper_classes.dependencies import Dependencies
