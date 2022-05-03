@@ -39,18 +39,18 @@ def test_get_quotes(test_client: requests.Session, created_n_quotes_by_admin: Li
 
 # Test that a quote can be updated
 @pytest.mark.parametrize("created_n_users_by_admin", [1], indirect=True)
-def test_put_quote(test_client: requests.Session, created_n_users_by_admin: List[UserDeep], created_quote_by_admin: QuoteDeep):
+def test_put_quote(test_client_admin_logged_in: requests.Session, created_n_users_by_admin: List[UserDeep], created_quote_by_admin: QuoteDeep):
     new_text = text.quote()
     assert created_quote_by_admin.text != new_text
     created_quote_by_admin.text = new_text
     assert created_quote_by_admin.author.id != created_n_users_by_admin[0].id
     created_quote_by_admin.author = created_n_users_by_admin[0]
-    quotes_admin_api.put_quote(test_client, created_quote_by_admin)
-    quote = quotes_admin_api.get_quote(test_client, created_quote_by_admin.id)
+    quotes_admin_api.put_quote(test_client_admin_logged_in, created_quote_by_admin)
+    quote = quotes_admin_api.get_quote(test_client_admin_logged_in, created_quote_by_admin.id)
     assert quote.text == new_text
     assert quote.author.id == created_n_users_by_admin[0].id
 
 # Test that a quote can be deleted by id
-def test_delete_quote(test_client: requests.Session, created_quote_by_admin: QuoteDeep):
-    quotes_admin_api.delete_quote(test_client, created_quote_by_admin.id)
-    quotes_admin_api.get_quote_expect_not_found(test_client, created_quote_by_admin.id)
+def test_delete_quote(test_client_admin_logged_in: requests.Session, created_quote_by_admin: QuoteDeep):
+    quotes_admin_api.delete_quote(test_client_admin_logged_in, created_quote_by_admin.id)
+    quotes_admin_api.get_quote_expect_not_found(test_client_admin_logged_in, created_quote_by_admin.id)

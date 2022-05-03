@@ -6,19 +6,26 @@ from api_dependencies.helper_classes.dependencies import Dependencies
 from crud_endpoints_generator.crud_endpoints_generator import generate_router_with_resource_endpoints
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 from admin.api.add_resource_url_ids_to_schema_properties import add_resource_url_ids_to_schema_properties
+from admin.api.authentication.routes import add_authentication_routes
+from data.access_tokens_store.access_token_manager import AccessTokenManager
 
-def add_all_admin_resources_routes(parent_router: APIRouter, dependencies: Dependencies) -> APIRouter:
+def add_all_admin_resources_routes(
+    parent_router: APIRouter,
+    dependencies: Dependencies,
+    access_token_manager: AccessTokenManager
+) -> APIRouter:
     admin_router = APIRouter(prefix="/admin")
 
-    _create_get_admin_resources_endpoints(admin_router)
+    _create_get_admin_resources_endpoints(admin_router, dependencies)
     _create_crud_endpoints_for_all_admin_resources(admin_router, dependencies)
+    add_authentication_routes(admin_router, dependencies, access_token_manager)
 
     parent_router.include_router(admin_router)
     return parent_router
 
 
-def _create_get_admin_resources_endpoints(router: APIRouter):
-    @router.get("/resources/")
+def _create_get_admin_resources_endpoints(router: APIRouter, route_dependencies: Dependencies):
+    @router.get("/resources/", dependencies=[route_dependencies.validated_access_token])
     def get_all_resources():
         infos = []
         for resourceConfiguration in resourcesConfigurations:

@@ -12,16 +12,16 @@ from test.utils.admin_api import quotes as quotes_admin_api
 logger = logging.getLogger(__name__)
 
 @pytest.fixture
-def created_quote_by_admin(test_client: requests.Session, created_user_by_admin: UserDeep) -> QuoteDeep:
+def created_quote_by_admin(test_client_admin_logged_in: requests.Session, created_user_by_admin: UserDeep) -> QuoteDeep:
     quote = generate_random_quote_to_create(created_user_by_admin)
-    return quotes_admin_api.create_quote(test_client, quote)
+    return quotes_admin_api.create_quote(test_client_admin_logged_in, quote)
 
 @pytest.fixture
-def created_n_quotes_by_admin(test_client: requests.Session, created_user_by_admin: UserDeep, n_quotes: int = 5) -> List[QuoteDeep]:
+def created_n_quotes_by_admin(test_client_admin_logged_in: requests.Session, created_user_by_admin: UserDeep, n_quotes: int = 5) -> List[QuoteDeep]:
     quotes = []
     for _ in range(n_quotes):
         quote = generate_random_quote_to_create(created_user_by_admin)
         quotes.append(
-            quotes_admin_api.create_quote(test_client, quote)
+            quotes_admin_api.create_quote(test_client_admin_logged_in, quote)
         )
     return quotes

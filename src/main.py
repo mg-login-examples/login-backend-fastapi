@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 
 import uvicorn
@@ -8,6 +9,7 @@ from core.logging_settings import set_logging_settings
 from core.db_manager import get_db_manager
 from core.app_factory import create_app
 from utils.db import dbUtils
+from admin import admin_users_manager
 
 logger = logging.getLogger(__name__)
 
@@ -25,12 +27,23 @@ app_db_manager = get_db_manager(SETTINGS.database_url, SETTINGS.database_user, S
 app = create_app(app_db_manager, SETTINGS)
 
 if __name__ == "__main__":
-    dbUtils.create_all_tables(app_db_manager.engine)
-    uvicorn.run(
-        "main:app",
-        host=SETTINGS.server_host,
-        port=SETTINGS.server_port,
-        log_config=None, # removes default uvicorn log level and formatting
-        reload=True,
-        workers=1
-    )
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "add_admin_user":
+            admin_users_manager.create_admin_user(sys.argv[2], sys.argv[3], next(app_db_manager.db_session()))
+        elif sys.argv[1] == "update_admin_user_password":
+            admin_users_manager.update_admin_user_password(sys.argv[2], sys.argv[3], next(app_db_manager.db_session()))
+        elif sys.argv[1] == "delete_admin_user":
+            admin_users_manager.delete_admin_user(sys.argv[2], next(app_db_manager.db_session()))
+        else:
+            logger.error("Unknown argument received")
+    else:
+        dbUtils.create_all_tables(app_db_manager.engine)
+        uvicorn.run(
+            "main:app",
+            host=SETTINGS.server_host,
+            port=SETTINGS.server_port,
+            log_config=None, # removes default uvicorn log level and formatting
+            reload=True,
+            workers=1
+        )

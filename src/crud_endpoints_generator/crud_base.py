@@ -72,3 +72,9 @@ def update_resource_item_full(db: Session, ResourceModel, item_to_update: BaseSc
 def delete_resource_item(db: Session, ResourceModel: BaseModel, item_id: int):
     db.query(ResourceModel).filter(ResourceModel.id == item_id).delete()
     db.commit()
+
+def delete_resource_item_by_attribute(db: Session, ResourceModel: BaseModel, ResourceModel_attribute: any, attribute_value: any):
+    db_item = db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).first()
+    if db_item:
+        db.delete(db_item)
+        db.commit()
