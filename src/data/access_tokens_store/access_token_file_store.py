@@ -19,7 +19,6 @@ class AccessTokenFileStore:
                             self.USER_ID_TO_ACCESS_TOKENS[user_id].append(access_token)
                         else:
                             self.USER_ID_TO_ACCESS_TOKENS[user_id] = [access_token]
-            logger.info(self.USER_ID_TO_ACCESS_TOKENS)
         else:
             with open(self.FILE_PATH, 'a'):
                 logger.info(f"Created file: {self.FILE_PATH}")

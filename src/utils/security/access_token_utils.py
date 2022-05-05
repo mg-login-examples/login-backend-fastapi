@@ -9,6 +9,14 @@ def generate_access_token(user_id: int, expiry_time_seconds: int):
     random_token = ''.join(secrets.token_urlsafe(32).split('-'))[:20]
     return f'{random_token}--{user_id}--{expiry_datetime_timestamp}'
 
+def check_access_token_in_valid_format(access_token: str):
+    try:
+        parse_access_token(access_token)
+    except Exception as _:
+        logger.info(f"Invalid token passed: {access_token}")
+        return False
+    return len(access_token.split('--')) == 3
+
 def parse_access_token(access_token: str, value: str = None):
     access_token_random_id = access_token.split('--')[0]
     access_token_user_id = int(access_token.split('--')[1])
