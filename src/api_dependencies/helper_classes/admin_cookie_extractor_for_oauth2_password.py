@@ -40,8 +40,7 @@ class AdminCookieExtractorWithOpenApiSecuritySchemeForOAuth2PasswordBearer(OAuth
             authorization = False
 
         if not authorization:
-            logger.error("Improper authorization error:")
-            logger.error(f"Endpoint accessed: {request.url}")
+            logger.error(f'Improper authorization error. Endpoint accessed: {request.url}. Header Admin-Authorization: {header_authorization}. Cookie {cookie_authorization}')
             raise HTTPException(
                 status_code=HTTP_403_FORBIDDEN, detail="Not authenticated"
             )

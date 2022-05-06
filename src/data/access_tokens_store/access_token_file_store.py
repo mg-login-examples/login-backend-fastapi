@@ -37,7 +37,6 @@ class AccessTokenFileStore:
             if user_id not in self.USER_ID_TO_ACCESS_TOKENS:
                 self.USER_ID_TO_ACCESS_TOKENS[user_id] = []
             self.USER_ID_TO_ACCESS_TOKENS[user_id].append(access_token)
-            logger.info(self.USER_ID_TO_ACCESS_TOKENS)
             with open(self.FILE_PATH, 'a') as file:
                 file.write(f"{user_id} {access_token}\n")
 

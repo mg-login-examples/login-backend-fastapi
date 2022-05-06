@@ -18,7 +18,7 @@ dot_env_file = os.getenv("ENV_FILE", ".env")
 SETTINGS = get_environment_settings(dot_env_file=dot_env_file)
 
 # Set logging
-set_logging_settings(SETTINGS.log_level)
+set_logging_settings(SETTINGS.log_level, SETTINGS.log_to_file, SETTINGS.log_filename)
 logger.info(f"Environment file selected: {dot_env_file}")
 
 # Create db manager
