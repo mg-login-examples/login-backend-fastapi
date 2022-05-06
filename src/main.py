@@ -30,7 +30,8 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         if sys.argv[1] == "create_db_tables":
             dbUtils.create_all_tables(app_db_manager.engine)
-        if sys.argv[1] == "add_admin_user":
+            logger.info("Created db tables")
+        elif sys.argv[1] == "add_admin_user":
             admin_users_manager.create_admin_user(sys.argv[2], sys.argv[3], next(app_db_manager.db_session()))
         elif sys.argv[1] == "update_admin_user_password":
             admin_users_manager.update_admin_user_password(sys.argv[2], sys.argv[3], next(app_db_manager.db_session()))

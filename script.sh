@@ -16,6 +16,7 @@ then
    # Stop all backend project's containers and build, start backend stack containers and run tests
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend build
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend run fastapi python main.py create_db_tables
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend run fastapi python main.py add_admin_user test_admin@fakemail.com secretpwd
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend run fastapi python -m pytest --alluredir='./test/allure-results'
 elif [ $case = "launch-app-dev-env" ]
