@@ -2900,6 +2900,18 @@ eval("\nvar uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/es.set.js":
+/*!************************************************!*\
+  !*** ./node_modules/core-js/modules/es.set.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar collection = __webpack_require__(/*! ../internals/collection */ \"./node_modules/core-js/internals/collection.js\");\nvar collectionStrong = __webpack_require__(/*! ../internals/collection-strong */ \"./node_modules/core-js/internals/collection-strong.js\");\n\n// `Set` constructor\n// https://tc39.es/ecma262/#sec-set-objects\ncollection('Set', function (init) {\n  return function Set() { return init(this, arguments.length ? arguments[0] : undefined); };\n}, collectionStrong);\n\n\n//# sourceURL=webpack:///./node_modules/core-js/modules/es.set.js?");
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/es.string.anchor.js":
 /*!**********************************************************!*\
   !*** ./node_modules/core-js/modules/es.string.anchor.js ***!
