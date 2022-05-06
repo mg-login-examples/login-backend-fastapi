@@ -27,8 +27,9 @@ app_db_manager = get_db_manager(SETTINGS.database_url, SETTINGS.database_user, S
 app = create_app(app_db_manager, SETTINGS)
 
 if __name__ == "__main__":
-
     if len(sys.argv) > 1:
+        if sys.argv[1] == "create_db_tables":
+            dbUtils.create_all_tables(app_db_manager.engine)
         if sys.argv[1] == "add_admin_user":
             admin_users_manager.create_admin_user(sys.argv[2], sys.argv[3], next(app_db_manager.db_session()))
         elif sys.argv[1] == "update_admin_user_password":
@@ -38,7 +39,6 @@ if __name__ == "__main__":
         else:
             logger.error("Unknown argument received")
     else:
-        dbUtils.create_all_tables(app_db_manager.engine)
         uvicorn.run(
             "main:app",
             host=SETTINGS.server_host,
