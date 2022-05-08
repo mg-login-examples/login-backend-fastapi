@@ -33,7 +33,6 @@ def generate_endpoint(
                     response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, expires=token_expiry_seconds)
                 else:
                     response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True)
-                # add_access_token(user.id, access_token)
                 access_token_manager.add_access_token(user.id, access_token)
                 return LoginResponse(
                     id=user.id,
