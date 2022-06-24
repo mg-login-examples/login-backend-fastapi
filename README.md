@@ -18,7 +18,6 @@ This app is a demo login Api supporting the [frontend demo login app](https://gi
 - Python3
 - MySQL
 
-
 <br/><br/> 
 
 # Quickstart (Local Development)
