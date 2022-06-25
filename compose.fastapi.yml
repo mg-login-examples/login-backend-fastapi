@@ -7,10 +7,6 @@ services:
     stdin_open: false # enables colored log # docker run -i
     build:
       context: ./src/
-    profiles:
-      - backend
-      - fullstack
-      - fullstack-e2e
     networks:
       - backend
       - fullstack
@@ -28,6 +24,10 @@ services:
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.myapp.tls=true
+      - traefik.http.routers.myapp.rule=Host("login-backend.localhost")
     # deploy:
     #   resources:
     #     limits:
