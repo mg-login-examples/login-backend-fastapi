@@ -37,7 +37,7 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend --profile fullstack-e2e build
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile fullstack-e2e run fastapi python main.py create_db_tables
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile fullstack-e2e run fastapi python main.py add_admin_user test_admin@fakemail.com secretpwd
-   export CYPRESS_ENV_FILE=.env.ci_e2e
+   export CYPRESS_ENV_FILE=.env_cypress.ci_e2e
    export CYPRESS_VIDEO=false
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend --profile fullstack-e2e run vueapp_test_e2e npm run test:e2e -- --headless --mode ci_e2e
 elif [ $case = "stop" ]
