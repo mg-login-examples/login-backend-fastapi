@@ -24,6 +24,7 @@ then
    # Stop all backend project's containers and build and start backend stack containers for production
    echo "Launching backend api & `mysql` container"
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
+   export CORS_ORIGINS_SET="Cloud-Development"
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend --profile backend up --build -d
 elif [ $case = "launch-fullstack-local" ]
 then

@@ -8,7 +8,7 @@ development_origins = [
 
 cloud_development_origins = [
     "http://login-frontend.duckdns.org",
-    "http://login-frontend.duckdns.org",
+    "https://login-frontend.duckdns.org",
 ]
 
 def add_cors(app: FastAPI, cors_origins_set: str):
