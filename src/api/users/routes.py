@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from crud_endpoints_generator.crud_endpoints_generator import generate_router_with_resource_endpoints
 from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs

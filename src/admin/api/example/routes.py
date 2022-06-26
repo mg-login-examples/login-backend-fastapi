@@ -1,6 +1,6 @@
-from fastapi import APIRouter
 from typing import Callable
 
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from admin.api.example.resources import resourcesConfigurations
 from crud_endpoints_generator.crud_endpoints_generator import get_resource_endpoints_router
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs

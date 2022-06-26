@@ -1,6 +1,6 @@
 from typing import List, Any
 
-from fastapi import APIRouter
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from sqlalchemy.orm import Session
 
 from ..sqlalchemy_base_model import Base as BaseORMModel

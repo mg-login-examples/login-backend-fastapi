@@ -2,6 +2,8 @@ import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
+
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.access_tokens_store.access_token_manager import AccessTokenManager
 from helpers.classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
 

@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from api.authentication.routes import add_authentication_routes
 from api.users.routes import add_resource_users_routes
 from api.quotes.routes import add_resource_quotes_routes

@@ -1,8 +1,8 @@
 from typing import List, Any
 
-from fastapi import APIRouter
 from sqlalchemy.orm import Session
 
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from .endpoints import get_items_count, get_items, get_item, post_item, put_item, delete_item
 from .endpoints_configs import EndpointsConfigs
 from .resource_configurations import ResourceConfigurations

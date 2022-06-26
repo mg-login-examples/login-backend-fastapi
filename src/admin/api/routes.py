@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from admin.api.resources import resourcesConfigurations
 from api_dependencies.helper_classes.dependencies import Dependencies
 

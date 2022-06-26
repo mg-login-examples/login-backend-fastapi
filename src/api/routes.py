@@ -1,5 +1,6 @@
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
 
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from admin.api.routes import add_all_admin_resources_routes
 from api.non_admin_routes import add_non_admin_routes
 from api_dependencies.helper_classes.dependencies import Dependencies

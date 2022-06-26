@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from api_dependencies.helper_classes.dependencies import Dependencies
 from data.access_tokens_store.access_token_manager import AccessTokenManager
 

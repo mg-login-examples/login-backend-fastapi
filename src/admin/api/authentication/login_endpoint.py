@@ -1,10 +1,11 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import Depends, HTTPException, Response
 from sqlalchemy.orm import Session
+
+from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.access_tokens_store.access_token_manager import AccessTokenManager
 from helpers.classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
-
 from data.schemas.login.login_response import LoginResponse
 from crud_endpoints_generator import crud_base
 from data.database.models.admin_user import AdminUser as AdminUserModel
