@@ -7,3 +7,9 @@ Python Fullstack Testing List Of Articles
 
 Docker Python Blog
 - https://www.docker.com/blog/containerized-python-development-part-3/
+
+Traefik Docker Service
+- https://medium.com/it-dead-inside/use-traefik-for-local-docker-https-4f3965d7d129
+
+Correct usage of cookies
+- https://medium.com/swlh/7-keys-to-the-mystery-of-a-missing-cookie-fdf22b012f09

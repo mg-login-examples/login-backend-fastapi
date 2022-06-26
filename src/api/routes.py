@@ -2,9 +2,6 @@ from fastapi import APIRouter, FastAPI
 
 from admin.api.routes import add_all_admin_resources_routes
 from api.non_admin_routes import add_non_admin_routes
-from api.authentication.routes import add_authentication_routes
-from api.users.routes import add_resource_users_routes
-from api.quotes.routes import add_resource_quotes_routes
 from api_dependencies.helper_classes.dependencies import Dependencies
 from data.access_tokens_store.access_token_manager import AccessTokenManager
 
