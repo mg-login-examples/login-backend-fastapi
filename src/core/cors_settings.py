@@ -5,10 +5,7 @@ development_origins = [
     "http://localhost:8080",
     "http://localhost:8081",
     "http://localhost:8019",
-    "http://127.0.0.1:8080",
-    "http://127.0.0.1:8081",
-    "http://127.0.0.1:8019",
-    "https://login-frontend.localhost",
+    "http://localhost:8021",
 ]
 
 cloud_development_origins = [
@@ -17,10 +14,6 @@ cloud_development_origins = [
     "http://localhost:8080",
     "http://localhost:8081",
     "http://localhost:8019",
-    "http://127.0.0.1:8080",
-    "http://127.0.0.1:8081",
-    "http://127.0.0.1:8019",
-    "https://login-frontend.localhost",
 ]
 
 production_origins = []

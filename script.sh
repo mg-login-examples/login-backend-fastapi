@@ -4,7 +4,6 @@ if [ $case = "launch-api-local" ]
 then
    # Stop all backend project's containers and build and start backend stack containers
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
-   docker-compose -p backend rm
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.traefik.yml -p backend up --build
 elif [ $case = "launch-fullstack-local" ]
 then
