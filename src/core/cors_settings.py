@@ -5,8 +5,6 @@ development_origins = [
     "http://localhost:8080",
     "http://localhost:8081",
     "http://localhost:8019",
-    "http://localhost:8029",
-    "http://host.docker.internal:8019",
 ]
 
 cloud_development_origins = [

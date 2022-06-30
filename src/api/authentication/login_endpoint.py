@@ -18,7 +18,8 @@ logger = logging.getLogger(__name__)
 def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
-    access_token_manager: AccessTokenManager
+    access_token_manager: AccessTokenManager,
+    secure_cookies: bool
 ):
     @router.post("/login/", response_model=LoginResponse)
     def login_user(
@@ -32,9 +33,9 @@ def generate_endpoint(
                 token_expiry_seconds = 30*24*60*60 if form_data.remember_me else 24*60*60
                 access_token = generate_access_token(user.id, token_expiry_seconds)
                 if form_data.remember_me:
-                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, expires=token_expiry_seconds, samesite="none", secure=False)
+                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, expires=token_expiry_seconds, samesite="none", secure=secure_cookies)
                 else:
-                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite="none", secure=False)
+                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite="none", secure=secure_cookies)
                 access_token_manager.add_access_token(user.id, access_token)
                 return LoginResponse(
                     id=user.id,

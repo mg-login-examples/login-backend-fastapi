@@ -12,14 +12,15 @@ def add_routes(
     admin_routes_dependencies: Dependencies,
     user_access_token_manager: AccessTokenManager,
     admin_access_token_manager: AccessTokenManager,
-    add_admin_app: bool
+    add_admin_app: bool,
+    secure_cookies: bool,
 ) -> FastAPI:
     api_router = APIRouter(prefix="/api")
 
     if add_admin_app:
-        add_all_admin_resources_routes(api_router, admin_routes_dependencies, admin_access_token_manager)
+        add_all_admin_resources_routes(api_router, admin_routes_dependencies, admin_access_token_manager, secure_cookies)
 
-    add_non_admin_routes(api_router, api_routes_dependencies, user_access_token_manager)
+    add_non_admin_routes(api_router, api_routes_dependencies, user_access_token_manager, secure_cookies)
 
     app.include_router(api_router)
     

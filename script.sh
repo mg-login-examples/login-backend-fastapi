@@ -30,6 +30,7 @@ then
    echo "Launching backend api & `mysql` container"
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend down
    export CORS_ORIGINS_SET="Cloud-Development"
+   export SECURE_COOKIES=True
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend up --build -d
 elif [ $case = "launch-fullstack-local" ]
 then
@@ -45,11 +46,11 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py add_admin_user test_admin@fakemail.com secretpwd
    export CYPRESS_ENV_FILE=.env_cypress.ci_e2e
    export CYPRESS_VIDEO=false
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend run vueapp_test_e2e npm run test:e2e -- --headless --mode ci_e2e
-elif [ $case = "stop" ]
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend run vueapp_test_e2e npm run test:e2e -- --headless --mode ci_e2e --browser chrome
+elif [ $case = "down" ]
 then
    # Stop all backend project's containers
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend down
+   docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend down
 else
    echo "no option passed"
    echo "available options are:

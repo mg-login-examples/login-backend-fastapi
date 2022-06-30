@@ -24,10 +24,7 @@ services:
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.myapp.tls=true
-      - traefik.http.routers.myapp.rule=Host("login-backend.localhost")
+      - SECURE_COOKIES=${SECURE_COOKIES:-False}
     # deploy:
     #   resources:
     #     limits:

@@ -27,7 +27,8 @@ def create_app(app_db_manager: SQLAlchemyDBManager, SETTINGS: Settings) -> FastA
         admin_api_routes_dependencies,
         user_access_token_manager,
         admin_access_token_manager,
-        SETTINGS.add_admin_app
+        SETTINGS.add_admin_app,
+        SETTINGS.secure_cookies,
     )
 
     if SETTINGS.add_admin_app:

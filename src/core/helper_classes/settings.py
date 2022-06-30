@@ -13,3 +13,4 @@ class Settings(BaseSettings):
 
     add_admin_app: bool = True
     cors_origins_set: str = "Development"
+    secure_cookies: bool = False

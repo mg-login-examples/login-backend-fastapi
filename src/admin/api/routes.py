@@ -11,13 +11,14 @@ from data.access_tokens_store.access_token_manager import AccessTokenManager
 def add_all_admin_resources_routes(
     parent_router: APIRouter,
     dependencies: Dependencies,
-    access_token_manager: AccessTokenManager
+    access_token_manager: AccessTokenManager,
+    secure_cookies: bool
 ) -> APIRouter:
     admin_router = APIRouter(prefix="/admin")
 
     _create_get_admin_resources_endpoints(admin_router, dependencies)
     _create_crud_endpoints_for_all_admin_resources(admin_router, dependencies)
-    add_authentication_routes(admin_router, dependencies, access_token_manager)
+    add_authentication_routes(admin_router, dependencies, access_token_manager, secure_cookies)
 
     parent_router.include_router(admin_router)
     return parent_router

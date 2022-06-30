@@ -9,11 +9,12 @@ from .authenticate_endpoint import generate_endpoint as generate_authentication_
 def add_authentication_routes(
     parent_router: APIRouter,
     route_dependencies: Dependencies,
-    access_token_manager: AccessTokenManager
+    access_token_manager: AccessTokenManager,
+    secure_cookies: bool
 ) -> APIRouter:
     router = APIRouter()
 
-    generate_login_endpoint(router, route_dependencies.db, access_token_manager)
+    generate_login_endpoint(router, route_dependencies.db, access_token_manager, secure_cookies)
     generate_authentication_endpoint(router, route_dependencies.current_user)
 
     parent_router.include_router(router)
