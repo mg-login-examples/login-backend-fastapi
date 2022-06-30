@@ -32,7 +32,7 @@ then
    export CORS_ORIGINS_SET="Cloud-Development"
    export SECURE_COOKIES=True
    export PRIMARY_DOMAIN="login-example.duckdns.org"
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend up --build -d
+   docker-compose -f docker-compose.yml -f docker-compose.override.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend up --build -d
 elif [ $case = "launch-fullstack-local" ]
 then
    # Stop all backend project's containers and build and start full stack
