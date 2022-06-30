@@ -27,10 +27,10 @@ services:
       - SECURE_COOKIES=${SECURE_COOKIES:-False}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.my-app.rule=Host(`backend.${PRIMARY_DOMAIN}`)"
-      - "traefik.http.routers.my-app.entrypoints=websecure"
-      - "traefik.http.routers.my-app.tls=true"
-      - "traefik.http.routers.my-app.tls.certresolver=le"
+      - "traefik.http.routers.backend.rule=Host(`backend.${PRIMARY_DOMAIN}`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.tls.certresolver=le"
     # deploy:
     #   resources:
     #     limits:

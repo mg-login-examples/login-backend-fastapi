@@ -8,8 +8,8 @@ development_origins = [
 ]
 
 cloud_development_origins = [
-    "http://login-frontend.duckdns.org",
-    "https://login-frontend.duckdns.org",
+    "http://frontend.login-examples.duckdns.org",
+    "https://frontend.login-examples.duckdns.org",
     "http://localhost:8080",
     "http://localhost:8081",
     "http://localhost:8019",
