@@ -25,6 +25,12 @@ services:
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
       - SECURE_COOKIES=${SECURE_COOKIES:-False}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.my-app.rule=Host(`backend.${PRIMARY_DOMAIN}`)"
+      - "traefik.http.routers.my-app.entrypoints=websecure"
+      - "traefik.http.routers.my-app.tls=true"
+      - "traefik.http.routers.my-app.tls.certresolver=le"
     # deploy:
     #   resources:
     #     limits:
