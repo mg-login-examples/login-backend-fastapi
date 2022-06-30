@@ -31,7 +31,7 @@ then
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend down
    export CORS_ORIGINS_SET="Cloud-Development"
    export SECURE_COOKIES=True
-   export PRIMARY_DOMAIN="login-examples.duckdns.org"
+   export PRIMARY_DOMAIN="login-example.duckdns.org"
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend up --build -d
 elif [ $case = "launch-fullstack-local" ]
 then
