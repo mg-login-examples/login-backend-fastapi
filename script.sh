@@ -10,7 +10,7 @@ then
    # Stop all backend project's containers and build and start fullstack containers
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend down
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vueapp.yml -p backend up --build
-elif [ $case = "tdd" ]
+elif [ $case = "launch-tdd" ]
 then
    # Stop all backend project's containers and build, start backend stack containers and run tests with watch
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend down
@@ -24,7 +24,7 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py create_db_tables
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py add_admin_user test_admin@fakemail.com secretpwd
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python -m pytest --alluredir='./test/allure-results'
-elif [ $case = "launch-app-dev-env" ]
+elif [ $case = "launch-api-cloud-dev" ]
 then
    # Stop all backend project's containers and build and start backend stack containers for production
    echo "Launching backend api & `mysql` container"
@@ -55,8 +55,12 @@ then
 else
    echo "no option passed"
    echo "available options are:
+    - launch-api-local
+    - launch-tdd
     - run-api-tests
-    - run-fullstack-tests
-    - launch-api
+    - launch-api-cloud-dev
+    - launch-fullstack-local
+    - run-e2e-tests
+    - down
     "
 fi

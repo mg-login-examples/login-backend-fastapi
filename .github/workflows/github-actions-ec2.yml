@@ -96,4 +96,4 @@ jobs:
             sudo rm -rf backend-fastapi-old &&
             cd backend-fastapi &&
             git clone -b main https://github.com/mg-login-examples/login-frontend-vue.git frontend &&
-            ./script.sh launch-app-dev-env
+            ./script.sh launch-api-cloud-dev
