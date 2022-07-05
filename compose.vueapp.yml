@@ -8,17 +8,9 @@ services:
     build:
       context: ./frontend
       target: serve-local-stage
+    restart: always
     volumes:
       - ./frontend/src:/app/src # live reload
       - ./frontend/tests:/app/tests # live reload
     ports:
       - 8019:8080
-
-  vueapp_serve_prod:
-    profiles:
-      - frontend-prod
-    build:
-      context: ./frontend
-      target: serve-prod-stage
-    ports:
-      - 8010:80

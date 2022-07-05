@@ -32,10 +32,11 @@ def generate_endpoint(
             if user and verify_password(form_data.password, user.hashed_password):
                 token_expiry_seconds = 30*24*60*60 if form_data.remember_me else 24*60*60
                 access_token = generate_access_token(user.id, token_expiry_seconds)
+                samesite = "none" if secure_cookies else "lax"
                 if form_data.remember_me:
-                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, expires=token_expiry_seconds, samesite="none", secure=secure_cookies)
+                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, expires=token_expiry_seconds, samesite=samesite, secure=secure_cookies)
                 else:
-                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite="none", secure=secure_cookies)
+                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies)
                 access_token_manager.add_access_token(user.id, access_token)
                 return LoginResponse(
                     id=user.id,
