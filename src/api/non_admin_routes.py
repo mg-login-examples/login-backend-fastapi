@@ -9,11 +9,12 @@ def add_non_admin_routes(
     parent_router: APIRouter,
     dependencies: Dependencies,
     access_token_manager: AccessTokenManager,
+    samesite: str,
     secure_cookies: bool
 ) -> APIRouter:
     router = APIRouter()
 
-    add_authentication_routes(router, dependencies, access_token_manager, secure_cookies)
+    add_authentication_routes(router, dependencies, access_token_manager, samesite, secure_cookies)
     add_resource_users_routes(router, dependencies)
     add_resource_quotes_routes(router, dependencies)
 

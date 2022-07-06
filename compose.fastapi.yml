@@ -25,6 +25,7 @@ services:
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
+      - SAMESITE=${SAMESITE:-lax}
       - SECURE_COOKIES=${SECURE_COOKIES:-False}
     labels:
       - "traefik.enable=true"

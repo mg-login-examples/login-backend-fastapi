@@ -28,6 +28,7 @@ def create_app(app_db_manager: SQLAlchemyDBManager, SETTINGS: Settings) -> FastA
         user_access_token_manager,
         admin_access_token_manager,
         SETTINGS.add_admin_app,
+        SETTINGS.samesite,
         SETTINGS.secure_cookies,
     )
 
@@ -36,7 +37,7 @@ def create_app(app_db_manager: SQLAlchemyDBManager, SETTINGS: Settings) -> FastA
 
     add_cors(app, SETTINGS.cors_origins_set)
 
-    create_swagger_docs_for_regular_endpoints(app, api_routes_dependencies, user_access_token_manager, SETTINGS.secure_cookies,)
-    create_swagger_docs_for_admin_endpoints(app, admin_api_routes_dependencies, admin_access_token_manager, SETTINGS.secure_cookies,)
+    create_swagger_docs_for_regular_endpoints(app, api_routes_dependencies, user_access_token_manager, SETTINGS.samesite, SETTINGS.secure_cookies)
+    create_swagger_docs_for_admin_endpoints(app, admin_api_routes_dependencies, admin_access_token_manager, SETTINGS.secure_cookies)
 
     return app

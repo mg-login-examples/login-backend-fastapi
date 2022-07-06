@@ -13,4 +13,5 @@ class Settings(BaseSettings):
 
     add_admin_app: bool = True
     cors_origins_set: str = "Development"
+    samesite: str = "lax"
     secure_cookies: bool = False

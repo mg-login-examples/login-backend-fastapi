@@ -13,12 +13,13 @@ def create_swagger_docs_for_regular_endpoints(
     app: FastAPI,
     regular_api_routes_dependencies: Dependencies,
     access_token_manager: AccessTokenManager,
+    samesite: str,
     secure_cookies: bool,
 ):
     @app.get("/openapi.json")
     async def get_open_api_endpoint():
         _router = APIRouter(prefix="/api")
-        add_non_admin_routes(_router, regular_api_routes_dependencies, access_token_manager, secure_cookies)
+        add_non_admin_routes(_router, regular_api_routes_dependencies, access_token_manager, samesite, secure_cookies)
         return JSONResponse(get_openapi(title="FastAPI", version=1, routes=_router.routes))
     @app.get("/docs")
     async def get_documentation():
