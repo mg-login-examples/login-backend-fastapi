@@ -32,7 +32,7 @@ services:
       - "traefik.http.routers.backend.rule=Host(`backend.${PRIMARY_DOMAIN}`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls=true"
-      - "traefik.http.routers.backend.tls.certresolver=le"
+      # - "traefik.http.routers.backend.tls.certresolver=le"
     # deploy:
     #   resources:
     #     limits:
