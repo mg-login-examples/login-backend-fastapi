@@ -22,9 +22,9 @@ class AccessTokenManager:
         self.file_store.remove_access_token(user_id, access_token)
 
     def check_if_access_token_is_valid(self, access_token: str):
+        is_token_valid = False
         if check_access_token_in_valid_format(access_token):
             token_user_id = parse_access_token(access_token, "user_id")
-            is_token_valid = False
             if not check_access_token_is_expired(access_token):
                 if self.file_store.check_access_token_exists(token_user_id, access_token):
                     is_token_valid = True

@@ -15,8 +15,8 @@ def get_api_routes_dependencies(
 ):
     db_session_as_dependency=Depends(app_db_manager.db_session)
     token_extractor = CookieExtractorWithOpenApiSecuritySchemeForOAuth2PasswordBearer(tokenUrl="api/login")
-    token_extractor_as_fastapi_dependency=Depends(token_extractor)
-    validated_access_token_as_dependency=get_validated_access_token_as_fastapi_dependency(token_extractor_as_fastapi_dependency, access_token_manager)
+    token_extractor_as_dependency=Depends(token_extractor)
+    validated_access_token_as_dependency=get_validated_access_token_as_fastapi_dependency(token_extractor_as_dependency, access_token_manager)
     current_user_as_dependency=get_current_user_as_fastapi_dependency(validated_access_token_as_dependency, db_session_as_dependency)
     route_dependencies = Dependencies(
         db_session_as_dependency=db_session_as_dependency,
@@ -31,8 +31,8 @@ def get_admin_routes_dependencies(
 ):
     db_session_as_dependency=Depends(app_db_manager.db_session)
     token_extractor = AdminCookieExtractorWithOpenApiSecuritySchemeForOAuth2PasswordBearer(tokenUrl="api/admin/login")
-    token_extractor_as_fastapi_dependency=Depends(token_extractor)
-    validated_access_token_as_dependency=get_validated_admin_access_token_as_fastapi_dependency(token_extractor_as_fastapi_dependency, admin_access_token_manager)
+    token_extractor_as_dependency=Depends(token_extractor)
+    validated_access_token_as_dependency=get_validated_admin_access_token_as_fastapi_dependency(token_extractor_as_dependency, admin_access_token_manager)
     current_user_as_dependency=get_current_user_as_fastapi_dependency(validated_access_token_as_dependency, db_session_as_dependency)
     route_dependencies = Dependencies(
         db_session_as_dependency=db_session_as_dependency,

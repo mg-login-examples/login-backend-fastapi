@@ -16,3 +16,7 @@ def authenticate(test_client: requests.Session) -> LoginResponse:
     response = test_client.post("/api/authenticate/")
     assert response.status_code == 200
     return User(**response.json())
+
+def logout(test_client: requests.Session) -> None:
+    response = test_client.post("/api/logout/")
+    assert response.status_code == 204
