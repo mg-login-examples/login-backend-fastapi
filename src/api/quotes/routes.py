@@ -9,6 +9,7 @@ from data.schemas.quotes.quoteCreate import QuoteCreate as QuoteCreateSchema
 from data.database.models.quote import Quote as QuoteModel
 from data.endUserSchemasToDbSchemas.quote import updateSchemaToDbSchema as quoteUpdateSchemaToDbSchema
 from data.endUserSchemasToDbSchemas.quote import createSchemaToDbSchema as quoteCreateSchemaToDbSchema
+from .edit_quote_endpoint import generate_endpoint as generate_edit_quote_endpoint
 
 def add_resource_quotes_routes(parent_router: APIRouter, route_dependencies: Dependencies) -> APIRouter:
     quote_resource_configurations = ResourceConfigurations(
@@ -28,6 +29,12 @@ def add_resource_quotes_routes(parent_router: APIRouter, route_dependencies: Dep
         endpoints_required,
         quote_resource_configurations,
         route_dependencies.db
+    )
+
+    generate_edit_quote_endpoint(
+        router,
+        route_dependencies.db,
+        route_dependencies.current_user
     )
 
     parent_router.include_router(router)

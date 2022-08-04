@@ -10,6 +10,10 @@ def create_quote(test_client: requests.Session, quote_to_create: QuoteCreate) ->
     assert response.status_code == 200
     return QuoteDeep(**response.json())
 
+def edit_quote(test_client: requests.Session, quote_to_edit: QuoteCreate):
+    response = test_client.put(f"/api/quotes/{quote_to_edit.id}/", json=quote_to_edit.dict())
+    assert response.status_code == 204
+
 def delete_quote(test_client: requests.Session, quote_id: int):
     response = test_client.delete(f"/api/quotes/{quote_id}/")
     assert response.status_code == 204
