@@ -12,6 +12,6 @@ class Quote(Base):
     author = relationship("User", back_populates="quotes")
     liked_by_users = relationship(
         "User",
-        secondary="user_liked_quotes",
+        secondary="user_quote_likes",
         back_populates="liked_quotes"
     )
