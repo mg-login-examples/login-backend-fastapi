@@ -46,4 +46,5 @@ def generate_endpoint(
                 )
         except Exception as e:
             logger.error(e)
+        logger.error(f"Unsuccessful user login with username: {form_data.username}")
         raise HTTPException(status_code=401, detail="Incorrect login")
