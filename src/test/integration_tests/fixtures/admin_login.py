@@ -8,7 +8,7 @@ from test.utils.admin_api import authentication as admin_authentication_api
 
 @pytest.fixture
 def admin_user_login() -> AdminUserCreate:
-    return AdminUserCreate(email="test_admin@fakemail.com", password="secretpwd")
+    return AdminUserCreate(email="admin@admin.admin", password="admin")
 
 @pytest.fixture
 def admin_login_response(test_client: requests.Session, admin_user_login: AdminUserCreate) -> LoginResponse:

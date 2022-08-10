@@ -31,3 +31,11 @@ def get_user_quotes(test_client: requests.Session, user_id: int, skip=0, limit=1
     assert isinstance(response.json(), List)
     quotes = [QuoteDeep(**quote_json) for quote_json in response.json()]
     return quotes
+
+def like_quote(test_client: requests.Session, quote_id: int, user_id: int):
+    response = test_client.put(f"/api/quotes/{quote_id}/users/{user_id}/like/")
+    assert response.status_code == 204
+
+def unlike_quote(test_client: requests.Session, quote_id: int, user_id: int):
+    response = test_client.delete(f"/api/quotes/{quote_id}/users/{user_id}/like/")
+    assert response.status_code == 204

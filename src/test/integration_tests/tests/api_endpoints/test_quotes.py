@@ -73,3 +73,18 @@ def test_edit_quote_ignore_other_changes(test_client_logged_in: requests.Session
 def test_delete_quote(test_client_logged_in: requests.Session, created_quote: QuoteDeep):
     quotes_api.delete_quote(test_client_logged_in, created_quote.id)
     quotes_admin_api.get_quote_expect_not_found(test_client_logged_in, created_quote.id)
+
+# Test that a quote can be liked
+def test_like_quote(test_client_logged_in: requests.Session, logged_in_user: User, created_quote_by_admin: QuoteDeep):
+    quotes_api.like_quote(test_client_logged_in, created_quote_by_admin.id, logged_in_user.id)
+    quote = quotes_admin_api.get_quote(test_client_logged_in, created_quote_by_admin.id)
+    all_liked_user_ids = [user.id for user in quote.liked_by_users]
+    assert logged_in_user.id in all_liked_user_ids
+
+# Test that a quote can be unliked
+def test_unlike_quote(test_client_logged_in: requests.Session, logged_in_user: User, created_quote_by_admin: QuoteDeep):
+    quotes_api.like_quote(test_client_logged_in, created_quote_by_admin.id, logged_in_user.id)
+    quotes_api.unlike_quote(test_client_logged_in, created_quote_by_admin.id, logged_in_user.id)
+    quote = quotes_admin_api.get_quote(test_client_logged_in, created_quote_by_admin.id)
+    all_liked_user_ids = [user.id for user in quote.liked_by_users]
+    assert logged_in_user.id not in all_liked_user_ids

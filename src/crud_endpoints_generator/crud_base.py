@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from sqlalchemy.orm import Session
 from pydantic import BaseModel as BaseSchema
@@ -75,6 +75,15 @@ def delete_resource_item(db: Session, ResourceModel: BaseModel, item_id: int):
 
 def delete_resource_item_by_attribute(db: Session, ResourceModel: BaseModel, ResourceModel_attribute: any, attribute_value: any):
     db_item = db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).first()
+    if db_item:
+        db.delete(db_item)
+        db.commit()
+
+def delete_resource_item_by_attributes(db: Session, ResourceModel: BaseModel, ResourceModel_attributes_and_values: List[Tuple]):
+    query = db.query(ResourceModel)
+    for attribute_and_value in ResourceModel_attributes_and_values:
+        query = query.filter(attribute_and_value[0] == attribute_and_value[1])
+    db_item = query.first()
     if db_item:
         db.delete(db_item)
         db.commit()
