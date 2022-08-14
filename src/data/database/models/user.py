@@ -11,6 +11,7 @@ class User(Base):
     email = Column(EmailType, unique=True, index=True)
     hashed_password = Column(String(128))
     is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
     quotes = relationship("Quote", back_populates="author")
     liked_quotes = relationship(
         "Quote",
