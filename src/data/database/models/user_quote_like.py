@@ -1,4 +1,5 @@
-from sqlalchemy import Integer, Column, ForeignKey, UniqueConstraint
+from sqlalchemy import Integer, Column, ForeignKey, UniqueConstraint, DateTime
+from sqlalchemy.sql import func
 
 from data.database.models.base import Base
 from data.database.models.user import User
@@ -11,3 +12,4 @@ class UserQuoteLike(Base):
     __table_args__ = (
         UniqueConstraint('user_id', 'quote_id', name='_user_quote_uc'),
     )
+    time_created = Column(DateTime(timezone=True), server_default=func.now())
