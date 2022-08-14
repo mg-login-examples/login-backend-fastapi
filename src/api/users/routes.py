@@ -17,13 +17,14 @@ def add_resource_users_routes(parent_router: APIRouter, api_dependencies: Depend
         UserModel,
         customEndUserCreateSchemaToDbSchema = userCreateSchemaToDbSchema
     )
-    endpoints_required = EndpointsConfigs().require_get_item()
+    endpoints_required = EndpointsConfigs()
+    endpoints_required.require_get_item(dependencies=[api_dependencies.current_user])
+    endpoints_required.require_post_item()
 
     router = generate_router_with_resource_endpoints(
         endpoints_required,
         user_resource_configurations,
-        api_dependencies.db,
-        route_dependencies=[api_dependencies.current_user]
+        api_dependencies.db
     )
 
     generate_user_quotes_endpoint(

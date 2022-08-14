@@ -22,6 +22,8 @@ def test_create_user(test_client_admin_logged_in: requests.Session):
     created_user = users_admin_api.create_user(test_client_admin_logged_in, user)
     assert created_user.email == user.email
     assert created_user.id is not None
+    assert created_user.is_active == True
+    assert created_user.is_verified == False
 
 # Test that multiple users can be fetched
 @pytest.mark.parametrize("created_n_users_by_admin", [5], indirect=True)
