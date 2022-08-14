@@ -1,5 +1,5 @@
 # Pull base image
-FROM python:3.9-alpine as install-stage
+FROM python:3.10-alpine as install-stage
 # working directory in the container
 WORKDIR /app
 # copy dependency file and install dependencies

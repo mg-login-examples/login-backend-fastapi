@@ -1,7 +1,7 @@
 # Heroku dockerfile
 
 # Pull base image
-FROM python:3.9 as install-stage
+FROM python:3.10 as install-stage
 # working directory in the container
 WORKDIR /app
 # copy dependency file and install dependencies

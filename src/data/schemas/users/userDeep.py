@@ -4,7 +4,6 @@ from data.schemas.users.user import User as UserShallow
 from data.schemas.quotes.quote import Quote
 
 class User(UserShallow):
-    is_verified: bool
     quotes: List[Quote]
     liked_quotes: List[Quote]
 
