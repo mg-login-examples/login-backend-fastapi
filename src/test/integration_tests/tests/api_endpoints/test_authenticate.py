@@ -13,7 +13,7 @@ authenticate_url = "api/authenticate/"
 
 def test_authentication_standard_flow(login_response: LoginResponse, test_client_logged_in: requests.Session):
     user = authentication_api.authenticate(test_client_logged_in)
-    assert user.id == login_response.id
+    assert user.id == login_response.user.id
 
 def test_authentication_no_access_token(test_client_logged_in: requests.Session):
     test_client_logged_in.cookies.pop("Authorization")

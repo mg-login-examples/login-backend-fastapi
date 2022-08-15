@@ -14,11 +14,23 @@ def get_resource_item(db: Session, ResourceModel, item_id: int) -> BaseModel:
 def get_resource_item_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any) -> BaseModel:
     return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).first()
 
+def get_resource_item_by_attributes(db: Session, ResourceModel, ResourceModel_attributes_and_values: List[Tuple]) -> BaseModel:
+    query = db.query(ResourceModel)
+    for attribute_and_value in ResourceModel_attributes_and_values:
+        query = query.filter(attribute_and_value[0] == attribute_and_value[1])
+    return query.first()
+
 def get_resource_items(db: Session, ResourceModel, skip: int = 0, limit: int = 100) -> List[BaseModel]:
     return db.query(ResourceModel).offset(skip).limit(limit).all()
 
 def get_resource_items_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any, skip: int = 0, limit: int = 100) -> List[BaseModel]:
     return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).offset(skip).limit(limit).all()
+
+def get_resource_items_by_attributes(db: Session, ResourceModel, ResourceModel_attributes_and_values: List[Tuple], skip: int = 0, limit: int = 100) -> BaseModel:
+    query = db.query(ResourceModel)
+    for attribute_and_value in ResourceModel_attributes_and_values:
+        query = query.filter(attribute_and_value[0] == attribute_and_value[1])
+    return query.offset(skip).limit(limit).all()
 
 def create_resource_item(db: Session, ResourceModel, item_to_create: BaseSchema) -> BaseModel:
     db_item = ResourceModel(**item_to_create.dict())

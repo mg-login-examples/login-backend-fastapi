@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import Response
+from fastapi import Response, status
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.access_tokens_store.access_token_manager import AccessTokenManager
@@ -13,7 +13,7 @@ def generate_endpoint(
     validated_access_token_as_fastapi_dependency: str,
     access_token_manager: AccessTokenManager,
 ):
-    @router.post("/logout/")
+    @router.post("/logout/", status_code=status.HTTP_200_OK)
     def logout_user(
         response: Response,
         validated_access_token: str = validated_access_token_as_fastapi_dependency

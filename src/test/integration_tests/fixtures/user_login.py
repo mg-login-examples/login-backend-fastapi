@@ -1,3 +1,4 @@
+from distutils.log import Log
 import pytest
 import requests
 
@@ -15,5 +16,10 @@ def test_client_logged_in(test_client: requests.Session, login_response: LoginRe
     return test_client
 
 @pytest.fixture
-def logged_in_user(test_client_logged_in: requests.Session) -> User:
-    return authentication_api.authenticate(test_client_logged_in)
+def logged_in_unverified_user(test_client: requests.Session, user_login: UserCreate, created_unverified_user_by_admin: User) -> User:
+    login_response = authentication_api.login(test_client, user_login)
+    return login_response.user
+
+@pytest.fixture
+def logged_in_user(login_response: LoginResponse) -> User:
+    return login_response.user

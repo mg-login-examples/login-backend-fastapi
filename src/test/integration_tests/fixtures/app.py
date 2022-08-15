@@ -31,6 +31,10 @@ def setup_db(test_app_db_manager: SQLAlchemyDBManager):
     dbUtils.create_all_tables(test_app_db_manager.engine)
 
 @pytest.fixture
+def db_session(test_app_db_manager: SQLAlchemyDBManager):
+    return next(test_app_db_manager.db_session())
+
+@pytest.fixture
 def test_client(test_settings: Settings, test_app_db_manager: SQLAlchemyDBManager, setup_db) -> requests.Session:
     app = create_app(test_app_db_manager, test_settings)
     return TestClient(app)

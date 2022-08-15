@@ -1,7 +1,7 @@
 from pydantic import BaseModel
+from data.schemas.users.user import User
 
 class LoginResponse(BaseModel):
-    id: int
-    email: str
+    user: User
     access_token: str
     token_type: str

@@ -5,26 +5,39 @@ from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 from data.schemas.users.user import User as UserSchema
 from data.schemas.users.userCreate import UserCreate as UserCreateSchema
 from data.database.models.user import User as UserModel
-from data.endUserSchemasToDbSchemas.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
 from api_dependencies.helper_classes.dependencies import Dependencies
 from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
+from .create_user_endpoint import generate_endpoint as generate_create_user_endpoint
+from data.access_tokens_store.access_token_manager import AccessTokenManager
 
-def add_resource_users_routes(parent_router: APIRouter, api_dependencies: Dependencies) -> APIRouter:
+def add_resource_users_routes(
+    parent_router: APIRouter,
+    api_dependencies: Dependencies,
+    access_token_manager: AccessTokenManager,
+    samesite: str,
+    secure_cookies: bool
+) -> APIRouter:
     user_resource_configurations = ResourceConfigurations(
         "users",
         UserSchema,
         UserCreateSchema,
-        UserModel,
-        customEndUserCreateSchemaToDbSchema = userCreateSchemaToDbSchema
+        UserModel
     )
     endpoints_required = EndpointsConfigs()
     endpoints_required.require_get_item(dependencies=[api_dependencies.current_user])
-    endpoints_required.require_post_item()
 
     router = generate_router_with_resource_endpoints(
         endpoints_required,
         user_resource_configurations,
         api_dependencies.db
+    )
+
+    generate_create_user_endpoint(
+        router,
+        api_dependencies.db,
+        access_token_manager,
+        samesite,
+        secure_cookies
     )
 
     generate_user_quotes_endpoint(

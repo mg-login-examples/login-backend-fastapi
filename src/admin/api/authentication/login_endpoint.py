@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.access_tokens_store.access_token_manager import AccessTokenManager
 from helpers.classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
-from data.schemas.login.login_response import LoginResponse
+from data.schemas.admin_login.admin_login_response import AdminLoginResponse
 from crud_endpoints_generator import crud_base
 from data.database.models.admin_user import AdminUser as AdminUserModel
 from utils.security.password_utils import verify_password
@@ -20,7 +20,7 @@ def generate_endpoint(
     admin_access_token_manager: AccessTokenManager,
     secure_cookies: bool
 ):
-    @router.post("/login/", response_model=LoginResponse)
+    @router.post("/login/", response_model=AdminLoginResponse)
     def login_admin_user(
         response: Response,
         form_data: OAuth2PasswordRequestFormExtended = Depends(),
@@ -36,7 +36,7 @@ def generate_endpoint(
                 else:
                     response.set_cookie(key="Admin-Authorization", value=f"Bearer {access_token}", httponly=True, samesite="strict", secure=secure_cookies)
                 admin_access_token_manager.add_access_token(user.id, access_token)
-                return LoginResponse(
+                return AdminLoginResponse(
                     id=user.id,
                     email=user.email,
                     access_token=access_token,

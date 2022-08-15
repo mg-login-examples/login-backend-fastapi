@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 
 from data.database.models.base import Base
 
-class UserEmailVerifications(Base):
+class UserEmailVerification(Base):
     __tablename__ = "user_email_verifications"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -13,3 +13,4 @@ class UserEmailVerifications(Base):
     verification_code = Column(Integer, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User")
+    expires_at = Column(DateTime, nullable=False)

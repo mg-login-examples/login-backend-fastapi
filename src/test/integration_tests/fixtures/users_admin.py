@@ -16,8 +16,14 @@ def user_login() -> UserCreate:
     return generate_random_user_to_create()
 
 @pytest.fixture
-def created_user_by_admin(test_client_admin_logged_in: requests.Session, user_login: UserCreate) -> UserDeep:
+def created_unverified_user_by_admin(test_client_admin_logged_in: requests.Session, user_login: UserCreate) -> UserDeep:
     return users_admin_api.create_user(test_client_admin_logged_in, user_login)
+
+@pytest.fixture
+def created_user_by_admin(test_client_admin_logged_in: requests.Session, created_unverified_user_by_admin: UserDeep) -> UserDeep:
+    created_unverified_user_by_admin.is_verified = True
+    users_admin_api.put_user(test_client_admin_logged_in, created_unverified_user_by_admin)
+    return created_unverified_user_by_admin
 
 @pytest.fixture
 def created_n_users_by_admin(test_client_admin_logged_in: requests.Session, n_users: int = 5) -> List[UserDeep]:

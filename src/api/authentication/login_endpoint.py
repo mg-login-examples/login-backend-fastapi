@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.access_tokens_store.access_token_manager import AccessTokenManager
 from helpers.classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
-
 from data.schemas.login.login_response import LoginResponse
 from crud_endpoints_generator import crud_base
 from data.database.models.user import User as UserModel
@@ -39,8 +38,7 @@ def generate_endpoint(
                     response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies)
                 access_token_manager.add_access_token(user.id, access_token)
                 return LoginResponse(
-                    id=user.id,
-                    email=user.email,
+                    user=user,
                     access_token=access_token,
                     token_type='bearer'
                 )
