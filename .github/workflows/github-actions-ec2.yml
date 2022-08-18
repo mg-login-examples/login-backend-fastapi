@@ -52,7 +52,7 @@ jobs:
           repository: mg-login-examples/login-frontend-vue
           path: frontend
       - name: Run e2e tests
-        run: sudo ./script.sh run-e2e-tests
+        run: CYPRESS_MAILSLURP_API_KEY=${{ secrets.MAILSLURP_API_KEY }} sudo ./script.sh run-e2e-tests
       - name: Zip allure reports
         if: success() || failure()
         run: cd frontend/tests/e2e && mv allure-results results && zip -r results.zip results
