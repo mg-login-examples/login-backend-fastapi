@@ -27,6 +27,8 @@ services:
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
       - SAMESITE=${SAMESITE:-lax}
       - SECURE_COOKIES=${SECURE_COOKIES:-False}
+      - TEST_ADMIN_USER_EMAIL=${TEST_ADMIN_USER_EMAIL}
+      - TEST_ADMIN_USER_PASSWORD=${TEST_ADMIN_USER_PASSWORD}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`backend.${PRIMARY_DOMAIN}`)"
