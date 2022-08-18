@@ -11,19 +11,27 @@ from core.db_manager import get_db_manager
 from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
 from utils.db import dbUtils
 from core.app_factory import create_app
+from test.env_settings_test import EnvSettingsTest
 
 logger = logging.getLogger(__name__)
 
 @pytest.fixture
-def test_settings() -> Settings:
-    dot_env_file = os.getenv("ENV_FILE", ".env")
-    SETTINGS = get_environment_settings(dot_env_file=dot_env_file)
+def app_settings() -> Settings:
+    dot_env_file = os.getenv("ENV_FILE", ".test.env")
+    settings = get_environment_settings(dot_env_file=dot_env_file)
     logger.info(f"Test environment file selected: {dot_env_file}")
-    return SETTINGS
+    return settings
 
 @pytest.fixture
-def test_app_db_manager(test_settings: Settings):
-    app_db_manager = get_db_manager(test_settings.database_url, test_settings.database_user, test_settings.database_password)
+def env_settings_test() -> EnvSettingsTest:
+    dot_env_file = os.getenv("ENV_FILE", ".test.env")
+    settings = EnvSettingsTest(_env_file=dot_env_file)
+    print(settings)
+    return settings
+
+@pytest.fixture
+def test_app_db_manager(app_settings: Settings):
+    app_db_manager = get_db_manager(app_settings.database_url, app_settings.database_user, app_settings.database_password)
     return app_db_manager
 
 @pytest.fixture
@@ -35,6 +43,6 @@ def db_session(test_app_db_manager: SQLAlchemyDBManager):
     return next(test_app_db_manager.db_session())
 
 @pytest.fixture
-def test_client(test_settings: Settings, test_app_db_manager: SQLAlchemyDBManager, setup_db) -> requests.Session:
-    app = create_app(test_app_db_manager, test_settings)
+def test_client(app_settings: Settings, test_app_db_manager: SQLAlchemyDBManager, setup_db) -> requests.Session:
+    app = create_app(test_app_db_manager, app_settings)
     return TestClient(app)

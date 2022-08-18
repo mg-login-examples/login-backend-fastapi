@@ -21,8 +21,10 @@ then
    # Stop all backend project's containers and build, start backend stack containers and run tests
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend down
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend build
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py create_db_tables
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py add_admin_user test_admin@fakemail.com secretpwd
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi alembic upgrade head
+   export TEST_ADMIN_USER_EMAIL="test_admin@fakemail.com"
+   export TEST_ADMIN_USER_PASSWORD="secretpwd"
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py add_admin_user $TEST_ADMIN_USER_EMAIL $TEST_ADMIN_USER_PASSWORD
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python -m pytest --alluredir='./test/allure-results'
 elif [ $case = "launch-api-cloud-dev" ]
 then
@@ -44,7 +46,7 @@ then
    # Stop all backend project's containers
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend down
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.vuecypress.yml -p backend build
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py create_db_tables
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi alembic upgrade head
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend run fastapi python main.py add_admin_user test_admin@fakemail.com secretpwd
    export CYPRESS_ENV_FILE=.env_cypress.ci_e2e
    export CYPRESS_VIDEO=true

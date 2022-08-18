@@ -5,10 +5,11 @@ from data.schemas.admin_login.admin_login_response import AdminLoginResponse
 from data.schemas.admin_users.admin_user import AdminUser
 from data.schemas.admin_users.admin_user_create import AdminUserCreate
 from test.utils.admin_api import authentication as admin_authentication_api
+from test.env_settings_test import EnvSettingsTest
 
 @pytest.fixture
-def admin_user_login() -> AdminUserCreate:
-    return AdminUserCreate(email="admin@admin.admin", password="admin")
+def admin_user_login(env_settings_test: EnvSettingsTest) -> AdminUserCreate:
+    return AdminUserCreate(email=env_settings_test.admin_user_email, password=env_settings_test.admin_user_password)
 
 @pytest.fixture
 def admin_login_response(test_client: requests.Session, admin_user_login: AdminUserCreate) -> AdminLoginResponse:
