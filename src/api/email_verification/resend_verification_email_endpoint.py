@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.schemas.users.user import User
-from background_tasks.emails import send_verification_email_task
+from api.email_verification.email_verification_task import create_verification_code_and_send_email
 
 def generate_endpoint(
     router: APIRouter,
@@ -17,5 +17,6 @@ def generate_endpoint(
         db: Session = db_as_dependency
     ):
         if not user.is_verified:
-            background_tasks.add_task(send_verification_email_task, db, user.id, user.email)
+            create_verification_code_and_send_email(background_tasks, db, user)
+            # background_tasks.add_task(send_verification_email_task, db, user.id, user.email)
         return Response(status_code=status.HTTP_204_NO_CONTENT)

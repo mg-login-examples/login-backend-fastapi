@@ -8,9 +8,9 @@ from data.schemas.users.userCreate import UserCreate
 from data.endUserSchemasToDbSchemas.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
 from utils.security.access_token_utils import generate_access_token
 from data.access_tokens_store.access_token_manager import AccessTokenManager
-from background_tasks.emails import send_verification_email_task
 from data.schemas.login.login_response import LoginResponse
-
+from data.schemas.users.user import User
+from api.email_verification.email_verification_task import create_verification_code_and_send_email
 
 def generate_endpoint(
     router: APIRouter,
@@ -34,7 +34,8 @@ def generate_endpoint(
         response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies)
         access_token_manager.add_access_token(user_db.id, access_token)
 
-        background_tasks.add_task(send_verification_email_task, db, user_db.id, user_db.email)
+        user_schema = User(**user_db.__dict__)
+        create_verification_code_and_send_email(background_tasks, db, user_schema)
 
         return LoginResponse(
             user=user_db,

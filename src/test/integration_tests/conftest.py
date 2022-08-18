@@ -1,4 +1,4 @@
-from test.integration_tests.fixtures.app import app_settings, env_settings_test, test_app_db_manager, setup_db, db_session, test_client
+from test.integration_tests.fixtures.app import app_settings, env_settings_test, test_app_db_manager, setup_db, test_client
 from test.integration_tests.fixtures.quotes_admin import created_quote_by_admin, created_n_quotes_by_admin
 from test.integration_tests.fixtures.users_admin import user_login, created_unverified_user_by_admin, created_user_by_admin, created_n_users_by_admin
 from test.integration_tests.fixtures.admin_login import admin_user_login, admin_login_response, test_client_admin_logged_in, logged_in_admin_user
