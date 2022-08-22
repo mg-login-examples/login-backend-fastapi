@@ -28,6 +28,7 @@ archive.zip
 .testmondata
 
 vue_admin
+password_reset_app
 /frontend
 /db/mysql_pwd.txt
 sql_app.db
