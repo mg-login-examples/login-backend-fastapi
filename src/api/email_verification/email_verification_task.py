@@ -29,6 +29,6 @@ def create_verification_code_and_send_email(background_tasks: BackgroundTasks, d
     email_message = (
         "Please enter the following code on the email verification page: \n"
         f"{verification_code}\n\n"
-        "Note: This code will expire in 24 hours"
+        "Note: This code will expire in 24 hours."
     )
     background_tasks.add_task(send_email, receiver_email_address, email_subject, email_message)

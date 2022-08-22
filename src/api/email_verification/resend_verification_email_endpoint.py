@@ -11,7 +11,7 @@ def generate_endpoint(
     current_user_dependency: User
 ):
     @router.post("/resend-email/", status_code=status.HTTP_204_NO_CONTENT)
-    def resend_verification_email_endpoint(
+    def resend_verification_email(
         background_tasks: BackgroundTasks,
         user: User = current_user_dependency,
         db: Session = db_as_dependency

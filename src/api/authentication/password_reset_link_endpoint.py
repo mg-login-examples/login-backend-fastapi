@@ -15,8 +15,8 @@ def generate_endpoint(
     class UserEmail(BaseModel):
         email: EmailStr
 
-    @router.post("/reset-password/", status_code=status.HTTP_204_NO_CONTENT)
-    def resend_verification_email_endpoint(
+    @router.post("/password-reset-link/", status_code=status.HTTP_204_NO_CONTENT)
+    def send_password_reset_link_email(
         background_tasks: BackgroundTasks,
         user_email: UserEmail,
         request: Request,

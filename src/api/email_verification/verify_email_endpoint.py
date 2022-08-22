@@ -1,6 +1,7 @@
+from datetime import datetime
+
 from fastapi import HTTPException, status, Response
 from sqlalchemy.orm import Session
-from datetime import datetime
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from crud_endpoints_generator import crud_base
