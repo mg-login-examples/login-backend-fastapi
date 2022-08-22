@@ -18,5 +18,4 @@ def generate_endpoint(
     ):
         if not user.is_verified:
             create_verification_code_and_send_email(background_tasks, db, user)
-            # background_tasks.add_task(send_verification_email_task, db, user.id, user.email)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
