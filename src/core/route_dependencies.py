@@ -7,6 +7,7 @@ from api_dependencies.helper_classes.admin_cookie_extractor_for_oauth2_password 
 from api_dependencies.validated_access_token import get_validated_access_token_as_fastapi_dependency
 from api_dependencies.validated_admin_access_token import get_validated_admin_access_token_as_fastapi_dependency
 from api_dependencies.current_user import get_current_user_as_fastapi_dependency
+from api_dependencies.current_admin_user import get_current_admin_user_as_fastapi_dependency
 from data.access_tokens_store.access_token_manager import AccessTokenManager
 
 def get_api_routes_dependencies(
@@ -33,7 +34,7 @@ def get_admin_routes_dependencies(
     token_extractor = AdminCookieExtractorWithOpenApiSecuritySchemeForOAuth2PasswordBearer(tokenUrl="api/admin/login")
     token_extractor_as_dependency=Depends(token_extractor)
     validated_access_token_as_dependency=get_validated_admin_access_token_as_fastapi_dependency(token_extractor_as_dependency, admin_access_token_manager)
-    current_user_as_dependency=get_current_user_as_fastapi_dependency(validated_access_token_as_dependency, db_session_as_dependency)
+    current_user_as_dependency=get_current_admin_user_as_fastapi_dependency(validated_access_token_as_dependency, db_session_as_dependency)
     route_dependencies = Dependencies(
         db_session_as_dependency=db_session_as_dependency,
         validated_access_token_as_dependency=validated_access_token_as_dependency,

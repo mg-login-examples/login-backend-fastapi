@@ -3,17 +3,18 @@ import logging
 from fastapi import Response
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
-from data.schemas.users.user import User
+from data.schemas.admin_users.admin_user import AdminUser
 
 logger = logging.getLogger(__name__)
 
 def generate_endpoint(
     router: APIRouter,
-    current_user_dependency: User
+    current_user_dependency: AdminUser
 ):
-    @router.post("/authenticate/", response_model=User)
+    @router.post("/authenticate/", response_model=AdminUser)
     def authenticate_user(
         response: Response,
-        user: User = current_user_dependency
+        user: AdminUser = current_user_dependency
     ):
+        print(user)
         return user
