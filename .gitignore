@@ -27,7 +27,7 @@ archive.zip
 
 .testmondata
 
-vue_admin
+login-admin-frontend-vue
 password_reset_app
 /frontend
 /db/mysql_pwd.txt
