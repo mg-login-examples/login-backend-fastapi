@@ -26,7 +26,6 @@ def app_settings() -> Settings:
 def env_settings_test() -> EnvSettingsTest:
     dot_env_file = os.getenv("ENV_FILE", ".test.env")
     settings = EnvSettingsTest(_env_file=dot_env_file)
-    print(settings)
     return settings
 
 @pytest.fixture

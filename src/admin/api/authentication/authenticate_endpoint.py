@@ -16,5 +16,4 @@ def generate_endpoint(
         response: Response,
         user: AdminUser = current_user_dependency
     ):
-        print(user)
         return user

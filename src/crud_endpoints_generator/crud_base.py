@@ -58,7 +58,6 @@ def update_resource_item_partial(db: Session, ResourceModel, item_to_update: Bas
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
-    print(db_item.is_active)
     return db_item
 
 def update_resource_item_full(db: Session, ResourceModel, item_to_update: BaseSchema) -> BaseModel:
