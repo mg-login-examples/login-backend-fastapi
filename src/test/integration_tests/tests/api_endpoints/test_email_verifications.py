@@ -2,7 +2,6 @@ import logging
 from unittest.mock import MagicMock, patch, ANY
 
 import requests
-from sqlalchemy.orm import Session
 
 from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
 from crud_endpoints_generator import crud_base
@@ -23,10 +22,11 @@ def test_resend_email_unverified_user(mock_add_task: MagicMock, logged_in_unveri
     db_session_1 = next(test_app_db_manager.db_session())
     db_email_verifications = crud_base.get_resource_items_by_attribute(db_session_1, UserEmailVerificationModel, UserEmailVerificationModel.user_id, logged_in_unverified_user.id)
     assert len(db_email_verifications) == 0
+
     # call send email verification endpoint
     email_verifications_api.resend_verification_email(test_client)
-    # assert email verification record exists in db
 
+    # assert email verification record exists in db
     db_session_2 = next(test_app_db_manager.db_session())
     db_email_verifications = crud_base.get_resource_items_by_attribute(db_session_2, UserEmailVerificationModel, UserEmailVerificationModel.user_id, logged_in_unverified_user.id)
     assert len(db_email_verifications) == 1

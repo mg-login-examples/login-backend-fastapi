@@ -25,7 +25,7 @@ def create_password_reset_link_and_send_email(background_tasks: BackgroundTasks,
         user_password_reset_token
     )
 
-    link = f"{app_base_url}password-reset?email={user.email}&token={reset_password_token}&expires_at={datetime.now().timestamp()}"
+    link = f"{app_base_url}password-reset?email={user.email}&token={reset_password_token}&expires_at={expires_at.timestamp()}"
     receiver_email_address = user.email
     email_subject = "Reset Password"
     email_message = (
