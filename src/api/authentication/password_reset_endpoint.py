@@ -36,9 +36,9 @@ def generate_endpoint(
                 user = crud_base.get_resource_item(db, UserModel, token_item.user_id)
                 if user and user.email == user_password_change.email:
                     hashed_password = get_password_hash(user_password_change.password)
-                    user.password = hashed_password
+                    user.hashed_password = hashed_password
                     crud_base.update_resource_item_partial(db, UserModel, user)
                     token_item.is_active = False
                     crud_base.update_resource_item_partial(db, UserPasswordResetTokenModel, token_item)
                     return Response(status_code=status.HTTP_204_NO_CONTENT)
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid link")

@@ -45,7 +45,7 @@ def update_resource_item_partial(db: Session, ResourceModel, item_to_update: Bas
         return None
     for item_field, field_value in vars(item_to_update).items():
         if (type(field_value) is not list):
-            setattr(db_item, item_field, field_value) if field_value else None
+            setattr(db_item, item_field, field_value)
         else:
             RelatedItemModel = getattr(ResourceModel, item_field).property.mapper.class_
             setattr(db_item, item_field, [])
@@ -58,6 +58,7 @@ def update_resource_item_partial(db: Session, ResourceModel, item_to_update: Bas
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
+    print(db_item.is_active)
     return db_item
 
 def update_resource_item_full(db: Session, ResourceModel, item_to_update: BaseSchema) -> BaseModel:
