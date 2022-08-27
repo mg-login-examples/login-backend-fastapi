@@ -12,7 +12,7 @@ from utils.email.email_utils import send_email
 
 def create_verification_code_and_send_email(background_tasks: BackgroundTasks, db: Session, user: User):
     verification_code = randint(100000, 999999)
-    expires_at = datetime.utcnow() + timedelta(hours = 24)
+    expires_at = datetime.now() + timedelta(hours = 24)
     user_email_verification = UserEmailVerificationSchema(
         verification_code=verification_code,
         user_id=user.id,

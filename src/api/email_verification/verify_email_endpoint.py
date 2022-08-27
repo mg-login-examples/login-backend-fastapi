@@ -27,7 +27,7 @@ def generate_endpoint(
             (UserEmailVerificationModel.verification_code, verification_code)
         ]
         db_email_verification = crud_base.get_resource_item_by_attributes(db, UserEmailVerificationModel, queryFiltersAndValues)
-        if db_email_verification and db_email_verification.expires_at.timestamp() > datetime.utcnow().timestamp():
+        if db_email_verification and db_email_verification.expires_at.timestamp() > datetime.now().timestamp():
             user.is_verified = True
             crud_base.update_resource_item_partial(db, UserModel, user)
             return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -10,9 +10,12 @@ from data.database.models.user_password_reset_token import UserPasswordResetToke
 from data.schemas.user_password_reset_tokens.userPasswordResetTokenBase import UserPasswordResetTokenBase as UserPasswordResetTokenSchema
 from utils.email.email_utils import send_email
 
+import logging
+logger = logging.getLogger(__name__)
+
 def create_password_reset_link_and_send_email(background_tasks: BackgroundTasks, db: Session, user: User, app_base_url: str):
     reset_password_token = secrets.token_urlsafe(32)
-    expires_at = datetime.utcnow() + timedelta(hours = 2)
+    expires_at = datetime.now() + timedelta(hours = 2)
     user_password_reset_token = UserPasswordResetTokenSchema(
         token=reset_password_token,
         user_id=user.id,

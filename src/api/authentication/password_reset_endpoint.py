@@ -32,7 +32,7 @@ def generate_endpoint(
         token_db_item = crud_base.get_resource_item_by_attribute(db, UserPasswordResetTokenModel, UserPasswordResetTokenModel.token, user_password_change.token)
         if token_db_item:
             token_item = UserPasswordResetTokenSchema(**token_db_item.__dict__)
-            if token_item.is_active and token_item.expires_at.timestamp() > datetime.utcnow().timestamp():
+            if token_item.is_active and token_item.expires_at.timestamp() > datetime.now().timestamp():
                 user = crud_base.get_resource_item(db, UserModel, token_item.user_id)
                 if user and user.email == user_password_change.email:
                     hashed_password = get_password_hash(user_password_change.password)
