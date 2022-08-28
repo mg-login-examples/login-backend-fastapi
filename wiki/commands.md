@@ -1,0 +1,21 @@
+- Run backend application directly:
+    - `cd src`
+    - `python main.py`
+    - Alternate (select a different server port and database)
+        - `SERVER_PORT=8050 DATABASE_URL="mysql://root:password@127.0.0.1:3306/login" python main.py`
+- Run backend application using docker:
+    - `docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -p backend up --build`
+- Run backend application tests (api tests)
+    - `cd src`
+    - `pytest`
+    - Alternate (select a database):
+        - `DATABASE_URL="mysql://root:password@127.0.0.1:3306/login" pytest`
+- Run backend application tests and watch for changes (test driven development)
+    - `cd src`
+    - `ptw -- --testmon`
+Generate alembic migrations automatically based on sqlalchemy models:
+    - `cd src`
+    - `alembic revision --autogenerate -m "some migration comment"`
+Run migrations and update database:
+    - `cd src`
+    - `alembic upgrade head`

@@ -22,11 +22,12 @@ def create_password_reset_link_and_send_email(background_tasks: BackgroundTasks,
         expires_at=expires_at,
         is_active=True,
     )
-    crud_base.create_resource_item(
+    created_token_db_item = crud_base.create_resource_item(
         db,
         UserPasswordResetTokenModel,
         user_password_reset_token
     )
+    expires_at = created_token_db_item.expires_at # Update expires_at variable as miliseconds are truncated when stored in mysql
 
     link = f"{app_base_url}password-reset?email={user.email}&token={reset_password_token}&expires_at={expires_at.timestamp()}"
     receiver_email_address = user.email

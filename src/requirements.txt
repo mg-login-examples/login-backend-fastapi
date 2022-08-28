@@ -5,7 +5,7 @@ email-validator
 typing-extensions
 aiofiles
 requests
-SQLAlchemy
+SQLAlchemy==1.4.40
 SQLAlchemy-Utils
 mysqlclient
 alembic
