@@ -8,12 +8,10 @@ from data.database.models.user import User as UserModel
 from api_dependencies.helper_classes.dependencies import Dependencies
 from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
 from .create_user_endpoint import generate_endpoint as generate_create_user_endpoint
-from data.access_tokens_store.access_token_manager import AccessTokenManager
 
 def add_resource_users_routes(
     parent_router: APIRouter,
     api_dependencies: Dependencies,
-    access_token_manager: AccessTokenManager,
     samesite: str,
     secure_cookies: bool
 ) -> APIRouter:
@@ -35,7 +33,7 @@ def add_resource_users_routes(
     generate_create_user_endpoint(
         router,
         api_dependencies.db,
-        access_token_manager,
+        api_dependencies.access_token_store,
         samesite,
         secure_cookies
     )

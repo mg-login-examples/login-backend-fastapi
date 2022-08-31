@@ -12,6 +12,8 @@ from data.database.models.user import User as UserModel
 from api.authentication.password_reset_link_task import create_password_reset_link_and_send_email
 from utils.security.password_utils import get_password_hash
 
+# TODO Invalidate all existing access tokens
+
 def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session

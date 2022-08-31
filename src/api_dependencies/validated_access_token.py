@@ -3,17 +3,23 @@ import logging
 from fastapi import Depends, HTTPException, status, Response
 from fastapi.requests import Request
 
-from data.access_tokens_store.access_token_manager import AccessTokenManager
+from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
 
 logger = logging.getLogger(__name__)
 
 def get_validated_access_token_as_fastapi_dependency(
     token_extractor_as_fastapi_dependency: str,
-    access_token_manager: AccessTokenManager
+    access_token_store_as_dependency: AccessTokenStore
 ):
-    def validated_access_token(request: Request, response: Response, access_token: str = token_extractor_as_fastapi_dependency):
+    async def validated_access_token(
+        request: Request,
+        response: Response,
+        access_token: str = token_extractor_as_fastapi_dependency,
+        access_token_store: AccessTokenStore = access_token_store_as_dependency
+    ):
         try:
-            if access_token_manager.check_if_access_token_is_valid(access_token):
+            resp = await access_token_store.check_if_access_token_is_valid(access_token)
+            if (resp):
                 return access_token
         except Exception as e:
             logger.error("Access token validation error:")

@@ -14,6 +14,8 @@ services:
     depends_on:
       mysql_db:
         condition: service_healthy
+      redis_cache:
+        condition: service_healthy
     ports:
       - ${API_SERVER_PORT:-8018}:${SERVER_PORT:-8018}
     volumes:
@@ -24,6 +26,10 @@ services:
       - DATABASE_URL=${DATABASE_URL:-mysql://root@mysql_db/login}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - SESSION_TOKEN_STORE_TYPE=${SESSION_TOKEN_STORE_TYPE:-in_memory_db}
+      - REDIS_URL=${REDIS_URL:-redis://redis_cache}
+      # - REDIS_USER=${REDIS_USER}
+      # - REDIS_PASSWORD=${REDIS_PASSWORD}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
       - SAMESITE=${SAMESITE:-lax}
       - SECURE_COOKIES=${SECURE_COOKIES:-False}

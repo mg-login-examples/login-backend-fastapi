@@ -13,7 +13,7 @@ def check_access_token_in_valid_format(access_token: str):
     try:
         parse_access_token(access_token)
     except Exception as _:
-        logger.info(f"Invalid token passed: {access_token}")
+        logger.error(f"Invalid token passed: {access_token}")
         return False
     return len(access_token.split('--')) == 3
 

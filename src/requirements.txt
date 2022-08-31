@@ -5,14 +5,16 @@ email-validator
 typing-extensions
 aiofiles
 requests
+passlib[bcrypt]
 SQLAlchemy==1.4.40
 SQLAlchemy-Utils
 mysqlclient
+aioredis
 alembic
-passlib[bcrypt]
 python-dotenv
 coloredlogs
 pytest
+pytest-asyncio
 pytest-watch
 pytest-html
 pytest-testmon

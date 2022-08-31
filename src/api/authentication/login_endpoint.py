@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
-from data.access_tokens_store.access_token_manager import AccessTokenManager
+from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
 from helpers.classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
 from data.schemas.login.login_response import LoginResponse
 from crud_endpoints_generator import crud_base
@@ -17,15 +17,16 @@ logger = logging.getLogger(__name__)
 def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
-    access_token_manager: AccessTokenManager,
+    access_token_store_as_dependency: AccessTokenStore,
     samesite: str,
     secure_cookies: bool
 ):
     @router.post("/login/", response_model=LoginResponse)
-    def login_user(
+    async def login_user(
         response: Response,
         form_data: OAuth2PasswordRequestFormExtended = Depends(),
-        db: Session = db_as_dependency
+        db: Session = db_as_dependency,
+        access_token_store: AccessTokenStore = access_token_store_as_dependency
     ):
         user = crud_base.get_resource_item_by_attribute(db, UserModel, UserModel.email, form_data.username)
         try:
@@ -36,7 +37,7 @@ def generate_endpoint(
                     response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies, expires=token_expiry_seconds)
                 else:
                     response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies)
-                access_token_manager.add_access_token(user.id, access_token)
+                await access_token_store.add_access_token(user.id, access_token)
                 return LoginResponse(
                     user=user,
                     access_token=access_token,

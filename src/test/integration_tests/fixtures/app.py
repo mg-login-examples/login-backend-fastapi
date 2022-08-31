@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 def app_settings() -> Settings:
     dot_env_file = os.getenv("ENV_FILE", ".test.env")
     settings = get_environment_settings(dot_env_file=dot_env_file)
-    logger.info(f"Test environment file selected: {dot_env_file}")
+    logger.debug(f"Test environment file selected: {dot_env_file}")
     return settings
 
 @pytest.fixture

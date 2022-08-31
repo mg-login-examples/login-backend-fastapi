@@ -29,6 +29,7 @@ archive.zip
 
 /frontend
 /db/mysql_pwd.txt
+/cache/redis_pwd.txt
 sql_app.db
 admin_access_tokens.txt
 user_access_tokens.txt
