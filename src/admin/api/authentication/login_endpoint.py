@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from fastapi import Depends, HTTPException, Response
 from sqlalchemy.orm import Session
@@ -30,13 +31,17 @@ def generate_endpoint(
         user = crud_base.get_resource_item_by_attribute(db, AdminUserModel, AdminUserModel.email, form_data.username)
         try:
             if user and verify_password(form_data.password, user.hashed_password):
-                token_expiry_seconds = 30*24*60*60 if form_data.remember_me else 24*60*60
-                access_token = generate_access_token(user.id, token_expiry_seconds)
+                token_expiry_duration_seconds = 30*24*60*60 if form_data.remember_me else 24*60*60
+                token_expiry_datetime_timestamp = int(datetime.now().timestamp()) + token_expiry_duration_seconds
+                access_token = generate_access_token(user.id, token_expiry_datetime_timestamp)
+
+                await access_token_store.add_access_token(user.id, access_token)
+
                 if form_data.remember_me:
-                    response.set_cookie(key="Admin-Authorization", value=f"Bearer {access_token}", httponly=True, samesite="strict", secure=secure_cookies, expires=token_expiry_seconds)
+                    response.set_cookie(key="Admin-Authorization", value=f"Bearer {access_token}", httponly=True, samesite="strict", secure=secure_cookies, expires=datetime.fromtimestamp(token_expiry_datetime_timestamp))
                 else:
                     response.set_cookie(key="Admin-Authorization", value=f"Bearer {access_token}", httponly=True, samesite="strict", secure=secure_cookies)
-                await access_token_store.add_access_token(user.id, access_token)
+
                 return AdminLoginResponse(
                     id=user.id,
                     email=user.email,

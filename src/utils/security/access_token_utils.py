@@ -4,8 +4,7 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-def generate_access_token(user_id: int, expiry_time_seconds: int):
-    expiry_datetime_timestamp = int(datetime.now().timestamp()) + expiry_time_seconds
+def generate_access_token(user_id: int, expiry_datetime_timestamp: int):
     random_token = ''.join(secrets.token_urlsafe(32).split('-'))[:20]
     return f'{random_token}--{user_id}--{expiry_datetime_timestamp}'
 

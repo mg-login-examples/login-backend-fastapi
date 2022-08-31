@@ -18,7 +18,7 @@ def add_authentication_routes(
 
     generate_login_endpoint(router, route_dependencies.db, route_dependencies.access_token_store, samesite, secure_cookies)
     generate_authentication_endpoint(router, route_dependencies.current_user)
-    generate_logout_endpoint(router, route_dependencies.validated_access_token, route_dependencies.access_token_store)
+    generate_logout_endpoint(router, route_dependencies.db, route_dependencies.access_token_store, route_dependencies.validated_access_token,)
     generate_password_reset_link_endpoint(router, route_dependencies.db)
     generate_password_reset_endpoint(router, route_dependencies.db)
 

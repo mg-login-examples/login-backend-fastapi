@@ -6,8 +6,9 @@ from data.schemas.users.user import User as UserSchema
 from data.schemas.users.userCreate import UserCreate as UserCreateSchema
 from data.database.models.user import User as UserModel
 from api_dependencies.helper_classes.dependencies import Dependencies
-from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
 from .create_user_endpoint import generate_endpoint as generate_create_user_endpoint
+from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
+from .user_sessions_endpoint import generate_endpoint as generate_user_sessions_endpoint
 
 def add_resource_users_routes(
     parent_router: APIRouter,
@@ -39,6 +40,12 @@ def add_resource_users_routes(
     )
 
     generate_user_quotes_endpoint(
+        router,
+        api_dependencies.db,
+        api_dependencies.current_user
+    )
+
+    generate_user_sessions_endpoint(
         router,
         api_dependencies.db,
         api_dependencies.current_user
