@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 
 from sqlalchemy.orm import Session
 
@@ -11,9 +11,9 @@ from data.schemas.user_sessions.userSession import UserSession as UserSessionSch
 def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
-    current_user_as_dependency: User
+    restrict_endpoint_to_own_resources_param_user_id: Any,
 ):
-    @router.get("/{user_id}/sessions/", response_model=List[UserSessionSchema], dependencies=[current_user_as_dependency])
+    @router.get("/{user_id}/sessions/", response_model=List[UserSessionSchema], dependencies=[restrict_endpoint_to_own_resources_param_user_id])
     def get_user_quotes(
         user_id: int,
         skip: int = 0,

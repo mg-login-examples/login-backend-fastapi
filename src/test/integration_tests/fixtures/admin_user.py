@@ -16,9 +16,5 @@ def admin_login_response(test_client: requests.Session, admin_user_login: AdminU
     return admin_authentication_api.login(test_client, admin_user_login)
 
 @pytest.fixture
-def test_client_admin_logged_in(test_client: requests.Session, admin_login_response: AdminLoginResponse) -> requests.Session:
-    return test_client
-
-@pytest.fixture
 def logged_in_admin_user(test_client_admin_logged_in: requests.Session) -> AdminUser:
     return admin_authentication_api.authenticate(test_client_admin_logged_in)

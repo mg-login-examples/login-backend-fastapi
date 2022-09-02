@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
 class UserSessionBase(BaseModel):
-    user_id: str
+    user_id: int

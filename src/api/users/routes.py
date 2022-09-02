@@ -23,7 +23,7 @@ def add_resource_users_routes(
         UserModel
     )
     endpoints_required = EndpointsConfigs()
-    endpoints_required.require_get_item(dependencies=[api_dependencies.current_user])
+    endpoints_required.require_get_item(dependencies=[api_dependencies.restrict_endpoint_to_own_resources_param_item_id])
 
     router = generate_router_with_resource_endpoints(
         endpoints_required,
@@ -42,13 +42,13 @@ def add_resource_users_routes(
     generate_user_quotes_endpoint(
         router,
         api_dependencies.db,
-        api_dependencies.current_user
+        api_dependencies.restrict_endpoint_to_own_resources_param_user_id,
     )
 
     generate_user_sessions_endpoint(
         router,
         api_dependencies.db,
-        api_dependencies.current_user
+        api_dependencies.restrict_endpoint_to_own_resources_param_user_id,
     )
 
     parent_router.include_router(router)

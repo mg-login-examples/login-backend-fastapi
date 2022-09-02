@@ -1,3 +1,4 @@
+import logging
 from typing import List, Any
 
 from sqlalchemy.orm import Session
@@ -7,6 +8,7 @@ from .endpoints import get_items_count, get_items, get_item, post_item, put_item
 from .endpoints_configs import EndpointsConfigs
 from .resource_configurations import ResourceConfigurations
 
+logger = logging.getLogger(__name__)
 
 def generate_router_with_resource_endpoints(
     endpoints_configs: EndpointsConfigs,

@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 from fastapi import status, Response
 from sqlalchemy.orm import Session
@@ -6,7 +7,6 @@ from sqlite3 import IntegrityError
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from crud_endpoints_generator import crud_base
-from data.schemas.users.user import User
 from data.database.models.user_quote_like import UserQuoteLike as UserQuoteLikesModel
 from data.schemas.user_quote_like.user_quote_like import UserQuoteLike
 
@@ -15,9 +15,9 @@ logger = logging.getLogger(__name__)
 def generate_endpoints(
     router: APIRouter,
     db_as_dependency: Session,
-    current_user_as_dependency: User
+    restrict_endpoint_to_own_resources_param_user_id_as_dependency: Any
 ):
-    @router.put("/{quote_id}/users/{user_id}/like/", status_code=status.HTTP_204_NO_CONTENT, dependencies=[current_user_as_dependency])
+    @router.put("/{quote_id}/users/{user_id}/like/", status_code=status.HTTP_204_NO_CONTENT, dependencies=[restrict_endpoint_to_own_resources_param_user_id_as_dependency])
     def like_quote(
         quote_id: int,
         user_id: int,
@@ -30,7 +30,7 @@ def generate_endpoints(
             pass
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-    @router.delete("/{quote_id}/users/{user_id}/like/", status_code=status.HTTP_204_NO_CONTENT, dependencies=[current_user_as_dependency])
+    @router.delete("/{quote_id}/users/{user_id}/like/", status_code=status.HTTP_204_NO_CONTENT, dependencies=[restrict_endpoint_to_own_resources_param_user_id_as_dependency])
     def unlike_quote(
         quote_id: int,
         user_id: int,

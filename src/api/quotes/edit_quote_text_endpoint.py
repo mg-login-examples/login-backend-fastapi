@@ -1,18 +1,19 @@
+from typing import Any
+
 from fastapi import status, HTTPException, Response
 from sqlalchemy.orm import Session
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from crud_endpoints_generator import crud_base
-from data.schemas.users.user import User
 from data.database.models.quote import Quote as QuoteModel
 from data.schemas.quotes.quoteEditText import Quote as QuoteEditText
 
 def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
-    current_user_as_dependency: User
+    verify_edit_quote_owner_dependency: Any
 ):
-    @router.put("/{quote_id}/", status_code=status.HTTP_204_NO_CONTENT, dependencies=[current_user_as_dependency])
+    @router.put("/{quote_id}/", status_code=status.HTTP_204_NO_CONTENT, dependencies=[verify_edit_quote_owner_dependency])
     def edit_quote_text(
         quote_id: int,
         quote: QuoteEditText,
