@@ -16,6 +16,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Add mysql password text file for a test mysql container
         run: echo "password" >> db/mysql_pwd.txt
+      - name: Add redis password text file for a test redis container
+        run: echo "password" >> cache/redis_pwd.txt
       - name: Run backend tests
         run: sudo ./script.sh run-api-tests
       - name: Zip allure reports
