@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from data.schemas.admin_login.admin_login_response import AdminLoginResponse
-from data.schemas.login.login_response import LoginResponse
+from data.schemas.authentication.login_response import LoginResponse
 
 logger = logging.getLogger(__name__)
 

@@ -10,7 +10,7 @@ from data.schemas.users.userCreate import UserCreate
 from data.endUserSchemasToDbSchemas.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
 from utils.security.access_token_utils import generate_access_token
 from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
-from data.schemas.login.login_response import LoginResponse
+from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.users.user import User
 from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate

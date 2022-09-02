@@ -1,7 +1,7 @@
 import requests
 
 from data.schemas.users.user import User
-from data.schemas.login.login_response import LoginResponse
+from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.users.userCreate import UserCreate
 
 
