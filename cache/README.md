@@ -1,0 +1,1 @@
+Add a text file named: "redis_pwd.txt" with a password for redis
