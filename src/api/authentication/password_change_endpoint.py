@@ -2,7 +2,6 @@ import logging
 from datetime import datetime
 
 from fastapi import APIRouter, HTTPException, Response, status
-from fastapi.requests import Request
 from sqlalchemy.orm import Session
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
@@ -19,6 +18,8 @@ from utils.security.access_token_utils import generate_access_token
 
 logger = logging.getLogger(__name__)
 
+# TODO Invalidate all existing access tokens
+
 def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
@@ -29,7 +30,6 @@ def generate_endpoint(
 ):
     @router.post("/password-change/", response_model=LoginResponse)
     async def change_user_password(
-        request: Request,
         response: Response,
         user_password_change: UserPasswordChange,
         current_user: UserSchema = get_current_user_as_dependency,
@@ -44,7 +44,7 @@ def generate_endpoint(
                 and user_password_change.password != user_password_change.password_new
                 and verify_password(user_password_change.password, user.hashed_password)
             ):
-                user.hashed_password = get_password_hash(user_password_change.password)
+                user.hashed_password = get_password_hash(user_password_change.password_new)
                 crud_base.update_resource_item_partial(db, UserModel, user)
 
                 token_expiry_duration_seconds = 24*60*60

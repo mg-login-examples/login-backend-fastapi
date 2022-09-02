@@ -7,6 +7,7 @@ from .authenticate_endpoint import generate_endpoint as generate_authentication_
 from .logout_endpoint import generate_endpoint as generate_logout_endpoint
 from .password_reset_link_endpoint import generate_endpoint as generate_password_reset_link_endpoint
 from .password_reset_endpoint import generate_endpoint as generate_password_reset_endpoint
+from .password_change_endpoint import generate_endpoint as generate_password_change_endpoint
 
 def add_authentication_routes(
     parent_router: APIRouter,
@@ -21,6 +22,7 @@ def add_authentication_routes(
     generate_logout_endpoint(router, route_dependencies.db, route_dependencies.access_token_store, route_dependencies.validated_access_token,)
     generate_password_reset_link_endpoint(router, route_dependencies.db)
     generate_password_reset_endpoint(router, route_dependencies.db)
+    generate_password_change_endpoint(router, route_dependencies.db, route_dependencies.access_token_store, route_dependencies.current_user, samesite, secure_cookies)
 
     parent_router.include_router(router)
     return router

@@ -1,6 +1,7 @@
 import requests
 
 from data.schemas.authentication.login_response import LoginResponse
+from data.schemas.authentication.user_password_change import UserPasswordChange
 from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.user import User
 from test.integration_tests.utils import asserts
@@ -29,3 +30,8 @@ def login_expect_unauthorized(test_client: requests.Session, user: UserCreate):
     )
     assert response.status_code == 401
     asserts.assert_response_error_invalid_login(response)
+
+def password_change(test_client: requests.Session, user_password_change: UserPasswordChange):
+    response = test_client.post("/api/password-change/", json=user_password_change.dict())
+    assert response.status_code == 200
+    return LoginResponse(**response.json())
