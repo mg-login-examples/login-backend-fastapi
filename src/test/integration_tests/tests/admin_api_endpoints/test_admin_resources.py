@@ -1,9 +1,8 @@
 import logging
-from typing import List
 
 import requests
 
-from admin.api.resources import resourcesConfigurations
+from api.admin.resources import resourcesConfigurations
 
 logger = logging.getLogger(__name__)
 

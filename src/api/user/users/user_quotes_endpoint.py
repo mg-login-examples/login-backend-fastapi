@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from crud_endpoints_generator import crud_base
-from data.schemas.users.user import User
 from data.database.models.quote import Quote as QuoteModel
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 

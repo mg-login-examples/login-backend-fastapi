@@ -15,7 +15,7 @@ from .verify_delete_quote_owner_dependency import get_verify_delete_quote_owner_
 from .verify_create_quote_owner_dependency import get_verify_create_quote_owner_as_fastapi_dependency
 from .verify_edit_quote_owner_dependency import get_verify_edit_quote_owner_as_fastapi_dependency
 
-def add_resource_quotes_routes(parent_router: APIRouter, route_dependencies: Dependencies) -> APIRouter:
+def get_router(route_dependencies: Dependencies) -> APIRouter:
     quote_resource_configurations = ResourceConfigurations(
         "quotes",
         QuoteSchema,
@@ -50,5 +50,4 @@ def add_resource_quotes_routes(parent_router: APIRouter, route_dependencies: Dep
         route_dependencies.restrict_endpoint_to_own_resources_param_user_id
     )
 
-    parent_router.include_router(router)
-    return parent_router
+    return router

@@ -1,10 +1,10 @@
 from typing import Callable
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
-from admin.api.example.resources import resourcesConfigurations
+from api.admin.example.resources import resourcesConfigurations
 from crud_endpoints_generator.crud_endpoints_generator import get_resource_endpoints_router
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
-from admin.api.add_resource_url_ids_to_schema_properties import add_resource_url_ids_to_schema_properties
+from api.admin.add_resource_url_ids_to_schema_properties import add_resource_url_ids_to_schema_properties
 
 def add_all_admin_resources_routes(parent_router: APIRouter, get_db_session: Callable) -> APIRouter:
     admin_router = APIRouter(prefix="/admin")

@@ -10,8 +10,7 @@ from .create_user_endpoint import generate_endpoint as generate_create_user_endp
 from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
 from .user_sessions_endpoint import generate_endpoint as generate_user_sessions_endpoint
 
-def add_resource_users_routes(
-    parent_router: APIRouter,
+def get_router(
     api_dependencies: Dependencies,
     samesite: str,
     secure_cookies: bool
@@ -51,5 +50,4 @@ def add_resource_users_routes(
         api_dependencies.restrict_endpoint_to_own_resources_param_user_id,
     )
 
-    parent_router.include_router(router)
-    return parent_router
+    return router

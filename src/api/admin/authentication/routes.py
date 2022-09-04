@@ -5,8 +5,7 @@ from .login_endpoint import generate_endpoint as generate_login_endpoint
 from .authenticate_endpoint import generate_endpoint as generate_authentication_endpoint
 from .logout_endpoint import generate_endpoint as generate_logout_endpoint
 
-def add_authentication_routes(
-    parent_router: APIRouter,
+def get_router(
     route_dependencies: Dependencies,
     secure_cookies: bool
 ) -> APIRouter:
@@ -16,5 +15,4 @@ def add_authentication_routes(
     generate_authentication_endpoint(router, route_dependencies.current_user)
     generate_logout_endpoint(router, route_dependencies.validated_access_token, route_dependencies.access_token_store)
 
-    parent_router.include_router(router)
     return router

@@ -14,4 +14,4 @@ class SPAStaticFiles(StaticFiles):
         return response
 
 def mount_admin_app(app: FastAPI):
-    app.mount("/admin", SPAStaticFiles(directory="admin/view/vue_admin_html", html=True), name="admin_app")
+    app.mount("/admin", SPAStaticFiles(directory="admin_app/vue_admin_html", html=True), name="admin_app")

@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.schemas.users.user import User
-from api.email_verification.email_verification_task import create_verification_code_and_send_email
+from .email_verification_task import create_verification_code_and_send_email
 
 def generate_endpoint(
     router: APIRouter,
