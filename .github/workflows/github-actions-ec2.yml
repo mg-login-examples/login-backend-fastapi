@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Deploy to EC2
+  api-tests:
+    name: Run API Tests And Send Results To Allure Docker Service
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the files
@@ -48,6 +48,16 @@ jobs:
             unzip results.zip &&
             rm results.zip &&
             curl http://localhost:5050/allure-docker-service/generate-report?project_id=backend
+  e2e-tests:
+    name: Run E2E Tests And Send Results To Allure Docker Service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+      - name: Add mysql password text file for a test mysql container
+        run: echo "password" >> db/mysql_pwd.txt
+      - name: Add redis password text file for a test redis container
+        run: echo "password" >> cache/redis_pwd.txt
       - name: Checkout frontend repo
         uses: actions/checkout@v3
         with:
@@ -85,6 +95,11 @@ jobs:
             unzip results.zip &&
             rm results.zip &&
             curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: [api-tests, e2e-tests]
+    steps:
       - name: Restart app - build new containers
         uses: appleboy/ssh-action@master
         with:
