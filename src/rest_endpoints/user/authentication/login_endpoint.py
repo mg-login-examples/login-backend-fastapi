@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
-from helpers.classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
+from helpers_classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
 from data.schemas.authentication.login_response import LoginResponse
 from crud_endpoints_generator import crud_base
 from data.database.models.user import User as UserModel

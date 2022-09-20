@@ -3,9 +3,9 @@ import logging
 from fastapi import FastAPI
 
 from core.cors_settings import add_cors
-from api import routes as api_routes
-from admin_app.mount_admin_app import mount_admin_app
-from password_reset_app.mount_password_reset_app import mount_password_reset_app
+from rest_endpoints import routes as api_routes
+from admin_app import app_mounter as admin_app_mounter
+from password_reset_app import mounter as password_reset_app_mounter
 from core.helper_classes.settings import Settings
 from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
 from core.route_dependencies import get_api_routes_dependencies, get_admin_routes_dependencies
@@ -32,9 +32,9 @@ def create_app(app_db_manager: SQLAlchemyDBManager, SETTINGS: Settings) -> FastA
     app.include_router(api_router)
 
     if SETTINGS.add_admin_app:
-        mount_admin_app(app)
+        admin_app_mounter.mount_app(app)
     if SETTINGS.add_password_reset_app:
-        mount_password_reset_app(app)
+        password_reset_app_mounter.mount_app(app)
 
     add_cors(app, SETTINGS.cors_origins_set)
 

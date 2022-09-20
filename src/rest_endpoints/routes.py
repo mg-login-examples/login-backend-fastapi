@@ -1,6 +1,6 @@
 from api_dependencies.helper_classes.custom_api_router import APIRouter
-from api.admin import routes as admin_routes
-from api.user import routes as user_routes
+from rest_endpoints.admin import routes as admin_routes
+from rest_endpoints.user import routes as user_routes
 from api_dependencies.helper_classes.dependencies import Dependencies
 
 def get_router(

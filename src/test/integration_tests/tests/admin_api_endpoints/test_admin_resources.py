@@ -2,7 +2,7 @@ import logging
 
 import requests
 
-from api.admin.resources import resourcesConfigurations
+from rest_endpoints.admin.resources import resourcesConfigurations
 
 logger = logging.getLogger(__name__)
 

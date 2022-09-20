@@ -3,8 +3,8 @@ from fastapi.responses import JSONResponse
 from fastapi.openapi.utils import get_openapi
 from fastapi.openapi.docs import get_swagger_ui_html
 
-from api.admin import routes as admin_routes
-from api.user import routes as user_routes
+from rest_endpoints.admin import routes as admin_routes
+from rest_endpoints.user import routes as user_routes
 from api_dependencies.helper_classes.dependencies import Dependencies
 
 def create_swagger_docs_for_user_endpoints(

@@ -14,7 +14,7 @@ from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.users.user import User
 from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
-from api.user.email_verification.email_verification_task import create_verification_code_and_send_email
+from rest_endpoints.user.email_verification.email_verification_task import create_verification_code_and_send_email
 
 def generate_endpoint(
     router: APIRouter,

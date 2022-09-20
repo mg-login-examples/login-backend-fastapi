@@ -9,7 +9,7 @@ from core.logging_settings import set_logging_settings
 from core.db_manager import get_db_manager
 from core.app_factory import create_app
 from utils.db import dbUtils
-from admin_app import admin_users_manager
+from core import admin_users_manager
 
 logger = logging.getLogger(__name__)
 

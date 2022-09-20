@@ -1,8 +1,8 @@
 from api_dependencies.helper_classes.custom_api_router import APIRouter
 from api_dependencies.helper_classes.dependencies import Dependencies
-from api.admin.get_admin_resources_endpoint import generate_endpoint as generate_get_admin_resources_endpoint
-from api.admin.admin_resources_crud_endpoints import generate_endpoints as generate_admin_resources_crud_endpoints
-from api.admin.authentication import routes as authentication_routes
+from rest_endpoints.admin.get_admin_resources_endpoint import generate_endpoint as generate_get_admin_resources_endpoint
+from rest_endpoints.admin.admin_resources_crud_endpoints import generate_endpoints as generate_admin_resources_crud_endpoints
+from rest_endpoints.admin.authentication import routes as authentication_routes
 
 def get_router(
     dependencies: Dependencies,
