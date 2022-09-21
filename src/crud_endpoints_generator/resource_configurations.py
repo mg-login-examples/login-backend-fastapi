@@ -1,7 +1,7 @@
 from typing import Callable
 from pydantic import BaseModel as BaseSchema
 
-from .sqlalchemy_base_model import Base as BaseORMModel
+from stores.sql_db_store.sqlalchemy_base_model import Base as BaseORMModel
 
 class ResourceConfigurations:
 

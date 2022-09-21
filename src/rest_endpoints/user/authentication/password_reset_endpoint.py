@@ -3,8 +3,8 @@ from datetime import datetime
 from fastapi import BackgroundTasks, status, Response, Request, HTTPException
 from sqlalchemy.orm import Session
 
-from crud_endpoints_generator import crud_base
-from api_dependencies.helper_classes.custom_api_router import APIRouter
+from stores.sql_db_store import crud_base
+from helpers_classes.custom_api_router import APIRouter
 from data.database.models.user_password_reset_token import UserPasswordResetToken as UserPasswordResetTokenModel
 from data.schemas.user_password_reset_tokens.userPasswordResetToken import UserPasswordResetToken as UserPasswordResetTokenSchema
 from data.schemas.authentication.user_password_reset import UserPasswordReset

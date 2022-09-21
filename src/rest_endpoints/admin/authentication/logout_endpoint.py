@@ -2,8 +2,8 @@ import logging
 
 from fastapi import Response, status
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from helpers_classes.custom_api_router import APIRouter
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 from utils.security.access_token_utils import parse_access_token
 
 logger = logging.getLogger(__name__)

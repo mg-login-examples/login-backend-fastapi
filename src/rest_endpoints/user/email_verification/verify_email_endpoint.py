@@ -3,8 +3,8 @@ from datetime import datetime
 from fastapi import HTTPException, status, Response
 from sqlalchemy.orm import Session
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from crud_endpoints_generator import crud_base
+from helpers_classes.custom_api_router import APIRouter
+from stores.sql_db_store import crud_base
 from data.database.models.user import User as UserModel
 from data.schemas.users.user import User
 from data.database.models.user_email_verification import UserEmailVerification as UserEmailVerificationModel

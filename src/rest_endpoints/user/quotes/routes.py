@@ -1,6 +1,6 @@
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from api_dependencies.helper_classes.dependencies import Dependencies
-
+from helpers_classes.custom_api_router import APIRouter
+from api_dependencies.common_route_dependencies import CommonRouteDependencies
+CommonRouteDependencies
 from crud_endpoints_generator.crud_endpoints_generator import generate_router_with_resource_endpoints
 from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
@@ -15,7 +15,7 @@ from .verify_delete_quote_owner_dependency import get_verify_delete_quote_owner_
 from .verify_create_quote_owner_dependency import get_verify_create_quote_owner_as_fastapi_dependency
 from .verify_edit_quote_owner_dependency import get_verify_edit_quote_owner_as_fastapi_dependency
 
-def get_router(route_dependencies: Dependencies) -> APIRouter:
+def get_router(route_dependencies: CommonRouteDependencies) -> APIRouter:
     quote_resource_configurations = ResourceConfigurations(
         "quotes",
         QuoteSchema,

@@ -5,8 +5,8 @@ from fastapi import status, Response
 from sqlalchemy.orm import Session
 from sqlite3 import IntegrityError
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from crud_endpoints_generator import crud_base
+from helpers_classes.custom_api_router import APIRouter
+from stores.sql_db_store import crud_base
 from data.database.models.user_quote_like import UserQuoteLike as UserQuoteLikesModel
 from data.schemas.user_quote_like.user_quote_like import UserQuoteLike
 

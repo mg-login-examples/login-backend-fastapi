@@ -5,11 +5,11 @@ from fastapi.openapi.docs import get_swagger_ui_html
 
 from rest_endpoints.admin import routes as admin_routes
 from rest_endpoints.user import routes as user_routes
-from api_dependencies.helper_classes.dependencies import Dependencies
+from api_dependencies.common_route_dependencies import CommonRouteDependencies
 
 def create_swagger_docs_for_user_endpoints(
     app: FastAPI,
-    regular_api_routes_dependencies: Dependencies,
+    regular_api_routes_dependencies: CommonRouteDependencies,
     samesite: str,
     secure_cookies: bool,
 ):
@@ -26,7 +26,7 @@ def create_swagger_docs_for_user_endpoints(
 
 def create_swagger_docs_for_admin_endpoints(
     app: FastAPI,
-    admin_api_routes_dependencies: Dependencies,
+    admin_api_routes_dependencies: CommonRouteDependencies,
     secure_cookies: bool,
 ):
     @app.get("/admin-openapi.json")

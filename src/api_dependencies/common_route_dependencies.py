@@ -2,10 +2,10 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 from data.schemas.users.user import User
 
-class Dependencies:
+class CommonRouteDependencies:
     def __init__(
         self,
         db_session_as_dependency: Session = None,

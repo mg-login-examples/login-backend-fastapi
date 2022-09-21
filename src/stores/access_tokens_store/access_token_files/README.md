@@ -1,0 +1,1 @@
+2 Access token files will be automatically created when Settings store_type = file

@@ -6,11 +6,11 @@ from fastapi.requests import Request
 from fastapi.security.utils import get_authorization_scheme_param
 from sqlalchemy.orm import Session
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from helpers_classes.custom_api_router import APIRouter
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 from helpers_classes.oauth2_password_request_form_extended import OAuth2PasswordRequestFormExtended
 from data.schemas.authentication.login_response import LoginResponse
-from crud_endpoints_generator import crud_base
+from stores.sql_db_store import crud_base
 from data.database.models.user import User as UserModel
 from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate

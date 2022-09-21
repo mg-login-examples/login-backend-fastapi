@@ -4,7 +4,7 @@ from logging.config import fileConfig
 from alembic import context
 
 from core.environment_settings import get_environment_settings
-from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from data.database.models.base import Base
 
 # Init settings for database url

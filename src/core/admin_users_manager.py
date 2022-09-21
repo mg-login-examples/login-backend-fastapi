@@ -2,7 +2,7 @@ import logging
 
 from sqlalchemy.orm import Session
 
-from crud_endpoints_generator import crud_base
+from stores.sql_db_store import crud_base
 from data.database.models.admin_user import AdminUser as AdminUserModel
 from data.schemas.admin_users.admin_user_create_as_model import AdminUserCreateAsModel as AdminUserCreateAsModelSchema
 from data.schemas.admin_users.admin_user import AdminUser as AdminUserSchema

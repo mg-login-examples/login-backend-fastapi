@@ -3,9 +3,9 @@ from unittest.mock import MagicMock, patch, ANY
 
 import requests
 
-from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from data.schemas.users.user import User
-from crud_endpoints_generator import crud_base
+from stores.sql_db_store import crud_base
 from data.database.models.user_email_verification import UserEmailVerification as UserEmailVerificationModel
 from test.integration_tests.utils.fake_user import generate_random_user_to_create
 from test.utils.api import users as users_api

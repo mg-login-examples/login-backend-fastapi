@@ -2,8 +2,8 @@ from fastapi import BackgroundTasks, status, Response, Request
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
 
-from crud_endpoints_generator import crud_base
-from api_dependencies.helper_classes.custom_api_router import APIRouter
+from stores.sql_db_store import crud_base
+from helpers_classes.custom_api_router import APIRouter
 from data.database.models.user import User as UserModel
 from .password_reset_link_task import create_password_reset_link_and_send_email
 

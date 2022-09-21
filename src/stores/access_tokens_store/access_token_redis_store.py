@@ -3,7 +3,7 @@ import logging
 from aioredis import Redis
 
 from utils.security.access_token_utils import parse_access_token
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 
 logger = logging.getLogger(__name__)
 

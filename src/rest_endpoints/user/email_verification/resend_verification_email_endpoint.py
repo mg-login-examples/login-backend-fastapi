@@ -1,7 +1,7 @@
 from fastapi import BackgroundTasks, status, Response
 from sqlalchemy.orm import Session
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
+from helpers_classes.custom_api_router import APIRouter
 from data.schemas.users.user import User
 from .email_verification_task import create_verification_code_and_send_email
 

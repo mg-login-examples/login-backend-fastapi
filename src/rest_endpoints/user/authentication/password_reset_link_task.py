@@ -5,7 +5,7 @@ from fastapi import BackgroundTasks
 from sqlalchemy.orm import Session
 
 from data.schemas.users.user import User
-from crud_endpoints_generator import crud_base
+from stores.sql_db_store import crud_base
 from data.database.models.user_password_reset_token import UserPasswordResetToken as UserPasswordResetTokenModel
 from data.schemas.user_password_reset_tokens.userPasswordResetTokenBase import UserPasswordResetTokenBase as UserPasswordResetTokenSchema
 from utils.email.email_utils import send_email

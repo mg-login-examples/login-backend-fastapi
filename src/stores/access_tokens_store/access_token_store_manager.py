@@ -1,8 +1,8 @@
 import logging
 
-from data.access_tokens_store.access_token_file_store import AccessTokenFileStore
-from data.access_tokens_store.access_token_redis_store import AccessTokenRedisStore
-from core.cache_manager import get_cache_manager
+from stores.access_tokens_store.access_token_file_store import AccessTokenFileStore
+from stores.access_tokens_store.access_token_redis_store import AccessTokenRedisStore
+from stores.store_utils import get_cache_manager
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ class AccessTokenStoreManager:
         store_type = "in_memory_db",
         file_name: str = None,
         redis_url: str = None,
-        redis_username: str = None,
+        redis_user: str = None,
         redis_password: str = None,
         redis_token_prefix: str = "",
     ):
@@ -21,7 +21,7 @@ class AccessTokenStoreManager:
         if store_type == "file":
             self.file_store = AccessTokenFileStore(file_name)
         if store_type == "in_memory_db":
-            self.app_redis_manager = get_cache_manager(redis_url, redis_username, redis_password)
+            self.app_redis_manager = get_cache_manager(redis_url, redis_user, redis_password)
             self.redis_token_prefix = redis_token_prefix
         logger.debug(f"access token store type: {self.store_type}")
 

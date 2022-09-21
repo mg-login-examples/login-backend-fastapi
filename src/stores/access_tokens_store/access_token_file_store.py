@@ -2,13 +2,13 @@ import os
 import logging
 
 from utils.security.access_token_utils import parse_access_token, check_access_tokens_are_equal
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 
 logger = logging.getLogger(__name__)
 
 class AccessTokenFileStore(AccessTokenStore):
     def __init__(self, file_name: str):
-        self.FILE_PATH = os.path.join("data", "access_tokens_store", file_name)
+        self.FILE_PATH = os.path.join("stores", "access_tokens_store", "access_token_files", file_name)
         self.USER_ID_TO_ACCESS_TOKENS = {}
         if os.path.isfile(self.FILE_PATH):
             with open(self.FILE_PATH, 'r') as file:

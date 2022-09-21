@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from utils.security.access_token_utils import parse_access_token
 from data.database.models.user import User as UserModel
-from crud_endpoints_generator import crud_base
+from stores.sql_db_store import crud_base
 
 def get_current_user_as_fastapi_dependency(
     get_validated_token_as_fastapi_dependency: str,

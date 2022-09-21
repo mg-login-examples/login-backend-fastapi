@@ -3,7 +3,7 @@ import logging
 from fastapi import Depends, HTTPException, status, Response
 from fastapi.requests import Request
 
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 
 logger = logging.getLogger(__name__)
 

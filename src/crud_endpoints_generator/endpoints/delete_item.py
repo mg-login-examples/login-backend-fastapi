@@ -2,8 +2,8 @@ from typing import List, Any
 from fastapi import status, Response, APIRouter
 from sqlalchemy.orm import Session
 
-from ..sqlalchemy_base_model import Base as BaseORMModel
-from .. import crud_base
+from stores.sql_db_store.sqlalchemy_base_model import Base as BaseORMModel
+from stores.sql_db_store import crud_base
 
 def generate_endpoint(
     router: APIRouter,

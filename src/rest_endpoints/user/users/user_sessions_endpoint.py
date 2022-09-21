@@ -2,9 +2,8 @@ from typing import List, Any
 
 from sqlalchemy.orm import Session
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from crud_endpoints_generator import crud_base
-from data.schemas.users.user import User
+from helpers_classes.custom_api_router import APIRouter
+from stores.sql_db_store import crud_base
 from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.user_sessions.userSession import UserSession as UserSessionSchema
 

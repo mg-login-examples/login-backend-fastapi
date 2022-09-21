@@ -2,7 +2,7 @@ import logging
 
 from fastapi import Response
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
+from helpers_classes.custom_api_router import APIRouter
 from data.schemas.users.user import User
 
 logger = logging.getLogger(__name__)

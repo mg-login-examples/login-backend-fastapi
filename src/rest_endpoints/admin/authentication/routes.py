@@ -1,12 +1,12 @@
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from api_dependencies.helper_classes.dependencies import Dependencies
+from helpers_classes.custom_api_router import APIRouter
+from api_dependencies.common_route_dependencies import CommonRouteDependencies
 
 from .login_endpoint import generate_endpoint as generate_login_endpoint
 from .authenticate_endpoint import generate_endpoint as generate_authentication_endpoint
 from .logout_endpoint import generate_endpoint as generate_logout_endpoint
 
 def get_router(
-    route_dependencies: Dependencies,
+    route_dependencies: CommonRouteDependencies,
     secure_cookies: bool
 ) -> APIRouter:
     router = APIRouter()

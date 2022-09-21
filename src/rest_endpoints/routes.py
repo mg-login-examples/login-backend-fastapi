@@ -1,11 +1,11 @@
-from api_dependencies.helper_classes.custom_api_router import APIRouter
+from helpers_classes.custom_api_router import APIRouter
 from rest_endpoints.admin import routes as admin_routes
 from rest_endpoints.user import routes as user_routes
-from api_dependencies.helper_classes.dependencies import Dependencies
+from api_dependencies.common_route_dependencies import CommonRouteDependencies
 
 def get_router(
-    api_routes_dependencies: Dependencies,
-    admin_routes_dependencies: Dependencies,
+    api_routes_dependencies: CommonRouteDependencies,
+    admin_routes_dependencies: CommonRouteDependencies,
     add_admin_app: bool,
     samesite: str,
     secure_cookies: bool,

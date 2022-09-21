@@ -3,8 +3,8 @@ from unittest.mock import MagicMock, patch, ANY
 
 import requests
 
-from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
-from crud_endpoints_generator import crud_base
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
+from stores.sql_db_store import crud_base
 from data.database.models.user_password_reset_token import UserPasswordResetToken as UserPasswordResetTokenModel
 from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.userDeep import User as UserDeep

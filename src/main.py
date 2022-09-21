@@ -6,9 +6,9 @@ import uvicorn
 
 from core.environment_settings import get_environment_settings
 from core.logging_settings import set_logging_settings
-from core.db_manager import get_db_manager
+from stores.store_utils import get_db_manager
 from core.app_factory import create_app
-from utils.db import dbUtils
+from stores.sql_db_store import db_utils
 from core import admin_users_manager
 
 logger = logging.getLogger(__name__)

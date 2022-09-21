@@ -4,8 +4,8 @@ import logging
 from fastapi import FastAPI
 
 from core.helper_classes.settings import Settings
-from core.db_manager import get_db_manager
-from core.helper_classes.sqlAlchemyDBManager import SQLAlchemyDBManager
+from stores.store_utils import get_db_manager
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from core.app_factory import create_app
 
 logger = logging.getLogger(__name__)

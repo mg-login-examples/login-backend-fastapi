@@ -1,6 +1,6 @@
 from typing import Callable
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
+from helpers_classes.custom_api_router import APIRouter
 from rest_endpoints.admin.example.resources import resourcesConfigurations
 from crud_endpoints_generator.crud_endpoints_generator import get_resource_endpoints_router
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs

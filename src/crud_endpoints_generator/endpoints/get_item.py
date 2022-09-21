@@ -4,8 +4,8 @@ from fastapi import status, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 from pydantic import BaseModel as BaseSchema
 
-from ..sqlalchemy_base_model import Base as BaseORMModel
-from .. import crud_base
+from stores.sql_db_store.sqlalchemy_base_model import Base as BaseORMModel
+from stores.sql_db_store import crud_base
 
 def generate_endpoint(
     router: APIRouter,

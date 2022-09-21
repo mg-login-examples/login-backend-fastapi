@@ -14,10 +14,8 @@ class Settings(BaseSettings):
 
     session_token_store_type: Literal["file", "in_memory_db"] = 'file'
     redis_url: str = ''
-    redis_username: str = ''
+    redis_user: str = ''
     redis_password: str = ''
-    user_api_tokens_file_name: str = "user_access_tokens.txt"
-    admin_api_tokens_file_name: str = "admin_access_tokens.txt"
 
     add_admin_app: bool = True
     add_password_reset_app: bool = True

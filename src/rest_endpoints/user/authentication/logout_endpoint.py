@@ -3,10 +3,10 @@ import logging
 from fastapi import Response, status
 from sqlalchemy.orm import Session
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from helpers_classes.custom_api_router import APIRouter
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 from utils.security.access_token_utils import parse_access_token
-from crud_endpoints_generator import crud_base
+from stores.sql_db_store import crud_base
 from data.database.models.user_session import UserSession as UserSessionModel
 
 logger = logging.getLogger(__name__)

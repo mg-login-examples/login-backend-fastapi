@@ -3,13 +3,13 @@ from datetime import datetime
 from fastapi import BackgroundTasks, Response
 from sqlalchemy.orm import Session
 
-from api_dependencies.helper_classes.custom_api_router import APIRouter
-from crud_endpoints_generator import crud_base
+from helpers_classes.custom_api_router import APIRouter
+from stores.sql_db_store import crud_base
 from data.database.models.user import User as UserModel
 from data.schemas.users.userCreate import UserCreate
 from data.endUserSchemasToDbSchemas.user import createSchemaToDbSchema as userCreateSchemaToDbSchema
 from utils.security.access_token_utils import generate_access_token
-from data.access_tokens_store.helper_classes.access_token_store import AccessTokenStore
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.users.user import User
 from data.database.models.user_session import UserSession as UserSessionModel
