@@ -5,35 +5,32 @@ from fastapi import FastAPI
 from core.cors_settings import add_cors
 from rest_endpoints import routes as api_routes
 from admin_app import app_mounter as admin_app_mounter
-from password_reset_app import mounter as password_reset_app_mounter
+from password_reset_app import app_mounter as password_reset_app_mounter
 from core.helper_classes.settings import Settings
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
+from stores.redis_store.aioredis_cache_manager import AioRedisCacheManager
 from api_dependencies.dependencies_manager import get_user_routes_dependencies, get_admin_routes_dependencies
 from core.swagger_docs import create_swagger_docs_for_user_endpoints, create_swagger_docs_for_admin_endpoints
-from stores.get_token_manager import get_access_token_store_manager
 
 logger = logging.getLogger(__name__)
 
-def create_app(app_db_manager: SQLAlchemyDBManager, SETTINGS: Settings) -> FastAPI:
+def create_app(
+    app_db_manager: SQLAlchemyDBManager,
+    app_cache_manager: AioRedisCacheManager,
+    SETTINGS: Settings
+) -> FastAPI:
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
-    user_access_token_manager = get_access_token_store_manager(
-        SETTINGS.session_token_store_type,
-        redis_url=SETTINGS.redis_url,
-        redis_user=SETTINGS.redis_user,
-        redis_password=SETTINGS.redis_password,
-        is_admin=False
+    api_routes_dependencies = get_user_routes_dependencies(
+        app_db_manager,
+        app_cache_manager,
+        SETTINGS.access_tokens_store_type
     )
-    admin_access_token_manager = get_access_token_store_manager(
-        SETTINGS.session_token_store_type,
-        redis_url=SETTINGS.redis_url,
-        redis_user=SETTINGS.redis_user,
-        redis_password=SETTINGS.redis_password,
-        is_admin=True
+    admin_api_routes_dependencies = get_admin_routes_dependencies(
+        app_db_manager,
+        app_cache_manager,
+        SETTINGS.access_tokens_store_type
     )
-
-    api_routes_dependencies = get_user_routes_dependencies(app_db_manager, user_access_token_manager)
-    admin_api_routes_dependencies = get_admin_routes_dependencies(app_db_manager, admin_access_token_manager)
     api_router = api_routes.get_router(
         api_routes_dependencies,
         admin_api_routes_dependencies,

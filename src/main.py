@@ -1,12 +1,14 @@
 import os
 import sys
 import logging
+import asyncio
 
 import uvicorn
 
 from core.environment_settings import get_environment_settings
 from core.logging_settings import set_logging_settings
 from stores.store_utils import get_db_manager
+from stores.store_utils import get_cache_manager
 from core.app_factory import create_app
 from stores.sql_db_store import db_utils
 from core import admin_users_manager
@@ -23,13 +25,15 @@ logger.info(f"Environment file selected: {dot_env_file}")
 
 # Create db manager
 app_db_manager = get_db_manager(SETTINGS.database_url, SETTINGS.database_user, SETTINGS.database_password)
+# Create redis manager
+redis_cache_manager = get_cache_manager(SETTINGS.redis_url, SETTINGS.redis_user, SETTINGS.redis_password)
 # Create fastapi webapp
-app = create_app(app_db_manager, SETTINGS)
+app = create_app(app_db_manager, redis_cache_manager, SETTINGS)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         if sys.argv[1] == "create_db_tables":
-            dbUtils.create_all_tables(app_db_manager.engine)
+            db_utils.create_all_tables(app_db_manager.engine)
             logger.info("Created db tables")
         elif sys.argv[1] == "add_admin_user":
             admin_users_manager.create_admin_user(sys.argv[2], sys.argv[3], next(app_db_manager.db_session()))
@@ -40,6 +44,9 @@ if __name__ == "__main__":
         else:
             logger.error("Unknown argument received")
     else:
+        # TODO Test db available
+        if SETTINGS.test_redis_connection_on_app_start:
+            asyncio.run(redis_cache_manager.assert_redis_is_available())
         uvicorn.run(
             "main:app",
             host=SETTINGS.server_host,

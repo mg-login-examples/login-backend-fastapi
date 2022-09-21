@@ -1,5 +1,5 @@
 from test.integration_tests.fixtures.settings import app_settings, env_settings_test
-from test.integration_tests.fixtures.app import app_db_manager, app
+from test.integration_tests.fixtures.app import app_db_manager, app_cache_manager, app
 from test.integration_tests.fixtures.fastapi_testclient import test_client, test_client_admin_logged_in, test_client_logged_in
 from test.integration_tests.fixtures.quotes_admin import created_quote_by_admin, created_n_quotes_by_admin
 from test.integration_tests.fixtures.user import user_login, created_unverified_user_by_admin, created_user_by_admin, login_response, logged_in_user, logged_in_unverified_user, created_n_users_by_admin, user_2_login, created_user_2_by_admin

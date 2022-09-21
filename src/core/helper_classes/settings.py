@@ -12,10 +12,11 @@ class Settings(BaseSettings):
     database_user: str = ''
     database_password: str = ''
 
-    session_token_store_type: Literal["file", "in_memory_db"] = 'file'
+    access_tokens_store_type: Literal["file", "in_memory_db"] = 'file'
     redis_url: str = ''
     redis_user: str = ''
     redis_password: str = ''
+    test_redis_connection_on_app_start: bool = False
 
     add_admin_app: bool = True
     add_password_reset_app: bool = True
