@@ -24,12 +24,12 @@ def create_app(
     api_routes_dependencies = get_user_routes_dependencies(
         app_db_manager,
         app_cache_manager,
-        SETTINGS.access_tokens_store_type
+        SETTINGS
     )
     admin_api_routes_dependencies = get_admin_routes_dependencies(
         app_db_manager,
         app_cache_manager,
-        SETTINGS.access_tokens_store_type
+        SETTINGS
     )
     api_router = api_routes.get_router(
         api_routes_dependencies,

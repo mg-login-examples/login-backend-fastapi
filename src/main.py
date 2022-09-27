@@ -9,6 +9,7 @@ from core.environment_settings import get_environment_settings
 from core.logging_settings import set_logging_settings
 from stores.store_utils import get_db_manager
 from stores.store_utils import get_cache_manager
+from stores.nosql_db_store import pymongo_manager
 from core.app_factory import create_app
 from stores.sql_db_store import db_utils
 from core import admin_users_manager
@@ -47,6 +48,8 @@ if __name__ == "__main__":
         # TODO Test db available
         if SETTINGS.test_redis_connection_on_app_start:
             asyncio.run(redis_cache_manager.assert_redis_is_available())
+        if SETTINGS.test_pymongo_connection_on_app_start:
+            pymongo_manager.assert_mongo_db_is_available(SETTINGS.mongo_host, SETTINGS.mongo_port)
         uvicorn.run(
             "main:app",
             host=SETTINGS.server_host,

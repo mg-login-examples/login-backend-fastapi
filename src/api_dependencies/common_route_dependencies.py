@@ -2,6 +2,7 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 from aioredis import Redis
+from pymongo.database import Database as NoSQLDatabase
 
 from stores.access_tokens_store.access_token_store import AccessTokenStore
 from data.schemas.users.user import User
@@ -11,6 +12,7 @@ class CommonRouteDependencies:
         self,
         db_session_as_dependency: Session = None,
         cache_session_as_dependency: Redis = None,
+        nosql_database_as_dependency: NoSQLDatabase = None,
         access_token_store_as_dependency: AccessTokenStore = None,
         validated_access_token_as_dependency: str = None,
         current_user_as_dependency: User = None,
@@ -19,6 +21,7 @@ class CommonRouteDependencies:
     ):
         self.db = db_session_as_dependency
         self.redis_cache_session = cache_session_as_dependency
+        self.nosql_database = nosql_database_as_dependency
         self.access_token_store = access_token_store_as_dependency
         self.validated_access_token = validated_access_token_as_dependency
         self.current_user = current_user_as_dependency

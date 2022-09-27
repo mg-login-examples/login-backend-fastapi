@@ -18,6 +18,13 @@ class Settings(BaseSettings):
     redis_password: str = ''
     test_redis_connection_on_app_start: bool = False
 
+    mongo_host: str ='localhost'
+    mongo_port: int = 27017
+    mongo_username: str = ''
+    mongo_password: str = ''
+    mongo_database: str = 'login'
+    test_pymongo_connection_on_app_start: bool = True
+
     add_admin_app: bool = True
     add_password_reset_app: bool = True
     cors_origins_set: str = "Development"
