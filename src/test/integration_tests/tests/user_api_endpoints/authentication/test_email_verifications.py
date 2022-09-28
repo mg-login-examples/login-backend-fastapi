@@ -8,7 +8,7 @@ from stores.sql_db_store import crud_base
 from data.database.models.user_email_verification import UserEmailVerification as UserEmailVerificationModel
 from data.schemas.users.user import User
 from test.utils.admin_api import users as users_admin_api
-from test.utils.api import email_verifications as email_verifications_api
+from test.utils.user_api import email_verifications as email_verifications_api
 from utils.email.email_utils import send_email
 
 logger = logging.getLogger(__name__)

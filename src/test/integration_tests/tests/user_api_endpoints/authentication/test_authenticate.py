@@ -7,7 +7,7 @@ import requests
 from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.users.user import User
 from data.schemas.users.userDeep import User as UserDeep
-from test.utils.api import authentication as authentication_api
+from test.utils.user_api import authentication as authentication_api
 
 logger = logging.getLogger(__name__)
 

@@ -4,7 +4,7 @@ import requests
 
 from data.schemas.users.userDeep import User as UserDeep
 from data.schemas.users.userCreate import UserCreate
-from test.utils.api import authentication as authentication_api
+from test.utils.user_api import authentication as authentication_api
 
 logger = logging.getLogger(__name__)
 

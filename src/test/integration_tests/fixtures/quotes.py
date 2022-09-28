@@ -7,7 +7,7 @@ import requests
 from data.schemas.quotes.quote import Quote
 from data.schemas.users.user import User
 from test.integration_tests.utils.fake_quote import generate_random_quote_to_create
-from test.utils.api import quotes as quotes_api
+from test.utils.user_api import quotes as quotes_api
 
 logger = logging.getLogger(__name__)
 

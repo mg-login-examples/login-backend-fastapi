@@ -8,8 +8,8 @@ from stores.sql_db_store import crud_base
 from data.database.models.user_password_reset_token import UserPasswordResetToken as UserPasswordResetTokenModel
 from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.userDeep import User as UserDeep
-from test.utils.api import password_reset as password_reset_api
-from test.utils.api import authentication as authentication_api
+from test.utils.user_api import password_reset as password_reset_api
+from test.utils.user_api import authentication as authentication_api
 from utils.email.email_utils import send_email
 
 logger = logging.getLogger(__name__)

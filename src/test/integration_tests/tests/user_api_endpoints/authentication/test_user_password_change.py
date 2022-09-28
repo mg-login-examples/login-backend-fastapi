@@ -8,7 +8,7 @@ from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.authentication.user_password_change import UserPasswordChange
 from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.userDeep import User as UserDeep
-from test.utils.api import authentication as authentication_api
+from test.utils.user_api import authentication as authentication_api
 
 logger = logging.getLogger(__name__)
 

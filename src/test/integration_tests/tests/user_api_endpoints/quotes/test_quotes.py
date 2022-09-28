@@ -8,7 +8,7 @@ import pytest
 from data.schemas.users.user import User
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from test.integration_tests.utils.fake_quote import generate_random_quote_to_create
-from test.utils.api import quotes as quotes_api
+from test.utils.user_api import quotes as quotes_api
 from test.utils.admin_api import quotes as quotes_admin_api
 from test.integration_tests.utils import asserts
 
