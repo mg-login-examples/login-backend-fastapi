@@ -2,8 +2,6 @@ import logging
 
 import requests
 
-from test.utils.api import authentication as authentication_api
-
 logger = logging.getLogger(__name__)
 
 def test_logout(test_client_logged_in: requests.Session):

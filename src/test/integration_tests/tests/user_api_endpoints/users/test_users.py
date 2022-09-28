@@ -8,7 +8,7 @@ from data.schemas.users.user import User
 from stores.sql_db_store import crud_base
 from data.database.models.user_email_verification import UserEmailVerification as UserEmailVerificationModel
 from test.integration_tests.utils.fake_user import generate_random_user_to_create
-from test.utils.api import users as users_api
+from test.utils.user_api import users as users_api
 from utils.email.email_utils import send_email
 from test.integration_tests.utils import asserts
 
