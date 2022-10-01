@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class UserNotesBase(BaseModel):
+class UserNoteBase(BaseModel):
     user_id: int
     title: str
     text: str

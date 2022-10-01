@@ -17,6 +17,7 @@ class EndpointsConfigs:
         self.post_item = Configs()
         self.put_item = Configs()
         self.delete_item = Configs()
+        self.sql_db = True
 
     def require_all(self, dependencies: List[Any] = []):
         self.get_items_count.require(dependencies)
@@ -26,6 +27,12 @@ class EndpointsConfigs:
         self.put_item.require(dependencies)
         self.delete_item.require(dependencies)
         return self
+    
+    def resource_in_sql_db(self):
+        self.sql_db = True
+
+    def resource_in_mongo_db(self):
+        self.sql_db = False
 
     def require_get_items_count(self, dependencies: List[Any] = []):
         self.get_items_count.require(dependencies)

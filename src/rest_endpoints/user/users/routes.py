@@ -19,7 +19,7 @@ def get_router(
         "users",
         UserSchema,
         UserCreateSchema,
-        UserModel
+        UserModel,
     )
     endpoints_required = EndpointsConfigs()
     endpoints_required.require_get_item(dependencies=[api_dependencies.restrict_endpoint_to_own_resources_param_item_id])
@@ -27,7 +27,8 @@ def get_router(
     router = generate_router_with_resource_endpoints(
         endpoints_required,
         user_resource_configurations,
-        api_dependencies.db
+        api_dependencies.db,
+        api_dependencies.nosql_database,
     )
 
     generate_create_user_endpoint(

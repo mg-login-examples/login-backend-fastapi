@@ -33,7 +33,8 @@ def get_router(route_dependencies: CommonRouteDependencies) -> APIRouter:
     router = generate_router_with_resource_endpoints(
         endpoints_required,
         quote_resource_configurations,
-        route_dependencies.db
+        route_dependencies.db,
+        route_dependencies.nosql_database,
     )
 
     verify_edit_quote_owner_dependency = get_verify_edit_quote_owner_as_fastapi_dependency(route_dependencies.db, route_dependencies.current_user)

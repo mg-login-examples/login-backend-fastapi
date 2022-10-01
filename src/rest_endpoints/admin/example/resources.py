@@ -22,7 +22,7 @@ from data.schemas.examples.authors.authorDeep import Author as AuthorSchema
 from data.schemas.examples.authors.authorCreate import AuthorCreate as AuthorCreateSchema
 
 
-resourcesConfigurations: List[ResourceConfigurations] = [
+resources_configurations: List[ResourceConfigurations] = [
     ResourceConfigurations(
         "users",
         UserSchema,
@@ -52,5 +52,5 @@ resourcesConfigurations: List[ResourceConfigurations] = [
     ),
 ]
 
-if not len({resourceConfiguration.resource_endpoints_url_prefix for resourceConfiguration in resourcesConfigurations}) == len(resourcesConfigurations):
+if not len({resourceConfiguration.resource_endpoints_url_prefix for resourceConfiguration in resources_configurations}) == len(resources_configurations):
     raise ValueError("2 or more Admin resources have the same url prefix! Ensure all url prefix are unique.")

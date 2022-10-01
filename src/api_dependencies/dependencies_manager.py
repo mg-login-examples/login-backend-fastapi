@@ -21,7 +21,6 @@ def get_user_routes_dependencies(
     settings: Settings,
 ):
     db_session_as_dependency=Depends(app_db_manager.db_session)
-    cache_session_as_dependency=Depends(app_cache_manager.redis_session)
     nosql_database_as_dependency=get_nosql_db_as_fastapi_dependency(
         settings.mongo_host,
         settings.mongo_port,
@@ -29,6 +28,7 @@ def get_user_routes_dependencies(
         settings.mongo_password,
         settings.mongo_database,
     )
+    cache_session_as_dependency=Depends(app_cache_manager.redis_session)
     token_extractor = UserAccessTokenExtractor(tokenUrl="api/login")
     token_extractor_as_dependency=Depends(token_extractor)
     access_token_store_as_dependency=get_access_token_store_as_fastapi_dependency(
@@ -43,8 +43,8 @@ def get_user_routes_dependencies(
     restrict_endpoint_to_own_resources_param_user_id_as_dependency = get_restrict_endpoint_to_own_resources_param_user_id_as_fastapi_dependency(current_user_as_dependency)
     route_dependencies = CommonRouteDependencies(
         db_session_as_dependency=db_session_as_dependency,
-        cache_session_as_dependency=cache_session_as_dependency,
         nosql_database_as_dependency=nosql_database_as_dependency,
+        cache_session_as_dependency=cache_session_as_dependency,
         access_token_store_as_dependency=access_token_store_as_dependency,
         validated_access_token_as_dependency=validated_access_token_as_dependency,
         current_user_as_dependency=current_user_as_dependency,
@@ -59,6 +59,13 @@ def get_admin_routes_dependencies(
     settings: Settings,
 ):
     db_session_as_dependency=Depends(app_db_manager.db_session)
+    nosql_database_as_dependency=get_nosql_db_as_fastapi_dependency(
+        settings.mongo_host,
+        settings.mongo_port,
+        settings.mongo_username,
+        settings.mongo_password,
+        settings.mongo_database,
+    )
     cache_session_as_dependency=Depends(app_cache_manager.redis_session)
     token_extractor = AdminAccessTokenExtractor(tokenUrl="api/admin/login")
     token_extractor_as_dependency=Depends(token_extractor)
@@ -72,6 +79,7 @@ def get_admin_routes_dependencies(
     current_user_as_dependency=get_current_admin_user_as_fastapi_dependency(validated_access_token_as_dependency, db_session_as_dependency)
     route_dependencies = CommonRouteDependencies(
         db_session_as_dependency=db_session_as_dependency,
+        nosql_database_as_dependency=nosql_database_as_dependency,
         cache_session_as_dependency=cache_session_as_dependency,
         access_token_store_as_dependency=access_token_store_as_dependency,
         validated_access_token_as_dependency=validated_access_token_as_dependency,

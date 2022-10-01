@@ -10,7 +10,8 @@ class ResourceConfigurations:
         resource_endpoints_url_prefix,
         ResourceSchema: BaseSchema,
         ResourceCreateSchema: BaseSchema,
-        ResourceModel: BaseORMModel,
+        ResourceModel: BaseORMModel = None,
+        MongoDBTable: str = None,
         customEndUserCreateSchemaToDbSchema: Callable = None,
         customEndUserUpdateSchemaToDbSchema: Callable = None,
     ):
@@ -18,5 +19,9 @@ class ResourceConfigurations:
         self.ResourceSchema = ResourceSchema
         self.ResourceCreateSchema = ResourceCreateSchema
         self.ResourceModel = ResourceModel
+        self.MongoDBTable = MongoDBTable
         self.customEndUserCreateSchemaToDbSchema = customEndUserCreateSchemaToDbSchema
         self.customEndUserUpdateSchemaToDbSchema = customEndUserUpdateSchemaToDbSchema
+
+        if not ResourceModel and not MongoDBTable:
+            raise Exception(f"Both ResourceModel and MongoDBTable are None for resource {resource_endpoints_url_prefix}")

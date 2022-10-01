@@ -13,23 +13,33 @@ from data.schemas.quotes.quoteCreate import QuoteCreate as QuoteCreateSchema
 from data.endUserSchemasToDbSchemas.quote import createSchemaToDbSchema as quoteCreateSchemaToDbSchema
 from data.endUserSchemasToDbSchemas.quote import updateSchemaToDbSchema as quoteUpdateSchemaToDbSchema
 
-resourcesConfigurations: List[ResourceConfigurations] = [
+from data.mongo_schemas.user_notes.user_note import UserNote as UserNoteSchema
+from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate as UserNoteCreateSchema
+from data.mongo_schemas.user_notes.user_note_db_table import UserNoteDBTable
+
+resources_configurations: List[ResourceConfigurations] = [
     ResourceConfigurations(
         "users",
         UserSchema,
         UserCreateSchema,
-        UserModel,
+        ResourceModel=UserModel,
         customEndUserCreateSchemaToDbSchema=userCreateSchemaToDbSchema,
     ),
     ResourceConfigurations(
         "quotes",
         QuoteSchema,
         QuoteCreateSchema,
-        QuoteModel,
+        ResourceModel=QuoteModel,
         customEndUserCreateSchemaToDbSchema=quoteCreateSchemaToDbSchema,
         customEndUserUpdateSchemaToDbSchema=quoteUpdateSchemaToDbSchema,
     ),
+    ResourceConfigurations(
+        "user-notes",
+        UserNoteSchema,
+        UserNoteCreateSchema,
+        MongoDBTable=UserNoteDBTable,
+    ),
 ]
 
-if len({resourceConfiguration.resource_endpoints_url_prefix for resourceConfiguration in resourcesConfigurations}) != len(resourcesConfigurations):
+if len({resource_configuration.resource_endpoints_url_prefix for resource_configuration in resources_configurations}) != len(resources_configurations):
     raise ValueError("2 or more Admin resources have the same url prefix! Ensure all url prefix are unique.")
