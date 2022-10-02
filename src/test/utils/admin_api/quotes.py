@@ -1,5 +1,6 @@
-import requests
 from typing import List
+
+import requests
 
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.quotes.quoteCreate import QuoteCreate

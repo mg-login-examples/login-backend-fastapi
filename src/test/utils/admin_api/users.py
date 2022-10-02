@@ -1,5 +1,6 @@
-import requests
 from typing import List
+
+import requests
 
 from data.schemas.users.userDeep import User as UserDeep
 from data.schemas.users.userCreate import UserCreate

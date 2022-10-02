@@ -1,5 +1,6 @@
-import requests
 from typing import List
+
+import requests
 
 from data.schemas.quotes.quote import Quote
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
@@ -10,7 +11,7 @@ def create_quote(test_client: requests.Session, quote_to_create: QuoteCreate) ->
     assert response.status_code == 200
     return QuoteDeep(**response.json())
 
-def edit_quote(test_client: requests.Session, quote_to_edit: QuoteCreate):
+def edit_quote(test_client: requests.Session, quote_to_edit: Quote):
     response = test_client.put(f"/api/quotes/{quote_to_edit.id}/", json=quote_to_edit.dict())
     assert response.status_code == 204
 

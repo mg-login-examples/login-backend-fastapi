@@ -1,7 +1,7 @@
 from typing import Callable
 
 from helpers_classes.custom_api_router import APIRouter
-from rest_endpoints.admin.example.resources import resourcesConfigurations
+from rest_endpoints.admin.example.resources import resources_configurations
 from crud_endpoints_generator.crud_endpoints_generator import get_resource_endpoints_router
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 from rest_endpoints.admin.add_resource_url_ids_to_schema_properties import add_resource_url_ids_to_schema_properties
@@ -20,26 +20,26 @@ def _create_get_admin_resources_endpoints(router: APIRouter):
     @router.get("/resources/")
     def get_all_resources():
         infos = []
-        for resourceConfiguration in resourcesConfigurations:
+        for resource_configuration in resources_configurations:
             info = {
-                "resourceUrlId": resourceConfiguration.resource_endpoints_url_prefix,
-                "resourceName": resourceConfiguration.ResourceSchema.schema()["title"],
-                "updateSchema": resourceConfiguration.ResourceSchema.schema(),
-                "createSchema": resourceConfiguration.ResourceCreateSchema.schema(),
+                "resourceUrlId": resource_configuration.resource_endpoints_url_prefix,
+                "resourceName": resource_configuration.ResourceSchema.schema()["title"],
+                "updateSchema": resource_configuration.ResourceSchema.schema(),
+                "createSchema": resource_configuration.ResourceCreateSchema.schema(),
             }
-            add_resource_url_ids_to_schema_properties(info["updateSchema"], resourceConfiguration, resourcesConfigurations)
-            add_resource_url_ids_to_schema_properties(info["createSchema"], resourceConfiguration, resourcesConfigurations)
+            add_resource_url_ids_to_schema_properties(info["updateSchema"], resource_configuration, resources_configurations)
+            add_resource_url_ids_to_schema_properties(info["createSchema"], resource_configuration, resources_configurations)
             infos.append(info)
         return infos
 
 
 def _create_crud_endpoints_for_all_admin_resources(router: APIRouter, get_db_session: Callable):
     endpoints_required = EndpointsConfigs().require_all()
-    for resourceConfiguration in resourcesConfigurations:
+    for resource_configuration in resources_configurations:
         router.include_router(
             get_resource_endpoints_router(
                 endpoints_required,
-                resourceConfiguration,
+                resource_configuration,
                 get_db_session
             ),
             prefix="/resource"
