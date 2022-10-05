@@ -26,4 +26,4 @@ volumes:
 
 secrets:
   mongo-password:
-    file: db/mongo_pwd.txt
+    file: docker_secrets/mongo_pwd.txt
