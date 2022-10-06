@@ -1,1 +1,0 @@
-Add a text file named: "mysql_pwd.txt" with a password for mysql

@@ -26,4 +26,4 @@ volumes:
 
 secrets:
   mysql-password:
-    file: db/mysql_pwd.txt
+    file: docker_secrets/mysql_pwd.txt

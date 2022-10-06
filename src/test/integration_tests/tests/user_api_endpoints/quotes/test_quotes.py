@@ -64,7 +64,7 @@ def test_get_user_quotes_fails_when_getting_quotes_of_different_user_than_logged
     assert response.status_code == 403
     asserts.assert_response_error_resource_not_accessible(response)
 
-# Test that a quote's text can be edit
+# Test that a quote's text can be edited
 def test_edit_quote_text(test_client_logged_in: requests.Session, created_quote: QuoteDeep):
     assert created_quote.text != "quote text changed"
     created_quote.text = "quote text changed"

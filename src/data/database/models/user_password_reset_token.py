@@ -12,6 +12,7 @@ class UserPasswordResetToken(Base):
     time_updated = Column(DateTime(timezone=True), onupdate=func.now())
     token = Column(String(128), nullable=False)
     is_active = Column(Boolean, default=False, nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    user = relationship("User")
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     expires_at = Column(DateTime, nullable=False)
+
+    user = relationship("User", back_populates="user_password_reset_tokens")

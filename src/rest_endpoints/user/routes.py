@@ -3,6 +3,7 @@ from rest_endpoints.user.authentication import routes as authentication_routes
 from rest_endpoints.user.users import routes as users_routes
 from rest_endpoints.user.quotes import routes as quotes_routes
 from rest_endpoints.user.email_verification import routes as email_verifications_routes
+from rest_endpoints.user.user_notes import routes as user_notes_routes
 from api_dependencies.common_route_dependencies import CommonRouteDependencies
 
 def get_router(
@@ -23,5 +24,8 @@ def get_router(
 
     email_verifications_router = email_verifications_routes.get_router(dependencies)
     router.include_router(email_verifications_router)
+
+    user_notes_router = user_notes_routes.get_router(dependencies)
+    router.include_router(user_notes_router)
 
     return router

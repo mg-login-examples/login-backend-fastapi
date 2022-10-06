@@ -1,7 +1,8 @@
 import logging
+from sqlite3 import Connection as SQLite3Connection
 
-from sqlalchemy import create_engine, pool
-from sqlalchemy.engine import make_url, URL
+from sqlalchemy import create_engine, pool, event
+from sqlalchemy.engine import make_url, URL, Engine
 from sqlalchemy.orm import sessionmaker
 
 
@@ -19,6 +20,7 @@ class SQLAlchemyDBManager():
         )
 
         if "sqlite" in database_url:
+            self.enable_sqlite_foreign_keys()
             self.engine = create_engine(
                 self.sqlalchemy_url, connect_args={"check_same_thread": False}
             )
@@ -65,3 +67,12 @@ class SQLAlchemyDBManager():
                 sqlalchemy_url, 
                 poolclass=pool.NullPool,
             )
+
+    def enable_sqlite_foreign_keys(self):
+        # https://stackoverflow.com/questions/5033547/sqlalchemy-cascade-delete/62327279#62327279
+        @event.listens_for(Engine, "connect")
+        def _set_sqlite_pragma(dbapi_connection, connection_record):
+            if isinstance(dbapi_connection, SQLite3Connection):
+                cursor = dbapi_connection.cursor()
+                cursor.execute("PRAGMA foreign_keys=ON;")
+                cursor.close()

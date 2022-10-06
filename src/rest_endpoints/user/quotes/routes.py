@@ -1,6 +1,5 @@
 from helpers_classes.custom_api_router import APIRouter
 from api_dependencies.common_route_dependencies import CommonRouteDependencies
-CommonRouteDependencies
 from crud_endpoints_generator.crud_endpoints_generator import generate_router_with_resource_endpoints
 from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
@@ -34,7 +33,8 @@ def get_router(route_dependencies: CommonRouteDependencies) -> APIRouter:
     router = generate_router_with_resource_endpoints(
         endpoints_required,
         quote_resource_configurations,
-        route_dependencies.db
+        route_dependencies.db,
+        route_dependencies.nosql_database,
     )
 
     verify_edit_quote_owner_dependency = get_verify_edit_quote_owner_as_fastapi_dependency(route_dependencies.db, route_dependencies.current_user)

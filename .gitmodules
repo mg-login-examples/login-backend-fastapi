@@ -1,6 +1,6 @@
 [submodule "vue_admin"]
-path = src/admin/view/vue_admin
+path = src/admin_app/admin-vue
 url = https://github.com/mg-login-examples/login-admin-frontend-vue.git
 [submodule "vue_reset_password"]
-path = src/password_reset_app/login-password-reset-frontend-vue
+path = src/password_reset_app/password-reset-vue
 url = https://github.com/mg-login-examples/login-password-reset-frontend-vue.git

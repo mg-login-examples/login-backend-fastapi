@@ -9,6 +9,7 @@ from api_dependencies.common_route_dependencies import CommonRouteDependencies
 from .create_user_endpoint import generate_endpoint as generate_create_user_endpoint
 from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
 from .user_sessions_endpoint import generate_endpoint as generate_user_sessions_endpoint
+from .user_notes_endpoint import generate_endpoint as generate_user_notes_endpoint
 
 def get_router(
     api_dependencies: CommonRouteDependencies,
@@ -19,7 +20,7 @@ def get_router(
         "users",
         UserSchema,
         UserCreateSchema,
-        UserModel
+        UserModel,
     )
     endpoints_required = EndpointsConfigs()
     endpoints_required.require_get_item(dependencies=[api_dependencies.restrict_endpoint_to_own_resources_param_item_id])
@@ -27,7 +28,8 @@ def get_router(
     router = generate_router_with_resource_endpoints(
         endpoints_required,
         user_resource_configurations,
-        api_dependencies.db
+        api_dependencies.db,
+        api_dependencies.nosql_database,
     )
 
     generate_create_user_endpoint(
@@ -47,6 +49,12 @@ def get_router(
     generate_user_sessions_endpoint(
         router,
         api_dependencies.db,
+        api_dependencies.restrict_endpoint_to_own_resources_param_user_id,
+    )
+
+    generate_user_notes_endpoint(
+        router,
+        api_dependencies.nosql_database,
         api_dependencies.restrict_endpoint_to_own_resources_param_user_id,
     )
 

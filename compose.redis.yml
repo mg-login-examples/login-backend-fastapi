@@ -24,4 +24,4 @@ volumes:
 
 secrets:
   redis-pass:
-    file: cache/redis_pwd.txt
+    file: docker_secrets/redis_pwd.txt

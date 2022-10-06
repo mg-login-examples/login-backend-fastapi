@@ -10,6 +10,7 @@ SQLAlchemy==1.4.40
 SQLAlchemy-Utils
 mysqlclient
 aioredis
+pymongo
 alembic
 python-dotenv
 coloredlogs

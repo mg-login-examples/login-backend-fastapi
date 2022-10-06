@@ -1,0 +1,1 @@
+UserNoteDBTable = "user_notes"

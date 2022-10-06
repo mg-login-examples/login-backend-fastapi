@@ -1,5 +1,6 @@
-import requests
 from typing import List
+
+import requests
 
 from data.schemas.users.user import User
 from data.schemas.authentication.login_response import LoginResponse
