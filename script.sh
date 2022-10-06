@@ -54,6 +54,10 @@ then
    export CYPRESS_ADMIN_API_LOGIN_PASSWORD=$BACKEND_ADMIN_USER_PASSWORD
    export SAMESITE=none
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend run vueapp_test_e2e npm run test:e2e -- --headless --mode ci_e2e --browser chrome
+elif [ $case = "launch-databases" ]
+then
+   docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend down
+   docker-compose -f docker-compose.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend up --build
 elif [ $case = "down" ]
 then
    # Stop all backend project's containers
