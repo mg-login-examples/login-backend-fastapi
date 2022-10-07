@@ -19,7 +19,7 @@ services:
     networks:
       - backend
     volumes:
-      - mongo-data:/var/lib/${MONGO_DOCKER_VOLUME-mongo}
+      - mongo-data:/data/db
 
 volumes:
   mongo-data:
