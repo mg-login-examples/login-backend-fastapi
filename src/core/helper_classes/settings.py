@@ -30,3 +30,6 @@ class Settings(BaseSettings):
     cors_origins_set: str = "Development"
     samesite: str = "lax"
     secure_cookies: bool = False
+
+    add_websocket: bool = True
+    broadcast_url: str = "memory://"

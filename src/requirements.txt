@@ -1,9 +1,11 @@
 fastapi
-uvicorn
+uvicorn[standard]
 python-multipart
 email-validator
 typing-extensions
+aiostream
 aiofiles
+broadcaster[redis]
 requests
 passlib[bcrypt]
 SQLAlchemy==1.4.40
