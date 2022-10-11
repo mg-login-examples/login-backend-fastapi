@@ -71,6 +71,7 @@ else
     - launch-api-cloud-dev
     - launch-fullstack-local
     - run-e2e-tests
+    - launch-databases
     - down
     "
 fi
