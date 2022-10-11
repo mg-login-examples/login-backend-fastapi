@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     log_to_file: bool = True
     log_filename: str = "app.log"
+    reload_app_on_change: bool = True
 
     database_url: str = ''
     database_user: str = ''

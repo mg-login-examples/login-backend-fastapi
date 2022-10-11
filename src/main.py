@@ -55,6 +55,6 @@ if __name__ == "__main__":
             host=SETTINGS.server_host,
             port=SETTINGS.server_port,
             log_config=None, # removes default uvicorn log level and formatting
-            reload=True,
+            reload=SETTINGS.reload_app_on_change,
             workers=1
         )
