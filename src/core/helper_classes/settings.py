@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     database_url: str = ''
     database_user: str = ''
     database_password: str = ''
+    test_sql_db_connection_on_app_start: bool = True
 
     access_tokens_store_type: Literal["file", "in_memory_db"] = 'file'
     redis_url: str = ''
@@ -23,7 +24,7 @@ class Settings(BaseSettings):
     mongo_username: str = ''
     mongo_password: str = ''
     mongo_database: str = 'login'
-    test_pymongo_connection_on_app_start: bool = True
+    test_mongo_db_connection_on_app_start: bool = False
 
     add_admin_app: bool = True
     add_password_reset_app: bool = True

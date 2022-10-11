@@ -25,7 +25,7 @@ def assert_mongo_db_is_available(mongo_host: str, mongo_port: int):
     try:
         client = MongoClient(mongo_host, mongo_port, serverSelectionTimeoutMS=1000)
         client.server_info()
-        logger.info("Test mongo connection established successfully")
+        logger.info("Test mongo db connection established successfully")
     except Exception as e:
         logger.error("Error pinging to mongo")
         raise e
