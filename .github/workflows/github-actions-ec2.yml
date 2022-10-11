@@ -121,8 +121,9 @@ jobs:
             sudo rm -rf backend-fastapi-old && 
             mv backend-fastapi backend-fastapi-old &&
             git clone -b main https://github.com/mg-login-examples/login-backend-fastapi.git backend-fastapi &&
-            cp backend-fastapi-old/db/mysql_pwd.txt backend-fastapi/db/ &&
-            cp backend-fastapi-old/cache/redis_pwd.txt backend-fastapi/cache/ &&
+            cp backend-fastapi-old/docker_secrets/mysql_pwd.txt backend-fastapi/docker_secrets/ &&
+            cp backend-fastapi-old/docker_secrets/mongo_pwd.txt backend-fastapi/docker_secrets/ &&
+            cp backend-fastapi-old/docker_secrets/redis_pwd.txt backend-fastapi/docker_secrets/ &&
             sudo rm -rf backend-fastapi-old &&
             cd backend-fastapi &&
             git clone -b main https://github.com/mg-login-examples/login-frontend-vue.git frontend &&

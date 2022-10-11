@@ -6,3 +6,4 @@ logger = logging.getLogger(__name__)
 
 def create_all_tables(engine):
     BaseModel.metadata.create_all(bind=engine)
+    logger.info("Created all db tables")
