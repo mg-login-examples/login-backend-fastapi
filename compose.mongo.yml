@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   mongo_db:
+    restart: always
     image: mongo:latest
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME-root_user}
