@@ -13,6 +13,7 @@ SQLAlchemy-Utils
 mysqlclient
 aioredis
 pymongo
+pymongo-inmemory
 alembic
 python-dotenv
 coloredlogs

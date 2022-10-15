@@ -13,9 +13,24 @@
 - Run backend application tests and watch for changes (test driven development)
     - `cd src`
     - `ptw -- --testmon`
-Generate alembic migrations automatically based on sqlalchemy models:
+- Generate alembic migrations automatically based on sqlalchemy models:
     - `cd src`
     - `alembic revision --autogenerate -m "some migration comment"`
-Run migrations and update database:
+- Run migrations and update database:
     - `cd src`
     - `alembic upgrade head`
+- Generate alembic migrations automatically based on sqlalchemy models for SQLite:
+    - `cd src`
+    - `alembic -c alembic.sqlite.ini revision --autogenerate -m "some migration comment"`
+- Run migrations and update database for SQLite:
+    - `cd src`
+    - `alembic -c alembic.sqlite.ini upgrade head`
+- Create admin user
+    - `cd src`
+    - `python main.py add_admin_user <user_email> <user_password>`
+- Change admin user password
+    - `cd src`
+    - `python main.py update_admin_user_password <user_email> <user_password>`
+- Delete admin user
+    - `cd src`
+    - `python main.py delete_admin_user_password <user_email>`

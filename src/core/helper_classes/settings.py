@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     database_password: str = ''
     test_sql_db_connection_on_app_start: bool = True
 
-    access_tokens_store_type: Literal["file", "in_memory_db"] = 'file'
+    access_tokens_store_type: Literal["file", "redis"] = 'file'
     redis_url: str = ''
     redis_user: str = ''
     redis_password: str = ''
