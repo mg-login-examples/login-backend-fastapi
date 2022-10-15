@@ -31,7 +31,7 @@ def get_socket_authorization_token_as_fastapi_dependency():
             authorization = False
 
         if not authorization:
-            logger.error(f'Improper authorization error. Endpoint accessed: {webSocket.url}. Header Admin-Authorization: {header_authorization}. Cookie Admin-Authorization: {cookie_authorization}')
+            logger.error(f'Improper authorization error. Endpoint accessed: {webSocket.url}. Header Authorization: {header_authorization}. Cookie Authorization: {cookie_authorization}')
             raise HTTPException(
                 status_code=HTTP_403_FORBIDDEN, detail="Not authenticated"
             )

@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     log_filename: str = "app.log"
     reload_app_on_change: bool = True
 
-    database_url: str = ''
+    database_url: str = 'sqlite:///./sql_app.db'
     database_user: str = ''
     database_password: str = ''
     test_sql_db_connection_on_app_start: bool = True
@@ -25,7 +25,8 @@ class Settings(BaseSettings):
     mongo_username: str = ''
     mongo_password: str = ''
     mongo_database: str = 'login'
-    test_mongo_db_connection_on_app_start: bool = False
+    use_in_memory_mongo_db: bool = True
+    test_mongo_db_connection_on_app_start: bool = True
 
     add_admin_app: bool = True
     add_password_reset_app: bool = True
