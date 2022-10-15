@@ -1,3 +1,6 @@
+from typing import List
+import asyncio
+
 from broadcaster import Broadcast
 from fastapi import WebSocket
 
@@ -9,6 +12,7 @@ from socket_endpoints.main_socket.socket_channel_subscriptions_manager import ha
 def get_router(
     broadcast: Broadcast,
     api_routes_dependencies: CommonRouteDependencies,
+    broadcast_subscribers_async_tasks: List[asyncio.Task]
 ) -> APIRouter:
 
     router = APIRouter()
@@ -17,6 +21,6 @@ def get_router(
     async def ws_main(websocket: WebSocket, current_user: User = api_routes_dependencies.current_user):
         await websocket.accept()
 
-        await handle_websocket_traffic(websocket, current_user, broadcast)
+        await handle_websocket_traffic(websocket, current_user, broadcast, broadcast_subscribers_async_tasks)
 
     return router

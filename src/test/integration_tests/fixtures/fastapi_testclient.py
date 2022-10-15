@@ -22,3 +22,8 @@ def test_client_admin_logged_in(test_client: requests.Session, admin_login_respo
 @pytest.fixture
 def test_client_logged_in(test_client: requests.Session, login_response: LoginResponse) -> requests.Session:
     return test_client
+
+@pytest.fixture
+def test_client_after_app_start(test_client: requests.Session) -> requests.Session:
+    with test_client as test_client:
+        yield test_client

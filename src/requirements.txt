@@ -19,6 +19,7 @@ python-dotenv
 coloredlogs
 pytest
 pytest-asyncio
+httpx
 pytest-watch
 pytest-html
 pytest-testmon

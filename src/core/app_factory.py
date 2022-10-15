@@ -1,6 +1,7 @@
 import logging
 
 from fastapi import FastAPI
+from broadcaster import Broadcast
 
 from core.cors_settings import add_cors
 from rest_endpoints import routes as api_routes
@@ -19,6 +20,7 @@ logger = logging.getLogger(__name__)
 def create_app(
     app_db_manager: SQLAlchemyDBManager,
     app_cache_manager: AioRedisCacheManager,
+    broadcast: Broadcast,
     SETTINGS: Settings
 ) -> FastAPI:
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
@@ -48,10 +50,12 @@ def create_app(
             app_cache_manager,
             SETTINGS
         )
-        broadcast = encode_broadcaster_utils.add_broadcaster(app, SETTINGS.broadcast_url)
+        broadcast_subscribers_async_tasks = []
+        encode_broadcaster_utils.enable_broadcaster(app, broadcast, broadcast_subscribers_async_tasks)
         socket_router = socket_routes.get_router(
             broadcast,
             socket_route_dependencies,
+            broadcast_subscribers_async_tasks,
         )
         app.include_router(socket_router)
 

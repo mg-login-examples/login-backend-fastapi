@@ -5,31 +5,40 @@ import asyncio
 
 import uvicorn
 
-from core.environment_settings import get_environment_settings
-from core.logging_settings import set_logging_settings
-from stores.store_utils import get_db_manager
-from stores.store_utils import get_cache_manager
+from core import environment_settings, logging_settings, app_factory, admin_users_manager
+from stores import store_utils 
 from stores.nosql_db_store import pymongo_manager
-from core.app_factory import create_app
 from stores.sql_db_store import db_utils
-from core import admin_users_manager
+from utils.encode_broadcaster import broadcaster_utils as encode_broadcaster_utils
+
 
 logger = logging.getLogger(__name__)
 
 # Init settings
 dot_env_file = os.getenv("ENV_FILE", ".env")
-SETTINGS = get_environment_settings(dot_env_file=dot_env_file)
+SETTINGS = environment_settings.get_environment_settings(dot_env_file=dot_env_file)
 
 # Set logging
-set_logging_settings(SETTINGS.log_level, SETTINGS.log_to_file, SETTINGS.log_filename)
+logging_settings.set_logging_settings(SETTINGS.log_level, SETTINGS.log_to_file, SETTINGS.log_filename)
 logger.info(f"Environment file selected: {dot_env_file}")
 
 # Create db manager
-app_db_manager = get_db_manager(SETTINGS.database_url, SETTINGS.database_user, SETTINGS.database_password)
+app_db_manager = store_utils.get_db_manager(
+    SETTINGS.database_url,
+    SETTINGS.database_user,
+    SETTINGS.database_password
+)
 # Create redis manager
-redis_cache_manager = get_cache_manager(SETTINGS.redis_url, SETTINGS.redis_user, SETTINGS.redis_password)
+redis_cache_manager = store_utils.get_cache_manager(
+    SETTINGS.redis_url,
+    SETTINGS.redis_user,
+    SETTINGS.redis_password
+)
+# Create broadcaster
+broadcast = encode_broadcaster_utils.get_broadcaster(SETTINGS.broadcast_url)
 # Create fastapi webapp
-app = create_app(app_db_manager, redis_cache_manager, SETTINGS)
+app = app_factory.create_app(app_db_manager, redis_cache_manager, broadcast, SETTINGS)
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -50,6 +59,8 @@ if __name__ == "__main__":
             asyncio.run(redis_cache_manager.assert_redis_is_available())
         if SETTINGS.test_mongo_db_connection_on_app_start:
             pymongo_manager.assert_mongo_db_is_available(SETTINGS.mongo_host, SETTINGS.mongo_port)
+        if SETTINGS.test_broadcast_connection_on_app_start:
+            asyncio.run(encode_broadcaster_utils.assert_broadcaster_is_able_to_connect_to_backend(broadcast))
         uvicorn.run(
             "main:app",
             host=SETTINGS.server_host,

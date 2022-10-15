@@ -14,12 +14,6 @@ class Settings(BaseSettings):
     database_password: str = ''
     test_sql_db_connection_on_app_start: bool = True
 
-    access_tokens_store_type: Literal["file", "redis"] = 'file'
-    redis_url: str = ''
-    redis_user: str = ''
-    redis_password: str = ''
-    test_redis_connection_on_app_start: bool = False
-
     mongo_host: str ='localhost'
     mongo_port: int = 27017
     mongo_username: str = ''
@@ -27,6 +21,12 @@ class Settings(BaseSettings):
     mongo_database: str = 'login'
     use_in_memory_mongo_db: bool = True
     test_mongo_db_connection_on_app_start: bool = True
+
+    access_tokens_store_type: Literal["file", "redis"] = 'file'
+    redis_url: str = ''
+    redis_user: str = ''
+    redis_password: str = ''
+    test_redis_connection_on_app_start: bool = False
 
     add_admin_app: bool = True
     add_password_reset_app: bool = True
@@ -36,3 +36,4 @@ class Settings(BaseSettings):
 
     add_websocket: bool = True
     broadcast_url: str = "memory://"
+    test_broadcast_connection_on_app_start: bool = True

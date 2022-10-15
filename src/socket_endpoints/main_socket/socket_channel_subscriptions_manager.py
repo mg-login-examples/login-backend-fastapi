@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 import logging
 import asyncio
 import json
@@ -16,7 +16,12 @@ from group_chat import socket_message_handler as group_chat_socket_message_handl
 
 logger = logging.getLogger(__name__)
 
-async def handle_websocket_traffic(websocket: WebSocket, current_user: User, broadcast: Broadcast):
+async def handle_websocket_traffic(
+    websocket: WebSocket,
+    current_user: User,
+    broadcast: Broadcast,
+    broadcast_subscribers_async_tasks: List[asyncio.Task]
+):
     subscribed_channels_to_infinite_loop_handler_streams = {}
     # Subscribe to any global channels here
     #
@@ -29,6 +34,7 @@ async def handle_websocket_traffic(websocket: WebSocket, current_user: User, bro
                 current_user,
                 broadcast,
                 subscribed_channels_to_infinite_loop_handler_streams,
+                broadcast_subscribers_async_tasks
             )
     except Exception as e:
         logger.error("Error in handle_websocket_traffic")
@@ -47,6 +53,7 @@ async def _handle_websocket_incomming_message(
     current_user: User,
     broadcast: Broadcast,
     subscribed_channels_to_infinite_loop_handler_streams: dict,
+    broadcast_subscribers_async_tasks: List[asyncio.Task]
     ):
     try:
         socket_payload = WebSocketPayload(**socket_payload_json)
@@ -58,6 +65,7 @@ async def _handle_websocket_incomming_message(
                 current_user,
                 broadcast,
                 subscribed_channels_to_infinite_loop_handler_streams,
+                broadcast_subscribers_async_tasks
             )
         # Action unsubscribe to channel
         if socket_payload.action == WebSocketActions.UNSUBSCRIBE.value:
@@ -87,13 +95,13 @@ async def _handle_action_subscribe_to_channel(
     current_user: User,
     broadcast: Broadcast,
     subscribed_channels_to_infinite_loop_handler_streams: dict,
+    broadcast_subscribers_async_tasks: List[asyncio.Task]
 ):
     # TODO User permission check before subscribing
     if channel not in subscribed_channels_to_infinite_loop_handler_streams:
         new_infinite_loop_handler_stream = AsyncStream()
         subscribed_channels_to_infinite_loop_handler_streams[channel] = new_infinite_loop_handler_stream
-        logger.info(f"{current_user.email} subscribing to {channel}")
-        asyncio.create_task(
+        subscriber_task = asyncio.create_task(
             _subscribe_to_channel(
                 channel,
                 websocket,
@@ -101,7 +109,9 @@ async def _handle_action_subscribe_to_channel(
                 new_infinite_loop_handler_stream
             )
         )
-    websocket_payload = { "channel": channel, "message":{ "channelSubscribed": True} }
+        # Collect task to gather during shutdown and ensure task is completed for a graceful shutdown
+        broadcast_subscribers_async_tasks.append(subscriber_task)
+    websocket_payload = { "channel": channel, "message":{ "channelSubscribed": True } }
     await websocket.send_json(websocket_payload)
 
 async def _subscribe_to_channel(
@@ -122,7 +132,8 @@ async def _subscribe_to_channel(
                         break
                     else:
                         try:
-                            websocket_payload = { "channel": channel, "message": event.message }
+                            message_dict = json.loads(event.message)
+                            websocket_payload = { "channel": channel, "message": message_dict }
                             await websocket.send_json(websocket_payload)
                         except Exception as e:
                             logger.error("Error in _subscribe_to_channel stream for channel {channel}")
@@ -138,7 +149,6 @@ async def _handle_action_unsubscribe_from_channel(
     subscribed_channels_to_infinite_loop_handler_streams: dict,
 ):
     if channel in subscribed_channels_to_infinite_loop_handler_streams:
-        logger.info(f"{current_user.email} unsubscribing from {channel}")
         infinite_loop_handler = subscribed_channels_to_infinite_loop_handler_streams[channel]
         await infinite_loop_handler.put(SubscribedChannelsStreamValues.CHANNEL_UNSUBSCRIBED)
         subscribed_channels_to_infinite_loop_handler_streams.pop(channel)

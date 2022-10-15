@@ -11,6 +11,7 @@ from data.schemas.users.userDeep import User as UserDeep
 from test.integration_tests.utils.fake_user import generate_random_user_to_create
 from test.utils.admin_api import users as users_admin_api
 from test.utils.user_api import authentication as authentication_api
+from test.integration_tests.utils.async_testclient_for_websockets import AsyncioTestClient
 
 logger = logging.getLogger(__name__)
 
