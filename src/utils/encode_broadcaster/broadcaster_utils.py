@@ -5,8 +5,6 @@ import asyncio
 from fastapi import FastAPI
 from broadcaster import Broadcast
 
-from helpers_classes.async_stream import AsyncStream
-
 logger = logging.getLogger(__name__)
 
 def get_broadcaster(broadcast_url: str) -> Broadcast:
