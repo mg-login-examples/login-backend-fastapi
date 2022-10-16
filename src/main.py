@@ -58,7 +58,7 @@ if __name__ == "__main__":
         if SETTINGS.test_redis_connection_on_app_start:
             asyncio.run(redis_cache_manager.assert_redis_is_available())
         if SETTINGS.test_mongo_db_connection_on_app_start:
-            pymongo_manager.assert_mongo_db_is_available(SETTINGS.mongo_host, SETTINGS.mongo_port)
+            pymongo_manager.assert_mongo_db_is_available(SETTINGS.mongo_host, SETTINGS.mongo_port, use_in_memory_mongo_db=SETTINGS.use_in_memory_mongo_db)
         if SETTINGS.test_broadcast_connection_on_app_start:
             asyncio.run(encode_broadcaster_utils.assert_broadcaster_is_able_to_connect_to_backend(broadcast))
         uvicorn.run(

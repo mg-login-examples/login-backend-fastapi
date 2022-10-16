@@ -29,6 +29,7 @@ def get_user_routes_dependencies(
         settings.mongo_username,
         settings.mongo_password,
         settings.mongo_database,
+        settings.use_in_memory_mongo_db,
     )
     cache_session_as_dependency=Depends(app_cache_manager.redis_session)
     token_extractor = UserAccessTokenExtractor(tokenUrl="api/login")
@@ -67,6 +68,7 @@ def get_admin_routes_dependencies(
         settings.mongo_username,
         settings.mongo_password,
         settings.mongo_database,
+        settings.use_in_memory_mongo_db,
     )
     cache_session_as_dependency=Depends(app_cache_manager.redis_session)
     token_extractor = AdminAccessTokenExtractor(tokenUrl="api/admin/login")
@@ -102,6 +104,7 @@ def get_socket_route_dependencies(
         settings.mongo_username,
         settings.mongo_password,
         settings.mongo_database,
+        settings.use_in_memory_mongo_db,
     )
     token_extractor_as_dependency=get_socket_authorization_token_as_fastapi_dependency()
     access_token_store_as_dependency=get_access_token_store_as_fastapi_dependency(
