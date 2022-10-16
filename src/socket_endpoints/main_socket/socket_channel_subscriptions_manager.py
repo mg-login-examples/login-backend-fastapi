@@ -111,7 +111,7 @@ async def _handle_action_subscribe_to_channel(
         )
         # Collect task to gather during shutdown and ensure task is completed for a graceful shutdown
         broadcast_subscribers_async_tasks.append(subscriber_task)
-    websocket_payload = { "channel": channel, "message":{ "channelSubscribed": True } }
+    websocket_payload = { "channel": channel, "subscribed": True }
     await websocket.send_json(websocket_payload)
 
 async def _subscribe_to_channel(
@@ -152,7 +152,7 @@ async def _handle_action_unsubscribe_from_channel(
         infinite_loop_handler = subscribed_channels_to_infinite_loop_handler_streams[channel]
         await infinite_loop_handler.put(SubscribedChannelsStreamValues.CHANNEL_UNSUBSCRIBED)
         subscribed_channels_to_infinite_loop_handler_streams.pop(channel)
-    websocket_payload = { "channel": channel, "message":{ "channelSubscribed": False } }
+    websocket_payload = { "channel": channel, "subscribed": False }
     await websocket.send_json(websocket_payload)
 
 async def _handle_channel_message(
