@@ -45,14 +45,7 @@ then
    export TEST_ADMIN_USER_PASSWORD="secretpwd"
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python main.py add_admin_user $TEST_ADMIN_USER_EMAIL $TEST_ADMIN_USER_PASSWORD
    # Run api tests
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 1
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 2
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 3
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 4
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 5
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 6
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 7
-   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 8
+   docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 2 --alluredir='./test/allure-results'
 elif [ $case = "launch-api-cloud-dev" ]
 then
    # Stop all backend project's containers and build and start backend stack containers for production
