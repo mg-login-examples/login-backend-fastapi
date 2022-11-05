@@ -22,8 +22,9 @@ def enable_broadcaster(app: FastAPI, broadcast: Broadcast, broadcast_subscribers
         # Ideally, on app shutdown, websocket connections will be forcibly closed by FastAPI,
         # the teardown code in src/socket_endpoints/main_socket/socket_channel_subscriptions_manager.py
         # will send websocket_closed event via async stream to all subscriber tasks which should end all of them
-        # Below line 29 that awaits tasks to complete is only needed for the tests - where the app is shutting down and
-        # broadcast is disconnected before all the subscriber tasks are ended, resulting in an error
+        # Below here on line 28 awaiting tasks to complete before disconnecting broadcast is only needed for the tests
+        # without line 28, the app is shutting down and broadcast is disconnected
+        # before all the subscriber tasks are ended, resulting in an error
         await asyncio.wait_for(asyncio.gather(*broadcast_subscribers_async_tasks), 5)
         await broadcast.disconnect()
 

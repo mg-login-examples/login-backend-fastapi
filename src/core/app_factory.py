@@ -10,6 +10,7 @@ from admin_app import app_mounter as admin_app_mounter
 from password_reset_app import app_mounter as password_reset_app_mounter
 from core.helper_classes.settings import Settings
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
+from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.aioredis_cache_manager import AioRedisCacheManager
 from api_dependencies.dependencies_manager import get_user_routes_dependencies, get_admin_routes_dependencies, get_socket_route_dependencies
 from utils.encode_broadcaster import broadcaster_utils as encode_broadcaster_utils
@@ -19,6 +20,7 @@ logger = logging.getLogger(__name__)
 
 def create_app(
     app_db_manager: SQLAlchemyDBManager,
+    app_nosql_db_manager: PyMongoManager,
     app_cache_manager: AioRedisCacheManager,
     broadcast: Broadcast,
     SETTINGS: Settings
@@ -27,11 +29,13 @@ def create_app(
 
     api_routes_dependencies = get_user_routes_dependencies(
         app_db_manager,
+        app_nosql_db_manager,
         app_cache_manager,
         SETTINGS
     )
     admin_api_routes_dependencies = get_admin_routes_dependencies(
         app_db_manager,
+        app_nosql_db_manager,
         app_cache_manager,
         SETTINGS
     )
@@ -47,6 +51,7 @@ def create_app(
     if SETTINGS.add_websocket:
         socket_route_dependencies = get_socket_route_dependencies(
             app_db_manager,
+            app_nosql_db_manager,
             app_cache_manager,
             SETTINGS
         )

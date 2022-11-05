@@ -13,7 +13,7 @@ from .websocket_actions import WebSocketActions
 from helpers_classes.async_stream import AsyncStream
 from data.schemas.users.user import User
 from group_chat import socket_message_handler as group_chat_socket_message_handler
-
+ 
 logger = logging.getLogger(__name__)
 
 async def handle_websocket_traffic(

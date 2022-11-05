@@ -20,6 +20,7 @@ coloredlogs
 pytest
 pytest-asyncio
 httpx
+pytest-xdist
 pytest-watch
 pytest-html
 pytest-testmon

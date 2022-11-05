@@ -1,10 +1,13 @@
 from typing import List
+import logging
 
 import requests
 
 from data.schemas.users.userDeep import User as UserDeep
 from data.schemas.users.userCreate import UserCreate
 from test.integration_tests.utils import asserts
+
+logger = logging.getLogger(__name__)
 
 def get_user(test_client: requests.Session, user_id: int) -> UserDeep:
     response = test_client.get(f"/api/admin/resource/users/{user_id}/")

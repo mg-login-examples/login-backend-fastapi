@@ -12,6 +12,9 @@ class SQLAlchemyDBManager():
 
     def __init__(self, database_url: str, database_user: str, database_password: str):
         logger.debug("Setting up SQLAlchemy")
+        self.database_url = database_url
+        self.database_user = database_user
+        self.database_password = database_password
 
         self.sqlalchemy_url = SQLAlchemyDBManager.generate_sqlalchemy_url(
             database_url,
@@ -68,30 +71,34 @@ class SQLAlchemyDBManager():
                 poolclass=pool.NullPool,
             )
 
-    @staticmethod
-    def ping_database(database_url: str, database_user: str, database_password: str):
-        sqlalchemy_url = SQLAlchemyDBManager.generate_sqlalchemy_url(
-            database_url,
-            database_user=database_user,
-            database_password=database_password,
-        )
+    def assert_sql_db_is_available(self):
+        try:
+            sqlalchemy_url = SQLAlchemyDBManager.generate_sqlalchemy_url(
+                self.database_url,
+                database_user=self.database_user,
+                database_password=self.database_password,
+            )
 
-        engine = None
-        if "sqlite" in database_url:
-            engine = create_engine(
-                sqlalchemy_url, 
-                poolclass=pool.NullPool,
-                connect_args={"check_same_thread": False},
-                pool_pre_ping=True
-            )
-        else:
-            engine = create_engine(
-                sqlalchemy_url, 
-                poolclass=pool.NullPool,
-                pool_pre_ping=True
-            )
-        with engine.connect() as connection:
-            pass
+            engine = None
+            if "sqlite" in self.database_url:
+                engine = create_engine(
+                    sqlalchemy_url, 
+                    poolclass=pool.NullPool,
+                    connect_args={"check_same_thread": False},
+                    pool_pre_ping=True
+                )
+            else:
+                engine = create_engine(
+                    sqlalchemy_url, 
+                    poolclass=pool.NullPool,
+                    pool_pre_ping=True
+                )
+            with engine.connect() as connection:
+                pass
+            logger.info("Test sql db connection established successfully")
+        except Exception as e:
+            logger.error("Error pinging to mysql")
+            raise e
 
     def enable_sqlite_foreign_keys(self):
         # https://stackoverflow.com/questions/5033547/sqlalchemy-cascade-delete/62327279#62327279

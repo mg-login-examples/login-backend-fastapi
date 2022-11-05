@@ -6,34 +6,54 @@ from pymongo_inmemory import MongoClient as MongoClientInMemory
 
 logger = logging.getLogger(__name__)
 
-def get_db(
-    mongo_host: str,
-    mongo_port: int,
-    mongo_username: str,
-    mongo_password: str,
-    mongo_database: str,
-    use_in_memory_mongo_db: bool = False
-) -> Database:
-    if not use_in_memory_mongo_db:
-        client = MongoClient(
-            mongo_host,
-            mongo_port,
-            username=mongo_username,
-            password=mongo_password,
-        )
-    else:
-        client = MongoClientInMemory()
-    db = client[mongo_database]
-    return db
+class PyMongoManager:
+    def __init__(
+        self,
+        mongo_host: str,
+        mongo_port: int,
+        mongo_username: str,
+        mongo_password: str,
+        mongo_database: str,
+        use_in_memory_mongo_db: bool = False
+    ):
+        self.mongo_host = mongo_host
+        self.mongo_port = mongo_port
+        self.mongo_username = mongo_username
+        self.mongo_password = mongo_password
+        self.mongo_database = mongo_database
+        self.use_in_memory_mongo_db = use_in_memory_mongo_db
+        self.client = None
+        self.db = None
 
-def assert_mongo_db_is_available(mongo_host: str, mongo_port: int, use_in_memory_mongo_db: bool = False):
-    try:
-        if not use_in_memory_mongo_db:
-            client = MongoClient(mongo_host, mongo_port, serverSelectionTimeoutMS=1000)
+    def get_db(self) -> Database:
+        if self.db is None:
+            self.init_mongodb_client()
+        return self.db
+
+    def assert_mongo_db_is_available(self):
+        try:
+            if self.client is None:
+                self.init_mongodb_client()
+            self.client.server_info()
+            logger.info("Test mongo db connection established successfully")
+        except Exception as e:
+            logger.error("Error pinging to mongo")
+            raise e
+
+    def init_mongodb_client(self):
+        # TODO Check if new client / db should be generated for each request, or same can be used
+        # Note: When using pymongo_inmemory, same client & db should be used otherwise new local mongodb instance is created everytime MongoClientInMemory() is called
+        if not self.use_in_memory_mongo_db:
+            client = MongoClient(
+                self.mongo_host,
+                self.mongo_port,
+                username=self.mongo_username,
+                password=self.mongo_password,
+            )
         else:
+            # Starts a local MongoDb server, and stops when the app is closed
+            # Data is not persisted on app restart
+            # Should be used only for local development
             client = MongoClientInMemory()
-        client.server_info()
-        logger.info("Test mongo db connection established successfully")
-    except Exception as e:
-        logger.error("Error pinging to mongo")
-        raise e
+        self.client = client
+        self.db = client[self.mongo_database]

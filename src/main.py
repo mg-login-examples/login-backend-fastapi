@@ -28,6 +28,15 @@ app_db_manager = store_utils.get_db_manager(
     SETTINGS.database_user,
     SETTINGS.database_password
 )
+# Create nosql db manager
+app_nosql_db_manager = store_utils.get_nosql_db_manager(
+        SETTINGS.mongo_host,
+        SETTINGS.mongo_port,
+        SETTINGS.mongo_username,
+        SETTINGS.mongo_password,
+        SETTINGS.mongo_database,
+        SETTINGS.use_in_memory_mongo_db,
+)
 # Create redis manager
 redis_cache_manager = store_utils.get_cache_manager(
     SETTINGS.redis_url,
@@ -37,7 +46,7 @@ redis_cache_manager = store_utils.get_cache_manager(
 # Create broadcaster
 broadcast = encode_broadcaster_utils.get_broadcaster(SETTINGS.broadcast_url)
 # Create fastapi webapp
-app = app_factory.create_app(app_db_manager, redis_cache_manager, broadcast, SETTINGS)
+app = app_factory.create_app(app_db_manager, app_nosql_db_manager, redis_cache_manager, broadcast, SETTINGS)
 
 
 if __name__ == "__main__":
@@ -54,11 +63,11 @@ if __name__ == "__main__":
             logger.error("Unknown argument received")
     else:
         if SETTINGS.test_sql_db_connection_on_app_start:
-            db_utils.assert_sql_db_is_available(SETTINGS.database_url, SETTINGS.database_user, SETTINGS.database_password)
+            app_db_manager.assert_sql_db_is_available()
         if SETTINGS.test_redis_connection_on_app_start:
             asyncio.run(redis_cache_manager.assert_redis_is_available())
-        if SETTINGS.test_mongo_db_connection_on_app_start:
-            pymongo_manager.assert_mongo_db_is_available(SETTINGS.mongo_host, SETTINGS.mongo_port, use_in_memory_mongo_db=SETTINGS.use_in_memory_mongo_db)
+        # if SETTINGS.test_mongo_db_connection_on_app_start:
+        #     app_nosql_db_manager.assert_mongo_db_is_available()
         if SETTINGS.test_broadcast_connection_on_app_start:
             asyncio.run(encode_broadcaster_utils.assert_broadcaster_is_able_to_connect_to_backend(broadcast))
         uvicorn.run(
