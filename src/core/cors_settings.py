@@ -5,6 +5,8 @@ development_origins = [
     "http://localhost:8080",
     "http://localhost:8081",
     "http://localhost:8019",
+    "http://localhost:5173",
+    "http://localhost:4173",
 ]
 
 cloud_development_origins = [
@@ -13,6 +15,8 @@ cloud_development_origins = [
     "http://localhost:8080",
     "http://localhost:8081",
     "http://localhost:8019",
+    "http://localhost:5173",
+    "http://localhost:4173",
 ]
 
 production_origins = []
