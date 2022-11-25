@@ -15,6 +15,7 @@ from data.schemas.authentication.user_password_change import UserPasswordChange
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from utils.security.password_utils import verify_password, get_password_hash
 from utils.security.access_token_utils import generate_access_token
+from utils.security.auth_cookies import add_authorization_cookie_to_response
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +26,7 @@ def generate_endpoint(
     db_as_dependency: Session,
     access_token_store_as_dependency: AccessTokenStore,
     get_current_user_as_dependency: UserSchema,
-    samesite: str,
-    secure_cookies: bool
+    auth_cookie_type: str,
 ):
     @router.post("/password-change/", response_model=LoginResponse)
     async def change_user_password(
@@ -55,7 +55,7 @@ def generate_endpoint(
                 crud_base.create_resource_item(db, UserSessionModel, userSession)
                 await access_token_store.add_access_token(user.id, access_token)
 
-                response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies)
+                add_authorization_cookie_to_response(response, auth_cookie_type, "Authorization", f"Bearer {access_token}", None)
 
                 return LoginResponse(
                     user=user,

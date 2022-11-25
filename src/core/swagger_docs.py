@@ -10,13 +10,12 @@ from api_dependencies.common_route_dependencies import CommonRouteDependencies
 def create_swagger_docs_for_user_endpoints(
     app: FastAPI,
     regular_api_routes_dependencies: CommonRouteDependencies,
-    samesite: str,
-    secure_cookies: bool,
+    auth_cookie_type: str,
 ):
     @app.get("/openapi.json")
     async def get_open_api_endpoint():
         base_router = APIRouter(prefix="/api")
-        user_router = user_routes.get_router(regular_api_routes_dependencies, samesite, secure_cookies)
+        user_router = user_routes.get_router(regular_api_routes_dependencies, auth_cookie_type)
         base_router.include_router(user_router)
         return JSONResponse(get_openapi(title="FastAPI", version=1, routes=base_router.routes))
     @app.get("/docs")
@@ -27,12 +26,12 @@ def create_swagger_docs_for_user_endpoints(
 def create_swagger_docs_for_admin_endpoints(
     app: FastAPI,
     admin_api_routes_dependencies: CommonRouteDependencies,
-    secure_cookies: bool,
+    auth_cookie_type: bool,
 ):
     @app.get("/admin-openapi.json")
     async def get_open_api_endpoint():
         base_router = APIRouter(prefix="/api")
-        admin_router =  admin_routes.get_router(admin_api_routes_dependencies, secure_cookies)
+        admin_router =  admin_routes.get_router(admin_api_routes_dependencies, auth_cookie_type)
         base_router.include_router(admin_router)
         return JSONResponse(get_openapi(title="FastAPI", version=1, routes=base_router.routes))
     @app.get("/admin-docs")

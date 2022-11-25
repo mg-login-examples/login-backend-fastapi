@@ -16,6 +16,7 @@ from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from utils.security.password_utils import verify_password
 from utils.security.access_token_utils import generate_access_token
+from utils.security.auth_cookies import add_authorization_cookie_to_response
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +24,7 @@ def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
     access_token_store_as_dependency: AccessTokenStore,
-    samesite: str,
-    secure_cookies: bool
+    auth_cookie_type: str,
 ):
     @router.post("/login/", response_model=LoginResponse)
     async def login_user(
@@ -55,9 +55,9 @@ def generate_endpoint(
                     crud_base.delete_resource_item_by_attribute(db, UserSessionModel, UserSessionModel.token, previous_access_token)
 
                 if form_data.remember_me:
-                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies, expires=token_expiry_duration_seconds)
+                    add_authorization_cookie_to_response(response, auth_cookie_type, "Authorization", f"Bearer {access_token}", token_expiry_duration_seconds)
                 else:
-                    response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies)
+                    add_authorization_cookie_to_response(response, auth_cookie_type, "Authorization", f"Bearer {access_token}", None)
 
                 return LoginResponse(
                     user=user,

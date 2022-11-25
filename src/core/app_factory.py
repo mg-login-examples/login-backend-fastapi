@@ -42,9 +42,9 @@ def create_app(
     api_router = api_routes.get_router(
         api_routes_dependencies,
         admin_api_routes_dependencies,
+        SETTINGS.user_auth_cookie_type,
+        SETTINGS.admin_user_auth_cookie_type,
         SETTINGS.add_admin_app,
-        SETTINGS.samesite,
-        SETTINGS.secure_cookies,
     )
     app.include_router(api_router)
 
@@ -71,7 +71,7 @@ def create_app(
 
     add_cors(app, SETTINGS.cors_origins_set)
 
-    create_swagger_docs_for_user_endpoints(app, api_routes_dependencies, SETTINGS.samesite, SETTINGS.secure_cookies)
-    create_swagger_docs_for_admin_endpoints(app, admin_api_routes_dependencies, SETTINGS.secure_cookies)
+    create_swagger_docs_for_user_endpoints(app, api_routes_dependencies, SETTINGS.user_auth_cookie_type)
+    create_swagger_docs_for_admin_endpoints(app, admin_api_routes_dependencies, SETTINGS.admin_user_auth_cookie_type)
 
     return app

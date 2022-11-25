@@ -8,15 +8,14 @@ from api_dependencies.common_route_dependencies import CommonRouteDependencies
 
 def get_router(
     dependencies: CommonRouteDependencies,
-    samesite: str,
-    secure_cookies: bool
+    auth_cookie_type: str
 ) -> APIRouter:
     router = APIRouter()
 
-    authentication_router = authentication_routes.get_router(dependencies, samesite, secure_cookies)
+    authentication_router = authentication_routes.get_router(dependencies, auth_cookie_type)
     router.include_router(authentication_router)
 
-    users_router = users_routes.get_router(dependencies, samesite, secure_cookies)
+    users_router = users_routes.get_router(dependencies, auth_cookie_type)
     router.include_router(users_router)
 
     quotes_router = quotes_routes.get_router(dependencies)

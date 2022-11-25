@@ -12,6 +12,7 @@ from stores.sql_db_store import crud_base
 from data.database.models.admin_user import AdminUser as AdminUserModel
 from utils.security.password_utils import verify_password
 from utils.security.access_token_utils import generate_access_token
+from utils.security.auth_cookies import add_authorization_cookie_to_response
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,7 @@ def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
     access_token_store_as_dependency: AccessTokenStore,
-    secure_cookies: bool
+    auth_cookie_type: str
 ):
     @router.post("/login/", response_model=AdminLoginResponse)
     async def login_admin_user(
@@ -38,9 +39,9 @@ def generate_endpoint(
                 await access_token_store.add_access_token(user.id, access_token)
 
                 if form_data.remember_me:
-                    response.set_cookie(key="Admin-Authorization", value=f"Bearer {access_token}", httponly=True, samesite="strict", secure=secure_cookies, expires=datetime.fromtimestamp(token_expiry_datetime_timestamp))
+                    add_authorization_cookie_to_response(response, auth_cookie_type, "Admin-Authorization", f"Bearer {access_token}", token_expiry_duration_seconds)
                 else:
-                    response.set_cookie(key="Admin-Authorization", value=f"Bearer {access_token}", httponly=True, samesite="strict", secure=secure_cookies)
+                    add_authorization_cookie_to_response(response, auth_cookie_type, "Admin-Authorization", f"Bearer {access_token}", None)
 
                 return AdminLoginResponse(
                     id=user.id,

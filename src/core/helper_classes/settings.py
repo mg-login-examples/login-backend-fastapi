@@ -30,9 +30,16 @@ class Settings(BaseSettings):
 
     add_admin_app: bool = True
     add_password_reset_app: bool = True
-    cors_origins_set: str = "Development"
-    samesite: str = "lax"
-    secure_cookies: bool = False
+
+    cors_origins_set: Literal['Development', 'Cloud-Development', 'Production'] = "Development"
+    user_auth_cookie_type: Literal['cross_site_secure', 'same_site_secure', 'same_site_not_secure', 'localhost_development'] = 'localhost_development'
+    admin_user_auth_cookie_type: Literal['cross_site_secure', 'same_site_secure', 'same_site_not_secure', 'localhost_development'] = 'localhost_development'
+     # cross_site_secure used for production when frontend & backend on different domains,
+     # same_site_secure used for production when frontend & backend on same domain
+     # samesite_not_secure used for docker e2e testing
+     # localhost_development used for local development
+    # samesite: str = 'lax'
+    # secure_cookies: bool = False
 
     add_websocket: bool = True
     broadcast_url: str = "memory://"

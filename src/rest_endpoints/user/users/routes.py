@@ -13,7 +13,6 @@ from .user_notes_endpoint import generate_endpoint as generate_user_notes_endpoi
 
 def get_router(
     api_dependencies: CommonRouteDependencies,
-    samesite: str,
     secure_cookies: bool
 ) -> APIRouter:
     user_resource_configurations = ResourceConfigurations(
@@ -36,7 +35,6 @@ def get_router(
         router,
         api_dependencies.db,
         api_dependencies.access_token_store,
-        samesite,
         secure_cookies
     )
 

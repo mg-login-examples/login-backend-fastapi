@@ -6,14 +6,14 @@ from rest_endpoints.admin.authentication import routes as authentication_routes
 
 def get_router(
     dependencies: CommonRouteDependencies,
-    secure_cookies: bool
+    auth_cookie_type: str
 ) -> APIRouter:
     router = APIRouter(prefix="/admin")
 
     generate_get_admin_resources_endpoint(router, dependencies)
     generate_admin_resources_crud_endpoints(router, dependencies)
     
-    auth_router = authentication_routes.get_router(dependencies, secure_cookies)
+    auth_router = authentication_routes.get_router(dependencies, auth_cookie_type)
     router.include_router(auth_router)
 
     return router

@@ -6,17 +6,17 @@ from api_dependencies.common_route_dependencies import CommonRouteDependencies
 def get_router(
     api_routes_dependencies: CommonRouteDependencies,
     admin_routes_dependencies: CommonRouteDependencies,
+    user_auth_cookie_type: str,
+    admin_user_auth_cookie_type: str,
     add_admin_app: bool,
-    samesite: str,
-    secure_cookies: bool,
 ) -> APIRouter:
     api_router = APIRouter(prefix="/api")
 
     if add_admin_app:
-        admin_router = admin_routes.get_router(admin_routes_dependencies, secure_cookies)
+        admin_router = admin_routes.get_router(admin_routes_dependencies, admin_user_auth_cookie_type)
         api_router.include_router(admin_router)
 
-    user_router = user_routes.get_router(api_routes_dependencies, samesite, secure_cookies)
+    user_router = user_routes.get_router(api_routes_dependencies, user_auth_cookie_type)
     api_router.include_router(user_router)
 
     return api_router    

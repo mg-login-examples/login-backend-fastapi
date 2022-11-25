@@ -15,13 +15,13 @@ from data.schemas.users.user import User
 from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from rest_endpoints.user.email_verification.email_verification_task import create_verification_code_and_send_email
+from utils.security.auth_cookies import add_authorization_cookie_to_response
 
 def generate_endpoint(
     router: APIRouter,
     db_as_dependency: Session,
     access_token_store_as_dependency: AccessTokenStore,
-    samesite: str,
-    secure_cookies: bool
+    auth_cookie_type: str,
 ):
     @router.post("/", response_model=LoginResponse)
     async def create_user(
@@ -45,7 +45,7 @@ def generate_endpoint(
 
         create_verification_code_and_send_email(background_tasks, db, user_schema)
 
-        response.set_cookie(key="Authorization", value=f"Bearer {access_token}", httponly=True, samesite=samesite, secure=secure_cookies)
+        add_authorization_cookie_to_response(response, auth_cookie_type, "Authorization", f"Bearer {access_token}", None)
 
         return LoginResponse(
             user=user_db,

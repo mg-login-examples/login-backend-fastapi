@@ -41,8 +41,8 @@ services:
       - BROADCAST_URL=${BROADCAST_URL:-redis://redis_cache}
       - TEST_REDIS_CONNECTION_ON_APP_START=True
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
-      - SAMESITE=${SAMESITE:-lax}
-      - SECURE_COOKIES=${SECURE_COOKIES:-False}
+      - USER_AUTH_COOKIE_TYPE=${USER_AUTH_COOKIE_TYPE:-localhost_development}
+      - ADMIN_USER_AUTH_COOKIE_TYPE=${ADMIN_USER_AUTH_COOKIE_TYPE:-localhost_development}
       - RELOAD_APP_ON_CHANGE=${RELOAD_APP_ON_CHANGE-True}
       - LOG_TO_FILE=False
       - TEST_ADMIN_USER_EMAIL=${TEST_ADMIN_USER_EMAIL}

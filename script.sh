@@ -56,8 +56,8 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi alembic upgrade head
    # Launch backend app and db
    export CORS_ORIGINS_SET="Cloud-Development"
-   export SECURE_COOKIES=True
-   export SAMESITE=none
+   export USER_AUTH_COOKIE_TYPE=cross_site_secure
+   export ADMIN_USER_AUTH_COOKIE_TYPE=same_site_secure
    export PRIMARY_DOMAIN="login-example.duckdns.org"
    export RELOAD_APP_ON_CHANGE=False
    docker-compose -f docker-compose.yml -f docker-compose.override.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend up --build -d
@@ -80,7 +80,7 @@ then
    export CYPRESS_ENV_FILE=.env_cypress.ci_e2e
    export CYPRESS_ADMIN_API_LOGIN_USERNAME=$BACKEND_ADMIN_USER_EMAIL
    export CYPRESS_ADMIN_API_LOGIN_PASSWORD=$BACKEND_ADMIN_USER_PASSWORD
-   export SAMESITE=none
+   export USER_AUTH_COOKIE_TYPE=samesite_not_secure
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend run vueapp_test_e2e npm run test:e2e -- --headless --mode ci_e2e --browser chrome
 elif [ $case = "launch-databases" ]
 then
