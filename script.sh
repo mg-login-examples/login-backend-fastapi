@@ -2,6 +2,8 @@
 case=${1:-default}
 if [ $case = "launch-api-local" ]
 then
+   # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
+   touch app.log
    # Stop all backend project's containers and build and start backend stack containers
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend down
    # Build containers
@@ -12,6 +14,8 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend up --build
 elif [ $case = "launch-fullstack-local" ]
 then
+   # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
+   touch app.log
    # Stop all backend project's containers and build and start fullstack containers
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend down
    # Build containers
@@ -22,6 +26,8 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vueapp.yml -p backend up --build
 elif [ $case = "launch-tdd" ]
 then
+   # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
+   touch app.log
    # Stop all backend project's containers and build, start backend stack containers and run tests with watch
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend down
    # Build containers
@@ -34,6 +40,8 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi ptw -- --testmon
 elif [ $case = "run-api-tests" ]
 then
+   # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
+   touch app.log
    # Stop all backend project's containers and build, start backend stack containers and run tests
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend down
    # Build containers
@@ -48,6 +56,8 @@ then
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi python -m pytest -n 2 --alluredir='./test/allure-results'
 elif [ $case = "launch-api-cloud-dev" ]
 then
+   # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
+   touch app.log
    # Stop all backend project's containers and build and start backend stack containers for production
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend down
    # Build containers
@@ -63,6 +73,8 @@ then
    docker-compose -f docker-compose.yml -f docker-compose.override.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend up --build -d
 elif [ $case = "run-e2e-tests" ]
 then
+   # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
+   touch app.log
    # Stop all backend project's containers
    docker-compose -f docker-compose.yml -f compose.vueapp.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -f compose.vuecypress.yml -p backend down
    # Build containers
