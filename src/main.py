@@ -7,7 +7,6 @@ import uvicorn
 
 from core import environment_settings, logging_settings, app_factory, admin_users_manager
 from stores import store_utils 
-from stores.nosql_db_store import pymongo_manager
 from stores.sql_db_store import db_utils
 from utils.encode_broadcaster import broadcaster_utils as encode_broadcaster_utils
 
