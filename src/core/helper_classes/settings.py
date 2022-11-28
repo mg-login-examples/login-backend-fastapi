@@ -38,8 +38,6 @@ class Settings(BaseSettings):
      # same_site_secure used for production when frontend & backend on same domain
      # samesite_not_secure used for docker e2e testing
      # localhost_development used for local development
-    # samesite: str = 'lax'
-    # secure_cookies: bool = False
 
     add_websocket: bool = True
     broadcast_url: str = "memory://"
