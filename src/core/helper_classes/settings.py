@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     log_to_file: bool = True
     log_filename: str = "../app.log"
+    log_env_vars_on_app_start = False
     reload_app_on_change: bool = True
 
     database_url: str = 'sqlite:///./sql_app.db'

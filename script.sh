@@ -11,6 +11,7 @@ then
    # Run db migrations
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend run fastapi alembic upgrade head
    # Launch backend app & db
+   export LOG_ENV_VARS_ON_APP_START=True
    docker-compose -f docker-compose.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend up --build
 elif [ $case = "launch-fullstack-local" ]
 then
