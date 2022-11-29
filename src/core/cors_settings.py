@@ -7,19 +7,14 @@ development_origins = [
     "http://localhost:8019",
     "http://localhost:5173",
     "http://localhost:4173",
+    "http://frontend.login.com:8029",
+    "http://frontend.login.com:8030",
+    "http://full_app_proxy.com",
 ]
 
 cloud_development_origins = [
     "http://frontend.login-example.duckdns.org",
     "https://frontend.login-example.duckdns.org",
-    "http://localhost:8080",
-    "http://localhost:8081",
-    "http://localhost:8019",
-    "http://localhost:5173",
-    "http://localhost:4173",
-    "http://frontend.login.com:8029",
-    "http://frontend.login.com:8030",
-    "http://full_app_proxy.com",
 ]
 
 production_origins = []
