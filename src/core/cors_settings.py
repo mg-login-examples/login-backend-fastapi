@@ -9,7 +9,7 @@ development_origins = [
     "http://localhost:4173",
     "http://frontend.login.com:8029",
     "http://frontend.login.com:8030",
-    "http://full_app_proxy.com",
+    "http://frontend.full_app_proxy",
 ]
 
 cloud_development_origins = [
