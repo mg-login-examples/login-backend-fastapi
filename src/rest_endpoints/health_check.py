@@ -7,6 +7,6 @@ logger = logging.getLogger(__name__)
 def generate_endpoint(
     router: APIRouter,
 ):
-    @router.get("/health-check/")
+    @router.head("/health-check/")
     def health_check():
-        return { "health": "ok" }
+        return
