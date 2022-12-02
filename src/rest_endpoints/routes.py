@@ -1,6 +1,7 @@
 from helpers_classes.custom_api_router import APIRouter
 from rest_endpoints.admin import routes as admin_routes
 from rest_endpoints.user import routes as user_routes
+from rest_endpoints import health_check
 from api_dependencies.common_route_dependencies import CommonRouteDependencies
 
 def get_router(
@@ -11,6 +12,7 @@ def get_router(
     add_admin_app: bool,
 ) -> APIRouter:
     api_router = APIRouter(prefix="/api")
+    health_check.generate_endpoint(api_router)
 
     if add_admin_app:
         admin_router = admin_routes.get_router(admin_routes_dependencies, admin_user_auth_cookie_type)

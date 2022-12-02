@@ -20,6 +20,7 @@ SETTINGS = environment_settings.get_environment_settings(dot_env_file=dot_env_fi
 # Set logging
 logging_settings.set_logging_settings(SETTINGS.log_level, SETTINGS.log_to_file, SETTINGS.log_filename)
 logger.info(f"Environment file selected: {dot_env_file}")
+logging_settings.filter_out_healthcheck_logs()
 
 # Create db manager
 app_db_manager = store_utils.get_db_manager(

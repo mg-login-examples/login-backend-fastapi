@@ -14,3 +14,11 @@ def set_logging_settings(log_level: str, log_to_file: bool, log_filename: str):
         fmt=coloredlogs_format
     )
     logger.info(f"Log level set: {log_level}")
+
+def filter_out_healthcheck_logs():
+    class EndpointFilter(logging.Filter):
+        def filter(self, record: logging.LogRecord) -> bool:
+            return record.getMessage().find("/api/healthcheck") == -1
+
+    # Filter out /endpoint
+    logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
