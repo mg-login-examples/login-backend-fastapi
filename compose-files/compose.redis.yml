@@ -3,13 +3,18 @@ version: '3.8'
 services:
   redis_cache:
     image: redis
-    command: bash -c '[ "$$REDIS_PASS_FILE" ] &&
-      ( cat "$$REDIS_PASS_FILE" | xargs -0 redis-server --requirepass ) || redis-server'
+    command: [
+      "bash", "-c",
+      '
+       docker-entrypoint.sh
+       --requirepass "$$(cat $$REDIS_PASS_FILE)"
+      '
+    ]
     restart: always
     ports:
       - 6379:6379
     environment:
-      - REDIS_PASS_FILE="/run/secrets/redis-pass"
+      - REDIS_PASS_FILE=/run/secrets/redis-pass
     healthcheck:
       test: ["CMD", "redis-cli","ping"]
     secrets:

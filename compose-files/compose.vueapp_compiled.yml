@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  vueapp_dev:
+    build:
+      context: ./frontend
+      target: serve-local-stage
+      args:
+        VITE_MODE: ${VITE_MODE}
+        VITE_APP_BACKEND_URL: ${VITE_APP_BACKEND_URL}
+        VITE_APP_BACKEND_WEBSOCKET_URL: ${VITE_APP_BACKEND_WEBSOCKET_URL}
+        VITE_LOG_ENV_VARS: ${VITE_LOG_ENV_VARS}
+    restart: always
+    volumes:
+      - ./frontend/src:/app/src # live reload
+    ports:
+      - 8019:5173
+      - 8020:5174
+    networks:
+      - fullstack_proxy
+    # depends_on:
+    #   fastapi:
+    #     condition: service_healthy
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5173
+      # test: wget --no-verbose --tries=1 -O /dev/null http://localhost:5173
+      interval: 60s
+      timeout: 10s
+      retries: 10

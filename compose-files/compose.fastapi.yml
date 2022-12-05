@@ -9,7 +9,7 @@ services:
       context: ./src/
     networks:
       - backend
-      - fullstack
+      - fullstack_proxy
       - traefik-public
     depends_on:
       mysql_db:
@@ -26,21 +26,24 @@ services:
     secrets:
       - mysql-password
       - mongo-password
+      - redis-pass
     environment:
       - DATABASE_URL=${DATABASE_URL:-mysql://root@mysql_db/login}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - TEST_SQL_DB_CONNECTION_ON_APP_START=True
       - MONGO_HOST=${MONGO_HOST-mongo_db}
       - MONGO_PORT=27017
       - MONGO_USERNAME=${MONGO_USERNAME-root_user}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
       - USE_IN_MEMORY_MONGO_DB=False
+      - TEST_IN_MONGO_DB_CONNECTION_ON_APP_START=True
       - SESSION_TOKEN_STORE_TYPE=${SESSION_TOKEN_STORE_TYPE:-redis}
       - REDIS_URL=${REDIS_URL:-redis://redis_cache}
       # - REDIS_USER=${REDIS_USER}
       # - REDIS_PASSWORD=${REDIS_PASSWORD}
-      - BROADCAST_URL=${BROADCAST_URL:-redis://redis_cache}
       - TEST_REDIS_CONNECTION_ON_APP_START=True
+      - BROADCAST_URL=${BROADCAST_URL:-redis://redis_cache}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
       - USER_AUTH_COOKIE_TYPE=${USER_AUTH_COOKIE_TYPE:-localhost_development}
       - ADMIN_USER_AUTH_COOKIE_TYPE=${ADMIN_USER_AUTH_COOKIE_TYPE:-localhost_development}
@@ -49,6 +52,11 @@ services:
       - LOG_ENV_VARS_ON_APP_START=${LOG_ENV_VARS_ON_APP_START:-False}
       - TEST_ADMIN_USER_EMAIL=${TEST_ADMIN_USER_EMAIL}
       - TEST_ADMIN_USER_PASSWORD=${TEST_ADMIN_USER_PASSWORD}
+    healthcheck:
+      # test: wget --no-verbose --tries=1 -O /dev/null http://localhost:8018/docs
+      test: wget --no-verbose --tries=1 --spider http://localhost:8018/api/health-check/
+      timeout: 20s
+      retries: 10
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`backend.${PRIMARY_DOMAIN}`)"

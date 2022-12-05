@@ -16,6 +16,10 @@ def get_environment_settings(dot_env_file: str = ".env"):
     if docker_mongo_secret:
         settings.mongo_password = docker_mongo_secret
 
+    redis_secret = sec.load("redis-pass")
+    if redis_secret:
+        settings.redis_password = redis_secret
+
     if settings.log_env_vars_on_app_start:
         logger.info("****************** ENV Vars ******************")
         settings_dict = settings.dict()

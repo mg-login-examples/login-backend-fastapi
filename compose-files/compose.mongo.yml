@@ -21,9 +21,12 @@ services:
       - backend
     volumes:
       - mongo-data:/data/db
+    logging:
+      driver: none 
 
 volumes:
   mongo-data:
+  mongo-config:
 
 secrets:
   mongo-password:

@@ -5,7 +5,9 @@ email-validator
 typing-extensions
 aiostream
 aiofiles
-broadcaster[redis]
+# broadcaster[redis]
+asyncio_redis
+broadcaster @ git+https://github.com/encode/broadcaster.git@ccd476e1c03aa54541f966183f839278c34b0d3d
 requests
 passlib[bcrypt]
 SQLAlchemy==1.4.40

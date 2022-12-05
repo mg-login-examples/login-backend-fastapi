@@ -7,7 +7,10 @@ from broadcaster import Broadcast
 
 logger = logging.getLogger(__name__)
 
-def get_broadcaster(broadcast_url: str) -> Broadcast:
+def get_broadcaster(broadcast_url: str, redis_pass: str = None) -> Broadcast:
+    if  "redis" in broadcast_url and redis_pass:
+        redis_url_split = broadcast_url.split("//")
+        broadcast_url = f'{redis_url_split[0]}//:{redis_pass}@{redis_url_split[1]}'
     broadcast = Broadcast(broadcast_url)
     return broadcast
 
