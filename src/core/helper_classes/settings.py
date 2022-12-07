@@ -25,7 +25,6 @@ class Settings(BaseSettings):
 
     access_tokens_store_type: Literal["file", "redis"] = 'file'
     redis_url: str = ''
-    redis_user: str = ''
     redis_password: str = ''
     test_redis_connection_on_app_start: bool = False
 

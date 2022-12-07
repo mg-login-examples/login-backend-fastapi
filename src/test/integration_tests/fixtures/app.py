@@ -39,14 +39,13 @@ def app_nosql_db_manager(app_settings: Settings):
 def app_cache_manager(app_settings: Settings):
     app_cache_manager = get_cache_manager(
         app_settings.redis_url,
-        app_settings.redis_user,
         app_settings.redis_password
     )
     return app_cache_manager
 
 @pytest.fixture
 def app_broadcaster(app_settings: Settings):
-    return encode_broadcaster_utils.get_broadcaster(app_settings.broadcast_url)
+    return encode_broadcaster_utils.get_broadcaster(app_settings.broadcast_url, redis_pass=app_settings.redis_password)
 
 @pytest.fixture
 def app(

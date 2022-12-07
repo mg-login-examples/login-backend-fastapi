@@ -28,10 +28,9 @@ def get_nosql_db_manager(
     )
     return nosql_db_manager
 
-def get_cache_manager(redis_url: str, redis_user: str, redis_password: str) -> AioRedisCacheManager:
+def get_cache_manager(redis_url: str, redis_password: str) -> AioRedisCacheManager:
     cache_manager = AioRedisCacheManager(
         redis_url,
-        redis_user,
         redis_password
     )
     return cache_manager

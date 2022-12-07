@@ -57,6 +57,9 @@ then
    BACKEND_ADMIN_USER_PASSWORD="admin"
    # build backend stack images, run db migrations and create test admin users
    build_backend_stack_docker_images && run_db_migrations && create_admin_users $BACKEND_ADMIN_USER_EMAIL $BACKEND_ADMIN_USER_PASSWORD
+   # set test user credentials as env vars
+   export TEST_ADMIN_USER_EMAIL=$BACKEND_ADMIN_USER_EMAIL
+   export TEST_ADMIN_USER_PASSWORD=$BACKEND_ADMIN_USER_PASSWORD
    # Run tdd command on app container
    docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi ptw -- --testmon
 elif [ $case = "run-api-tests" ]
@@ -69,6 +72,9 @@ then
    BACKEND_ADMIN_USER_PASSWORD="admin"
    # build backend stack images, run db migrations and create test admin users
    build_backend_stack_docker_images && run_db_migrations && create_admin_users $BACKEND_ADMIN_USER_EMAIL $BACKEND_ADMIN_USER_PASSWORD
+   # set test user credentials as env vars
+   export TEST_ADMIN_USER_EMAIL=$BACKEND_ADMIN_USER_EMAIL
+   export TEST_ADMIN_USER_PASSWORD=$BACKEND_ADMIN_USER_PASSWORD
    # Run tdd command on app container
    docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi python -m pytest -n 2 --alluredir='./test/allure-results'
 elif [ $case = "run-e2e-tests" ]

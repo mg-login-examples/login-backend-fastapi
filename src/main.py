@@ -40,7 +40,6 @@ app_nosql_db_manager = store_utils.get_nosql_db_manager(
 # Create redis manager
 redis_cache_manager = store_utils.get_cache_manager(
     SETTINGS.redis_url,
-    SETTINGS.redis_user,
     SETTINGS.redis_password
 )
 # Create broadcaster
