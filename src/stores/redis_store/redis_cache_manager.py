@@ -1,10 +1,11 @@
 import logging
 
-import aioredis
+from redis import asyncio as asyncio_redis
+from redis.asyncio.client import Redis
 
 logger = logging.getLogger(__name__)
 
-class AioRedisCacheManager():
+class RedisCacheManager():
 
     def __init__(self, redis_url: str, redis_password: str):
         logger.debug("Setting up SQLAlchemy")
@@ -12,9 +13,9 @@ class AioRedisCacheManager():
         self.redis_url = redis_url
         self.redis_password = redis_password
 
-    async def redis_session(self):
+    async def redis_session(self) -> Redis:
         try:
-            redis = aioredis.from_url(
+            redis = asyncio_redis.from_url(
                 self.redis_url,
                 password=self.redis_password,
                 decode_responses=True
@@ -25,7 +26,7 @@ class AioRedisCacheManager():
 
     async def assert_redis_is_available(self):
         try:
-            redis = aioredis.from_url(
+            redis = asyncio_redis.from_url(
                 self.redis_url,
                 password=self.redis_password,
                 socket_connect_timeout=1

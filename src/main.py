@@ -8,8 +8,8 @@ import uvicorn
 from core import environment_settings, logging_settings, app_factory, admin_users_manager
 from stores import store_utils 
 from stores.sql_db_store import db_utils
-from utils.encode_broadcaster import broadcaster_utils as encode_broadcaster_utils
-
+from utils.pubsub import utils as pubsub_utils
+from utils.pubsub.pubsub import PubSub
 
 logger = logging.getLogger(__name__)
 
@@ -42,10 +42,10 @@ redis_cache_manager = store_utils.get_cache_manager(
     SETTINGS.redis_url,
     SETTINGS.redis_password
 )
-# Create broadcaster
-broadcast = encode_broadcaster_utils.get_broadcaster(SETTINGS.broadcast_url, redis_pass=SETTINGS.redis_password)
+# Create pubsub
+pubsub = pubsub_utils.get_pubsub(SETTINGS.pubsub_url, SETTINGS.redis_password)
 # Create fastapi webapp
-app = app_factory.create_app(app_db_manager, app_nosql_db_manager, redis_cache_manager, broadcast, SETTINGS)
+app = app_factory.create_app(app_db_manager, app_nosql_db_manager, redis_cache_manager, pubsub, SETTINGS)
 
 
 if __name__ == "__main__":
@@ -67,8 +67,8 @@ if __name__ == "__main__":
             asyncio.run(redis_cache_manager.assert_redis_is_available())
         if SETTINGS.test_mongo_db_connection_on_app_start:
             app_nosql_db_manager.assert_mongo_db_is_available()
-        if SETTINGS.test_broadcast_connection_on_app_start:
-            asyncio.run(encode_broadcaster_utils.assert_broadcaster_is_able_to_connect_to_backend(broadcast))
+        if SETTINGS.test_pubsub_connection_on_app_start:
+            asyncio.run(pubsub_utils.assert_pubsub_is_able_to_connect_to_backend(pubsub))
         uvicorn.run(
             "main:app",
             host=SETTINGS.server_host,

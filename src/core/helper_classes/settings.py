@@ -40,5 +40,5 @@ class Settings(BaseSettings):
      # localhost_development used for local development
 
     add_websocket: bool = True
-    broadcast_url: str = "memory://"
-    test_broadcast_connection_on_app_start: bool = True
+    pubsub_url: str = "memory://"
+    test_pubsub_connection_on_app_start: bool = True

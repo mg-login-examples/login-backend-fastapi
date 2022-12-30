@@ -11,8 +11,6 @@ from data.schemas.authentication.login_response import LoginResponse
 async def async_test_client(event_loop: AbstractEventLoop, app: FastAPI) -> AsyncClient:
     async with AsyncClient(app=app, base_url="http://test") as client:
         yield client
-    # async with AsyncioTestClient(app, event_loop=event_loop) as client:
-    #     yield client
 
 @pytest.fixture
 async def async_test_client_admin_logged_in(async_test_client: AsyncClient, async_admin_login_response: AdminLoginResponse) -> AsyncClient:

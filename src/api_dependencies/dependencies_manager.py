@@ -2,7 +2,7 @@ from fastapi import Depends
 
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from stores.nosql_db_store.pymongo_manager import PyMongoManager
-from stores.redis_store.aioredis_cache_manager import AioRedisCacheManager
+from stores.redis_store.redis_cache_manager import RedisCacheManager
 from api_dependencies.common_route_dependencies import CommonRouteDependencies
 from api_dependencies.dependencies.helper_classes.user_access_token_extractor import UserAccessTokenExtractor
 from api_dependencies.dependencies.helper_classes.admin_access_token_extractor import AdminAccessTokenExtractor
@@ -15,11 +15,13 @@ from api_dependencies.dependencies.access_token_store import get_access_token_st
 from api_dependencies.dependencies.socket_authorization_token_extractor import get_socket_authorization_token_as_fastapi_dependency
 from api_dependencies.dependencies.socket_validated_access_token import get_socket_validated_access_token_as_fastapi_dependency
 from core.helper_classes.settings import Settings
+from utils.pubsub.pubsub import PubSub
 
 def get_user_routes_dependencies(
     app_db_manager: SQLAlchemyDBManager,
     app_nosql_db_manager: PyMongoManager,
-    app_cache_manager: AioRedisCacheManager,
+    app_cache_manager: RedisCacheManager,
+    pubsub: PubSub,
     settings: Settings,
 ):
     db_session_as_dependency=Depends(app_db_manager.db_session)
@@ -41,6 +43,7 @@ def get_user_routes_dependencies(
         db_session_as_dependency=db_session_as_dependency,
         nosql_database_as_dependency=nosql_database_as_dependency,
         cache_session_as_dependency=cache_session_as_dependency,
+        pubsub_as_dependency=pubsub.get_pubsub_as_fastapi_dependency(),
         access_token_store_as_dependency=access_token_store_as_dependency,
         validated_access_token_as_dependency=validated_access_token_as_dependency,
         current_user_as_dependency=current_user_as_dependency,
@@ -52,7 +55,8 @@ def get_user_routes_dependencies(
 def get_admin_routes_dependencies(
     app_db_manager: SQLAlchemyDBManager,
     app_nosql_db_manager: PyMongoManager,
-    app_cache_manager: AioRedisCacheManager,
+    app_cache_manager: RedisCacheManager,
+    pubsub: PubSub,
     settings: Settings,
 ):
     db_session_as_dependency=Depends(app_db_manager.db_session)
@@ -72,6 +76,7 @@ def get_admin_routes_dependencies(
         db_session_as_dependency=db_session_as_dependency,
         nosql_database_as_dependency=nosql_database_as_dependency,
         cache_session_as_dependency=cache_session_as_dependency,
+        pubsub_as_dependency=pubsub.get_pubsub_as_fastapi_dependency(),
         access_token_store_as_dependency=access_token_store_as_dependency,
         validated_access_token_as_dependency=validated_access_token_as_dependency,
         current_user_as_dependency=current_user_as_dependency
@@ -81,7 +86,8 @@ def get_admin_routes_dependencies(
 def get_socket_route_dependencies(
     app_db_manager: SQLAlchemyDBManager,
     app_nosql_db_manager: PyMongoManager,
-    app_cache_manager: AioRedisCacheManager,
+    app_cache_manager: RedisCacheManager,
+    pubsub: PubSub,
     settings: Settings,
 ):
     db_session_as_dependency=Depends(app_db_manager.db_session)
@@ -102,6 +108,7 @@ def get_socket_route_dependencies(
         db_session_as_dependency=db_session_as_dependency,
         cache_session_as_dependency=cache_session_as_dependency,
         nosql_database_as_dependency=nosql_database_as_dependency,
+        pubsub_as_dependency=pubsub.get_pubsub_as_fastapi_dependency(),
         access_token_store_as_dependency=access_token_store_as_dependency,
         validated_access_token_as_dependency=validated_access_token_as_dependency,
         current_user_as_dependency=current_user_as_dependency,
@@ -109,4 +116,3 @@ def get_socket_route_dependencies(
         restrict_endpoint_to_own_resources_param_user_id_as_dependency=restrict_endpoint_to_own_resources_param_user_id_as_dependency,
     )
     return route_dependencies
-

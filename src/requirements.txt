@@ -1,20 +1,16 @@
-fastapi==0.79.0
-# fastapi
+fastapi
 uvicorn[standard]
 python-multipart
 email-validator
 typing-extensions
 aiostream
 aiofiles
-# broadcaster[redis]
-asyncio_redis
-broadcaster @ git+https://github.com/encode/broadcaster.git@ccd476e1c03aa54541f966183f839278c34b0d3d
 requests
 passlib[bcrypt]
 SQLAlchemy==1.4.40
 SQLAlchemy-Utils
 mysqlclient
-aioredis
+redis
 pymongo
 pymongo-inmemory
 alembic
@@ -23,6 +19,7 @@ coloredlogs
 pytest
 pytest-asyncio
 httpx
+httpx-ws # use until httpx provides async websocket functionality. feature in active development https://github.com/encode/httpx/issues/304
 pytest-xdist
 pytest-watch
 pytest-html

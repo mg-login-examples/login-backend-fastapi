@@ -1,7 +1,6 @@
 import logging
 
 from fastapi import FastAPI
-from broadcaster import Broadcast
 
 from core.cors_settings import add_cors
 from rest_endpoints import routes as api_routes
@@ -11,9 +10,11 @@ from password_reset_app import app_mounter as password_reset_app_mounter
 from core.helper_classes.settings import Settings
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from stores.nosql_db_store.pymongo_manager import PyMongoManager
-from stores.redis_store.aioredis_cache_manager import AioRedisCacheManager
+from stores.redis_store.redis_cache_manager import RedisCacheManager
 from api_dependencies.dependencies_manager import get_user_routes_dependencies, get_admin_routes_dependencies, get_socket_route_dependencies
-from utils.encode_broadcaster import broadcaster_utils as encode_broadcaster_utils
+from utils.pubsub.pubsub import PubSub
+from utils.pubsub import utils as pubsub_utils
+
 from core.swagger_docs import create_swagger_docs_for_user_endpoints, create_swagger_docs_for_admin_endpoints
 
 logger = logging.getLogger(__name__)
@@ -21,8 +22,8 @@ logger = logging.getLogger(__name__)
 def create_app(
     app_db_manager: SQLAlchemyDBManager,
     app_nosql_db_manager: PyMongoManager,
-    app_cache_manager: AioRedisCacheManager,
-    broadcast: Broadcast,
+    app_cache_manager: RedisCacheManager,
+    pubsub: PubSub,
     SETTINGS: Settings
 ) -> FastAPI:
     app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
@@ -31,12 +32,14 @@ def create_app(
         app_db_manager,
         app_nosql_db_manager,
         app_cache_manager,
+        pubsub,
         SETTINGS
     )
     admin_api_routes_dependencies = get_admin_routes_dependencies(
         app_db_manager,
         app_nosql_db_manager,
         app_cache_manager,
+        pubsub,
         SETTINGS
     )
     api_router = api_routes.get_router(
@@ -53,14 +56,14 @@ def create_app(
             app_db_manager,
             app_nosql_db_manager,
             app_cache_manager,
+            pubsub,
             SETTINGS
         )
-        broadcast_subscribers_async_tasks = []
-        encode_broadcaster_utils.enable_broadcaster(app, broadcast, broadcast_subscribers_async_tasks)
+        pubsub_subscribers_async_tasks = []
+        pubsub_utils.enable_pubsub(app, pubsub, pubsub_subscribers_async_tasks)
         socket_router = socket_routes.get_router(
-            broadcast,
             socket_route_dependencies,
-            broadcast_subscribers_async_tasks,
+            pubsub_subscribers_async_tasks,
         )
         app.include_router(socket_router)
 

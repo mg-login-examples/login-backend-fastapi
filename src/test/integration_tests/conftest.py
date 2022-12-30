@@ -1,7 +1,7 @@
 from test.integration_tests.fixtures.settings import app_settings, env_settings_test
-from test.integration_tests.fixtures.app import app_db_manager, app_nosql_db_manager, app_cache_manager, app_broadcaster, app
+from test.integration_tests.fixtures.app import app_db_manager, app_nosql_db_manager, app_cache_manager, app_pubsub, app_pubsub_connected, app
 
-from test.integration_tests.fixtures.fastapi_testclient import test_client, test_client_admin_logged_in, test_client_logged_in, test_client_after_app_start
+from test.integration_tests.fixtures.testclient import test_client, test_client_admin_logged_in, test_client_logged_in, test_client_after_app_start
 from test.integration_tests.fixtures.admin_user import admin_user_login, admin_login_response, logged_in_admin_user
 from test.integration_tests.fixtures.quotes_admin import created_quote_by_admin, created_n_quotes_by_admin
 from test.integration_tests.fixtures.user_notes_admin import created_user_note_by_admin, created_n_user_notes_by_admin

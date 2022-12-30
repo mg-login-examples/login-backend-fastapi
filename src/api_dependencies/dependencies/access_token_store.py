@@ -1,6 +1,6 @@
 import logging
 
-from aioredis import Redis
+from redis.asyncio.client import Redis
 from fastapi import Depends
 
 from stores.access_tokens_store.access_token_file_store import AccessTokenFileStore

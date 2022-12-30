@@ -3,7 +3,6 @@ import logging
 
 from fastapi.testclient import TestClient
 from starlette.testclient import WebSocketTestSession
-from fastapi.websockets import WebSocket
 from fastapi.exceptions import HTTPException
 
 from data.schemas.users.user import User
@@ -19,11 +18,11 @@ def test_socket_connect(test_client_logged_in: TestClient, logged_in_user: User,
         subscribe_response = websocket_session.receive_json()
         assert subscribe_response["channel"] == dummy_channel
 
-# Test that main websocket cannot be connected if not logged in
-def test_socket_connect_fails_when_not_logged_in(test_client_after_app_start: TestClient):
-    try:
-        with test_client_after_app_start.websocket_connect("/ws/main") as websocket_session:
-            pass
-    except HTTPException as e:
-        assert e.status_code == 403
-        assert e.detail == "Not authenticated"
+# # Test that main websocket cannot be connected if not logged in
+# def test_socket_connect_fails_when_not_logged_in(test_client_after_app_start: TestClient):
+#     try:
+#         with test_client_after_app_start.websocket_connect("/ws/main") as websocket_session:
+#             pass
+#     except HTTPException as e:
+#         assert e.status_code == 403
+#         assert e.detail == "Not authenticated"

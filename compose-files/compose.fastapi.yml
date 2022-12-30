@@ -38,11 +38,11 @@ services:
       - MONGO_PASSWORD
       - USE_IN_MEMORY_MONGO_DB=False
       - TEST_IN_MONGO_DB_CONNECTION_ON_APP_START=True
-      - SESSION_TOKEN_STORE_TYPE=${SESSION_TOKEN_STORE_TYPE:-redis}
+      - ACCESS_TOKENS_STORE_TYPE=${ACCESS_TOKENS_STORE_TYPE:-redis}
       - REDIS_URL=${REDIS_URL:-redis://redis_cache}
       - REDIS_PASSWORD
       - TEST_REDIS_CONNECTION_ON_APP_START=True
-      - BROADCAST_URL=${BROADCAST_URL:-redis://redis_cache}
+      - PUBSUB_URL=${PUBSUB_URL:-redis://redis_cache}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
       - USER_AUTH_COOKIE_TYPE=${USER_AUTH_COOKIE_TYPE:-localhost_development}
       - ADMIN_USER_AUTH_COOKIE_TYPE=${ADMIN_USER_AUTH_COOKIE_TYPE:-localhost_development}
