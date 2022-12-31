@@ -10,12 +10,13 @@ services:
         VITE_APP_BACKEND_URL: ${VITE_APP_BACKEND_URL}
         VITE_APP_BACKEND_WEBSOCKET_URL: ${VITE_APP_BACKEND_WEBSOCKET_URL}
         VITE_LOG_ENV_VARS: ${VITE_LOG_ENV_VARS}
+    environment:
+      - VITE_LOG_ENV_VARS=${VITE_LOG_ENV_VARS-false} # Pass env directly to container for unit tests
     restart: always
     volumes:
       - ./frontend/src:/app/src # live reload
     ports:
       - 8019:5173
-      - 8020:5174
     networks:
       - fullstack_proxy
     # depends_on:

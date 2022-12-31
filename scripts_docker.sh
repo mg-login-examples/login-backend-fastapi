@@ -80,8 +80,8 @@ then
 elif [ $case = "run-e2e-tests" ]
 then
    docker_down_all_backend_containers
-   # create backend log file (used as docker volume) to prevent docker from creating a directory
-   touch backend/app.log
+   # create log file (used as docker volume) to prevent docker from creating a directory
+   touch app.log
    # Define test admin users
    BACKEND_ADMIN_USER_EMAIL="test_admin@fakemail.com"
    BACKEND_ADMIN_USER_PASSWORD="secretpwd"
