@@ -13,6 +13,10 @@ from data.schemas.quotes.quoteCreate import QuoteCreate as QuoteCreateSchema
 from data.endUserSchemasToDbSchemas.quote import createSchemaToDbSchema as quoteCreateSchemaToDbSchema
 from data.endUserSchemasToDbSchemas.quote import updateSchemaToDbSchema as quoteUpdateSchemaToDbSchema
 
+from data.database.models.trip import Trip as TripModel
+from data.schemas.trips.trip import Trip as TripSchema
+from data.schemas.trips.tripCreate import TripCreate as TripCreateSchema
+
 from data.mongo_schemas.user_notes.user_note import UserNote as UserNoteSchema
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate as UserNoteCreateSchema
 from data.mongo_schemas.user_notes.user_note_db_table import UserNoteDBTable
@@ -23,6 +27,8 @@ resources_configurations: List[ResourceConfigurations] = [
         UserSchema,
         UserCreateSchema,
         ResourceModel=UserModel,
+        readonly_fields=["quotes"],
+        designation_fields=["name", "email"],
         customEndUserCreateSchemaToDbSchema=userCreateSchemaToDbSchema,
     ),
     ResourceConfigurations(
@@ -30,8 +36,16 @@ resources_configurations: List[ResourceConfigurations] = [
         QuoteSchema,
         QuoteCreateSchema,
         ResourceModel=QuoteModel,
+        designation_fields=["text"],
         customEndUserCreateSchemaToDbSchema=quoteCreateSchemaToDbSchema,
         customEndUserUpdateSchemaToDbSchema=quoteUpdateSchemaToDbSchema,
+    ),
+    ResourceConfigurations(
+        "trips",
+        TripSchema,
+        TripCreateSchema,
+        ResourceModel=TripModel,
+        designation_fields=["description"],
     ),
     ResourceConfigurations(
         "user-notes",

@@ -8,3 +8,5 @@ from . import user_quote_like
 from . import user_email_verification
 from . import user_password_reset_token
 from . import user_session
+
+from . import trip
