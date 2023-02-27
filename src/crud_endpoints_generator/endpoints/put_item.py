@@ -18,7 +18,7 @@ def generate_sql_endpoint(
     customEndUserUpdateSchemaToDbSchema: Callable,
 ):
     @router.put("/{item_id}/", status_code=status.HTTP_204_NO_CONTENT, dependencies=dependencies)
-    def update_item(item_id: int, item: ResourceSchema, db: Session = db_as_dependency) -> ResourceSchema:
+    def update_item(item_id: int, item: ResourceSchema, db: Session = db_as_dependency) -> Response:
         if item_id != item.id:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Item id in request body different from path parameter")
         if customEndUserUpdateSchemaToDbSchema:
@@ -37,7 +37,7 @@ def generate_mongo_endpoint(
     customEndUserUpdateSchemaToDbSchema: Callable,
 ):
     @router.put("/{item_id}/", status_code=status.HTTP_204_NO_CONTENT, dependencies=dependencies)
-    def update_item(item_id: str, item: ResourceSchema, db: Database = db_as_dependency) -> ResourceSchema:
+    def update_item(item_id: str, item: ResourceSchema, db: Database = db_as_dependency) -> Response:
         if item_id != str(item.id):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Item id in request body different from path parameter")
         if customEndUserUpdateSchemaToDbSchema:
