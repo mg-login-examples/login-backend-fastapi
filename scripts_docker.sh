@@ -152,7 +152,7 @@ then
    export ADMIN_USER_AUTH_COOKIE_TYPE=same_site_secure
    export PRIMARY_DOMAIN="login-example.duckdns.org"
    export RELOAD_APP_ON_CHANGE=True
-   docker-compose -f docker-compose.yml -f docker-compose.override.yml -f compose.fastapi.yml -f compose.mysql.yml -f compose.mongo.yml -f compose.redis.yml -p backend up --build -d
+   docker-compose -f docker-compose.yml -f docker-compose.override.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend up --build -d
 elif [ $case = "launch-databases" ]
 then
    docker_down_all_backend_containers
