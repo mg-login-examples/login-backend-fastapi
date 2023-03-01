@@ -1,5 +1,6 @@
 import logging
 
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from stores.sql_db_store import crud_base
@@ -12,12 +13,18 @@ from utils.security.password_utils import get_password_hash
 logger = logging.getLogger(__name__)
 
 def create_admin_user(email: str, password: str, db: Session):
-    hashed_password = get_password_hash(password)
-    admin_user = AdminUserCreateAsModelSchema(email=email, hashed_password=hashed_password)
-    admin_user_created = crud_base.create_resource_item(db, AdminUserModel, admin_user)
-    admin_user_schema = AdminUserSchema.from_orm(admin_user_created)
-    logger.info("Admin user created:")
-    logger.info(admin_user_schema.dict())
+    try:
+        hashed_password = get_password_hash(password)
+        admin_user = AdminUserCreateAsModelSchema(email=email, hashed_password=hashed_password)
+        admin_user_created = crud_base.create_resource_item(db, AdminUserModel, admin_user)
+        admin_user_schema = AdminUserSchema.from_orm(admin_user_created)
+        logger.info("Admin user created:")
+        logger.info(admin_user_schema.dict())
+    except IntegrityError as e:
+        if str(e.__cause__) == "UNIQUE constraint failed: admin_users.email":
+            logger.error(f"Error: An admin user with email '{email}' already exists")
+        else:
+            logger.error(f'Unexpected Integrity Error: {e.__cause__}')
 
 def update_admin_user_password(email: str, password_new: str, db: Session):
     admin_user = crud_base.get_resource_item_by_attribute(db, AdminUserModel, AdminUserModel.email, email)
