@@ -50,8 +50,8 @@ jobs:
             unzip results.zip &&
             rm results.zip &&
             curl http://localhost:5050/allure-docker-service/generate-report?project_id=backend
-  e2e-tests:
-    name: Run E2E Tests And Send Results To Allure Docker Service
+  e2e-tests-cypress:
+    name: Run Cypress E2E Tests And Send Results To Allure Docker Service
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the files
@@ -72,10 +72,8 @@ jobs:
         shell: bash
         env:
           MAILSLURP_API_KEY: ${{secrets.MAILSLURP_API_KEY}}
-      - name: Run e2e tests
-        # env:
-        #   CYPRESS_MAILSLURP_API_KEY: ${{ secrets.MAILSLURP_API_KEY }}
-        run: ./scripts_docker.sh run-e2e-tests
+      - name: Run cypress e2e tests
+        run: ./scripts_docker.sh run-e2e-tests-cypress
       - name: Zip allure reports
         if: success() || failure()
         run: cd frontend/cypress && mv allure-results results && zip -r results.zip results
@@ -88,7 +86,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           source: "frontend/cypress/results.zip"
-          target: "/home/ubuntu/allure-docker/projects/frontend-e2e/"
+          target: "/home/ubuntu/allure-docker/projects/frontend-e2e-cypress/"
           strip_components: 2
       - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
         if: success() || failure()
@@ -99,11 +97,58 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: >-
-            cd /home/ubuntu/allure-docker/projects/frontend-e2e &&
+            cd /home/ubuntu/allure-docker/projects/frontend-e2e-cypress &&
             sudo rm -rf results &&
             unzip results.zip &&
             rm results.zip &&
-            curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e
+            curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e-cypress
+  e2e-tests-playwright:
+    name: Run Playwright E2E Tests And Send Results To Allure Docker Service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+      - name: Add mysql password text file for a test mysql container
+        run: echo "password" > docker_secrets/mysql_pwd.txt
+      - name: Add mongo password text file for a test mongo container
+        run: echo "password" > docker_secrets/mongo_pwd.txt
+      - name: Add redis password text file for a test redis container
+        run: echo "password" > docker_secrets/redis_pwd.txt
+      - name: Checkout frontend repo
+        uses: actions/checkout@v3
+        with:
+          repository: mg-login-examples/login-frontend-vue-vite
+          path: frontend
+      - name: Run playwright e2e tests
+        run: ./scripts_docker.sh run-e2e-tests-playwright
+      - name: Zip allure reports
+        if: success() || failure()
+        run: cd frontend/playwright && mv allure-results results && zip -r results.zip results
+      - name: Copy zipped reports to allure server
+        if: success() || failure()
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          source: "frontend/playwright/results.zip"
+          target: "/home/ubuntu/allure-docker/projects/frontend-e2e-playwright/"
+          strip_components: 2
+      - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
+        if: success() || failure()
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: >-
+            cd /home/ubuntu/allure-docker/projects/frontend-e2e-playwright &&
+            sudo rm -rf results &&
+            unzip results.zip &&
+            rm results.zip &&
+            curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e-playwright
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest

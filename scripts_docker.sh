@@ -77,7 +77,7 @@ then
    export TEST_ADMIN_USER_PASSWORD=$BACKEND_ADMIN_USER_PASSWORD
    # Run tdd command on app container
    docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi python -m pytest -n 2 --alluredir='./test/allure-results'
-elif [ $case = "run-e2e-tests" ]
+elif [ $case = "run-e2e-tests-cypress" ]
 then
    docker_down_all_backend_containers
    # create log file (used as docker volume) to prevent docker from creating a directory
@@ -109,7 +109,36 @@ then
    export CYPRESS_adminApiLoginPassword=$BACKEND_ADMIN_USER_PASSWORD
    # export CYPRESS_TAGS=@tag1,@tag2 # example with multiple tags
    # run e2e tests
-   docker-compose -f docker-compose.yml -f compose-files/compose.cypress.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.full_app_proxy.yml -p backend run vueapp_test_e2e npm run test:e2e:dev:run:docker
+   docker-compose -f docker-compose.yml -f compose-files/compose.cypress.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.full_app_proxy.yml -p backend run vueapp_test_e2e_cypress npm run test:e2e:dev:run:docker
+elif [ $case = "run-e2e-tests-playwright" ]
+then
+   docker_down_all_backend_containers
+   # create log file (used as docker volume) to prevent docker from creating a directory
+   touch app.log
+   # Define test admin users
+   BACKEND_ADMIN_USER_EMAIL="test_admin@fakemail.com"
+   BACKEND_ADMIN_USER_PASSWORD="secretpwd"
+   # build backend stack images, run db migrations and create test admin users
+   build_backend_stack_docker_images && run_db_migrations && create_admin_users $BACKEND_ADMIN_USER_EMAIL $BACKEND_ADMIN_USER_PASSWORD
+   # Set env vars before building images
+   # set vite build env vars
+   export VITE_APP_BACKEND_URL=http://backend.full_app_proxy.com
+   export VITE_APP_BACKEND_WEBSOCKET_URL=ws://backend.full_app_proxy.com/ws/main
+   # set full app proxy env vars for nginx config for e2e test
+   export NGINX_FILENAME=nginx-e2e-test.conf
+   # build frontend and playwright containers
+   docker-compose -f docker-compose.yml -f compose-files/compose.playwright.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.full_app_proxy.yml -p backend build
+   # set env vars for tests execution
+   # set auth cookie type for e2e docker tests
+   export USER_AUTH_COOKIE_TYPE=same_site_not_secure
+   # set playwright env vars
+   export PLAYWRIGHT_BASE_URL=http://frontend.full_app_proxy.com
+   export PLAYWRIGHT_apiUrl=http://backend.full_app_proxy.com/api
+   export PLAYWRIGHT_adminApiUrl=http://backend.full_app_proxy.com/api/admin
+   export PLAYWRIGHT_adminApiLoginUsername=$BACKEND_ADMIN_USER_EMAIL
+   export PLAYWRIGHT_adminApiLoginPassword=$BACKEND_ADMIN_USER_PASSWORD
+   # run e2e tests
+   docker-compose -f docker-compose.yml -f compose-files/compose.playwright.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.full_app_proxy.yml -p backend run vueapp_test_e2e_playwright npm run test:e2e:playwright
 elif [ $case = "launch-api-cloud-dev" ]
 then
    docker_down_all_backend_containers

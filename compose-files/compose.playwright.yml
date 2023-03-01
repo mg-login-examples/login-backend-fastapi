@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  vueapp_test_e2e_playwright:
+    networks:
+      - fullstack_proxy
+    build:
+      context: ./frontend
+      dockerfile: ./playwright.Dockerfile
+    environment:
+      - PLAYWRIGHT_BASE_URL=${PLAYWRIGHT_BASE_URL}
+      - PLAYWRIGHT_apiUrl=${PLAYWRIGHT_apiUrl}
+      - PLAYWRIGHT_adminApiUrl=${PLAYWRIGHT_adminApiUrl}
+      - PLAYWRIGHT_adminApiLoginUsername=${PLAYWRIGHT_adminApiLoginUsername}
+      - PLAYWRIGHT_adminApiLoginPassword=${PLAYWRIGHT_adminApiLoginPassword}
+      - CI=${CI:-1}
+      # - DISPLAY=... # Replace this line with the appropriate value
+    depends_on:
+      fastapi:
+        condition: service_healthy
+      vueapp_dev:
+        condition: service_healthy
+      full_app_proxy:
+        condition: service_healthy
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/playwright:/app/playwright

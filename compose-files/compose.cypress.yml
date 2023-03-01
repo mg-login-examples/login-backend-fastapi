@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  vueapp_test_e2e:
+  vueapp_test_e2e_cypress:
     networks:
       - fullstack_proxy
     build:
