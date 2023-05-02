@@ -7,6 +7,9 @@ from data.schemas.users.userCreate import UserCreate as UserCreateSchema
 from data.database.models.user import User as UserModel
 from api_dependencies.common_route_dependencies import CommonRouteDependencies
 from .create_user_endpoint import generate_endpoint as generate_create_user_endpoint
+from .get_users_endpoint import generate_endpoint as generate_get_users_endpoint
+from .get_users_by_ids_endpoint import generate_endpoint as generate_get_users_by_ids_endpoint
+from .user_profile_endpoints import generate_endpoints as generate_user_profile_endpoints
 from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
 from .user_sessions_endpoint import generate_endpoint as generate_user_sessions_endpoint
 from .user_notes_endpoint import generate_endpoint as generate_user_notes_endpoint
@@ -36,6 +39,25 @@ def get_router(
         api_dependencies.db,
         api_dependencies.access_token_store,
         secure_cookies
+    )
+
+    generate_get_users_endpoint(
+        router,
+        api_dependencies.db,
+        api_dependencies.current_user,
+    )
+
+    generate_get_users_by_ids_endpoint(
+        router,
+        api_dependencies.db,
+        api_dependencies.current_user,
+    )
+
+    generate_user_profile_endpoints(
+        router,
+        api_dependencies.db,
+        api_dependencies.current_user,
+        api_dependencies.restrict_endpoint_to_own_resources_param_user_id
     )
 
     generate_user_quotes_endpoint(

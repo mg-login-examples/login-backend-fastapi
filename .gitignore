@@ -30,7 +30,11 @@ archive.zip
 /frontend
 /docker_secrets/*.txt
 sql_app.db
+image_uploads/*.jpg
+image_uploads/*.jpeg
+image_uploads/*.png
 admin_access_tokens.txt
 user_access_tokens.txt
 app.log
+app-tests.log
 allure-results

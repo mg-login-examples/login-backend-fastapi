@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.fixture
 def app_db_manager(app_settings: Settings):
+    logger.debug("Create fixture app_db_manager")
     app_db_manager = get_db_manager(
         app_settings.database_url,
         app_settings.database_user,
@@ -25,6 +26,7 @@ def app_db_manager(app_settings: Settings):
 
 @pytest.fixture
 def app_nosql_db_manager(app_settings: Settings):
+    logger.debug("Create fixture app_nosql_db_manager")
     app_nosql_db_manager = get_nosql_db_manager(
         app_settings.mongo_host,
         app_settings.mongo_port,
@@ -37,6 +39,7 @@ def app_nosql_db_manager(app_settings: Settings):
 
 @pytest.fixture
 def app_cache_manager(app_settings: Settings):
+    logger.debug("Create fixture app_cache_manager")
     app_cache_manager = get_cache_manager(
         app_settings.redis_url,
         app_settings.redis_password
@@ -45,6 +48,7 @@ def app_cache_manager(app_settings: Settings):
 
 @pytest.fixture
 def app_pubsub(app_settings: Settings):
+    logger.debug("Create fixture app_pubsub")
     return pubsub_utils.get_pubsub(
         pubsub_url=app_settings.pubsub_url,
         redis_pass=app_settings.redis_password
@@ -52,6 +56,7 @@ def app_pubsub(app_settings: Settings):
 
 @pytest.fixture
 async def app_pubsub_connected(app_pubsub: PubSub):
+    logger.debug("Create fixture app_pubsub_connected")
     await app_pubsub.connect()
 
 @pytest.fixture
@@ -62,6 +67,7 @@ def app(
     app_cache_manager: RedisCacheManager,
     app_pubsub: PubSub
 ) -> FastAPI:
+    logger.debug("Create fixture app")
     app = app_factory.create_app(
         app_db_manager,
         app_nosql_db_manager,

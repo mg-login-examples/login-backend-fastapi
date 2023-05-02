@@ -18,14 +18,23 @@ class Subscriber:
         except Unsubscribed:
             pass
 
-    async def get(self) -> Event:
-        item = await self._queue.get()
-        if item is None:
-            raise Unsubscribed()
-        return item
+    async def exit_async_iter(self) -> None:
+        await self._queue.put(None)
+    
+    async def get(self, timeout: Optional[float] = None) -> Event:
+        try:
+            item = await asyncio.wait_for(self._queue.get(), timeout=timeout)
+            if item is None:
+                raise Unsubscribed()
+            return item
+        except asyncio.TimeoutError:
+            raise TimeoutError() from None
 
     async def put(self, event: Event):
         await self._queue.put(event)
 
-    async def exit_async_iter(self) -> None:
-        await self._queue.put(None)
+    async def __aenter__(self) -> 'Subscriber':
+        return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+        await self.exit_async_iter()

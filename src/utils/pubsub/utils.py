@@ -25,10 +25,13 @@ def enable_pubsub(app: FastAPI, pubsub: PubSub, pubsub_subscribers_async_tasks: 
         # Ideally, on app shutdown, websocket connections will be forcibly closed by FastAPI,
         # the teardown code in src/socket_endpoints/main_socket/socket_channel_subscriptions_manager.py
         # will send websocket_closed event via async stream to all subscriber tasks which should end all of them
-        # Below here on line 28 awaiting tasks to complete before disconnecting pubsub is only needed for the tests
-        # without line 28, the app is shutting down and pubsub is disconnected
+        # Below here on line 32 awaiting tasks to complete before disconnecting pubsub is only needed for integration tests.
+        # Without line 32, the app is shutting down and pubsub is disconnected
         # before all the subscriber tasks are ended, resulting in an error
-        await asyncio.wait_for(asyncio.gather(*pubsub_subscribers_async_tasks), 5)
+        try:
+            await asyncio.wait_for(asyncio.gather(*pubsub_subscribers_async_tasks), 5)
+        except asyncio.TimeoutError:
+            logger.error("pubsub subscribers tasks did not end within 5 sec and were cancelled!")
         await pubsub.disconnect()
 
 async def assert_pubsub_is_able_to_connect_to_backend(pubsub: PubSub):

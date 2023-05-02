@@ -12,14 +12,17 @@ SQLAlchemy-Utils
 mysqlclient
 redis
 pymongo
-pymongo-inmemory
+Pillow
 alembic
 python-dotenv
 coloredlogs
+pymongo-inmemory
 pytest
 pytest-asyncio
+pytest-timeout
 httpx
 httpx-ws # use until httpx provides async websocket functionality. feature in active development https://github.com/encode/httpx/issues/304
+asgi_lifespan
 pytest-xdist
 pytest-watch
 pytest-html

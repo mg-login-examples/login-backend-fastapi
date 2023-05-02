@@ -22,8 +22,11 @@ class PubSub:
         self._channel_to_subscribers: Dict[str, List[Subscriber]] = {}
 
     async def connect(self):
-        await self._backend.connect()
-        logger.info("********* starting listen task")
+        try:
+            await self._backend.connect()
+        except Exception as e:
+            logger.error(f"Error while trying to connect to pubsub backend:")
+            raise e
         if not self._listener_task or self._listener_task.done:
             self._listener_task = asyncio.create_task(self._listener())
 
@@ -44,18 +47,21 @@ class PubSub:
     async def subscribe(self, channel: str):
         try:
             await self._backend.subscribe(channel)
-            subscriber = Subscriber()
+            async with Subscriber() as subscriber:
+                if channel in self._channel_to_subscribers:
+                    self._channel_to_subscribers[channel].append(subscriber)
+                else:
+                    self._channel_to_subscribers[channel] = [subscriber]
+                yield subscriber
+        except Exception as e:
+            logger.error("Error in pubsub subscribe")
+            raise e
+        finally:
             if channel in self._channel_to_subscribers:
-                self._channel_to_subscribers[channel].append(subscriber)
-            else:
-                self._channel_to_subscribers[channel] = [subscriber]
-            yield subscriber
-            self._channel_to_subscribers[channel].remove(subscriber)
+                self._channel_to_subscribers[channel].remove(subscriber)
             if not self._channel_to_subscribers.get(channel):
                 del self._channel_to_subscribers[channel]
                 await self._backend.unsubscribe(channel)
-        finally:
-            await subscriber.exit_async_iter()
 
     async def _listener(self) -> None:
         while True:
@@ -66,6 +72,8 @@ class PubSub:
             except Exception as e:
                 logger.error("Error in PubSub listener for backend events:")
                 logger.error(e)
+                logger.error(type(e))
+                raise e
 
     def get_pubsub_as_fastapi_dependency(self):
         def get_self():

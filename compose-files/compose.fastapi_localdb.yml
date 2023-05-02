@@ -12,8 +12,6 @@ services:
       - fullstack_proxy
       - traefik-public
     depends_on:
-      mysql_db:
-        condition: service_healthy
       mongo_db:
         condition: service_healthy
       redis_cache:
@@ -25,11 +23,10 @@ services:
       - ./app.log:/app.log
       - ./app.log:/app-tests.log
     secrets:
-      - mysql-password
       - mongo-password
       - redis-pass
     environment:
-      - DATABASE_URL=${DATABASE_URL:-mysql://root@mysql_db/login}
+      - DATABASE_URL
       - DATABASE_USER
       - DATABASE_PASSWORD
       - TEST_SQL_DB_CONNECTION_ON_APP_START=True
@@ -39,11 +36,11 @@ services:
       - MONGO_PASSWORD
       - USE_IN_MEMORY_MONGO_DB=False
       - TEST_IN_MONGO_DB_CONNECTION_ON_APP_START=True
-      - ACCESS_TOKENS_STORE_TYPE=${ACCESS_TOKENS_STORE_TYPE:-redis}
-      - REDIS_URL=${REDIS_URL:-redis://redis_cache}
+      - ACCESS_TOKENS_STORE_TYPE
+      - REDIS_URL
       - REDIS_PASSWORD
-      - TEST_REDIS_CONNECTION_ON_APP_START=True
-      - PUBSUB_URL=${PUBSUB_URL:-redis://redis_cache}
+      - TEST_REDIS_CONNECTION_ON_APP_START
+      - PUBSUB_URL
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
       - USER_AUTH_COOKIE_TYPE=${USER_AUTH_COOKIE_TYPE:-localhost_development}
       - ADMIN_USER_AUTH_COOKIE_TYPE=${ADMIN_USER_AUTH_COOKIE_TYPE:-localhost_development}
@@ -72,4 +69,3 @@ services:
     #     reservations:
     #       cpus: '0.25'
     #       memory: 128M
-

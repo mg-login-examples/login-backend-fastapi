@@ -14,6 +14,16 @@ def get_resource_item(db: Session, ResourceModel, item_id: int) -> BaseModel:
 def get_resource_item_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any) -> BaseModel:
     return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).first()
 
+def get_resource_items_by_attribute_filtered(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_filter: any, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+    return db.query(ResourceModel).filter(ResourceModel_attribute.like(attribute_filter)).offset(skip).limit(limit).all()
+
+def get_resource_items_by_attribute_in_list(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_in_list: List[any], all = False, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+    query = db.query(ResourceModel).filter(ResourceModel_attribute.in_(attribute_in_list))
+    if all:
+        return query.all()
+    else:
+        return query.offset(skip).limit(limit).all()
+
 def get_resource_item_by_attributes(db: Session, ResourceModel, ResourceModel_attributes_and_values: List[Tuple]) -> BaseModel:
     query = db.query(ResourceModel)
     for attribute_and_value in ResourceModel_attributes_and_values:

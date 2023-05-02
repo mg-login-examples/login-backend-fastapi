@@ -12,9 +12,11 @@ class User(Base):
     time_created = Column(DateTime(timezone=True), server_default=func.now())
     time_updated = Column(DateTime(timezone=True), onupdate=func.now())
     email = Column(EmailType, unique=True, index=True)
-    hashed_password = Column(String(128))
+    name = Column(String(128), index=True, nullable=True)
+    profile_picture = Column(String(256), nullable=True)
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
+    hashed_password = Column(String(128))
 
     quotes = relationship("Quote", back_populates="author", passive_deletes=True)
     liked_quotes = relationship(

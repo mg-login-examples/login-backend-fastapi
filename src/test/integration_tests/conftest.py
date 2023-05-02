@@ -1,4 +1,4 @@
-from test.integration_tests.fixtures.settings import app_settings, env_settings_test
+from test.integration_tests.fixtures.allure import clean_allure_results
 from test.integration_tests.fixtures.app import app_db_manager, app_nosql_db_manager, app_cache_manager, app_pubsub, app_pubsub_connected, app
 
 from test.integration_tests.fixtures.testclient import test_client, test_client_admin_logged_in, test_client_logged_in, test_client_after_app_start

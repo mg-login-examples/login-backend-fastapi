@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.fixture
 async def async_created_user_by_admin(async_test_client_admin_logged_in: AsyncClient, user_login: UserCreate) -> UserDeep:
+    logger.debug("Create fixture async_created_user_by_admin")
     response = await async_test_client_admin_logged_in.post(
         "/api/admin/resource/users/",
         json=user_login.dict()
@@ -28,6 +29,7 @@ async def async_created_user_by_admin(async_test_client_admin_logged_in: AsyncCl
 
 @pytest.fixture
 async def async_login_response(async_test_client: AsyncClient, user_login: UserCreate, async_created_user_by_admin: User) -> LoginResponse:
+    logger.debug("Create fixture async_login_response")
     response = await async_test_client.post(
         f"/api/login/",
         data={"username": user_login.email, "password": user_login.password}
@@ -37,4 +39,5 @@ async def async_login_response(async_test_client: AsyncClient, user_login: UserC
 
 @pytest.fixture
 async def async_logged_in_user(async_login_response: LoginResponse) -> User:
+    logger.debug("Create fixture async_logged_in_user")
     return async_login_response.user
