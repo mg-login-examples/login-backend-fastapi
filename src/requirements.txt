@@ -7,7 +7,7 @@ aiostream
 aiofiles
 requests
 passlib[bcrypt]
-SQLAlchemy==1.4.40
+SQLAlchemy
 SQLAlchemy-Utils
 mysqlclient
 redis
