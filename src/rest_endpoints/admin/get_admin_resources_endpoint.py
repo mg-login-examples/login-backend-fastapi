@@ -14,7 +14,8 @@ def generate_endpoint(router: APIRouter, route_dependencies: CommonRouteDependen
                 "updateSchema": resource_configuration.ResourceSchema.schema(by_alias=False),
                 "createSchema": resource_configuration.ResourceCreateSchema.schema(by_alias=False),
             }
-            add_resource_url_ids_to_schema_properties(info["updateSchema"], resource_configuration, resources_configurations)
-            add_resource_url_ids_to_schema_properties(info["createSchema"], resource_configuration, resources_configurations)
+            if not resource_configuration.MongoDBTable:
+                add_resource_url_ids_to_schema_properties(info["updateSchema"], resource_configuration, resources_configurations)
+                add_resource_url_ids_to_schema_properties(info["createSchema"], resource_configuration, resources_configurations)
             infos.append(info)
         return infos

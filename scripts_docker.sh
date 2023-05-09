@@ -1,6 +1,6 @@
 #!/bin/sh
-# docker_down_all_backend_containers() { docker-compose -f docker-compose.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.full_app_proxy.yml -f compose-files/compose.cypress.yml -p backend down --rmi all; }
-docker_down_all_backend_containers() { docker-compose -f docker-compose.yml -p backend down --rmi all -v --remove-orphans; }
+# docker_down_all_containers() { docker-compose -f docker-compose.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.full_app_proxy.yml -f compose-files/compose.cypress.yml -p backend down --rmi all; }
+docker_down_all_containers() { docker-compose -f docker-compose.yml -p backend down --rmi all -v --remove-orphans; }
 build_backend_stack_docker_images() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend build; }
 run_db_migrations() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi alembic upgrade head; }
 create_admin_users() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi python main.py add_admin_user $1 $2; }
@@ -12,7 +12,7 @@ create_admin_users_localdb() { docker-compose -f docker-compose.yml -f compose-f
 case=${1:-default}
 if [ $case = "launch-api-local" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
    touch app.log
    # Define test admin users
@@ -25,7 +25,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend up
 elif [ $case = "launch-fullstack-local" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
    touch app.log
    # Define test admin users
@@ -37,7 +37,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend up --build
 elif [ $case = "launch-fullstack-local-with-proxy" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
    touch app.log
    # Define test admin users
@@ -54,7 +54,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.full_app_proxy.yml -p backend up --build
 elif [ $case = "launch-tdd" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
    touch app.log
    # Define test admin users
@@ -69,7 +69,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi ptw -- --testmon
 elif [ $case = "run-api-tests" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
    touch app.log
    touch app-tests.log
@@ -85,7 +85,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi python -m pytest -n 3 --capture=no --alluredir='./test/allure-results'
 elif [ $case = "run-api-tests-localdb" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
    touch app.log
    touch app-tests.log
@@ -101,7 +101,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi python -m pytest -n 3 --capture=no --alluredir='./test/allure-results'
 elif [ $case = "run-e2e-tests-cypress" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # create log file (used as docker volume) to prevent docker from creating a directory
    touch app.log
    # Define test admin users
@@ -134,7 +134,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.cypress.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.full_app_proxy.yml -p backend run vueapp_test_e2e_cypress npm run test:e2e:dev:run:docker
 elif [ $case = "run-e2e-tests-playwright" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # create log file (used as docker volume) to prevent docker from creating a directory
    touch app.log
    # Define test admin users
@@ -163,7 +163,7 @@ then
    docker-compose -f docker-compose.yml -f compose-files/compose.playwright.yml -f compose-files/compose.vueapp_compiled.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.full_app_proxy.yml -p backend run vueapp_test_e2e_playwright npm run test:e2e:playwright
 elif [ $case = "launch-api-cloud-dev" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    # Ensure app.log file is created otherwise docker creates app.log directory by default as it is mounted
    touch app.log
    # Build containers & run db migrations
@@ -177,11 +177,11 @@ then
    docker-compose -f docker-compose.yml -f docker-compose.override.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend up --build -d
 elif [ $case = "launch-databases" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
    docker-compose -f docker-compose.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend up --build
 elif [ $case = "down" ]
 then
-   docker_down_all_backend_containers
+   docker_down_all_containers
 else
    echo "no option passed"
    echo "available options are:
