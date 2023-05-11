@@ -1,2 +1,1 @@
-from test.integration_and_unit_tests.fixtures.settings import app_settings, env_settings_test
-from test.integration_and_unit_tests.fixtures.logging import set_logging_level
+from test.integration_and_unit_tests.fixtures.settings import app_settings

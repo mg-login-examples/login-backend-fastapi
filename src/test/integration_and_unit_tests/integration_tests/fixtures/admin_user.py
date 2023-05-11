@@ -6,7 +6,7 @@ from data.schemas.admin_login.admin_login_response import AdminLoginResponse
 from data.schemas.admin_users.admin_user import AdminUser
 from data.schemas.admin_users.admin_user_create import AdminUserCreate
 from test.integration_and_unit_tests.utils.admin_api import authentication as admin_authentication_api
-from test.integration_and_unit_tests.env_settings_test import EnvSettingsTest
+from test.env_settings_test import EnvSettingsTest
 
 logger = logging.getLogger(__name__)
 
