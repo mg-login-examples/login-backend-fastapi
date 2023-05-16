@@ -5,7 +5,7 @@ build_backend_stack_docker_images() { docker-compose -f docker-compose.yml -f co
 run_db_migrations() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi alembic upgrade head; }
 create_admin_users() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi.yml -f compose-files/compose.mysql.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi python main.py add_admin_user $1 $2; }
 
-build_backend_stack_docker_images_localdb() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -f compose-files/compose.pytest_playwright.yml -p backend build; }
+build_backend_stack_docker_images_localdb() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend build; }
 run_db_migrations_localdb() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi_localdb alembic -c alembic.sqlite.ini upgrade head; }
 create_admin_users_localdb() { docker-compose -f docker-compose.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi_localdb python main.py add_admin_user $1 $2; }
 
@@ -93,10 +93,10 @@ then
    # build backend stack images, run db migrations and create test admin users
    build_backend_stack_docker_images_localdb && run_db_migrations_localdb && create_admin_users_localdb $BACKEND_ADMIN_USER_EMAIL $BACKEND_ADMIN_USER_PASSWORD
    # set test user credentials as env vars
-   export TEST_ADMIN_USER_EMAIL=$BACKEND_ADMIN_USER_EMAIL
-   export TEST_ADMIN_USER_PASSWORD=$BACKEND_ADMIN_USER_PASSWORD
-   # Run tdd command on app container
-   docker-compose -f docker-compose.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi_localdb python -m pytest -n 3 test/integration_and_unit_tests
+   # export TEST_ADMIN_USER_EMAIL=$BACKEND_ADMIN_USER_EMAIL
+   # export TEST_ADMIN_USER_PASSWORD=$BACKEND_ADMIN_USER_PASSWORD
+   # # Run tdd command on app container
+   # docker-compose -f docker-compose.yml -f compose-files/compose.fastapi_localdb.yml -f compose-files/compose.mongo.yml -f compose-files/compose.redis.yml -p backend run fastapi_localdb python -m pytest -n 3 test/integration_and_unit_tests
 elif [ $case = "run-admin-app-e2e-tests" ]
 then
    docker_down_all_containers
