@@ -9,6 +9,10 @@ logger = logging.getLogger(__name__)
 def clean_allure_results():
     logger.debug("Create fixture clean_allure_results")
     # Delete all files inside the allure-results before a test run
-    files = glob.glob('allure-results/*')
+    files = glob.glob('test/allure-results/*')
     for f in files:
-        os.remove(f)
+        try:
+            os.remove(f)
+        except Exception as e:
+            logger.debug("Error while deleting allure results file:")
+            logger.debug(e)

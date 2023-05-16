@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  pytest_playwright:
+    tty: true # enables colored log # docker run -t
+    stdin_open: false # enables colored log # docker run -i
+    build:
+      context: ./src/
+      dockerfile: ./playwright.Dockerfile
+    networks:
+      - backend
+    depends_on:
+      fastapi:
+        condition: service_healthy
+    volumes:
+      - ./src:/app
+    environment:
+      - TEST_ADMIN_USER_EMAIL
+      - TEST_ADMIN_USER_PASSWORD
+      - TEST_PLAYWRIGHT_APP_BASE_URL=${TEST_PLAYWRIGHT_APP_BASE_URL:-http://fastapi:8018}
+      - DEBUG

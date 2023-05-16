@@ -23,7 +23,6 @@ services:
     volumes:
       - ./src:/app
       - ./app.log:/app.log
-      - ./app.log:/app-tests.log
     secrets:
       - mysql-password
       - mongo-password

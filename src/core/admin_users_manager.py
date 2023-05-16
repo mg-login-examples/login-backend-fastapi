@@ -21,7 +21,10 @@ def create_admin_user(email: str, password: str, db: Session):
         logger.info("Admin user created:")
         logger.info(admin_user_schema.dict())
     except IntegrityError as e:
-        if str(e.__cause__) == "UNIQUE constraint failed: admin_users.email":
+        if (
+            str(e.__cause__) == "UNIQUE constraint failed: admin_users.email" or #sqlite
+            f"Duplicate entry '{email}'" in str(e.__cause__) # mysql
+        ):
             logger.error(f"Error: An admin user with email '{email}' already exists")
         else:
             logger.error(f'Unexpected Integrity Error: {e.__cause__}')

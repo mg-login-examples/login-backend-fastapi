@@ -18,5 +18,4 @@ FROM install-stage as serve-stage
 # expose app server port
 EXPOSE $SERVER_PORT
 CMD ["python", "main.py"]
-# CMD ["pytest", "--alluredir='./test/allure-results'"]
 # CMD ["ptw", "--", "--testmon"]
