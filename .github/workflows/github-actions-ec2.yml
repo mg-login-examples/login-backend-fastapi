@@ -191,6 +191,48 @@ jobs:
       #       unzip results.zip &&
       #       rm results.zip &&
       #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e-playwright
+  admin-app-e2e-tests:
+    name: Run Admin App E2E Tests And Send Results To Allure Docker Service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+      - name: Add mysql password text file for a test mysql container
+        run: echo "password" > docker_secrets/mysql_pwd.txt
+      - name: Add mongo password text file for a test mongo container
+        run: echo "password" > docker_secrets/mongo_pwd.txt
+      - name: Add redis password text file for a test redis container
+        run: echo "password" > docker_secrets/redis_pwd.txt
+      - name: Run admin app tests
+        run: sudo ./scripts_docker.sh run-admin-app-e2e-tests
+      # - name: Zip allure reports
+      #   if: success() || failure()
+      #   run: cd src/test && mv allure-results results && zip -r results.zip results
+      # - name: Copy zipped reports to allure server
+      #   if: success() || failure()
+      #   uses: appleboy/scp-action@master
+      #   with:
+      #     host: ${{ secrets.HOST_DNS }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.EC2_SSH_KEY }}
+      #     port: 22
+      #     source: "src/test/results.zip"
+      #     target: "/home/ubuntu/allure-docker/projects/admin-app-e2e/"
+      #     strip_components: 2
+      # - name: Delete previous allure-results folder, unzip new one and delete zipped after
+      #   if: success() || failure()
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST_DNS }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.EC2_SSH_KEY }}
+      #     port: 22
+      #     script: >-
+      #       cd /home/ubuntu/allure-docker/projects/admin-app-e2e &&
+      #       sudo rm -rf results &&
+      #       unzip results.zip &&
+      #       rm results.zip &&
+      #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=admin-app-e2e
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest
