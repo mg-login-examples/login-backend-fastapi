@@ -17,26 +17,26 @@ phase_report_key = StashKey[Dict[str, CollectReport]]()
 @pytest.fixture
 @pytest.mark.timeout(30)
 def admin_user_not_logged_in(
-    # my_playwright_context: BrowserContext,
+    my_playwright_context: BrowserContext,
     page: Page,
     env_settings_test: EnvSettingsTest,
     request: FixtureRequest
 ):
     user = AdminUser(
-        "mr admin",
+        "Test Admin",
         env_settings_test.admin_user_email,
         env_settings_test.admin_user_password,
         env_settings_test.playwright_app_base_url,
-        # browser_context=my_playwright_context
-        page=page
+        browser_context=my_playwright_context
+        # page=page
     )
     yield user
     try:
         if hasattr(request.node, "rep_call"):
             outcome = request.node.rep_call
-            # if outcome.failed:
-            #     logger.info(f"Test {request.node.name} failed. Taking screenshot")
-            #     user.save_screenshot()
+            if outcome.failed:
+                logger.info(f"Test {request.node.name} failed. Taking screenshot")
+                user.save_screenshot()
     except Exception as e:
         logger.error("Error in admin user fixture teardown")
         logger.error(e)
