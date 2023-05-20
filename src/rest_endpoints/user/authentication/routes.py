@@ -8,6 +8,7 @@ from .logout_endpoint import generate_endpoint as generate_logout_endpoint
 from .password_reset_link_endpoint import generate_endpoint as generate_password_reset_link_endpoint
 from .password_reset_endpoint import generate_endpoint as generate_password_reset_endpoint
 from .password_change_endpoint import generate_endpoint as generate_password_change_endpoint
+from .google_login_endpoint import generate_endpoint as generate_google_login_endpoint
 
 def get_router(
     route_dependencies: CommonRouteDependencies,
@@ -21,5 +22,6 @@ def get_router(
     generate_password_reset_link_endpoint(router, route_dependencies.db)
     generate_password_reset_endpoint(router, route_dependencies.db)
     generate_password_change_endpoint(router, route_dependencies.db, route_dependencies.access_token_store, route_dependencies.current_user, auth_cookie_type)
+    generate_google_login_endpoint(router, route_dependencies.db, route_dependencies.access_token_store, auth_cookie_type)
 
     return router

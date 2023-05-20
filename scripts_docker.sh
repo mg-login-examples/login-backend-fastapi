@@ -207,8 +207,10 @@ else
     - launch-fullstack-local-with-proxy
     - launch-tdd
     - run-api-tests
-    - run-e2e-tests
+    - run-api-tests-localdb
     - run-admin-app-e2e-tests
+    - run-e2e-tests-cypress
+    - run-e2e-tests-playwright
     - launch-api-cloud-dev
     - launch-databases
     - down

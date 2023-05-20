@@ -31,6 +31,7 @@ def generate_endpoint(
         db: Session = db_as_dependency,
         access_token_store: AccessTokenStore = access_token_store_as_dependency
     ):
+        # TODO Check password is valid
         user_with_password_hash = userCreateSchemaToDbSchema(user)
         user_db = crud_base.create_resource_item(db, UserModel, user_with_password_hash)
         user_schema = User(**user_db.__dict__)

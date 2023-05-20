@@ -13,6 +13,9 @@ mysqlclient
 redis
 pymongo
 Pillow
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
 alembic
 python-dotenv
 coloredlogs

@@ -16,7 +16,7 @@ class User(Base):
     profile_picture = Column(String(256), nullable=True)
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
-    hashed_password = Column(String(128))
+    hashed_password = Column(String(128), nullable=True)
 
     quotes = relationship("Quote", back_populates="author", passive_deletes=True)
     liked_quotes = relationship(
