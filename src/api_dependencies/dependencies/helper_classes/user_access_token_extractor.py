@@ -2,10 +2,10 @@ from typing import Optional
 import logging
 
 from fastapi.security import OAuth2PasswordBearer
-from fastapi import HTTPException, Response
+from fastapi import Response
 from fastapi.security.utils import get_authorization_scheme_param
 from fastapi.requests import Request
-from starlette.status import HTTP_403_FORBIDDEN
+from data.schemas.http_error_exceptions.http_403_exceptions import HTTP_403_NOT_AUTHENTICATED_EXCEPTION
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +42,5 @@ class UserAccessTokenExtractor(OAuth2PasswordBearer):
         if not authorization:
             logger.error(f'Improper authorization error. Endpoint accessed: {request.url}. Header Authorization: {header_authorization}. Cookie Authorization: {cookie_authorization}')
             response.delete_cookie("Authorization")
-            raise HTTPException(
-                status_code=HTTP_403_FORBIDDEN, detail="Not authenticated"
-            )
+            raise HTTP_403_NOT_AUTHENTICATED_EXCEPTION
         return param

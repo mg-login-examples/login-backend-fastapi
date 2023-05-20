@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 
-from fastapi import Depends, HTTPException, Response
+from fastapi import Depends, Response
 from sqlalchemy.orm import Session
 
 from helpers_classes.custom_api_router import APIRouter
@@ -13,6 +13,7 @@ from data.database.models.admin_user import AdminUser as AdminUserModel
 from utils.security.password_utils import verify_password
 from utils.security.access_token_utils import generate_access_token
 from utils.security.auth_cookies import add_authorization_cookie_to_response
+from data.schemas.http_error_exceptions.http_401_exceptions import HTTP_401_INVALID_LOGIN_EXCEPTION
 
 logger = logging.getLogger(__name__)
 
@@ -52,4 +53,4 @@ def generate_endpoint(
         except Exception as e:
             logger.error(e)
         logger.error(f"Unsuccessful admin login with username: {form_data.username}")
-        raise HTTPException(status_code=401, detail="Incorrect login")
+        raise HTTP_401_INVALID_LOGIN_EXCEPTION

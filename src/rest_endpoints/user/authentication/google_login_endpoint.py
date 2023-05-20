@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, Response
 from fastapi.requests import Request
 from fastapi.security.utils import get_authorization_scheme_param
 from sqlalchemy.orm import Session
@@ -20,6 +20,7 @@ from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from utils.security.access_token_utils import generate_access_token
 from utils.security.auth_cookies import add_authorization_cookie_to_response
+from data.schemas.http_error_exceptions.http_401_exceptions import HTTP_401_INVALID_LOGIN_EXCEPTION, HTTP_401_GOOGLE_LOGIN_UNVERIFIED_EMAIL_EXCEPTION
 
 logger = logging.getLogger(__name__)
 
@@ -43,8 +44,10 @@ def generate_endpoint(
         try:
             idinfo = id_token.verify_oauth2_token(google_sign_in_payload.credential, requests.Request(), google_client_id)
             user_email = idinfo["email"]
+            if idinfo["email_verified"] == True:
+                raise HTTP_401_GOOGLE_LOGIN_UNVERIFIED_EMAIL_EXCEPTION
             user = crud_base.get_resource_item_by_attribute(db, UserModel, UserModel.email, user_email)
-            if not user and idinfo["email_verified"] == True:
+            if not user:
                 logger.info("Creating new user")
                 user_to_create = UserBase(email=user_email)
                 user_db = crud_base.create_resource_item(db, UserModel, user_to_create)
@@ -81,6 +84,7 @@ def generate_endpoint(
                     token_type='bearer'
                 )
         except Exception as e:
+            logger.error("Error during google login:")
             logger.error(e)
         logger.error(f"Unsuccessful google user login")
-        raise HTTPException(status_code=401, detail="Incorrect login")
+        raise HTTP_401_INVALID_LOGIN_EXCEPTION

@@ -1,8 +1,9 @@
 import logging
 
-from fastapi import Depends, HTTPException, status, WebSocket
+from fastapi import Depends, WebSocket
 
 from stores.access_tokens_store.access_token_store import AccessTokenStore
+from data.schemas.http_error_exceptions.http_403_exceptions import HTTP_403_INVALID_TOKEN_EXCEPTION
 
 logger = logging.getLogger(__name__)
 
@@ -20,9 +21,8 @@ def get_socket_validated_access_token_as_fastapi_dependency(
             if (resp):
                 return access_token
         except Exception as e:
-            logger.error("Access token validation error:")
-            logger.error(f"Endpoint accessed: {webSocket.url}")
+            logger.error(f"Invalid access token error - Endpoint accessed: {webSocket.url}:")
             logger.error(e)
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid access token")
+        raise HTTP_403_INVALID_TOKEN_EXCEPTION
 
     return Depends(validated_socket_access_token)

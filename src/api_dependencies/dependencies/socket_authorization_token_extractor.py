@@ -1,9 +1,8 @@
 import logging
 
 from fastapi import WebSocket, Depends
-from fastapi import HTTPException
 from fastapi.security.utils import get_authorization_scheme_param
-from starlette.status import HTTP_403_FORBIDDEN
+from data.schemas.http_error_exceptions.http_403_exceptions import HTTP_403_NOT_AUTHENTICATED_EXCEPTION
 
 logger = logging.getLogger(__name__)
 
@@ -32,9 +31,7 @@ def get_socket_authorization_token_as_fastapi_dependency():
 
         if not authorization:
             logger.error(f'Improper authorization error. Endpoint accessed: {webSocket.url}. Header Authorization: {header_authorization}. Cookie Authorization: {cookie_authorization}')
-            raise HTTPException(
-                status_code=HTTP_403_FORBIDDEN, detail="Not authenticated"
-            )
+            raise HTTP_403_NOT_AUTHENTICATED_EXCEPTION
         return param
 
     return Depends(get_authorization_token)

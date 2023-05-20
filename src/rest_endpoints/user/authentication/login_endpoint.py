@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, Response
 from fastapi.requests import Request
 from fastapi.security.utils import get_authorization_scheme_param
 from sqlalchemy.orm import Session
@@ -17,6 +17,7 @@ from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from utils.security.password_utils import verify_password
 from utils.security.access_token_utils import generate_access_token
 from utils.security.auth_cookies import add_authorization_cookie_to_response
+from data.schemas.http_error_exceptions.http_401_exceptions import HTTP_401_INVALID_LOGIN_EXCEPTION
 
 logger = logging.getLogger(__name__)
 
@@ -67,4 +68,4 @@ def generate_endpoint(
         except Exception as e:
             logger.error(e)
         logger.error(f"Unsuccessful user login with username: {form_data.username}")
-        raise HTTPException(status_code=401, detail="Incorrect login")
+        raise HTTP_401_INVALID_LOGIN_EXCEPTION
