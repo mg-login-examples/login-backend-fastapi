@@ -1,12 +1,14 @@
 from typing import Any
 
-from fastapi import status, HTTPException, Response
+from fastapi import status, Response
 from sqlalchemy.orm import Session
 
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base
 from data.database.models.quote import Quote as QuoteModel
 from data.schemas.quotes.quoteEditText import Quote as QuoteEditText
+from data.schemas.http_error_exceptions.http_400_exceptions import HTTP_400_ITEM_ID_MISMATCH_EXCEPTION
+from data.schemas.http_error_exceptions.http_404_exceptions import HTTP_404_ITEM_NOT_FOUND_EXCEPTION
 
 def generate_endpoint(
     router: APIRouter,
@@ -20,8 +22,8 @@ def generate_endpoint(
         db: Session = db_as_dependency
     ):
         if quote_id != quote.id:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Item id in request body different from path parameter")
+            raise HTTP_400_ITEM_ID_MISMATCH_EXCEPTION
         db_quote = crud_base.update_resource_item_partial(db, QuoteModel, quote)
         if not db_quote:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+            raise HTTP_404_ITEM_NOT_FOUND_EXCEPTION
         return Response(status_code=status.HTTP_204_NO_CONTENT)

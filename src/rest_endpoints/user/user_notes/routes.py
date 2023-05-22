@@ -6,6 +6,7 @@ from fastapi import status, Response
 from helpers_classes.custom_api_router import APIRouter
 from api_dependencies.common_route_dependencies import CommonRouteDependencies
 from data.mongo_schemas.user_notes.user_note import UserNote
+from data.mongo_schemas.user_notes.user_note_db_table import UserNoteDBTable
 from data.mongo_schemas.user_notes.user_note_edit_text_title import UserNote as UserNoteEditTitleText
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate
 from stores.nosql_db_store import crud_base
@@ -20,7 +21,7 @@ def get_router(route_dependencies: CommonRouteDependencies) -> APIRouter:
     async def get_user_note(user_note_id: str, db: Database = route_dependencies.nosql_database):
         user_notes = crud_base.get_resource_item_by_id(
             db,
-            "user_notes",
+            UserNoteDBTable,
             user_note_id,
             ItemSchema=UserNote
         )
@@ -34,7 +35,7 @@ def get_router(route_dependencies: CommonRouteDependencies) -> APIRouter:
     ):
         user_note = crud_base.create_resource_item(
             db,
-            "user_notes",
+            UserNoteDBTable,
             user_note_to_create,
             ItemSchema=UserNote
         )
@@ -49,7 +50,7 @@ def get_router(route_dependencies: CommonRouteDependencies) -> APIRouter:
     ):
         crud_base.update_item_by_id(
             db,
-            "user_notes",
+            UserNoteDBTable,
             user_note_id,
             user_note,
         )
@@ -60,7 +61,7 @@ def get_router(route_dependencies: CommonRouteDependencies) -> APIRouter:
     async def delete_user_note(user_note_id: str, db: Database = route_dependencies.nosql_database):
         crud_base.delete_resource_item_by_id(
             db,
-            "user_notes",
+            UserNoteDBTable,
             user_note_id
         )
         return Response(status_code=status.HTTP_204_NO_CONTENT)

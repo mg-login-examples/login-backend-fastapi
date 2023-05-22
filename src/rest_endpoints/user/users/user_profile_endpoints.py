@@ -1,6 +1,6 @@
 from typing import Any
 
-from fastapi import File, UploadFile, HTTPException, status, Response
+from fastapi import File, UploadFile, status, Response
 from sqlalchemy.orm import Session
 
 from helpers_classes.custom_api_router import APIRouter
@@ -8,7 +8,7 @@ from stores.sql_db_store import crud_base
 from data.database.models.user import User as UserModel
 from data.schemas.users.user import User
 from utils.image import image_utils
-
+from data.schemas.http_error_exceptions.http_400_exceptions import HTTP_400_INVALID_IMAGE_TYPE_EXCEPTION
 
 def generate_endpoints(
     router: APIRouter,
@@ -23,7 +23,7 @@ def generate_endpoints(
         image: UploadFile = File(..., media_type='image/png, image/jpeg, image/jpg'),
     ):
         if not image_utils.check_fastapi_request_uploaded_image_valid(image):
-            raise HTTPException(status_code=400, detail="Invalid file type. Only PNG and JPEG/JPG files are allowed.")
+            raise HTTP_400_INVALID_IMAGE_TYPE_EXCEPTION
         image_url = await image_utils.save_image_to_uploads(image)
         user.profile_picture = image_url
         crud_base.update_resource_item_full(db, UserModel, user)

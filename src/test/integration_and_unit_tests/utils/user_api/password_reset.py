@@ -27,5 +27,5 @@ def reset_password_expect_unauthorized(test_client: requests.Session, email: str
         "token": token
     }
     response = test_client.post("/api/password-reset/", json=payload)
-    assert response.status_code == 401
-    asserts.assert_response_error_invalid_link(response)
+    assert response.status_code == 410
+    asserts.assert_response_error_expired_or_inactive_link(response)
