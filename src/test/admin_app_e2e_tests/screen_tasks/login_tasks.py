@@ -15,8 +15,8 @@ class LoginTasks:
         def step_wrapper():
             logger.info(step_desc)
             self.user.on_login_view().email_input.type(email)
-            self.user.on_login_view().email_input.expectToHaveValue(email)
+            self.user.on_login_view().email_input.expect_to_have_value(email)
             self.user.on_login_view().password_input.type(password)
-            self.user.on_login_view().password_input.expectToHaveValue(password)
+            self.user.on_login_view().password_input.expect_to_have_value(password)
             self.user.on_login_view().submit_button.click()
         step_wrapper()

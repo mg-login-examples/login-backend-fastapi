@@ -5,7 +5,10 @@ from playwright.sync_api import expect, Page
 import allure
 
 from test.admin_app_e2e_tests.screens.login_view_screen import LoginViewScreen
+from test.admin_app_e2e_tests.screens.quotes_list_view_screen import QuotesListViewScreen
 from test.admin_app_e2e_tests.screens.resources_dashboard_screen import ResourcesDashboardScreen
+from test.admin_app_e2e_tests.screens.topbar_screen import TopbarScreen
+from test.admin_app_e2e_tests.screens.user_notes_list_view_screen import UserNotesListViewScreen
 from test.admin_app_e2e_tests.screens.users_list_view_screen import UsersListViewScreen
 from test.admin_app_e2e_tests.screen_tasks.login_tasks import LoginTasks
 from test.admin_app_e2e_tests.utils.playwright_screenshots import save_screenshot
@@ -59,11 +62,20 @@ class AdminUser:
     def on_login_view(self):
         return LoginViewScreen(self.page, self.base_url, user_name=self.name)
 
+    def on_topbar(self):
+        return TopbarScreen(self.page, user_name=self.name)
+
     def on_resources_dashboard(self):
         return ResourcesDashboardScreen(self.page, self.base_url, user_name=self.name)
 
     def on_users_list_views(self):
         return UsersListViewScreen(self.page, self.base_url, user_name=self.name)
+
+    def on_quotes_list_views(self):
+        return QuotesListViewScreen(self.page, self.base_url, user_name=self.name)
+
+    def on_user_notes_list_views(self):
+        return UserNotesListViewScreen(self.page, self.base_url, user_name=self.name)
 
     def with_login_tasks(self):
         return LoginTasks(self)

@@ -28,7 +28,7 @@ class PageSelectorHelper:
             self.page.locator(self.selector).type(text, delay=delay, timeout=timeout)
         step_wrapper()
 
-    def expectToBeVisible(self, timeout = None):
+    def expect_to_be_visible(self, timeout = None):
         step_desc = f"User '{self.user_name}' expect '{self.selector_desc}' to be visible"
         @allure.step(step_desc)
         def step_wrapper():
@@ -36,7 +36,7 @@ class PageSelectorHelper:
             expect(self.page.locator(self.selector)).to_be_visible(timeout=timeout)
         step_wrapper()
 
-    def expectNotToBeVisible(self, timeout = None):
+    def expect_not_to_be_visible(self, timeout = None):
         step_desc = f"User '{self.user_name}' expect '{self.selector_desc}' to not be visible"
         @allure.step(step_desc)
         def step_wrapper():
@@ -44,10 +44,26 @@ class PageSelectorHelper:
             expect(self.page.locator(self.selector)).not_to_be_visible(timeout=timeout)
         step_wrapper()
 
-    def expectToHaveValue(self, value: str, timeout = None):
-        step_desc = f"User '{self.user_name}' expect '{self.selector_desc}' to have value"
+    def expect_to_have_text(self, text: str, timeout = None):
+        step_desc = f"User '{self.user_name}' expect '{self.selector_desc}' to have text '{text}'"
         @allure.step(step_desc)
         def step_wrapper():
             logger.info(step_desc)
-            expect(self.page.locator(self.selector)).to_have_value(value, timeout=timeout)
+            expect(self.page.locator(self.selector)).to_have_text(text, timeout=timeout)
+        step_wrapper()
+
+    def expect_to_contain_text(self, text: str, timeout = None):
+        step_desc = f"User '{self.user_name}' expect '{self.selector_desc}' to contain text '{text}'"
+        @allure.step(step_desc)
+        def step_wrapper():
+            logger.info(step_desc)
+            expect(self.page.locator(self.selector)).to_contain_text(text, timeout=timeout)
+        step_wrapper()
+
+    def expect_to_have_value(self, text: str, timeout = None):
+        step_desc = f"User '{self.user_name}' expect '{self.selector_desc}' to have value '{text}'"
+        @allure.step(step_desc)
+        def step_wrapper():
+            logger.info(step_desc)
+            expect(self.page.locator(self.selector)).to_have_value(text, timeout=timeout)
         step_wrapper()

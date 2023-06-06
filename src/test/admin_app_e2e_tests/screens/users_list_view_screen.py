@@ -8,3 +8,9 @@ class UsersListViewScreen:
         self.page = page
         self.view_url = ViewUrlHelper(base_url + "/admin/resource/users", "Users List Page", page, user_name=user_name)
         self.user_name = user_name
+
+    users_resources_title_desc = "Users Resources Title"
+    users_resources_title_selector = "[data-test='items--title']"
+    @property
+    def users_resources_title(self):
+        return PageSelectorHelper(self.page, self.users_resources_title_selector, self.users_resources_title_desc)
