@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 class LoginTasks:
     def __init__(self, user):
-        from test.admin_app_e2e_tests.users.admin_user import AdminUser
+        from test.admin_app_e2e_tests.users.admin_user import AdminUser # Import inside to avoid cyclic import error
         self.user: AdminUser = user
 
     def login(self, email: str, password: str):
@@ -14,9 +14,9 @@ class LoginTasks:
         @allure.step(step_desc)
         def step_wrapper():
             logger.info(step_desc)
-            self.user.on_login_view().email_input.type(email)
+            self.user.on_login_view().email_input.fill(email)
             self.user.on_login_view().email_input.expect_to_have_value(email)
-            self.user.on_login_view().password_input.type(password)
+            self.user.on_login_view().password_input.fill(password)
             self.user.on_login_view().password_input.expect_to_have_value(password)
             self.user.on_login_view().submit_button.click()
         step_wrapper()
