@@ -1,7 +1,7 @@
 from helpers_classes.custom_api_router import APIRouter
 from rest_endpoints.admin.resources import resources_configurations
 from api_dependencies.common_route_dependencies import CommonRouteDependencies
-from rest_endpoints.admin.add_resource_url_ids_to_schema_properties import add_resource_url_ids_to_schema_properties
+from rest_endpoints.admin.enhance_resource_schemas import enhance_resource_schemas
 
 def generate_endpoint(router: APIRouter, route_dependencies: CommonRouteDependencies):
     @router.get("/resources/", dependencies=[route_dependencies.validated_access_token])
@@ -11,11 +11,15 @@ def generate_endpoint(router: APIRouter, route_dependencies: CommonRouteDependen
             info = {
                 "resourceUrlId": resource_configuration.resource_endpoints_url_prefix,
                 "resourceName": resource_configuration.ResourceSchema.schema()["title"],
-                "updateSchema": resource_configuration.ResourceSchema.schema(by_alias=False),
                 "createSchema": resource_configuration.ResourceCreateSchema.schema(by_alias=False),
+                "updateSchema": resource_configuration.ResourceSchema.schema(by_alias=False),
             }
-            if not resource_configuration.MongoDBTable:
-                add_resource_url_ids_to_schema_properties(info["updateSchema"], resource_configuration, resources_configurations)
-                add_resource_url_ids_to_schema_properties(info["createSchema"], resource_configuration, resources_configurations)
+            enhance_resource_schemas(
+                info["updateSchema"],
+                info["createSchema"],
+                resource_configuration,
+                resources_configurations,
+                resource_configuration.MongoDBTable == None,
+            )
             infos.append(info)
         return infos

@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, List
 from pydantic import BaseModel as BaseSchema
 
 from stores.sql_db_store.sqlalchemy_base_model import Base as BaseORMModel
@@ -12,6 +12,8 @@ class ResourceConfigurations:
         ResourceCreateSchema: BaseSchema,
         ResourceModel: BaseORMModel = None,
         MongoDBTable: str = None,
+        readonly_fields: List[str] = None,
+        designation_fields: List[str] = None,
         customEndUserCreateSchemaToDbSchema: Callable = None,
         customEndUserUpdateSchemaToDbSchema: Callable = None,
     ):
@@ -20,6 +22,8 @@ class ResourceConfigurations:
         self.ResourceCreateSchema = ResourceCreateSchema
         self.ResourceModel = ResourceModel
         self.MongoDBTable = MongoDBTable
+        self.readonly_fields = readonly_fields if readonly_fields else ["id"]
+        self.designation_fields = designation_fields
         self.customEndUserCreateSchemaToDbSchema = customEndUserCreateSchemaToDbSchema
         self.customEndUserUpdateSchemaToDbSchema = customEndUserUpdateSchemaToDbSchema
 
