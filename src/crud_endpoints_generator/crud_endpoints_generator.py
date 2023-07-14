@@ -29,14 +29,16 @@ def generate_router_with_resource_endpoints(
                 router,
                 route_dependencies + endpoints_configs.get_items_count.dependencies,
                 sql_db_as_dependency,
-                resource_configs.ResourceModel
+                resource_configs.ResourceModel,
+                resource_configs.ResourceSchema
             )
         else:
             get_items_count.generate_mongo_endpoint(
                 router,
                 route_dependencies + endpoints_configs.get_items_count.dependencies,
                 mongo_db_as_dependency,
-                resource_configs.MongoDBTable
+                resource_configs.MongoDBTable,
+                resource_configs.ResourceSchema
             )
     # GET items
     if endpoints_configs.get_items.add:

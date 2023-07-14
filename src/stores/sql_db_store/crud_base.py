@@ -17,6 +17,16 @@ def get_resource_item_by_attribute(db: Session, ResourceModel, ResourceModel_att
 def get_resource_items_by_attribute_filtered(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_filter: any, skip: int = 0, limit: int = 100) -> List[BaseModel]:
     return db.query(ResourceModel).filter(ResourceModel_attribute.like(attribute_filter)).offset(skip).limit(limit).all()
 
+def get_resource_items_filtered_by_like_multiple_attributes_count(db: Session, ResourceModel, ResourceModel_attributes: any, attribute_filters: any) -> int:
+    return db.query(ResourceModel).filter(
+        *[ResourceModel_attribute.like(attribute_filter) for (ResourceModel_attribute, attribute_filter) in zip(ResourceModel_attributes, attribute_filters)]
+    ).count()
+
+def get_resource_items_filtered_by_like_multiple_attributes(db: Session, ResourceModel, ResourceModel_attributes: any, attribute_filters: any, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+    return db.query(ResourceModel).filter(
+        *[ResourceModel_attribute.like(attribute_filter) for (ResourceModel_attribute, attribute_filter) in zip(ResourceModel_attributes, attribute_filters)]
+    ).offset(skip).limit(limit).all()
+
 def get_resource_items_by_attribute_in_list(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_in_list: List[any], all = False, skip: int = 0, limit: int = 100) -> List[BaseModel]:
     query = db.query(ResourceModel).filter(ResourceModel_attribute.in_(attribute_in_list))
     if all:
