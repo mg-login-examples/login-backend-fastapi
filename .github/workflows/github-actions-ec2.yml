@@ -8,18 +8,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  api-tests:
-    name: Run API Tests And Send Results To Allure Docker Service
+  api-tests-with-deps:
+    name: Run API Tests with Docker using MySQL, Mongo, Redis based tokens, PubSub[Redis]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the files
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Add mysql password text file for a test mysql container
-        run: echo "password" > docker_secrets/mysql_pwd.txt
+        run: echo "password_mysql" > docker_secrets/mysql_pwd.txt
       - name: Add mongo password text file for a test mongo container
-        run: echo "password" > docker_secrets/mongo_pwd.txt
+        run: echo "password_mongo" > docker_secrets/mongo_pwd.txt
       - name: Add redis password text file for a test redis container
-        run: echo "password" > docker_secrets/redis_pwd.txt
+        run: echo "password_redis" > docker_secrets/redis_pwd.txt
       - name: Run backend tests
         run: sudo ./scripts_docker.sh run-api-tests
       # - name: Zip allure reports
@@ -36,7 +36,7 @@ jobs:
       #     source: "src/test/results.zip"
       #     target: "/home/ubuntu/allure-docker/projects/backend/"
       #     strip_components: 2
-      # - name: Delete previous allure-results folder, unzip new one and delete zipped after
+      # - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
       #   if: success() || failure()
       #   uses: appleboy/ssh-action@master
       #   with:
@@ -50,20 +50,49 @@ jobs:
       #       unzip results.zip &&
       #       rm results.zip &&
       #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=backend
-  api-tests-localdb:
-    name: Run API Tests Without MySQL or Redis And Send Results To Allure Docker Service
+
+  api-tests-no-deps:
+    name: Run API Tests without Docker using SQLite, Mongo, File based tokens, PubSub[In_Memory]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
     steps:
       - name: Checkout the files
-        uses: actions/checkout@v2
-      - name: Add mysql password text file for a test mysql container
-        run: echo "password" > docker_secrets/mysql_pwd.txt
-      - name: Add mongo password text file for a test mongo container
-        run: echo "password" > docker_secrets/mongo_pwd.txt
-      - name: Add redis password text file for a test redis container
-        run: echo "password" > docker_secrets/redis_pwd.txt
+        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.6
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.6
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v3
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: venv-${{ hashFiles('poetry.lock') }}
+      - name: Install the project dependencies
+        run: poetry install
+      - name: Run db migrations
+        run: poetry run alembic -c alembic.sqlite.ini upgrade head
+      - name: Add admin user
+        run: poetry run python main.py add_admin_user admin@admin.admin admin
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: latest
+          mongodb-username: root_user
+          mongodb-password: password_mongo
       - name: Run backend tests
-        run: sudo ./scripts_docker.sh run-api-tests-localdb
+        run: poetry run pytest test/integration_and_unit_tests/ --alluredir='./test/allure-results'
+        env:
+          MONGO_USERNAME: root_user
+          MONGO_PASSWORD: password_mongo
       # - name: Zip allure reports
       #   if: success() || failure()
       #   run: cd src/test && mv allure-results results && zip -r results.zip results
@@ -78,7 +107,7 @@ jobs:
       #     source: "src/test/results.zip"
       #     target: "/home/ubuntu/allure-docker/projects/backend-localdb/"
       #     strip_components: 2
-      # - name: Delete previous allure-results folder, unzip new one and delete zipped after
+      # - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
       #   if: success() || failure()
       #   uses: appleboy/ssh-action@master
       #   with:
@@ -92,8 +121,9 @@ jobs:
       #       unzip results.zip &&
       #       rm results.zip &&
       #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=backend-localdb
+
   e2e-tests-cypress:
-    name: Run Cypress E2E Tests And Send Results To Allure Docker Service
+    name: Run Cypress E2E Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the files
@@ -144,18 +174,19 @@ jobs:
       #       unzip results.zip &&
       #       rm results.zip &&
       #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e-cypress
+
   e2e-tests-playwright:
-    name: Run Playwright E2E Tests And Send Results To Allure Docker Service
+    name: Run Playwright E2E Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the files
         uses: actions/checkout@v2
       - name: Add mysql password text file for a test mysql container
-        run: echo "password" > docker_secrets/mysql_pwd.txt
+        run: echo "password_mysql" > docker_secrets/mysql_pwd.txt
       - name: Add mongo password text file for a test mongo container
-        run: echo "password" > docker_secrets/mongo_pwd.txt
+        run: echo "password_mongo" > docker_secrets/mongo_pwd.txt
       - name: Add redis password text file for a test redis container
-        run: echo "password" > docker_secrets/redis_pwd.txt
+        run: echo "password_redis" > docker_secrets/redis_pwd.txt
       - name: Checkout frontend repo
         uses: actions/checkout@v3
         with:
@@ -191,18 +222,19 @@ jobs:
       #       unzip results.zip &&
       #       rm results.zip &&
       #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e-playwright
-  admin-app-e2e-tests:
-    name: Run Admin App E2E Tests And Send Results To Allure Docker Service
+
+  admin-app-e2e-tests-with-deps:
+    name: Run Admin App E2E Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the files
         uses: actions/checkout@v2
       - name: Add mysql password text file for a test mysql container
-        run: echo "password" > docker_secrets/mysql_pwd.txt
+        run: echo "password_mysql" > docker_secrets/mysql_pwd.txt
       - name: Add mongo password text file for a test mongo container
-        run: echo "password" > docker_secrets/mongo_pwd.txt
+        run: echo "password_mongo" > docker_secrets/mongo_pwd.txt
       - name: Add redis password text file for a test redis container
-        run: echo "password" > docker_secrets/redis_pwd.txt
+        run: echo "password_redis" > docker_secrets/redis_pwd.txt
       - name: Run admin app tests
         run: sudo ./scripts_docker.sh run-admin-app-e2e-tests
       # - name: Zip allure reports
@@ -219,7 +251,7 @@ jobs:
       #     source: "src/test/results.zip"
       #     target: "/home/ubuntu/allure-docker/projects/admin-app-e2e/"
       #     strip_components: 2
-      # - name: Delete previous allure-results folder, unzip new one and delete zipped after
+      # - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
       #   if: success() || failure()
       #   uses: appleboy/ssh-action@master
       #   with:
@@ -233,10 +265,78 @@ jobs:
       #       unzip results.zip &&
       #       rm results.zip &&
       #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=admin-app-e2e
+
+  admin-app-e2e-tests-no-deps:
+    name: Run Admin App E2E Tests without Docker using SQLite, Mongo, File based tokens, PubSub[In_Memory]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.6
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.6
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v3
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: venv-${{ hashFiles('poetry.lock') }}
+      - name: Install the project dependencies
+        run: poetry install
+      - name: Install playwright dependencies
+        run: poetry run playwright install --with-deps chromium
+      - name: Run db migrations
+        run: poetry run alembic -c alembic.sqlite.ini upgrade head
+      - name: Add admin user
+        run: poetry run python main.py add_admin_user admin@admin.admin admin
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: latest
+          mongodb-username: root_user
+          mongodb-password: password_mongo
+      - name: Run application in background
+        run: poetry run python main.py &
+      - name: Wait for application to be online
+        run: |
+          timeout=300  # Adjust timeout as needed (in seconds)
+          interval=10  # Adjust interval between checks (in seconds)
+          end=$((SECONDS+timeout))
+
+          while [ $SECONDS -lt $end ]; do
+            if wget --spider --no-verbose --tries=1 http://localhost:8018/api/health-check/; then
+              echo "Application is online."
+              break
+            fi
+            echo "Waiting for the application to be online..."
+            sleep $interval
+          done
+
+          if [ $SECONDS -ge $end ]; then
+            echo "Timeout: Application did not become online within $timeout seconds."
+            exit 1
+          fi
+      - name: Run backend tests
+        run: poetry run pytest test/admin_app_e2e_tests/ --alluredir='./test/allure-results'
+        env:
+          MONGO_USERNAME: root_user
+          MONGO_PASSWORD: password_mongo
+
+
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest
-    needs: [api-tests, api-tests-localdb, e2e-tests-cypress, e2e-tests-playwright]
+    needs: [api-tests-with-deps, api-tests-no-deps, e2e-tests-cypress, e2e-tests-playwright]
     steps:
       - name: Do not deploy
         run: echo "Do Not Deploy"

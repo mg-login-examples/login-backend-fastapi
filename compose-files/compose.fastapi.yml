@@ -28,7 +28,7 @@ services:
       - mongo-password
       - redis-pass
     environment:
-      - DATABASE_URL=${DATABASE_URL:-mysql://root@mysql_db/login}
+      - DATABASE_URL=${DATABASE_URL:-mysql+pymysql://root@mysql_db/login}
       - DATABASE_USER
       - DATABASE_PASSWORD
       - TEST_SQL_DB_CONNECTION_ON_APP_START=True
@@ -55,6 +55,7 @@ services:
       # test: wget --no-verbose --tries=1 -O /dev/null http://localhost:8018/docs
       test: wget --no-verbose --tries=1 --spider http://localhost:8018/api/health-check/
       timeout: 20s
+      interval: 10s
       retries: 10
     labels:
       - "traefik.enable=true"

@@ -20,7 +20,7 @@ class RedisBackend:
         await self.pubsub.subscribe(dummy_channel)
 
     async def disconnect(self):
-        await self.redis.close()
+        await self.redis.aclose()
 
     async def ping(self):
         await self.pubsub.ping()

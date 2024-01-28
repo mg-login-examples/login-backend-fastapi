@@ -1,7 +1,5 @@
 import pytest
 from _pytest.fixtures import FixtureRequest
-from pytest import StashKey, CollectReport
-from typing import Dict
 import logging
 
 from playwright.sync_api._generated import Page
@@ -12,10 +10,7 @@ from test.env_settings_test import EnvSettingsTest
 
 logger = logging.getLogger(__name__)
 
-phase_report_key = StashKey[Dict[str, CollectReport]]()
-
 @pytest.fixture
-@pytest.mark.timeout(30)
 def admin_user_not_logged_in(
     page: Page,
     env_settings_test: EnvSettingsTest,
@@ -42,7 +37,7 @@ def admin_user_not_logged_in(
 @pytest.fixture
 def admin_user(admin_user_not_logged_in: AdminUser):
     admin_user_not_logged_in.on_login_view().view_url.open()
-    expect(admin_user_not_logged_in.page).to_have_title("vue_admin")
+    expect(admin_user_not_logged_in.page).to_have_title("Admin App")
     admin_user_not_logged_in.with_login_tasks().login(admin_user_not_logged_in.email, admin_user_not_logged_in.password)
     admin_user_not_logged_in.on_resources_dashboard().view_url.expect_to_be_open()
     return admin_user_not_logged_in

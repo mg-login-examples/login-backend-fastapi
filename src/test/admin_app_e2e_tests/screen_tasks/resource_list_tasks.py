@@ -14,7 +14,7 @@ class ResourceListTasks:
         @allure.step(step_desc)
         def step_wrapper():
             logger.info(step_desc)
-            if self.user.on_resource_list_view().navigate_to_last_page_button.check_if_visible():
+            if self.user.on_resource_list_view().navigate_to_last_page_button.check_if_enabled():
                 self.user.on_resource_list_view().navigate_to_last_page_button.click()
             self.user.on_resource_list_view().navigate_to_last_page_button.expect_to_be_disabled()
         step_wrapper()

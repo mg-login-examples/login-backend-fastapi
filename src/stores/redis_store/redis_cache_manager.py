@@ -22,7 +22,7 @@ class RedisCacheManager():
             )
             yield redis
         finally:
-            await redis.close()
+            await redis.aclose()
 
     async def assert_redis_is_available(self):
         try:
