@@ -13,7 +13,7 @@ class TopbarScreen:
         self.user_name = user_name
 
     home_link_desc = "Home Link"
-    home_link_selector = "[data-test='router-link-home']"
+    home_link_selector = "[test-id='topbar--router-link-home']"
     @property
     def home_link(self):
         return PageSelectorHelper(self.page, self.home_link_selector, self.home_link_desc)

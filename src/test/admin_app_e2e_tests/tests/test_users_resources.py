@@ -1,3 +1,4 @@
+import pytest
 from random import randint
 
 from test.admin_app_e2e_tests.users.admin_user import AdminUser

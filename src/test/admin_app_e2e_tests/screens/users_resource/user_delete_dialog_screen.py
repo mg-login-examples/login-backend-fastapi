@@ -8,7 +8,7 @@ class UserDeleteDialogScreen:
         self.user_name = user_name
 
     delete_user_dialog_desc = "Delete User Dialog"
-    delete_user_dialog_selector = "[data-test='items--delete-item-dialog']:has-text('Delete User')"
+    delete_user_dialog_selector = "[test-id='delete-item--title']:has-text('Delete User')"
     @property
     def delete_user_dialog(self):
         return PageSelectorHelper(self.page, self.delete_user_dialog_selector, self.delete_user_dialog_desc)
@@ -18,12 +18,12 @@ class UserDeleteDialogScreen:
         return f"Delete message for user with name or email '{user_designation}'s"
     @staticmethod
     def delete_user_message_selector(user_designation: str):
-        return f"[data-test='items--delete-item-dialog--delete-message']:has-text('{user_designation}')"
+        return f"[test-id='items--delete-item-dialog--delete-message']:has-text('{user_designation}')"
     def delete_user_message(self, user_designation: str):
         return PageSelectorHelper(self.page, UserDeleteDialogScreen.delete_user_message_selector(user_designation), UserDeleteDialogScreen.delete_user_message_desc(user_designation))
 
     delete_user_button_desc = "Delete User Button"
-    delete_user_button_selector = "[data-test='items--delete-item-dialog--delete']"
+    delete_user_button_selector = "[test-id='delete-item--delete-button']"
     @property
     def delete_user_button(self):
         return PageSelectorHelper(self.page, self.delete_user_button_selector, self.delete_user_button_desc)

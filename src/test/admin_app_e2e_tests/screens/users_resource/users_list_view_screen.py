@@ -12,7 +12,7 @@ class UsersListViewScreen(ResourceListViewScreen):
         self.user_name = user_name
 
     users_resources_title_desc = "Users Resources Title"
-    users_resources_title_selector = "[data-test='items--title']:has-text('Users')"
+    users_resources_title_selector = "[test-id='items--title']:has-text('Users')"
     @property
     def users_resources_title(self):
         return PageSelectorHelper(self.page, self.users_resources_title_selector, self.users_resources_title_desc)
@@ -22,7 +22,7 @@ class UsersListViewScreen(ResourceListViewScreen):
         return f"User with email '{email}'"
     @staticmethod
     def user_with_email_selector(email: str):
-        return f"[data-test='items--item']:has-text('{email}')"
+        return f"[test-id='items--item']:has-text('{email}')"
     def user_with_email(self, email: str):
         return PageSelectorHelper(self.page, UsersListViewScreen.user_with_email_selector(email), UsersListViewScreen.user_with_email_desc(email))
 
@@ -31,7 +31,7 @@ class UsersListViewScreen(ResourceListViewScreen):
         return f"User '{designation}' Update Button"
     @staticmethod
     def user_update_button_selector(designation: str):
-        return f"[data-test='items--item']:has-text('{designation}') [data-test='items--edit-item']"
+        return f"[test-id='items--item']:has-text('{designation}') [test-id='items--update-item']"
     def user_update_button(self, designation: str):
         return PageSelectorHelper(self.page, UsersListViewScreen.user_update_button_selector(designation), UsersListViewScreen.user_update_button_desc(designation))
 
@@ -40,6 +40,6 @@ class UsersListViewScreen(ResourceListViewScreen):
         return f"User '{designation}' Delete Button"
     @staticmethod
     def user_delete_button_selector(designation: str):
-        return f"[data-test='items--item']:has-text('{designation}') [data-test='items--delete-item']"
+        return f"[test-id='items--item']:has-text('{designation}') [test-id='items--delete-item']"
     def user_delete_button(self, designation: str):
         return PageSelectorHelper(self.page, UsersListViewScreen.user_delete_button_selector(designation), UsersListViewScreen.user_delete_button_selector(designation))

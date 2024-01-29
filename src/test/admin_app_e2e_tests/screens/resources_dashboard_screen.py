@@ -10,19 +10,19 @@ class ResourcesDashboardScreen:
         self.user_name = user_name
 
     users_resources_link_desc = "Users Resources Link"
-    users_resources_link_selector = "[data-test='resources--users-link']"
+    users_resources_link_selector = "[test-id='resources--users-link']"
     @property
     def users_resources_link(self):
         return PageSelectorHelper(self.page, self.users_resources_link_selector, self.users_resources_link_desc)
 
     quotes_resources_link_desc = "Quotes Resources Link"
-    quotes_resources_link_selector = "[data-test='resources--quotes-link']"
+    quotes_resources_link_selector = "[test-id='resources--quotes-link']"
     @property
     def quotes_resources_link(self):
         return PageSelectorHelper(self.page, self.quotes_resources_link_selector, self.quotes_resources_link_desc)
 
     user_notes_resources_link_desc = "User Notes Resources Link"
-    user_notes_resources_link_selector = "[data-test='resources--user-notes-link']"
+    user_notes_resources_link_selector = "[test-id='resources--user-notes-link']"
     @property
     def user_notes_resources_link(self):
         return PageSelectorHelper(self.page, self.user_notes_resources_link_selector, self.user_notes_resources_link_desc)

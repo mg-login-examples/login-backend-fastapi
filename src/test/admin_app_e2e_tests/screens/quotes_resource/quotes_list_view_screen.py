@@ -10,7 +10,7 @@ class QuotesListViewScreen:
         self.user_name = user_name
 
     quotes_resources_title_desc = "Quotes Resources Title"
-    quotes_resources_title_selector = "[data-test='items--title']:has-text('Quotes')"
+    quotes_resources_title_selector = "[test-id='items--title']:has-text('Quotes')"
     @property
     def quotes_resources_title(self):
         return PageSelectorHelper(self.page, self.quotes_resources_title_selector, self.quotes_resources_title_desc)
