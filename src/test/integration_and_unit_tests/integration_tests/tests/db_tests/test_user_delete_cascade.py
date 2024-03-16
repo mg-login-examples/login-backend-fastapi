@@ -104,7 +104,7 @@ def test_user_delete_cascade_password_tokens(app_db_manager: SQLAlchemyDBManager
     user_db = crud_base.create_resource_item(db_session, UserModel, user_password_hashed)
     user = UserDeep.model_validate(user_db)
     # create user password token
-    password_token = UserPasswordResetTokenBase(user_id=user.id, token=132213, expires_at=datetime.now(), is_active=False)
+    password_token = UserPasswordResetTokenBase(user_id=user.id, token='132213', expires_at=datetime.now(), is_active=False)
     password_token_db = crud_base.create_resource_item(db_session, UserPasswordResetTokenModel, password_token)
     password_token_id = password_token_db.id
     # given a user with password tokens
