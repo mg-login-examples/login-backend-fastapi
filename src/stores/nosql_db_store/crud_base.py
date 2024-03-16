@@ -54,7 +54,7 @@ def create_resource_item(
     item_to_create: dict | BaseModel,
     ItemSchema: BaseModel = None
 ) -> BaseModel | dict:
-    item_dict = item_to_create.dict() if isinstance(item_to_create, BaseModel) else item_to_create
+    item_dict = item_to_create.model_dump() if isinstance(item_to_create, BaseModel) else item_to_create
     db[db_table].insert_one(item_dict)
     item_created = ItemSchema(**item_dict) if ItemSchema else item_dict
     return item_created
@@ -66,7 +66,7 @@ def update_item_by_id(
     item_fields_to_update: dict | BaseModel,
 ):
     id_filter = { "_id": ObjectId(item_id) }
-    item_fields_to_update = item_fields_to_update.dict() if isinstance(item_fields_to_update, BaseModel) else item_fields_to_update
+    item_fields_to_update = item_fields_to_update.model_dump() if isinstance(item_fields_to_update, BaseModel) else item_fields_to_update
     db[db_table].update_one(id_filter, { "$set": item_fields_to_update })
     return
 

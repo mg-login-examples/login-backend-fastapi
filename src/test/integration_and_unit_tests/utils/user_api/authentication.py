@@ -32,6 +32,6 @@ def login_expect_unauthorized(test_client: requests.Session, user: UserCreate):
     asserts.assert_response_error_invalid_login(response)
 
 def password_change(test_client: requests.Session, user_password_change: UserPasswordChange):
-    response = test_client.post("/api/password-change/", json=user_password_change.dict())
+    response = test_client.post("/api/password-change/", json=user_password_change.model_dump())
     assert response.status_code == 200
     return LoginResponse(**response.json())

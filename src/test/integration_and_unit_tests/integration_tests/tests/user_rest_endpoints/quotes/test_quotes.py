@@ -31,7 +31,7 @@ def test_create_quote_fails_when_quote_author_different_from_logged_in_user(
 ):
     assert logged_in_user.id != created_user_2_by_admin.id
     quote_to_create = generate_random_quote_to_create(created_user_2_by_admin)
-    response = test_client_logged_in.post("/api/quotes/", json=quote_to_create.dict())
+    response = test_client_logged_in.post("/api/quotes/", json=quote_to_create.model_dump())
     assert response.status_code == 403
     asserts.assert_response_error_resource_not_accessible(response)
 
@@ -106,7 +106,7 @@ def test_edit_quote_text_fails_when_updating_quote_of_different_user_than_logged
     quote_by_user_2 = quotes_admin_api.create_quote(test_client_admin_logged_in, quote_by_user_2_to_create)
     assert quote_by_user_2.text != "quote text changed"
     quote_by_user_2.text = "quote text changed"
-    response = test_client_logged_in.put(f"/api/quotes/{quote_by_user_2.id}/", json=quote_by_user_2.dict())
+    response = test_client_logged_in.put(f"/api/quotes/{quote_by_user_2.id}/", json=quote_by_user_2.model_dump())
     assert response.status_code == 403
     asserts.assert_response_error_resource_not_accessible(response)
 

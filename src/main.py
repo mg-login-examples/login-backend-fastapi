@@ -61,13 +61,13 @@ if __name__ == "__main__":
         else:
             logger.error("Unknown argument received")
     else:
-        if SETTINGS.test_sql_db_connection_on_app_start:
+        if SETTINGS.check_sql_db_connection_on_app_start:
             app_db_manager.assert_sql_db_is_available()
-        if SETTINGS.test_redis_connection_on_app_start:
+        if SETTINGS.check_redis_connection_on_app_start:
             asyncio.run(redis_cache_manager.assert_redis_is_available())
-        if SETTINGS.test_mongo_db_connection_on_app_start:
+        if SETTINGS.check_mongo_db_connection_on_app_start:
             app_nosql_db_manager.assert_mongo_db_is_available()
-        if SETTINGS.test_pubsub_connection_on_app_start:
+        if SETTINGS.check_pubsub_connection_on_app_start:
             asyncio.run(pubsub_utils.assert_pubsub_is_able_to_connect_to_backend(pubsub))
         uvicorn.run(
             "main:app",

@@ -1,7 +1,6 @@
 from data.schemas.examples.movies.movieBase import MovieBase
+from pydantic import ConfigDict
 
 class Movie(MovieBase):
     id: int
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

@@ -6,7 +6,7 @@ class OAuth2PasswordRequestFormExtended(OAuth2PasswordRequestForm):
 
     def __init__(
         self,
-        grant_type: str = Form(None, regex="password"),
+        grant_type: str = Form(None, pattern="password"),
         username: str = Form(...),
         password: str = Form(...),
         remember_me: bool = Form(None),

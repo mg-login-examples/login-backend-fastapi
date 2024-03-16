@@ -13,7 +13,7 @@ def get_user(test_client: requests.Session, user_id: int) -> User:
     return User(**response.json())
 
 def create_user(test_client: requests.Session, user_to_create: UserCreate) -> User:
-    response = test_client.post("/api/users/", json=user_to_create.dict())
+    response = test_client.post("/api/users/", json=user_to_create.model_dump())
     assert response.status_code == 200
     loginResponse = LoginResponse(**response.json())
     return loginResponse.user

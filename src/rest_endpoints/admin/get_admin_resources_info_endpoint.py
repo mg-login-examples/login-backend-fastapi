@@ -10,9 +10,9 @@ def generate_endpoint(router: APIRouter, route_dependencies: CommonRouteDependen
         for resource_configuration in resources_configurations:
             info = {
                 "resourceUrlId": resource_configuration.resource_endpoints_url_prefix,
-                "resourceName": resource_configuration.ResourceSchema.schema()["title"],
-                "createSchema": resource_configuration.ResourceCreateSchema.schema(by_alias=False),
-                "updateSchema": resource_configuration.ResourceSchema.schema(by_alias=False),
+                "resourceName": resource_configuration.ResourceSchema.model_json_schema()["title"],
+                "createSchema": resource_configuration.ResourceCreateSchema.model_json_schema(by_alias=False),
+                "updateSchema": resource_configuration.ResourceSchema.model_json_schema(by_alias=False),
             }
             enhance_resource_schemas(
                 info["updateSchema"],

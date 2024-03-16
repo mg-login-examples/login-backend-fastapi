@@ -15,14 +15,14 @@ async def async_created_user_by_admin(async_test_client_admin_logged_in: AsyncCl
     logger.debug("Create fixture async_created_user_by_admin")
     response = await async_test_client_admin_logged_in.post(
         "/api/admin/resource/users/",
-        json=user_login.dict()
+        json=user_login.model_dump()
     )
     assert response.status_code == 200
     created_unverified_user_by_admin = UserDeep(**response.json())
     created_unverified_user_by_admin.is_verified = True
     response = await async_test_client_admin_logged_in.put(
         f"/api/admin/resource/users/{created_unverified_user_by_admin.id}/",
-        json=created_unverified_user_by_admin.dict()
+        json=created_unverified_user_by_admin.model_dump()
     )
     assert response.status_code == 204
     return created_unverified_user_by_admin

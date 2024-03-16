@@ -18,7 +18,7 @@ def get_user_user_notes(test_client: requests.Session, user_id: int, skip=0, lim
     return user_notes
 
 def create_user_note(test_client: requests.Session, user_note_to_create: UserNoteCreate) -> UserNote:
-    response = test_client.post("/api/user-notes/", json=user_note_to_create.dict())
+    response = test_client.post("/api/user-notes/", json=user_note_to_create.model_dump())
     assert response.status_code == 200
     return UserNote(**response.json())
 

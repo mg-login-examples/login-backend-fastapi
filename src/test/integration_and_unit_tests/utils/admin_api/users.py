@@ -15,12 +15,12 @@ def get_user(test_client: requests.Session, user_id: int) -> UserDeep:
     return UserDeep(**response.json())
 
 def create_user(test_client: requests.Session, user_to_create: UserCreate) -> UserDeep:
-    response = test_client.post("/api/admin/resource/users/", json=user_to_create.dict())
+    response = test_client.post("/api/admin/resource/users/", json=user_to_create.model_dump())
     assert response.status_code == 200
     return UserDeep(**response.json())
 
 def put_user(test_client: requests.Session, user_to_edit: UserDeep):
-    response = test_client.put(f"/api/admin/resource/users/{user_to_edit.id}/", json=user_to_edit.dict())
+    response = test_client.put(f"/api/admin/resource/users/{user_to_edit.id}/", json=user_to_edit.model_dump())
     assert response.status_code == 204
 
 def delete_user(test_client: requests.Session, user_id: int):

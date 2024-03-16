@@ -7,12 +7,12 @@ from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.quotes.quoteCreate import QuoteCreate
 
 def create_quote(test_client: requests.Session, quote_to_create: QuoteCreate) -> QuoteDeep:
-    response = test_client.post("/api/quotes/", json=quote_to_create.dict())
+    response = test_client.post("/api/quotes/", json=quote_to_create.model_dump())
     assert response.status_code == 200
     return QuoteDeep(**response.json())
 
 def edit_quote(test_client: requests.Session, quote_to_edit: Quote):
-    response = test_client.put(f"/api/quotes/{quote_to_edit.id}/", json=quote_to_edit.dict())
+    response = test_client.put(f"/api/quotes/{quote_to_edit.id}/", json=quote_to_edit.model_dump())
     assert response.status_code == 204
 
 def delete_quote(test_client: requests.Session, quote_id: int):

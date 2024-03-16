@@ -1,6 +1,7 @@
 from typing import Optional
 
 from data.schemas.users.userBase import UserBase
+from pydantic import ConfigDict
 
 class User(UserBase):
     id: int
@@ -8,6 +9,4 @@ class User(UserBase):
     is_verified: bool
     name: Optional[str]
     profile_picture: Optional[str]
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

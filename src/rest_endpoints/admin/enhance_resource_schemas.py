@@ -33,10 +33,8 @@ def _add_resource_url_ids_to_schema_properties(
     all_resources_configurations: List[ResourceConfigurations]
 ):
     for resource_schema_property in resource_schema_dict["properties"]:
-        if (
-            ("$ref" in resource_schema_dict["properties"][resource_schema_property])
-            or (resource_schema_dict["properties"][resource_schema_property]["type"] == "array")
-        ):
+        schema_property = resource_schema_dict["properties"][resource_schema_property]
+        if (("$ref" in schema_property) or ("type" in schema_property and schema_property["type"] == "array")):
             resource_schema_property_type = resource_configurations.ResourceSchema.get_class_by_field(resource_schema_property)
             for one_of_all_resource_configurations in all_resources_configurations:
                 if (
@@ -44,4 +42,4 @@ def _add_resource_url_ids_to_schema_properties(
                     or issubclass(one_of_all_resource_configurations.ResourceSchema, resource_schema_property_type)
                     or (one_of_all_resource_configurations.ResourceSchema == resource_schema_property_type)
                 ):
-                    resource_schema_dict["properties"][resource_schema_property]["resourceUrlId"] = one_of_all_resource_configurations.resource_endpoints_url_prefix
+                    schema_property["resourceUrlId"] = one_of_all_resource_configurations.resource_endpoints_url_prefix

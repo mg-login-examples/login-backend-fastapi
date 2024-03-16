@@ -31,17 +31,17 @@ services:
       - DATABASE_URL=${DATABASE_URL:-mysql+pymysql://root@mysql_db/login}
       - DATABASE_USER
       - DATABASE_PASSWORD
-      - TEST_SQL_DB_CONNECTION_ON_APP_START=True
+      - CHECK_SQL_DB_CONNECTION_ON_APP_START=True
       - MONGO_HOST=${MONGO_HOST-mongo_db}
       - MONGO_PORT=27017
       - MONGO_USERNAME=${MONGO_USERNAME-root_user}
       - MONGO_PASSWORD
       - USE_IN_MEMORY_MONGO_DB=False
-      - TEST_IN_MONGO_DB_CONNECTION_ON_APP_START=True
+      - CHECK_MONGO_DB_CONNECTION_ON_APP_START=True
       - ACCESS_TOKENS_STORE_TYPE=${ACCESS_TOKENS_STORE_TYPE:-redis}
       - REDIS_URL=${REDIS_URL:-redis://redis_cache}
       - REDIS_PASSWORD
-      - TEST_REDIS_CONNECTION_ON_APP_START=True
+      - CHECK_REDIS_CONNECTION_ON_APP_START=True
       - PUBSUB_URL=${PUBSUB_URL:-redis://redis_cache}
       - CORS_ORIGINS_SET=${CORS_ORIGINS_SET:-Development}
       - USER_AUTH_COOKIE_TYPE=${USER_AUTH_COOKIE_TYPE:-localhost_development}

@@ -32,7 +32,7 @@ def test_create_user_note_fails_when_user_note_user_different_from_logged_in_use
 ):
     assert logged_in_user.id != created_user_2_by_admin.id
     user_note_to_create = generate_random_user_note_to_create(created_user_2_by_admin.id)
-    response = test_client_logged_in.post("/api/user-notes/", json=user_note_to_create.dict())
+    response = test_client_logged_in.post("/api/user-notes/", json=user_note_to_create.model_dump())
     assert response.status_code == 403
     asserts.assert_response_error_resource_not_accessible(response)
 

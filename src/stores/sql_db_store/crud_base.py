@@ -43,7 +43,7 @@ def get_resource_items_by_attributes(db: Session, ResourceModel, ResourceModel_a
     return query.offset(skip).limit(limit).all()
 
 def create_resource_item(db: Session, ResourceModel, item_to_create: BaseSchema) -> BaseModel:
-    db_item = ResourceModel(**item_to_create.dict())
+    db_item = ResourceModel(**item_to_create.model_dump())
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
