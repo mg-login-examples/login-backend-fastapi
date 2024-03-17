@@ -1,4 +1,3 @@
-from typing import List
 from bson import ObjectId
 
 from pymongo.database import Database
@@ -19,7 +18,7 @@ def get_resource_items(
     ItemSchema: BaseModel = None,
     limit = 0,
     skip = 0,
-) -> List[BaseModel] | List[dict]:
+) -> list[BaseModel] | list[dict]:
     items = []
     items_db = db[db_table].find(filter, limit=limit, skip=skip)
     if ItemSchema:

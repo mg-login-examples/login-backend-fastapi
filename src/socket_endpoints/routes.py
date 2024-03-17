@@ -1,4 +1,3 @@
-from typing import List
 import asyncio
 
 from socket_endpoints.main_socket import routes as main_socket_routes
@@ -7,7 +6,7 @@ from api_dependencies.common_route_dependencies import CommonRouteDependencies
 
 def get_router(
     api_routes_dependencies: CommonRouteDependencies,
-    pubsub_subscribers_async_tasks: List[asyncio.Task],
+    pubsub_subscribers_async_tasks: list[asyncio.Task],
 ) -> APIRouter:
     api_router = APIRouter(prefix="/ws")
 

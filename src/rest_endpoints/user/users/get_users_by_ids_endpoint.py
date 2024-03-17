@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import Any
 
 from sqlalchemy.orm import Session
 
@@ -12,9 +12,9 @@ def generate_endpoint(
     db_as_dependency: Session,
     current_user_dependency: User
 ):
-    @router.post("/ids", response_model=List[User], dependencies=[current_user_dependency])
+    @router.post("/ids", response_model=list[User], dependencies=[current_user_dependency])
     def get_users_by_ids(
-        user_ids: List[int],
+        user_ids: list[int],
         skip: int = 0,
         limit: int = 100,
         db: Session = db_as_dependency

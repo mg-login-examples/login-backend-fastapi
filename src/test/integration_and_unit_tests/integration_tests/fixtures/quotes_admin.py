@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 import pytest
 import requests
@@ -18,7 +17,7 @@ def created_quote_by_admin(test_client_admin_logged_in: requests.Session, create
     return quotes_admin_api.create_quote(test_client_admin_logged_in, quote)
 
 @pytest.fixture
-def created_n_quotes_by_admin(test_client_admin_logged_in: requests.Session, created_user_by_admin: UserDeep, n_quotes: int = 5) -> List[QuoteDeep]:
+def created_n_quotes_by_admin(test_client_admin_logged_in: requests.Session, created_user_by_admin: UserDeep, n_quotes: int = 5) -> list[QuoteDeep]:
     logger.debug("Create fixture created_n_quotes_by_admin")
     quotes = []
     for _ in range(n_quotes):

@@ -1,4 +1,3 @@
-from typing import List
 import logging
 import asyncio
 
@@ -28,7 +27,7 @@ async def assert_pubsub_is_able_to_connect_to_backend(pubsub: PubSub):
         except Exception as e:
             pass
 
-async def pubsub_disconnect_gracefully(pubsub: PubSub, pubsub_subscribers_async_tasks: List[asyncio.Task]):
+async def pubsub_disconnect_gracefully(pubsub: PubSub, pubsub_subscribers_async_tasks: list[asyncio.Task]):
     # Wait max 5 seconds for pubsub subscribe tasks to complete before disconnecting pubsub
     # Ideally, on app shutdown, websocket connections will be forcibly closed by FastAPI,
     # the teardown code in src/socket_endpoints/main_socket/socket_channel_subscriptions_manager.py

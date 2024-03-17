@@ -1,5 +1,3 @@
-from typing import List
-
 from pymongo.database import Database
 from fastapi import status, Response
 

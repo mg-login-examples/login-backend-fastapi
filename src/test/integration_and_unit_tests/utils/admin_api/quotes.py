@@ -1,5 +1,3 @@
-from typing import List
-
 import requests
 
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
@@ -24,10 +22,10 @@ def delete_quote(test_client: requests.Session, quote_id: int):
     response = test_client.delete(f"/api/admin/resource/quotes/{quote_id}/")
     assert response.status_code == 204
 
-def get_quotes(test_client: requests.Session, skip=0, limit=10) -> List[QuoteDeep]:
+def get_quotes(test_client: requests.Session, skip=0, limit=10) -> list[QuoteDeep]:
     response = test_client.get(f"/api/admin/resource/quotes/?skip={skip}&limit={limit}")
     assert response.status_code == 200
-    assert isinstance(response.json(), List)
+    assert isinstance(response.json(), list)
     quotes = [QuoteDeep(**quote_json) for quote_json in response.json()]
     return quotes
 

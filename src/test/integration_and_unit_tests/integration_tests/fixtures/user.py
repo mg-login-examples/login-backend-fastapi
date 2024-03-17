@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 import pytest
 import requests
@@ -48,7 +47,7 @@ def logged_in_user(login_response: LoginResponse) -> User:
     return login_response.user
 
 @pytest.fixture
-def created_n_users_by_admin(test_client_admin_logged_in: requests.Session, n_users: int = 5) -> List[UserDeep]:
+def created_n_users_by_admin(test_client_admin_logged_in: requests.Session, n_users: int = 5) -> list[UserDeep]:
     logger.debug("Create fixture created_n_users_by_admin")
     users = []
     for _ in range(n_users):

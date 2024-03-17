@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import Any
 
 from sqlalchemy.orm import Session
 from pydantic import BaseModel as BaseSchema
@@ -11,23 +11,23 @@ from stores.nosql_db_store import crud_base as mongo_crud_base
 
 def generate_sql_endpoint(
     router: APIRouter,
-    dependencies: List[Any],
+    dependencies: list[Any],
     db_as_dependency: Session,
     ResourceModel: BaseORMModel,
     ResourceSchema: BaseSchema
 ):
-    @router.get("/", response_model=List[ResourceSchema], dependencies=dependencies)
-    def get_items(skip: int = 0, limit: int = 100, db: Session = db_as_dependency) -> List[ResourceSchema]:
+    @router.get("/", response_model=list[ResourceSchema], dependencies=dependencies)
+    def get_items(skip: int = 0, limit: int = 100, db: Session = db_as_dependency) -> list[ResourceSchema]:
         return sql_crud_base.get_resource_items(db, ResourceModel, skip=skip, limit=limit)
 
 def generate_mongo_endpoint(
     router: APIRouter,
-    dependencies: List[Any],
+    dependencies: list[Any],
     db_as_dependency: Database,
     db_table: str,
     ResourceSchema: BaseSchema
 ):
-    @router.get('/', response_model=List[ResourceSchema], response_model_by_alias=False, dependencies=dependencies)
+    @router.get('/', response_model=list[ResourceSchema], response_model_by_alias=False, dependencies=dependencies)
     async def get_items(
         skip: int = 0,
         limit: int = 100,

@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 import requests
 import pytest
@@ -27,7 +26,7 @@ def test_create_user(test_client_admin_logged_in: requests.Session):
 
 # Test that multiple users can be fetched
 @pytest.mark.parametrize("created_n_users_by_admin", [5], indirect=True)
-def test_get_users(test_client_admin_logged_in: requests.Session, created_n_users_by_admin: List[UserDeep]):
+def test_get_users(test_client_admin_logged_in: requests.Session, created_n_users_by_admin: list[UserDeep]):
     users = users_admin_api.get_users(test_client_admin_logged_in, limit=4)
     assert len(users) == 4
     for user in users:

@@ -1,5 +1,3 @@
-from typing import List
-
 import requests
 
 from data.schemas.users.user import User
@@ -18,7 +16,7 @@ def create_user(test_client: requests.Session, user_to_create: UserCreate) -> Us
     loginResponse = LoginResponse(**response.json())
     return loginResponse.user
 
-def get_user_sessions(test_client: requests.Session, user_id: int, skip=0, limit=10) -> List[UserSession]:
+def get_user_sessions(test_client: requests.Session, user_id: int, skip=0, limit=10) -> list[UserSession]:
     response = test_client.get(f"/api/users/{user_id}/sessions/?skip={skip}&limit={limit}")
     assert response.status_code == 200
     user_sessions = [UserSession(**user_session_json) for user_session_json in response.json()]

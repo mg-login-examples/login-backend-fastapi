@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from data.schemas.examples.books.book import Book as BookShallow
 from data.schemas.examples.authors.author import Author
@@ -8,8 +8,8 @@ from data.schemas.examples.users.user import User
 class Book(BookShallow):
     id: int
     author: Optional[Author] = None
-    movies: List[Movie] = []
-    users: List[User] = []
+    movies: list[Movie] = []
+    users: list[User] = []
 
     def get_class_by_field(field):
         if field == "author":

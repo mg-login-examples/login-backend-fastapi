@@ -1,4 +1,4 @@
-from typing import Callable, List, Any
+from typing import Callable, Any
 from pydantic import BaseModel as BaseSchema
 
 from stores.sql_db_store.sqlalchemy_base_model import Base as BaseORMModel
@@ -12,8 +12,8 @@ class ResourceConfigurations:
         ResourceCreateSchema: BaseSchema,
         ResourceModel: Any = None, # TODO Find type
         MongoDBTable: str = None,
-        readonly_fields: List[str] = None,
-        designation_fields: List[str] = None,
+        readonly_fields: list[str] = None,
+        designation_fields: list[str] = None,
         customEndUserCreateSchemaToDbSchema: Callable = None,
         customEndUserUpdateSchemaToDbSchema: Callable = None,
     ):

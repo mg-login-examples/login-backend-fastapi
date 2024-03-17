@@ -1,5 +1,3 @@
-from typing import List
-
 from sqlalchemy.orm import Session
 
 from helpers_classes.custom_api_router import APIRouter
@@ -12,7 +10,7 @@ def generate_endpoint(
     db_as_dependency: Session,
     current_user_dependency: User
 ):
-    @router.get("/", response_model=List[User], dependencies=[current_user_dependency])
+    @router.get("/", response_model=list[User], dependencies=[current_user_dependency])
     def get_users(
         filter_users_text: str,
         skip: int = 0,

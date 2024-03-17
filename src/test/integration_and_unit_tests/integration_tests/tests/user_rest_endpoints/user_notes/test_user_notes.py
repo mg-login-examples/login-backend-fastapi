@@ -1,6 +1,5 @@
 
 import logging
-from typing import List
 
 import requests
 import pytest
@@ -38,7 +37,7 @@ def test_create_user_note_fails_when_user_note_user_different_from_logged_in_use
 
 # Test that multiple user notes can be fetched
 @pytest.mark.parametrize("created_n_user_notes", [5], indirect=True)
-def test_get_user_notes_of_user(test_client_logged_in: requests.Session, logged_in_user: User, created_n_user_notes: List[UserNote]):
+def test_get_user_notes_of_user(test_client_logged_in: requests.Session, logged_in_user: User, created_n_user_notes: list[UserNote]):
     user_notes = user_notes_api.get_user_user_notes(test_client_logged_in, logged_in_user.id, limit=4)
     assert len(user_notes) == 4
     for user_note in user_notes:
@@ -49,7 +48,7 @@ def test_get_user_notes_of_user(test_client_logged_in: requests.Session, logged_
 @pytest.mark.parametrize("created_n_user_notes", [5], indirect=True)
 def test_get_user_notes_of_user_fails_when_getting_user_notes_of_different_user_than_logged_in(
     test_client_logged_in: requests.Session,
-    logged_in_user: User, created_n_user_notes: List[UserNote],
+    logged_in_user: User, created_n_user_notes: list[UserNote],
     created_user_2_by_admin: User
 ):
     assert logged_in_user.id != created_user_2_by_admin.id

@@ -1,5 +1,3 @@
-from typing import List
-
 from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 
 from data.database.models.user import User as UserModel
@@ -17,7 +15,7 @@ from data.mongo_schemas.user_notes.user_note import UserNote as UserNoteSchema
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate as UserNoteCreateSchema
 from data.mongo_schemas.user_notes.user_note_db_table import UserNoteDBTable
 
-resources_configurations: List[ResourceConfigurations] = [
+resources_configurations: list[ResourceConfigurations] = [
     ResourceConfigurations(
         "users",
         UserSchema,

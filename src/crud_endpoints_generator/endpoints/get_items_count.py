@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import Any
 
 from helpers_classes.custom_api_router import APIRouter
 from sqlalchemy.orm import Session
@@ -10,7 +10,7 @@ from stores.nosql_db_store import crud_base as mongo_crud_base
 
 def generate_sql_endpoint(
     router: APIRouter,
-    dependencies: List[Any],
+    dependencies: list[Any],
     db_as_dependency: Session,
     ResourceModel: BaseORMModel,
 ):
@@ -21,7 +21,7 @@ def generate_sql_endpoint(
 
 def generate_mongo_endpoint(
     router: APIRouter,
-    dependencies: List[Any],
+    dependencies: list[Any],
     db_as_dependency: Database,
     db_table: str,
 ):

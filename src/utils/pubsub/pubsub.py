@@ -1,4 +1,4 @@
-from typing import Dict, List, Any
+from typing import Dict, Any
 import asyncio
 from contextlib import asynccontextmanager
 import logging
@@ -19,7 +19,7 @@ class PubSub:
             self._backend = RedisBackend(backend_url)
         self._listener_task = None
 
-        self._channel_to_subscribers: Dict[str, List[Subscriber]] = {}
+        self._channel_to_subscribers: Dict[str, list[Subscriber]] = {}
 
     async def connect(self):
         try:

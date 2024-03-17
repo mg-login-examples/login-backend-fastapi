@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import Any
 
 from sqlalchemy.orm import Session
 
@@ -12,7 +12,7 @@ def generate_endpoint(
     db_as_dependency: Session,
     restrict_endpoint_to_own_resources_param_user_id: Any
 ):
-    @router.get("/{user_id}/quotes/", response_model=List[QuoteDeep], dependencies=[restrict_endpoint_to_own_resources_param_user_id])
+    @router.get("/{user_id}/quotes/", response_model=list[QuoteDeep], dependencies=[restrict_endpoint_to_own_resources_param_user_id])
     def get_user_quotes(
         user_id: int,
         skip: int = 0,

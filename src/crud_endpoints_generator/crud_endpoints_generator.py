@@ -1,5 +1,5 @@
 import logging
-from typing import List, Any
+from typing import Any
 
 from sqlalchemy.orm import Session
 from pymongo.database import Database
@@ -16,7 +16,7 @@ def generate_router_with_resource_endpoints(
     resource_configs: ResourceConfigurations,
     sql_db_as_dependency: Session,
     mongo_db_as_dependency: Database,
-    route_dependencies: List[Any] = None,
+    route_dependencies: list[Any] = None,
 ):
     if route_dependencies is None:
         route_dependencies = []

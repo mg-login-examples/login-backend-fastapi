@@ -1,6 +1,5 @@
 
 import logging
-from typing import List
 
 import requests
 import pytest
@@ -21,7 +20,7 @@ def test_create_quote(test_client_logged_in: requests.Session, logged_in_user: U
     assert created_quote.text == quote_to_create.text
     assert created_quote.author.id == quote_to_create.author.id
     assert created_quote.id is not None
-    assert isinstance(created_quote.liked_by_users, List)
+    assert isinstance(created_quote.liked_by_users, list)
 
 # Test that a quote cannot be created for a user different than who is logged in
 def test_create_quote_fails_when_quote_author_different_from_logged_in_user(
@@ -37,7 +36,7 @@ def test_create_quote_fails_when_quote_author_different_from_logged_in_user(
 
 # Test that multiple quotes can be fetched
 @pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
-def test_get_quotes(test_client: requests.Session, created_n_quotes: List[QuoteDeep]):
+def test_get_quotes(test_client: requests.Session, created_n_quotes: list[QuoteDeep]):
     quotes = quotes_api.get_quotes(test_client, limit=4)
     assert len(quotes) == 4
     for quote in quotes:
@@ -45,7 +44,7 @@ def test_get_quotes(test_client: requests.Session, created_n_quotes: List[QuoteD
 
 # Test that multiple user quotes can be fetched
 @pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
-def test_get_user_quotes(test_client_logged_in: requests.Session, logged_in_user: User, created_n_quotes: List[QuoteDeep]):
+def test_get_user_quotes(test_client_logged_in: requests.Session, logged_in_user: User, created_n_quotes: list[QuoteDeep]):
     quotes = quotes_api.get_user_quotes(test_client_logged_in, logged_in_user.id, limit=4)
     assert len(quotes) == 4
     for quote in quotes:
@@ -56,7 +55,7 @@ def test_get_user_quotes(test_client_logged_in: requests.Session, logged_in_user
 @pytest.mark.parametrize("created_n_quotes", [5], indirect=True)
 def test_get_user_quotes_fails_when_getting_quotes_of_different_user_than_logged_in(
     test_client_logged_in: requests.Session,
-    logged_in_user: User, created_n_quotes: List[QuoteDeep],
+    logged_in_user: User, created_n_quotes: list[QuoteDeep],
     created_user_2_by_admin: User
 ):
     assert logged_in_user.id != created_user_2_by_admin.id

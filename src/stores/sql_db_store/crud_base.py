@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Tuple
 
 from sqlalchemy.orm import Session
 from pydantic import BaseModel as BaseSchema
@@ -14,29 +14,29 @@ def get_resource_item(db: Session, ResourceModel, item_id: int) -> BaseModel:
 def get_resource_item_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any) -> BaseModel:
     return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).first()
 
-def get_resource_items_by_attribute_filtered(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_filter: any, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+def get_resource_items_by_attribute_filtered(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_filter: any, skip: int = 0, limit: int = 100) -> list[BaseModel]:
     return db.query(ResourceModel).filter(ResourceModel_attribute.like(attribute_filter)).offset(skip).limit(limit).all()
 
-def get_resource_items_by_attribute_in_list(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_in_list: List[any], all = False, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+def get_resource_items_by_attribute_in_list(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_in_list: list[any], all = False, skip: int = 0, limit: int = 100) -> list[BaseModel]:
     query = db.query(ResourceModel).filter(ResourceModel_attribute.in_(attribute_in_list))
     if all:
         return query.all()
     else:
         return query.offset(skip).limit(limit).all()
 
-def get_resource_item_by_attributes(db: Session, ResourceModel, ResourceModel_attributes_and_values: List[Tuple]) -> BaseModel:
+def get_resource_item_by_attributes(db: Session, ResourceModel, ResourceModel_attributes_and_values: list[Tuple]) -> BaseModel:
     query = db.query(ResourceModel)
     for attribute_and_value in ResourceModel_attributes_and_values:
         query = query.filter(attribute_and_value[0] == attribute_and_value[1])
     return query.first()
 
-def get_resource_items(db: Session, ResourceModel, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+def get_resource_items(db: Session, ResourceModel, skip: int = 0, limit: int = 100) -> list[BaseModel]:
     return db.query(ResourceModel).offset(skip).limit(limit).all()
 
-def get_resource_items_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any, skip: int = 0, limit: int = 100) -> List[BaseModel]:
+def get_resource_items_by_attribute(db: Session, ResourceModel, ResourceModel_attribute: any, attribute_value: any, skip: int = 0, limit: int = 100) -> list[BaseModel]:
     return db.query(ResourceModel).filter(ResourceModel_attribute == attribute_value).offset(skip).limit(limit).all()
 
-def get_resource_items_by_attributes(db: Session, ResourceModel, ResourceModel_attributes_and_values: List[Tuple], skip: int = 0, limit: int = 100) -> BaseModel:
+def get_resource_items_by_attributes(db: Session, ResourceModel, ResourceModel_attributes_and_values: list[Tuple], skip: int = 0, limit: int = 100) -> BaseModel:
     query = db.query(ResourceModel)
     for attribute_and_value in ResourceModel_attributes_and_values:
         query = query.filter(attribute_and_value[0] == attribute_and_value[1])
@@ -101,7 +101,7 @@ def delete_resource_item_by_attribute(db: Session, ResourceModel: BaseModel, Res
         db.delete(db_item)
         db.commit()
 
-def delete_resource_item_by_attributes(db: Session, ResourceModel: BaseModel, ResourceModel_attributes_and_values: List[Tuple]):
+def delete_resource_item_by_attributes(db: Session, ResourceModel: BaseModel, ResourceModel_attributes_and_values: list[Tuple]):
     query = db.query(ResourceModel)
     for attribute_and_value in ResourceModel_attributes_and_values:
         query = query.filter(attribute_and_value[0] == attribute_and_value[1])

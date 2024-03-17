@@ -1,12 +1,10 @@
-from typing import List
-
 from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 
 def enhance_resource_schemas(
     create_resource_schema_dict: dict,
     update_resource_schema_dict: dict,
     resource_configurations: ResourceConfigurations,
-    all_resources_configurations: List[ResourceConfigurations],
+    all_resources_configurations: list[ResourceConfigurations],
     is_resource_sql: bool,
 ):
     # Add get items url for foreign key fields to schemas
@@ -30,7 +28,7 @@ def enhance_resource_schemas(
 def _add_resource_url_ids_to_schema_properties(
     resource_schema_dict: dict,
     resource_configurations: ResourceConfigurations,
-    all_resources_configurations: List[ResourceConfigurations]
+    all_resources_configurations: list[ResourceConfigurations]
 ):
     for resource_schema_property in resource_schema_dict["properties"]:
         schema_property = resource_schema_dict["properties"][resource_schema_property]

@@ -1,4 +1,4 @@
-from typing import List, Any, Callable
+from typing import Any, Callable
 
 from fastapi import status, HTTPException, APIRouter, Response
 from sqlalchemy.orm import Session
@@ -11,7 +11,7 @@ from stores.nosql_db_store import crud_base as mongo_crud_base
 
 def generate_sql_endpoint(
     router: APIRouter,
-    dependencies: List[Any],
+    dependencies: list[Any],
     db_as_dependency: Session,
     ResourceModel: BaseORMModel,
     ResourceSchema: BaseSchema,
@@ -30,7 +30,7 @@ def generate_sql_endpoint(
 
 def generate_mongo_endpoint(
     router: APIRouter,
-    dependencies: List[Any],
+    dependencies: list[Any],
     db_as_dependency: Database,
     db_table: str,
     ResourceSchema: BaseSchema,

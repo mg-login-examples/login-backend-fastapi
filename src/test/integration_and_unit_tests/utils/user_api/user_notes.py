@@ -1,5 +1,3 @@
-from typing import List
-
 import requests
 from fastapi.encoders import jsonable_encoder
 
@@ -11,7 +9,7 @@ def get_user_note(test_client: requests.Session, user_note_id: str) -> UserNote:
     assert response.status_code == 200
     return UserNote(**response.json())
 
-def get_user_user_notes(test_client: requests.Session, user_id: int, skip=0, limit=10) -> List[UserNote]:
+def get_user_user_notes(test_client: requests.Session, user_id: int, skip=0, limit=10) -> list[UserNote]:
     response = test_client.get(f"/api/users/{user_id}/user-notes/?skip={skip}&limit={limit}")
     assert response.status_code == 200
     user_notes = [UserNote(**user_note_json) for user_note_json in response.json()]
