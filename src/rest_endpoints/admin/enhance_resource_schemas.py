@@ -26,7 +26,7 @@ def enhance_resource_schemas(
     update_resource_schema_dict["readonly"] = resource_configurations.readonly_fields
     update_resource_schema_dict["designation_fields"] = resource_configurations.designation_fields
 
-
+# Move this function to pydantic utils if possible, or part of it
 def _add_resource_url_ids_to_schema_properties(
     resource_schema_dict: dict,
     resource_configurations: ResourceConfigurations,
