@@ -21,10 +21,19 @@ def enhance_resource_schemas(
         )
 
     # Add readonly and designation fields to schemas
-    update_resource_schema_dict["readonly"] = resource_configurations.readonly_fields
-    update_resource_schema_dict["designation_fields"] = resource_configurations.designation_fields
+    update_schema_readonly_fields = [field for field in resource_configurations.readonly_fields if (field in update_resource_schema_dict["properties"].keys())]
+    if len(update_schema_readonly_fields) > 0:
+        update_resource_schema_dict["readonly"] = update_schema_readonly_fields
+    update_schema_designation_fields = [field for field in resource_configurations.designation_fields if field in update_resource_schema_dict["properties"].keys()]
+    if len(update_schema_designation_fields) > 0:
+        update_resource_schema_dict["designation_fields"] = update_schema_designation_fields
+    create_schema_readonly_fields = [field for field in resource_configurations.readonly_fields if field in create_resource_schema_dict["properties"].keys()]
+    if len(create_schema_readonly_fields) > 0:
+        create_resource_schema_dict["readonly"] = create_schema_readonly_fields
+    create_schema_designation_fields = [field for field in resource_configurations.designation_fields if field in create_resource_schema_dict["properties"].keys()]
+    if len(create_schema_designation_fields) > 0:
+        create_resource_schema_dict["designation_fields"] = create_schema_designation_fields
 
-# Move this function to pydantic utils if possible, or part of it
 def _add_resource_url_ids_to_schema_properties(
     resource_schema_dict: dict,
     resource_configurations: ResourceConfigurations,

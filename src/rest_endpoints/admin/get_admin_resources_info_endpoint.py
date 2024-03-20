@@ -20,8 +20,8 @@ def generate_endpoint(router: APIRouter, route_dependencies: CommonRouteDependen
                 ),
             }
             enhance_resource_schemas(
-                info["updateSchema"],
                 info["createSchema"],
+                info["updateSchema"],
                 resource_configuration,
                 resources_configurations,
                 resource_configuration.MongoDBTable == None,
