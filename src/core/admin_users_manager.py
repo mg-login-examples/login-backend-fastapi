@@ -17,9 +17,9 @@ def create_admin_user(email: str, password: str, db: Session):
         hashed_password = get_password_hash(password)
         admin_user = AdminUserCreateAsModelSchema(email=email, hashed_password=hashed_password)
         admin_user_created = crud_base.create_resource_item(db, AdminUserModel, admin_user)
-        admin_user_schema = AdminUserSchema.from_orm(admin_user_created)
+        admin_user_schema = AdminUserSchema.model_validate(admin_user_created)
         logger.info("Admin user created:")
-        logger.info(admin_user_schema.dict())
+        logger.info(admin_user_schema.model_dump())
     except IntegrityError as e:
         if (
             str(e.__cause__) == "UNIQUE constraint failed: admin_users.email" or #sqlite
@@ -31,12 +31,12 @@ def create_admin_user(email: str, password: str, db: Session):
 
 def update_admin_user_password(email: str, password_new: str, db: Session):
     admin_user = crud_base.get_resource_item_by_attribute(db, AdminUserModel, AdminUserModel.email, email)
-    admin_user = AdminUserWithPasswordSchema.from_orm(admin_user)
+    admin_user = AdminUserWithPasswordSchema.model_validate(admin_user)
     admin_user.hashed_password = get_password_hash(password_new)
     admin_user_updated = crud_base.update_resource_item_full(db, AdminUserModel, admin_user)
-    admin_user_schema = AdminUserSchema.from_orm(admin_user_updated)
+    admin_user_schema = AdminUserSchema.model_validate(admin_user_updated)
     logger.info("Admin user updated:")
-    logger.info(admin_user_schema.dict())
+    logger.info(admin_user_schema.model_dump())
 
 def delete_admin_user(email: str, db: Session):
     crud_base.delete_resource_item_by_attribute(db, AdminUserModel, AdminUserModel.email, email)

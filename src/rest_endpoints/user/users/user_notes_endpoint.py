@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import Any
 
 from pymongo.database import Database
 
@@ -12,7 +12,7 @@ def generate_endpoint(
     restrict_endpoint_to_own_resources_param_user_id: Any
 ):
 
-    @router.get('/{user_id}/user-notes', response_model=List[UserNote], response_model_by_alias=False, dependencies=[restrict_endpoint_to_own_resources_param_user_id])
+    @router.get('/{user_id}/user-notes', response_model=list[UserNote], response_model_by_alias=False, dependencies=[restrict_endpoint_to_own_resources_param_user_id])
     async def get_user_notes_of_user(
         user_id: int,
         skip: int = 0,

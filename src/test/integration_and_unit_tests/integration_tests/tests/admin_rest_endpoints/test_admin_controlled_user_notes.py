@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 import requests
 import pytest
@@ -31,7 +30,7 @@ def test_create_user_note(test_client: requests.Session, created_user_by_admin: 
 
 # Test that multiple user notes can be fetched
 @pytest.mark.parametrize("created_n_user_notes_by_admin", [5], indirect=True)
-def test_get_user_notes(test_client: requests.Session, created_n_user_notes_by_admin: List[UserNote]):
+def test_get_user_notes(test_client: requests.Session, created_n_user_notes_by_admin: list[UserNote]):
     user_notes = user_notes_admin_api.get_user_notes(test_client, skip=0, limit=4)
     assert len(user_notes) == 4
     for user_note in user_notes:
@@ -39,7 +38,7 @@ def test_get_user_notes(test_client: requests.Session, created_n_user_notes_by_a
 
 # Test that a user note can be updated
 @pytest.mark.parametrize("created_n_users_by_admin", [1], indirect=True)
-def test_put_user_note(test_client_admin_logged_in: requests.Session, created_n_users_by_admin: List[UserDeep], created_user_note_by_admin: UserNote):
+def test_put_user_note(test_client_admin_logged_in: requests.Session, created_n_users_by_admin: list[UserDeep], created_user_note_by_admin: UserNote):
     new_text = text.sentence()
     assert created_user_note_by_admin.text != new_text
     created_user_note_by_admin.text = new_text

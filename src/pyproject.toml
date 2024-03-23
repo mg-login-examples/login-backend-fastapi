@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "backend-login-app"
 version = "0.1.0"
 description = ""
@@ -6,38 +7,37 @@ authors = ["Mudit Gurjar <mudit182@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.11.6"
-fastapi = "0.95"
-uvicorn = {extras = ["standard"], version = "^0.23.2"}
-python-multipart = "^0.0.6"
-email-validator = "^2.1.0"
-google-api-python-client = "^2.104.0"
-google-auth-httplib2 = "^0.1.1"
-google-auth-oauthlib = "^1.1.0"
-alembic = "^1.12.0"
-python-dotenv = "^1.0.0"
+python = "3.12.2"
+fastapi = "^0.110.0"
+uvicorn = {extras = ["standard"], version = "^0.28.0"}
+python-multipart = "^0.0.9"
+email-validator = "^2.1.1"
+google-api-python-client = "^2.122.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.0"
+alembic = "^1.13.1"
+python-dotenv = "^1.0.1"
 coloredlogs = "^15.0.1"
-httpx = "^0.25.0"
 sec = "^0.3.0"
 sqlalchemy-utils = "^0.41.1"
-sqlalchemy = "^2.0.22"
-redis = "^5.0.1"
-pymongo = "^4.6.0"
-pillow = "^10.1.0"
-passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+sqlalchemy = "^2.0.28"
+redis = "^5.0.3"
+pymongo = "^4.6.2"
+pillow = "^10.2.0"
 requests = "^2.31.0"
 aiofiles = "^23.2.1"
-aiostream = "^0.5.1"
-typing-extensions = "^4.8.0"
-pydantic = "1.10.13"
+aiostream = "^0.5.2"
+typing-extensions = "^4.10.0"
+pydantic = "^2.6.4"
 pymysql = "^1.1.0"
-
+bcrypt = "^4.1.2"
+pydantic-settings = "^2.2.1"
+pydantic-mongo = "^2.1.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"
 pytest-asyncio = "0.20.3"
 pytest-timeout = "^2.2.0"
-httpx = "^0.25.0"
 asgi-lifespan = "^2.1.0"
 pytest-xdist = "^3.3.1"
 pytest-watch = "^4.2.0"
@@ -48,8 +48,10 @@ coverage = "^7.3.2"
 mimesis = "^11.1.0"
 pre-commit = "^3.5.0"
 pymongo-inmemory = "^0.4.0"
-httpx-ws = "^0.4.2"
 pytest-playwright = "0.3.3"
+httpx = "0.26"
+httpx-ws = "0.4.3"
+bump-pydantic = "^0.8.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,7 +1,6 @@
 from data.schemas.quotes.quoteBase import QuoteBase
+from pydantic import ConfigDict
 
 class Quote(QuoteBase):
     id: int
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

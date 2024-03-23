@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 import requests
 import pytest
@@ -31,7 +30,7 @@ def test_create_quote(test_client: requests.Session, created_user_by_admin: User
 
 # Test that multiple quotes can be fetched
 @pytest.mark.parametrize("created_n_quotes_by_admin", [5], indirect=True)
-def test_get_quotes(test_client: requests.Session, created_n_quotes_by_admin: List[QuoteDeep]):
+def test_get_quotes(test_client: requests.Session, created_n_quotes_by_admin: list[QuoteDeep]):
     quotes = quotes_admin_api.get_quotes(test_client, skip=0, limit=4)
     assert len(quotes) == 4
     for quote in quotes:
@@ -39,7 +38,7 @@ def test_get_quotes(test_client: requests.Session, created_n_quotes_by_admin: Li
 
 # Test that a quote can be updated
 @pytest.mark.parametrize("created_n_users_by_admin", [1], indirect=True)
-def test_put_quote(test_client_admin_logged_in: requests.Session, created_n_users_by_admin: List[UserDeep], created_quote_by_admin: QuoteDeep):
+def test_put_quote(test_client_admin_logged_in: requests.Session, created_n_users_by_admin: list[UserDeep], created_quote_by_admin: QuoteDeep):
     new_text = text.quote()
     assert created_quote_by_admin.text != new_text
     created_quote_by_admin.text = new_text

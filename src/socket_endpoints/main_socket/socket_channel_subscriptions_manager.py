@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any
 import logging
 import asyncio
 import json
@@ -18,7 +18,7 @@ async def handle_websocket_traffic(
     websocket: WebSocket,
     current_user: User,
     pubsub: PubSub,
-    pubsub_subscribers_async_tasks: List[asyncio.Task]
+    pubsub_subscribers_async_tasks: list[asyncio.Task]
 ):
     logger.debug(f"Started websocket session for user '{current_user.email}'")
     channel_to_subscriber: dict[str, Subscriber] = {}
@@ -59,7 +59,7 @@ async def _handle_websocket_incomming_message(
     current_user: User,
     pubsub: PubSub,
     channel_to_subscriber: dict[str, Subscriber],
-    pubsub_subscribers_async_tasks: List[asyncio.Task]
+    pubsub_subscribers_async_tasks: list[asyncio.Task]
     ):
     try:
         socket_payload = WebSocketPayload(**socket_payload_json)
@@ -101,7 +101,7 @@ async def _handle_action_subscribe_to_channel(
     current_user: User,
     pubsub: PubSub,
     channel_to_subscriber: dict,
-    pubsub_subscribers_async_tasks: List[asyncio.Task]
+    pubsub_subscribers_async_tasks: list[asyncio.Task]
 ):
     try:
         logger.debug(f"Handle subscribe action to channel '{channel}' for user {current_user.email}")

@@ -1,6 +1,6 @@
 # Pull base image
 # FROM python:3.10-alpine as install-stage
-FROM python:3.11.6 as install-stage
+FROM python:3.12.2 as install-stage
 # working directory in the container
 WORKDIR /app
 # Install mysql dependencies to prevent pip install errors (when using python:alpine images)

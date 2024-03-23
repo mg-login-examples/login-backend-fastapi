@@ -1,4 +1,3 @@
-from typing import List
 import logging
 
 import requests
@@ -16,7 +15,7 @@ def get_user_note(test_client: requests.Session, user_note_id: int) -> UserNote:
     return UserNote(**response.json())
 
 def create_user_note(test_client: requests.Session, user_note_to_create: UserNoteCreate) -> UserNote:
-    response = test_client.post("/api/admin/resource/user-notes/", json=user_note_to_create.dict())
+    response = test_client.post("/api/admin/resource/user-notes/", json=user_note_to_create.model_dump())
     assert response.status_code == 200
     return UserNote(**response.json())
 
@@ -28,10 +27,10 @@ def delete_user_note(test_client: requests.Session, user_note_id: int):
     response = test_client.delete(f"/api/admin/resource/user-notes/{user_note_id}/")
     assert response.status_code == 204
 
-def get_user_notes(test_client: requests.Session, skip=0, limit=10) -> List[UserNote]:
+def get_user_notes(test_client: requests.Session, skip=0, limit=10) -> list[UserNote]:
     response = test_client.get(f"/api/admin/resource/user-notes/?skip={skip}&limit={limit}")
     assert response.status_code == 200
-    assert isinstance(response.json(), List)
+    assert isinstance(response.json(), list)
     user_notes = [UserNote(**user_note_json) for user_note_json in response.json()]
     return user_notes
 

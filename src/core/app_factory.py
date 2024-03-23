@@ -3,6 +3,7 @@ import logging
 from fastapi import FastAPI
 
 from core.cors_settings import add_cors
+from core.app_lifespan import get_lifespan
 from rest_endpoints import routes as api_routes
 from socket_endpoints import routes as socket_routes
 from admin_app import app_mounter as admin_app_mounter
@@ -13,7 +14,6 @@ from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager
 from api_dependencies.dependencies_manager import get_user_routes_dependencies, get_admin_routes_dependencies, get_socket_route_dependencies
 from utils.pubsub.pubsub import PubSub
-from utils.pubsub import utils as pubsub_utils
 
 from core.swagger_docs import create_swagger_docs_for_user_endpoints, create_swagger_docs_for_admin_endpoints
 
@@ -26,7 +26,9 @@ def create_app(
     pubsub: PubSub,
     SETTINGS: Settings
 ) -> FastAPI:
-    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+    pubsub_subscribers_async_tasks = []
+
+    app = FastAPI(lifespan=get_lifespan(pubsub, pubsub_subscribers_async_tasks), docs_url=None, redoc_url=None, openapi_url=None)
 
     api_routes_dependencies = get_user_routes_dependencies(
         app_db_manager,
@@ -59,8 +61,6 @@ def create_app(
             pubsub,
             SETTINGS
         )
-        pubsub_subscribers_async_tasks = []
-        pubsub_utils.enable_pubsub(app, pubsub, pubsub_subscribers_async_tasks)
         socket_router = socket_routes.get_router(
             socket_route_dependencies,
             pubsub_subscribers_async_tasks,

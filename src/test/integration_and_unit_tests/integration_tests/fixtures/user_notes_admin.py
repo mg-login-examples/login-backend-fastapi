@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 import pytest
 import requests
@@ -18,7 +17,7 @@ def created_user_note_by_admin(test_client_admin_logged_in: requests.Session, cr
     return user_notes_admin_api.create_user_note(test_client_admin_logged_in, user_note)
 
 @pytest.fixture
-def created_n_user_notes_by_admin(test_client_admin_logged_in: requests.Session, created_user_by_admin: UserDeep, n_user_notes: int = 5) -> List[UserNote]:
+def created_n_user_notes_by_admin(test_client_admin_logged_in: requests.Session, created_user_by_admin: UserDeep, n_user_notes: int = 5) -> list[UserNote]:
     logger.debug("Create fixture created_n_user_notes_by_admin")
     user_notes = []
     for _ in range(n_user_notes):

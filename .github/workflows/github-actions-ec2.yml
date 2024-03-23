@@ -62,11 +62,11 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.11.6
+          python-version: 3.12.2
       - name: Run image
         uses: abatilo/actions-poetry@v2
         with:
-          poetry-version: 1.6
+          poetry-version: 1.8.2
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
           poetry config virtualenvs.create true --local
@@ -235,7 +235,7 @@ jobs:
         run: echo "password_mongo" > docker_secrets/mongo_pwd.txt
       - name: Add redis password text file for a test redis container
         run: echo "password_redis" > docker_secrets/redis_pwd.txt
-      - name: Run admin app tests
+      - name: Run admin app e2e tests
         run: sudo ./scripts_docker.sh run-admin-app-e2e-tests
       # - name: Zip allure reports
       #   if: success() || failure()
@@ -277,11 +277,11 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.11.6
+          python-version: 3.12.2
       - name: Run image
         uses: abatilo/actions-poetry@v2
         with:
-          poetry-version: 1.6
+          poetry-version: 1.8.2
       - name: Setup a local virtual environment (if no poetry.toml file)
         run: |
           poetry config virtualenvs.create true --local
@@ -326,7 +326,7 @@ jobs:
             echo "Timeout: Application did not become online within $timeout seconds."
             exit 1
           fi
-      - name: Run backend tests
+      - name: Run admin app e2e tests
         run: poetry run pytest test/admin_app_e2e_tests/ --alluredir='./test/allure-results'
         env:
           MONGO_USERNAME: root_user

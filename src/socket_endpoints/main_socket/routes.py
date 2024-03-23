@@ -1,4 +1,3 @@
-from typing import List
 import asyncio
 
 from fastapi import WebSocket
@@ -11,7 +10,7 @@ from utils.pubsub.pubsub import PubSub
 
 def get_router(
     api_routes_dependencies: CommonRouteDependencies,
-    pubsub_subscribers_async_tasks: List[asyncio.Task]
+    pubsub_subscribers_async_tasks: list[asyncio.Task]
 ) -> APIRouter:
 
     router = APIRouter()

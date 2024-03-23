@@ -17,10 +17,10 @@ def create_swagger_docs_for_user_endpoints(
         base_router = APIRouter(prefix="/api")
         user_router = user_routes.get_router(regular_api_routes_dependencies, auth_cookie_type)
         base_router.include_router(user_router)
-        return JSONResponse(get_openapi(title="FastAPI", version=1, routes=base_router.routes))
+        return JSONResponse(get_openapi(title="User API", version='1', routes=base_router.routes))
     @app.get("/docs")
     async def get_documentation():
-        return get_swagger_ui_html(openapi_url="/openapi.json", title="docs")
+        return get_swagger_ui_html(openapi_url="/openapi.json", title="user-docs")
 
 
 def create_swagger_docs_for_admin_endpoints(
@@ -33,7 +33,7 @@ def create_swagger_docs_for_admin_endpoints(
         base_router = APIRouter(prefix="/api")
         admin_router =  admin_routes.get_router(admin_api_routes_dependencies, auth_cookie_type)
         base_router.include_router(admin_router)
-        return JSONResponse(get_openapi(title="FastAPI", version=1, routes=base_router.routes))
+        return JSONResponse(get_openapi(title="Admin API", version='1', routes=base_router.routes))
     @app.get("/admin-docs")
     async def get_documentation():
-        return get_swagger_ui_html(openapi_url="/admin-openapi.json", title="docs")
+        return get_swagger_ui_html(openapi_url="/admin-openapi.json", title="admin-docs")
