@@ -1,4 +1,5 @@
 import logging
+import asyncio
 
 from fastapi import FastAPI
 
@@ -12,12 +13,15 @@ from core.helper_classes.settings import Settings
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager
-from api_dependencies.dependencies_manager import get_user_routes_dependencies, get_admin_routes_dependencies, get_socket_route_dependencies
+from api_dependencies.user_route_dependencies import get_user_routes_dependencies
+from api_dependencies.admin_route_dependencies import get_admin_routes_dependencies
+from api_dependencies.socket_route_dependencies import get_socket_routes_dependencies
 from utils.pubsub.pubsub import PubSub
 
 from core.swagger_docs import create_swagger_docs_for_user_endpoints, create_swagger_docs_for_admin_endpoints
 
 logger = logging.getLogger(__name__)
+
 
 def create_app(
     app_db_manager: SQLAlchemyDBManager,
@@ -26,26 +30,30 @@ def create_app(
     pubsub: PubSub,
     SETTINGS: Settings
 ) -> FastAPI:
-    pubsub_subscribers_async_tasks = []
+    pubsub_subscribers_async_tasks: list[asyncio.Task] = []
 
-    app = FastAPI(lifespan=get_lifespan(pubsub, pubsub_subscribers_async_tasks), docs_url=None, redoc_url=None, openapi_url=None)
+    app = FastAPI(
+        lifespan=get_lifespan(
+            pubsub,
+            pubsub_subscribers_async_tasks),
+        docs_url=None,
+        redoc_url=None,
+        openapi_url=None)
 
-    api_routes_dependencies = get_user_routes_dependencies(
+    user_routes_dependencies = get_user_routes_dependencies(
         app_db_manager,
         app_nosql_db_manager,
         app_cache_manager,
-        pubsub,
         SETTINGS
     )
     admin_api_routes_dependencies = get_admin_routes_dependencies(
         app_db_manager,
         app_nosql_db_manager,
         app_cache_manager,
-        pubsub,
         SETTINGS
     )
     api_router = api_routes.get_router(
-        api_routes_dependencies,
+        user_routes_dependencies,
         admin_api_routes_dependencies,
         SETTINGS.user_auth_cookie_type,
         SETTINGS.admin_user_auth_cookie_type,
@@ -54,7 +62,7 @@ def create_app(
     app.include_router(api_router)
 
     if SETTINGS.add_websocket:
-        socket_route_dependencies = get_socket_route_dependencies(
+        socket_route_dependencies = get_socket_routes_dependencies(
             app_db_manager,
             app_nosql_db_manager,
             app_cache_manager,
@@ -74,7 +82,11 @@ def create_app(
 
     add_cors(app, SETTINGS.cors_origins_set)
 
-    create_swagger_docs_for_user_endpoints(app, api_routes_dependencies, SETTINGS.user_auth_cookie_type)
-    create_swagger_docs_for_admin_endpoints(app, admin_api_routes_dependencies, SETTINGS.admin_user_auth_cookie_type)
+    create_swagger_docs_for_user_endpoints(
+        app, user_routes_dependencies, SETTINGS.user_auth_cookie_type)
+    create_swagger_docs_for_admin_endpoints(
+        app,
+        admin_api_routes_dependencies,
+        SETTINGS.admin_user_auth_cookie_type)
 
     return app

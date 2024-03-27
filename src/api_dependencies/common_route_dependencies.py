@@ -8,18 +8,19 @@ from stores.access_tokens_store.access_token_store import AccessTokenStore
 from data.schemas.users.user import User
 from utils.pubsub.pubsub import PubSub
 
+
 class CommonRouteDependencies:
     def __init__(
         self,
-        db_session_as_dependency: Session = None,
-        nosql_database_as_dependency: NoSQLDatabase = None,
-        cache_session_as_dependency: Redis = None,
-        access_token_store_as_dependency: AccessTokenStore = None,
-        pubsub_as_dependency: PubSub = None,
-        validated_access_token_as_dependency: str = None,
-        current_user_as_dependency: User = None,
-        restrict_endpoint_to_own_resources_param_item_id_as_dependency: Any = None,
-        restrict_endpoint_to_own_resources_param_user_id_as_dependency: Any = None,
+        db_session_as_dependency: Session,
+        nosql_database_as_dependency: NoSQLDatabase,
+        pubsub_as_dependency: PubSub,
+        current_user_as_dependency: User,
+        cache_session_as_dependency: Redis | None = None,
+        access_token_store_as_dependency: AccessTokenStore | None = None,
+        validated_access_token_as_dependency: str | None = None,
+        restrict_endpoint_to_own_resources_param_item_id_as_dependency: Any | None = None,
+        restrict_endpoint_to_own_resources_param_user_id_as_dependency: Any | None = None,
     ):
         self.db = db_session_as_dependency
         self.nosql_database = nosql_database_as_dependency

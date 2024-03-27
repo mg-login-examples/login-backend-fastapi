@@ -1,6 +1,7 @@
 from data.schemas.examples.authors.author import Author as AuthorShallow
 from data.schemas.examples.books.book import Book
 
+
 class Author(AuthorShallow):
     id: int
     books: list[Book] = []
@@ -9,4 +10,3 @@ class Author(AuthorShallow):
         if field == "books":
             return Book
         return None
-

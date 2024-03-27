@@ -5,8 +5,8 @@ from fastapi import APIRouter, Response
 from fastapi.requests import Request
 from fastapi.security.utils import get_authorization_scheme_param
 from sqlalchemy.orm import Session
-from google.oauth2 import id_token
-from google.auth.transport import requests
+from google.oauth2 import id_token  # type: ignore
+from google.auth.transport import requests  # type: ignore
 
 from helpers_classes.custom_api_router import APIRouter
 from stores.access_tokens_store.access_token_store import AccessTokenStore
@@ -27,9 +27,10 @@ logger = logging.getLogger(__name__)
 # TODO Move to environment variable or secrets if needed
 google_client_id = "94297494812-duhngd0ecimur6q39gd1l5qbdfnced4p.apps.googleusercontent.com"
 
+
 def generate_endpoint(
     router: APIRouter,
-    db_as_dependency: Session,
+    sql_db_session_as_dependency: Session,
     access_token_store_as_dependency: AccessTokenStore,
     auth_cookie_type: str,
 ):
@@ -38,45 +39,57 @@ def generate_endpoint(
         request: Request,
         response: Response,
         google_sign_in_payload: GoogleSignInPayload,
-        db: Session = db_as_dependency,
+        sql_db_session: Session = sql_db_session_as_dependency,
         access_token_store: AccessTokenStore = access_token_store_as_dependency
     ):
         try:
-            idinfo = id_token.verify_oauth2_token(google_sign_in_payload.credential, requests.Request(), google_client_id)
+            idinfo = id_token.verify_oauth2_token(
+                google_sign_in_payload.credential, requests.Request(), google_client_id)
             user_email = idinfo["email"]
             if idinfo["email_verified"] == True:
                 raise HTTP_401_GOOGLE_LOGIN_UNVERIFIED_EMAIL_EXCEPTION
-            user = crud_base.get_resource_item_by_attribute(db, UserModel, UserModel.email, user_email)
+            user = crud_base.get_resource_item_by_attribute(
+                sql_db_session, UserModel, UserModel.email, user_email)
             if not user:
                 logger.info("Creating new user")
                 user_to_create = UserBase(email=user_email)
-                user_db = crud_base.create_resource_item(db, UserModel, user_to_create)
+                user_db = crud_base.create_resource_item(
+                    sql_db_session, UserModel, user_to_create)
                 user = User(**user_db.__dict__)
                 user.is_verified = True
                 if idinfo["name"]:
                     user.name = idinfo["name"]
-                # TODO Download user profile idinfo["picture"], save it locally and add profile link
-                crud_base.update_resource_item_full(db, UserModel, user)
+                # TODO Download user profile idinfo["picture"], save it locally
+                # and add profile link
+                crud_base.update_resource_item_full(
+                    sql_db_session, UserModel, user)
 
             if user:
-                token_expiry_duration_seconds = 30*24*60*60
-                token_expiry_datetime_timestamp = int(datetime.now().timestamp()) + token_expiry_duration_seconds
-                access_token = generate_access_token(user.id, token_expiry_datetime_timestamp)
+                token_expiry_duration_seconds = 30 * 24 * 60 * 60
+                token_expiry_datetime_timestamp = int(
+                    datetime.now().timestamp()) + token_expiry_duration_seconds
+                access_token = generate_access_token(
+                    user.id, token_expiry_datetime_timestamp)
 
-                userSession = UserSessionCreate(user_id=user.id, token=access_token, expires_at=datetime.fromtimestamp(token_expiry_datetime_timestamp))
-                crud_base.create_resource_item(db, UserSessionModel, userSession)
+                userSession = UserSessionCreate(
+                    user_id=user.id, token=access_token, expires_at=datetime.fromtimestamp(token_expiry_datetime_timestamp))
+                crud_base.create_resource_item(
+                    sql_db_session, UserSessionModel, userSession)
                 await access_token_store.add_access_token(user.id, access_token)
 
                 # Delete existing access token if any
-                cookie_authorization: str = request.cookies.get("Authorization")
+                cookie_authorization = request.cookies.get(
+                    "Authorization")
                 _, cookie_param = get_authorization_scheme_param(
                     cookie_authorization
                 )
                 if cookie_param:
                     previous_access_token = cookie_param
-                    crud_base.delete_resource_item_by_attribute(db, UserSessionModel, UserSessionModel.token, previous_access_token)
+                    crud_base.delete_resource_item_by_attribute(
+                        sql_db_session, UserSessionModel, UserSessionModel.token, previous_access_token)
 
-                add_authorization_cookie_to_response(response, auth_cookie_type, "Authorization", f"Bearer {access_token}", None)
+                add_authorization_cookie_to_response(
+                    response, auth_cookie_type, "Authorization", f"Bearer {access_token}", None)
 
                 return LoginResponse(
                     user=user,

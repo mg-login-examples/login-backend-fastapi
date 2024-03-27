@@ -9,7 +9,10 @@ from test.integration_and_unit_tests.utils.user_api import authentication as aut
 logger = logging.getLogger(__name__)
 
 # Test that a user can login with email and password
-def test_valid_login(test_client: requests.Session, user_login: UserCreate, created_user_by_admin: UserDeep):
+
+
+def test_valid_login(test_client: requests.Session,
+                     user_login: UserCreate, created_user_by_admin: UserDeep):
     assert test_client.cookies.get("Authorization") is None
     login_response = authentication_api.login(test_client, user_login)
     assert login_response.user.id == created_user_by_admin.id

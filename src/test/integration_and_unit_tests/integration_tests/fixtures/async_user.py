@@ -10,8 +10,10 @@ from data.schemas.users.userDeep import User as UserDeep
 
 logger = logging.getLogger(__name__)
 
+
 @pytest.fixture
-async def async_created_user_by_admin(async_test_client_admin_logged_in: AsyncClient, user_login: UserCreate) -> UserDeep:
+async def async_created_user_by_admin(
+        async_test_client_admin_logged_in: AsyncClient, user_login: UserCreate) -> UserDeep:
     logger.debug("Create fixture async_created_user_by_admin")
     response = await async_test_client_admin_logged_in.post(
         "/api/admin/resource/users/",
@@ -27,8 +29,10 @@ async def async_created_user_by_admin(async_test_client_admin_logged_in: AsyncCl
     assert response.status_code == 204
     return created_unverified_user_by_admin
 
+
 @pytest.fixture
-async def async_login_response(async_test_client: AsyncClient, user_login: UserCreate, async_created_user_by_admin: User) -> LoginResponse:
+async def async_login_response(async_test_client: AsyncClient, user_login: UserCreate,
+                               async_created_user_by_admin: User) -> LoginResponse:
     logger.debug("Create fixture async_login_response")
     response = await async_test_client.post(
         f"/api/login/",
@@ -36,6 +40,7 @@ async def async_login_response(async_test_client: AsyncClient, user_login: UserC
     )
     assert response.status_code == 200
     return LoginResponse(**response.json())
+
 
 @pytest.fixture
 async def async_logged_in_user(async_login_response: LoginResponse) -> User:

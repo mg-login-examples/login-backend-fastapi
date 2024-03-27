@@ -7,6 +7,7 @@ from data.schemas.admin_users.admin_user import AdminUser
 
 logger = logging.getLogger(__name__)
 
+
 def generate_endpoint(
     router: APIRouter,
     current_user_dependency: AdminUser

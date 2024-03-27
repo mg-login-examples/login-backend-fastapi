@@ -11,16 +11,18 @@ from data.schemas.http_error_exceptions.http_403_exceptions import HTTP_403_NOT_
 
 logger = logging.getLogger(__name__)
 
+
 def get_verify_edit_quote_owner_as_fastapi_dependency(
-    db_as_dependency: Session,
+    sql_db_session_as_dependency: Session,
     get_current_user_as_dependency: User
 ):
     def verify_edit_quote_owner(
         quote: QuoteEditText,
         current_user: User = get_current_user_as_dependency,
-        db: Session = db_as_dependency
+        sql_db_session: Session = sql_db_session_as_dependency
     ):
-        quote_db = crud_base.get_resource_item(db, QuoteModel, quote.id)
+        quote_db = crud_base.get_resource_item(
+            sql_db_session, QuoteModel, quote.id)
         if quote_db:
             quote_author = User(**quote_db.author.__dict__)
             if current_user.id != quote_author.id:

@@ -11,10 +11,11 @@ from .backends.redis import RedisBackend
 
 logger = logging.getLogger(__name__)
 
+
 class PubSub:
     def __init__(self, backend_url: str = ""):
         if backend_url == "memory://":
-            self._backend = InMemoryBackend()
+            self._backend: InMemoryBackend | RedisBackend = InMemoryBackend()
         elif "redis://" in backend_url:
             self._backend = RedisBackend(backend_url)
         self._listener_task = None
@@ -67,8 +68,9 @@ class PubSub:
         while True:
             try:
                 event = await self._backend.get_next_event()
-                for subscriber in self._channel_to_subscribers.get(event.channel, []):
-                        await subscriber.put(event)
+                for subscriber in self._channel_to_subscribers.get(
+                        event.channel, []):
+                    await subscriber.put(event)
             except Exception as e:
                 logger.error("Error in PubSub listener for backend events:")
                 logger.error(e)

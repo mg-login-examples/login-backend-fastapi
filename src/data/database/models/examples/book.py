@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from data.database.models.base import Base
 from data.database.models.examples.user_book import user_book_table
 
+
 class Book(Base):
     __tablename__ = "books"
 

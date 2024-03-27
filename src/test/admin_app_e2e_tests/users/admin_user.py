@@ -21,15 +21,16 @@ from test.admin_app_e2e_tests.utils.playwright_screenshots import save_screensho
 
 logger = logging.getLogger(__name__)
 
+
 class AdminUser:
     def __init__(
-            self,
-            name: str,
-            email: str,
-            password: str,
-            base_url: str,
-            page: Page,
-        ):
+        self,
+        name: str,
+        email: str,
+        password: str,
+        base_url: str,
+        page: Page,
+    ):
         self.name = name
         self.email = email
         self.password = password
@@ -39,6 +40,7 @@ class AdminUser:
 
     def save_screenshot(self):
         step_desc = f"User '{self.name}' save screenshot"
+
         @allure.step(step_desc)
         def step_wrapper():
             logger.info(step_desc)
@@ -52,19 +54,23 @@ class AdminUser:
         return TopbarScreen(self.page, user_name=self.name)
 
     def on_resources_dashboard(self):
-        return ResourcesDashboardScreen(self.page, self.base_url, user_name=self.name)
+        return ResourcesDashboardScreen(
+            self.page, self.base_url, user_name=self.name)
 
     def on_resource_list_view(self):
         return ResourceListViewScreen(self.page, user_name=self.name)
 
     def on_users_list_view(self):
-        return UsersListViewScreen(self.page, self.base_url, user_name=self.name)
+        return UsersListViewScreen(
+            self.page, self.base_url, user_name=self.name)
 
     def on_quotes_list_view(self):
-        return QuotesListViewScreen(self.page, self.base_url, user_name=self.name)
+        return QuotesListViewScreen(
+            self.page, self.base_url, user_name=self.name)
 
     def on_user_notes_list_view(self):
-        return UserNotesListViewScreen(self.page, self.base_url, user_name=self.name)
+        return UserNotesListViewScreen(
+            self.page, self.base_url, user_name=self.name)
 
     def on_user_create_dialog(self):
         return UserCreateDialogScreen(self.page, user_name=self.name)

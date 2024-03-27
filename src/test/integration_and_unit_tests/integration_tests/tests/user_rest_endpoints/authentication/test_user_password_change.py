@@ -12,16 +12,20 @@ from test.integration_and_unit_tests.utils.user_api import authentication as aut
 
 logger = logging.getLogger(__name__)
 
-def test_user_password_change(user_login: UserCreate, login_response: LoginResponse, created_user_by_admin: UserDeep, test_client_logged_in: requests.Session):
+
+def test_user_password_change(user_login: UserCreate, login_response: LoginResponse,
+                              created_user_by_admin: UserDeep, test_client_logged_in: requests.Session):
     old_token = test_client_logged_in.cookies.get("Authorization")
 
-    new_user_password = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+    new_user_password = ''.join(random.choices(
+        string.ascii_uppercase + string.digits, k=8))
     user_password_change = UserPasswordChange(
         username=user_login.email,
         password=user_login.password,
         password_new=new_user_password
     )
-    login_response_new = authentication_api.password_change(test_client_logged_in, user_password_change)
+    login_response_new = authentication_api.password_change(
+        test_client_logged_in, user_password_change)
     assert login_response_new.user.id == created_user_by_admin.id
     assert login_response_new.access_token is not None
     assert login_response_new.access_token != login_response.access_token

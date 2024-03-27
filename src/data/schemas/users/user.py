@@ -3,6 +3,7 @@ from typing import Optional
 from data.schemas.users.userBase import UserBase
 from pydantic import ConfigDict
 
+
 class User(UserBase):
     id: int
     is_active: bool

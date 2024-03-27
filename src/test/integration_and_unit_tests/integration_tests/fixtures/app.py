@@ -14,6 +14,7 @@ from utils.pubsub.pubsub import PubSub
 
 logger = logging.getLogger(__name__)
 
+
 @pytest.fixture
 def app_db_manager(app_settings: Settings):
     logger.debug("Create fixture app_db_manager")
@@ -23,6 +24,7 @@ def app_db_manager(app_settings: Settings):
         app_settings.database_password
     )
     return app_db_manager
+
 
 @pytest.fixture
 def app_nosql_db_manager(app_settings: Settings):
@@ -37,6 +39,7 @@ def app_nosql_db_manager(app_settings: Settings):
     )
     return app_nosql_db_manager
 
+
 @pytest.fixture
 def app_cache_manager(app_settings: Settings):
     logger.debug("Create fixture app_cache_manager")
@@ -46,6 +49,7 @@ def app_cache_manager(app_settings: Settings):
     )
     return app_cache_manager
 
+
 @pytest.fixture
 def app_pubsub(app_settings: Settings):
     logger.debug("Create fixture app_pubsub")
@@ -54,10 +58,12 @@ def app_pubsub(app_settings: Settings):
         redis_pass=app_settings.redis_password
     )
 
+
 @pytest.fixture
 async def app_pubsub_connected(app_pubsub: PubSub):
     logger.debug("Create fixture app_pubsub_connected")
     await app_pubsub.connect()
+
 
 @pytest.fixture
 def app(

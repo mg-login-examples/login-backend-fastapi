@@ -8,6 +8,7 @@ from data.schemas.http_error_exceptions.http_403_exceptions import HTTP_403_NOT_
 
 logger = logging.getLogger(__name__)
 
+
 def get_verify_create_user_note_owner_as_fastapi_dependency(
     get_current_user_as_dependency: User
 ):

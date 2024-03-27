@@ -1,6 +1,7 @@
 import smtplib
 from email.message import EmailMessage
 
+
 def send_email(to, subject, message):
 
     app_email_address = "mgautoemails@gmail.com"

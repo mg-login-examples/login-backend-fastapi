@@ -17,9 +17,10 @@ from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from rest_endpoints.user.email_verification.email_verification_task import create_verification_code_and_send_email
 from utils.security.auth_cookies import add_authorization_cookie_to_response
 
+
 def generate_endpoint(
     router: APIRouter,
-    db_as_dependency: Session,
+    sql_db_session_as_dependency: Session,
     access_token_store_as_dependency: AccessTokenStore,
     auth_cookie_type: str,
 ):
@@ -28,25 +29,31 @@ def generate_endpoint(
         response: Response,
         user: UserCreate,
         background_tasks: BackgroundTasks,
-        db: Session = db_as_dependency,
+        sql_db_session: Session = sql_db_session_as_dependency,
         access_token_store: AccessTokenStore = access_token_store_as_dependency
     ):
-        # TODO Check password is valid
         user_with_password_hash = userCreateSchemaToDbSchema(user)
-        user_db = crud_base.create_resource_item(db, UserModel, user_with_password_hash)
+        user_db = crud_base.create_resource_item(
+            sql_db_session, UserModel, user_with_password_hash)
         user_schema = User(**user_db.__dict__)
 
-        token_expiry_duration_seconds = 24*60*60
-        token_expiry_datetime_timestamp = int(datetime.now().timestamp()) + token_expiry_duration_seconds
-        access_token = generate_access_token(user_schema.id, token_expiry_datetime_timestamp)
+        token_expiry_duration_seconds = 24 * 60 * 60
+        token_expiry_datetime_timestamp = int(
+            datetime.now().timestamp()) + token_expiry_duration_seconds
+        access_token = generate_access_token(
+            user_schema.id, token_expiry_datetime_timestamp)
 
-        userSession = UserSessionCreate(user_id=user_schema.id, token=access_token, expires_at=datetime.fromtimestamp(token_expiry_datetime_timestamp))
-        crud_base.create_resource_item(db, UserSessionModel, userSession)
+        userSession = UserSessionCreate(user_id=user_schema.id, token=access_token,
+                                        expires_at=datetime.fromtimestamp(token_expiry_datetime_timestamp))
+        crud_base.create_resource_item(
+            sql_db_session, UserSessionModel, userSession)
         await access_token_store.add_access_token(user_db.id, access_token)
 
-        create_verification_code_and_send_email(background_tasks, db, user_schema)
+        create_verification_code_and_send_email(
+            background_tasks, sql_db_session, user_schema)
 
-        add_authorization_cookie_to_response(response, auth_cookie_type, "Authorization", f"Bearer {access_token}", None)
+        add_authorization_cookie_to_response(
+            response, auth_cookie_type, "Authorization", f"Bearer {access_token}", None)
 
         return LoginResponse(
             user=user_db,

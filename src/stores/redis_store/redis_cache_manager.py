@@ -1,9 +1,11 @@
 import logging
+from typing import AsyncGenerator
 
 from redis import asyncio as asyncio_redis
 from redis.asyncio.client import Redis
 
 logger = logging.getLogger(__name__)
+
 
 class RedisCacheManager():
 
@@ -13,7 +15,7 @@ class RedisCacheManager():
         self.redis_url = redis_url
         self.redis_password = redis_password
 
-    async def redis_session(self) -> Redis:
+    async def redis_session(self) -> AsyncGenerator[Redis, None]:
         try:
             redis = asyncio_redis.from_url(
                 self.redis_url,

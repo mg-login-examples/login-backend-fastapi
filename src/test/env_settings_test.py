@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class EnvSettingsTest(BaseSettings):
     admin_user_email: str = ''
     admin_user_password: str = ''

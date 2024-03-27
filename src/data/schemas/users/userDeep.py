@@ -1,6 +1,7 @@
 from data.schemas.users.user import User as UserShallow
 from data.schemas.quotes.quote import Quote
 
+
 class User(UserShallow):
     quotes: list[Quote]
     liked_quotes: list[Quote]

@@ -1,6 +1,7 @@
 from data.schemas.examples.books.bookDeep import Book as BookDeepSchema
 from data.schemas.examples.books.bookAsModel import BookAsModel as BookAsModelSchema
 
+
 def updateSchemaToDbSchema(book: BookDeepSchema) -> BookAsModelSchema:
     book_as_model = BookAsModelSchema(**book.model_dump(exclude={'author'}))
     if book.author:

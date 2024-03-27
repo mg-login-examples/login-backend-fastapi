@@ -7,6 +7,7 @@ from core.helper_classes.settings import Settings
 
 logger = logging.getLogger(__name__)
 
+
 @pytest.fixture(scope="session")
 def app_settings() -> Settings:
     dot_env_file = os.getenv("ENV_FILE", ".env")

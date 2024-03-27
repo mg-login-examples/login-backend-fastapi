@@ -16,24 +16,29 @@ from test.integration_and_unit_tests.integration_tests.utils.fake_quote import g
 
 logger = logging.getLogger(__name__)
 
+
 def test_quote_delete_cascade_quote_likes(app_db_manager: SQLAlchemyDBManager):
     db_session = next(app_db_manager.db_session())
     # create user (quote author) and quote
     user_login = generate_random_user_to_create()
     user_password_hashed = userCreateSchemaToDbSchema(user_login)
-    user_db = crud_base.create_resource_item(db_session, UserModel, user_password_hashed)
+    user_db = crud_base.create_resource_item(
+        db_session, UserModel, user_password_hashed)
     user = UserDeep.model_validate(user_db)
     quote_to_create = generate_random_quote_to_create(user)
     quote_to_create = quoteCreateSchemaToDbSchema(quote_to_create)
-    quote_db = crud_base.create_resource_item(db_session, QuoteModel, quote_to_create)
+    quote_db = crud_base.create_resource_item(
+        db_session, QuoteModel, quote_to_create)
     quote = QuoteDeep.model_validate(quote_db)
     # create user 2 and quote like
     user_2_login = generate_random_user_to_create()
     user_2_password_hashed = userCreateSchemaToDbSchema(user_2_login)
-    user_2_db = crud_base.create_resource_item(db_session, UserModel, user_2_password_hashed)
+    user_2_db = crud_base.create_resource_item(
+        db_session, UserModel, user_2_password_hashed)
     user_2 = UserDeep.model_validate(user_2_db)
     user_quote_like = UserQuoteLike(user_id=user_2.id, quote_id=quote.id)
-    crud_base.create_resource_item(db_session, UserQuoteLikeModel, user_quote_like)
+    crud_base.create_resource_item(
+        db_session, UserQuoteLikeModel, user_quote_like)
     # given a quote with quote likes
     quote_db = crud_base.get_resource_item(db_session, QuoteModel, quote.id)
     quote = QuoteDeep.model_validate(quote_db)
@@ -47,7 +52,9 @@ def test_quote_delete_cascade_quote_likes(app_db_manager: SQLAlchemyDBManager):
     user_2_db = crud_base.get_resource_item(db_session, UserModel, user_2.id)
     user_2 = UserDeep.model_validate(user_2_db)
     assert len(user_2.liked_quotes) == 0
-    user_quote_like = crud_base.get_resource_item_by_attribute(db_session, UserQuoteLikeModel, UserQuoteLikeModel.quote_id, quote.id)
+    user_quote_like = crud_base.get_resource_item_by_attribute(
+        db_session, UserQuoteLikeModel, UserQuoteLikeModel.quote_id, quote.id)
     assert user_quote_like is None
-    user_quote_like = crud_base.get_resource_item_by_attribute(db_session, UserQuoteLikeModel, UserQuoteLikeModel.user_id, user_2.id)
+    user_quote_like = crud_base.get_resource_item_by_attribute(
+        db_session, UserQuoteLikeModel, UserQuoteLikeModel.user_id, user_2.id)
     assert user_quote_like is None

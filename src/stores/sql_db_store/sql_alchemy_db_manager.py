@@ -8,9 +8,11 @@ from sqlalchemy.orm import sessionmaker
 
 logger = logging.getLogger(__name__)
 
+
 class SQLAlchemyDBManager():
 
-    def __init__(self, database_url: str, database_user: str, database_password: str):
+    def __init__(self, database_url: str, database_user: str,
+                 database_password: str):
         logger.debug("Setting up SQLAlchemy")
         self.database_url = database_url
         self.database_user = database_user
@@ -30,7 +32,8 @@ class SQLAlchemyDBManager():
         else:
             self.engine = create_engine(self.sqlalchemy_url)
 
-        self.Session = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        self.Session = sessionmaker(
+            autocommit=False, autoflush=False, bind=self.engine)
 
     def db_session(self):
         session = self.Session()
@@ -40,7 +43,8 @@ class SQLAlchemyDBManager():
             session.close()
 
     @staticmethod
-    def generate_sqlalchemy_url(database_url: str, database_user: str, database_password: str) -> URL:
+    def generate_sqlalchemy_url(
+            database_url: str, database_user: str, database_password: str) -> URL:
         sqlalchemy_url = make_url(database_url)
 
         if not "sqlite" in database_url:
@@ -52,7 +56,8 @@ class SQLAlchemyDBManager():
         return sqlalchemy_url
 
     @staticmethod
-    def create_sqlalchemy_engine_for_alembic(database_url: str, database_user: str, database_password: str):
+    def create_sqlalchemy_engine_for_alembic(
+            database_url: str, database_user: str, database_password: str):
         sqlalchemy_url = SQLAlchemyDBManager.generate_sqlalchemy_url(
             database_url,
             database_user=database_user,
@@ -61,13 +66,13 @@ class SQLAlchemyDBManager():
 
         if "sqlite" in database_url:
             return create_engine(
-                sqlalchemy_url, 
+                sqlalchemy_url,
                 poolclass=pool.NullPool,
                 connect_args={"check_same_thread": False}
             )
         else:
             return create_engine(
-                sqlalchemy_url, 
+                sqlalchemy_url,
                 poolclass=pool.NullPool,
             )
 
@@ -82,14 +87,14 @@ class SQLAlchemyDBManager():
             engine = None
             if "sqlite" in self.database_url:
                 engine = create_engine(
-                    sqlalchemy_url, 
+                    sqlalchemy_url,
                     poolclass=pool.NullPool,
                     connect_args={"check_same_thread": False},
                     pool_pre_ping=True
                 )
             else:
                 engine = create_engine(
-                    sqlalchemy_url, 
+                    sqlalchemy_url,
                     poolclass=pool.NullPool,
                     pool_pre_ping=True
                 )

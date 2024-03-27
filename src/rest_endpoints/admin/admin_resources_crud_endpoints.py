@@ -1,10 +1,12 @@
 from helpers_classes.custom_api_router import APIRouter
 from rest_endpoints.admin.resources import resources_configurations
-from api_dependencies.common_route_dependencies import CommonRouteDependencies
+from api_dependencies.admin_route_dependencies import AdminRouteDependencies
 from crud_endpoints_generator.crud_endpoints_generator import generate_router_with_resource_endpoints
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 
-def generate_endpoints(router: APIRouter, route_dependencies: CommonRouteDependencies):
+
+def generate_endpoints(router: APIRouter,
+                       admin_route_dependencies: AdminRouteDependencies):
     for resource_configuration in resources_configurations:
         endpoints_required = EndpointsConfigs().require_all()
         if resource_configuration.MongoDBTable:
@@ -13,9 +15,10 @@ def generate_endpoints(router: APIRouter, route_dependencies: CommonRouteDepende
             generate_router_with_resource_endpoints(
                 endpoints_required,
                 resource_configuration,
-                route_dependencies.db,
-                route_dependencies.nosql_database,
-                route_dependencies=[route_dependencies.validated_access_token]
+                admin_route_dependencies.sql_db_session,
+                admin_route_dependencies.mongo_db,
+                route_dependencies=[
+                    admin_route_dependencies.validated_access_token]
             ),
             prefix="/resource"
         )

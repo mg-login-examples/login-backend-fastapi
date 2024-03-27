@@ -2,9 +2,10 @@ import logging
 
 from pymongo import MongoClient
 from pymongo.database import Database
-from pymongo_inmemory import MongoClient as MongoClientInMemory
+from pymongo_inmemory import MongoClient as MongoClientInMemory  # type: ignore
 
 logger = logging.getLogger(__name__)
+
 
 class PyMongoManager:
     def __init__(
@@ -25,7 +26,7 @@ class PyMongoManager:
         self.client = None
         self.db = None
 
-    def get_db(self) -> Database:
+    def get_db(self) -> Database | None:
         if self.db is None:
             self.init_mongodb_client()
         return self.db
@@ -38,11 +39,14 @@ class PyMongoManager:
             logger.info("Test mongo db connection established successfully")
         except Exception as e:
             logger.error("Error pinging to mongo")
-            raise e
+            raise Exception(
+                "Mongo connection refused. You may need to launch a mongo db. Run `./scripts_docker.sh launch-databases`")
 
     def init_mongodb_client(self):
         # TODO Check if new client / db should be generated for each request, or same can be used
-        # Note: When using pymongo_inmemory, same client & db should be used otherwise new local mongodb instance is created everytime MongoClientInMemory() is called
+        # Note: When using pymongo_inmemory, same client & db should be used
+        # otherwise new local mongodb instance is created everytime
+        # MongoClientInMemory() is called
         if not self.use_in_memory_mongo_db:
             client = MongoClient(
                 self.mongo_host,

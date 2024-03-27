@@ -1,16 +1,18 @@
-from typing import Optional, AsyncGenerator
+from typing import AsyncGenerator
 import asyncio
 
 from .event import Event
 
+
 class Unsubscribed(Exception):
     pass
+
 
 class Subscriber:
     def __init__(self):
         self._queue = asyncio.Queue()
 
-    async def __aiter__(self) -> Optional[AsyncGenerator]:
+    async def __aiter__(self) -> AsyncGenerator | None:
         try:
             while True:
                 event = await self.get()
@@ -20,8 +22,8 @@ class Subscriber:
 
     async def exit_async_iter(self) -> None:
         await self._queue.put(None)
-    
-    async def get(self, timeout: Optional[float] = None) -> Event:
+
+    async def get(self, timeout: float | None = None) -> Event:
         try:
             item = await asyncio.wait_for(self._queue.get(), timeout=timeout)
             if item is None:

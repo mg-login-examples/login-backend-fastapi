@@ -4,13 +4,17 @@ import allure
 
 logger = logging.getLogger(__name__)
 
+
 class ResourceListTasks:
     def __init__(self, user):
-        from test.admin_app_e2e_tests.users.admin_user import AdminUser # Import inside to avoid cyclic import error
+        # Import inside to avoid cyclic import error
+        from test.admin_app_e2e_tests.users.admin_user import AdminUser
         self.user: AdminUser = user
 
     def navigate_to_last_page(self):
-        step_desc = f"User '{self.user.name}' navigate to last page in resource list"
+        step_desc = f"User '{
+            self.user.name}' navigate to last page in resource list"
+
         @allure.step(step_desc)
         def step_wrapper():
             logger.info(step_desc)

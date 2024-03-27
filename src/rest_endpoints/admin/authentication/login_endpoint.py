@@ -17,9 +17,10 @@ from data.schemas.http_error_exceptions.http_401_exceptions import HTTP_401_INVA
 
 logger = logging.getLogger(__name__)
 
+
 def generate_endpoint(
     router: APIRouter,
-    db_as_dependency: Session,
+    sql_db_session_as_dependency: Session,
     access_token_store_as_dependency: AccessTokenStore,
     auth_cookie_type: str
 ):
@@ -27,22 +28,29 @@ def generate_endpoint(
     async def login_admin_user(
         response: Response,
         form_data: OAuth2PasswordRequestFormExtended = Depends(),
-        db: Session = db_as_dependency,
+        sql_db_session: Session = sql_db_session_as_dependency,
         access_token_store: AccessTokenStore = access_token_store_as_dependency
     ):
-        user = crud_base.get_resource_item_by_attribute(db, AdminUserModel, AdminUserModel.email, form_data.username)
+        user = crud_base.get_resource_item_by_attribute(
+            sql_db_session, AdminUserModel, AdminUserModel.email, form_data.username)
         try:
-            if user and verify_password(form_data.password, user.hashed_password):
-                token_expiry_duration_seconds = 30*24*60*60 if form_data.remember_me else 24*60*60
-                token_expiry_datetime_timestamp = int(datetime.now().timestamp()) + token_expiry_duration_seconds
-                access_token = generate_access_token(user.id, token_expiry_datetime_timestamp)
+            if user and verify_password(
+                    form_data.password, user.hashed_password):
+                token_expiry_duration_seconds = 30 * 24 * 60 * \
+                    60 if form_data.remember_me else 24 * 60 * 60
+                token_expiry_datetime_timestamp = int(
+                    datetime.now().timestamp()) + token_expiry_duration_seconds
+                access_token = generate_access_token(
+                    user.id, token_expiry_datetime_timestamp)
 
                 await access_token_store.add_access_token(user.id, access_token)
 
                 if form_data.remember_me:
-                    add_authorization_cookie_to_response(response, auth_cookie_type, "Admin-Authorization", f"Bearer {access_token}", token_expiry_duration_seconds)
+                    add_authorization_cookie_to_response(
+                        response, auth_cookie_type, "Admin-Authorization", f"Bearer {access_token}", token_expiry_duration_seconds)
                 else:
-                    add_authorization_cookie_to_response(response, auth_cookie_type, "Admin-Authorization", f"Bearer {access_token}", None)
+                    add_authorization_cookie_to_response(
+                        response, auth_cookie_type, "Admin-Authorization", f"Bearer {access_token}", None)
 
                 return AdminLoginResponse(
                     id=user.id,
@@ -52,5 +60,6 @@ def generate_endpoint(
                 )
         except Exception as e:
             logger.error(e)
-        logger.error(f"Unsuccessful admin login with username: {form_data.username}")
+        logger.error(f"Unsuccessful admin login with username: {
+                     form_data.username}")
         raise HTTP_401_INVALID_LOGIN_EXCEPTION

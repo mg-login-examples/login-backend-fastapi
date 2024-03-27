@@ -64,7 +64,7 @@
 
 #     db_generator = db_manager.db_session()
 #     mock_Session.assert_not_called()
-#     assert isinstance(db_generator, Generator) 
+#     assert isinstance(db_generator, Generator)
 
 #     db = db_generator.__next__()
 #     assert db == mock_db_session
@@ -74,4 +74,3 @@
 #     with pytest.raises(StopIteration):
 #         db_generator.__next__()
 #     mock_db_session.close.assert_called()
-    

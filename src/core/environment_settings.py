@@ -1,12 +1,13 @@
-import sec
+import sec  # type: ignore
 import logging
 
 from core.helper_classes.settings import Settings
 
 logger = logging.getLogger(__name__)
 
+
 def get_environment_settings(dot_env_file: str = ".env"):
-    settings = Settings(_env_file=dot_env_file)
+    settings = Settings(_env_file=dot_env_file)  # type: ignore
 
     docker_mysql_secret = sec.load("mysql-password")
     if docker_mysql_secret:

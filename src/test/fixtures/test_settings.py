@@ -6,6 +6,7 @@ from test.env_settings_test import EnvSettingsTest
 
 logger = logging.getLogger(__name__)
 
+
 @pytest.fixture(scope="session")
 def env_settings_test() -> EnvSettingsTest:
     dot_env_file = os.getenv("ENV_FILE", ".test.env")

@@ -1,5 +1,6 @@
 from fastapi import Response
 
+
 def add_authorization_cookie_to_response(
     response: Response,
     auth_cookie_type: str,
@@ -7,7 +8,8 @@ def add_authorization_cookie_to_response(
     cookie_value: str,
     cookie_expiry_duration_seconds: int | None
 ):
-    # To be used in production (https) if frontend and backend have different url
+    # To be used in production (https) if frontend and backend have different
+    # url
     if auth_cookie_type == 'cross_site_secure':
         response.set_cookie(
             key=cookie_key,
@@ -29,13 +31,15 @@ def add_authorization_cookie_to_response(
             expires=cookie_expiry_duration_seconds
         )
 
-    # Used for E2E testing with docker, where backend and frontend docker services have different http (insecure) urls so need to be accessed via a proxy
+    # Used for E2E testing with docker, where backend and frontend docker
+    # services have different http (insecure) urls so need to be accessed via
+    # a proxy
     if auth_cookie_type == 'same_site_not_secure':
         response.set_cookie(
             key=cookie_key,
             value=cookie_value,
             httponly=True,
-            samesite='strict', # samesite cannot be none for most browsers if secure=False
+            samesite='strict',  # samesite cannot be none for most browsers if secure=False
             secure=False,
             expires=cookie_expiry_duration_seconds
         )
@@ -46,8 +50,8 @@ def add_authorization_cookie_to_response(
             key=cookie_key,
             value=cookie_value,
             httponly=True,
-            # samesite='none', # 'strict' is not required when backend url is localhost for chrome
+            # samesite='none', # 'strict' is not required when backend url is
+            # localhost for chrome
             secure=False,  # field can also be set to True as it is ignored by chrome if domain is localhost
             expires=cookie_expiry_duration_seconds
         )
-

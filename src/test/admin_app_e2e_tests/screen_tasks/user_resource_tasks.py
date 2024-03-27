@@ -6,13 +6,17 @@ from data.schemas.users.user import User
 
 logger = logging.getLogger(__name__)
 
+
 class UserResourceTasks:
     def __init__(self, user):
-        from test.admin_app_e2e_tests.users.admin_user import AdminUser # Import inside to avoid cyclic import error
+        # Import inside to avoid cyclic import error
+        from test.admin_app_e2e_tests.users.admin_user import AdminUser
         self.user: AdminUser = user
 
     def create_basic_user(self, user_email: str, user_password: str):
-        step_desc = f"User '{self.user.name}' create new user with email f'{user_email}' and password f'{user_password}'"
+        step_desc = f"User '{self.user.name}' create new user with email f'{
+            user_email}' and password f'{user_password}'"
+
         @allure.step(step_desc)
         def step_wrapper():
             logger.info(step_desc)

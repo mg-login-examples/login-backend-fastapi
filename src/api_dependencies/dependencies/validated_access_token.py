@@ -8,6 +8,7 @@ from data.schemas.http_error_exceptions.http_403_exceptions import HTTP_403_INVA
 
 logger = logging.getLogger(__name__)
 
+
 def get_validated_access_token_as_fastapi_dependency(
     token_extractor_as_fastapi_dependency: str,
     access_token_store_as_dependency: AccessTokenStore
@@ -22,7 +23,8 @@ def get_validated_access_token_as_fastapi_dependency(
             if resp:
                 return access_token
         except Exception as e:
-            logger.error(f"Invalid access token error - Endpoint accessed: {request.url}:")
+            logger.error(
+                f"Invalid access token error - Endpoint accessed: {request.url}:")
             logger.error(e)
         raise HTTP_403_INVALID_TOKEN_EXCEPTION
 

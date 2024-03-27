@@ -5,6 +5,7 @@ from data.schemas.examples.authors.author import Author
 from data.schemas.examples.movies.movie import Movie
 from data.schemas.examples.users.user import User
 
+
 class Book(BookShallow):
     id: int
     author: Optional[Author] = None

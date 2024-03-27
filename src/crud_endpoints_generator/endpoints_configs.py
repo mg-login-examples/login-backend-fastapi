@@ -1,13 +1,15 @@
 from typing import Any
 
+
 class Configs:
     def __init__(self):
         self.add = False
         self.dependencies = []
-    
+
     def require(self, dependencies: list[Any] = []):
         self.add = True
         self.dependencies.extend(dependencies)
+
 
 class EndpointsConfigs:
     def __init__(self):
@@ -27,7 +29,7 @@ class EndpointsConfigs:
         self.put_item.require(dependencies)
         self.delete_item.require(dependencies)
         return self
-    
+
     def resource_in_sql_db(self):
         self.sql_db = True
 

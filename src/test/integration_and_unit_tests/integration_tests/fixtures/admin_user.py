@@ -10,17 +10,23 @@ from test.env_settings_test import EnvSettingsTest
 
 logger = logging.getLogger(__name__)
 
+
 @pytest.fixture
 def admin_user_login(env_settings_test: EnvSettingsTest) -> AdminUserCreate:
     logger.debug("Create fixture admin_user_login")
-    return AdminUserCreate(email=env_settings_test.admin_user_email, password=env_settings_test.admin_user_password)
+    return AdminUserCreate(email=env_settings_test.admin_user_email,
+                           password=env_settings_test.admin_user_password)
+
 
 @pytest.fixture
-def admin_login_response(test_client: requests.Session, admin_user_login: AdminUserCreate) -> AdminLoginResponse:
+def admin_login_response(test_client: requests.Session,
+                         admin_user_login: AdminUserCreate) -> AdminLoginResponse:
     logger.debug("Create fixture admin_login_response")
     return admin_authentication_api.login(test_client, admin_user_login)
 
+
 @pytest.fixture
-def logged_in_admin_user(test_client_admin_logged_in: requests.Session) -> AdminUser:
+def logged_in_admin_user(
+        test_client_admin_logged_in: requests.Session) -> AdminUser:
     logger.debug("Create fixture logged_in_admin_user")
     return admin_authentication_api.authenticate(test_client_admin_logged_in)

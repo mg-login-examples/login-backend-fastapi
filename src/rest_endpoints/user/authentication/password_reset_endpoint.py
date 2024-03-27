@@ -16,28 +16,33 @@ from data.schemas.http_error_exceptions.http_410_exceptions import HTTP_410_EXPI
 # TODO Invalidate all existing access tokens
 # TODO Check password meets requirements
 
+
 def generate_endpoint(
     router: APIRouter,
-    db_as_dependency: Session
+    sql_db_session_as_dependency: Session
 ):
     @router.post("/password-reset/", status_code=status.HTTP_204_NO_CONTENT)
     def reset_password(
         background_tasks: BackgroundTasks,
         user_password_change: UserPasswordReset,
         request: Request,
-        db: Session = db_as_dependency,
+        sql_db_session: Session = sql_db_session_as_dependency,
     ):
-        token_db_item = crud_base.get_resource_item_by_attribute(db, UserPasswordResetTokenModel, UserPasswordResetTokenModel.token, user_password_change.token)
+        token_db_item = crud_base.get_resource_item_by_attribute(
+            sql_db_session, UserPasswordResetTokenModel, UserPasswordResetTokenModel.token, user_password_change.token)
         if not token_db_item:
             raise HTTP_400_BAD_REQUEST_EXCEPTION
         token_item = UserPasswordResetTokenSchema(**token_db_item.__dict__)
-        if (not token_item.is_active) or (datetime.now().timestamp() > token_item.expires_at.timestamp()):
+        if (not token_item.is_active) or (
+                datetime.now().timestamp() > token_item.expires_at.timestamp()):
             raise HTTP_410_EXPIRED_OR_INACTIVE_CODE_EXCEPTION
-        user = crud_base.get_resource_item(db, UserModel, token_item.user_id)
+        user = crud_base.get_resource_item(
+            sql_db_session, UserModel, token_item.user_id)
         if (not user) or (user.email != user_password_change.email):
             raise HTTP_400_BAD_REQUEST_EXCEPTION
         user.hashed_password = get_password_hash(user_password_change.password)
-        crud_base.update_resource_item_partial(db, UserModel, user)
+        crud_base.update_resource_item_partial(sql_db_session, UserModel, user)
         token_item.is_active = False
-        crud_base.update_resource_item_partial(db, UserPasswordResetTokenModel, token_item)
+        crud_base.update_resource_item_partial(
+            sql_db_session, UserPasswordResetTokenModel, token_item)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
