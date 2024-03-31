@@ -1,6 +1,6 @@
 import logging
 
-import requests
+import requests  # type: ignore
 from fastapi.encoders import jsonable_encoder
 
 from data.mongo_schemas.user_notes.user_note import UserNote
@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_user_note(test_client: requests.Session,
-                  user_note_id: int) -> UserNote:
+                  user_note_id: str) -> UserNote:
     response = test_client.get(
         f"/api/admin/resource/user-notes/{user_note_id}/")
     assert response.status_code == 200
@@ -32,7 +32,7 @@ def put_user_note(test_client: requests.Session, user_note_to_edit: UserNote):
     assert response.status_code == 204
 
 
-def delete_user_note(test_client: requests.Session, user_note_id: int):
+def delete_user_note(test_client: requests.Session, user_note_id: str):
     response = test_client.delete(
         f"/api/admin/resource/user-notes/{user_note_id}/")
     assert response.status_code == 204
@@ -50,7 +50,7 @@ def get_user_notes(test_client: requests.Session, skip=0,
 
 
 def get_user_note_expect_not_found(
-        test_client: requests.Session, user_note_id: int):
+        test_client: requests.Session, user_note_id: str):
     response = test_client.get(
         f"/api/admin/resource/user-notes/{user_note_id}/")
     assert response.status_code == 404

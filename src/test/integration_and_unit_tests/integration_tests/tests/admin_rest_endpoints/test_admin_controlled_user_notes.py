@@ -1,6 +1,6 @@
 import logging
 
-import requests
+import requests  # type: ignore
 import pytest
 from mimesis import Text
 

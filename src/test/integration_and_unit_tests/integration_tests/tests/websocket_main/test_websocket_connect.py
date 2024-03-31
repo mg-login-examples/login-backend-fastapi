@@ -4,7 +4,6 @@ import pytest
 import time
 
 from fastapi.testclient import TestClient
-from starlette.testclient import WebSocketTestSession
 from fastapi.exceptions import HTTPException
 
 from data.schemas.users.user import User
@@ -18,7 +17,6 @@ logger = logging.getLogger(__name__)
 def test_socket_connect(test_client_logged_in: TestClient,
                         logged_in_user: User, test_client_after_app_start: TestClient):
     with test_client_after_app_start.websocket_connect("/ws/main") as websocket_session:
-        websocket_session: WebSocketTestSession = websocket_session
         dummy_channel = "dummy_channel"
         websocket_session.send_json(
             data={"action": "subscribe", "channel": dummy_channel})

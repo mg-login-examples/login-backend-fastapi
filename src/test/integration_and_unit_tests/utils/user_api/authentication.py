@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore
 
 from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.authentication.user_password_change import UserPasswordChange
@@ -16,7 +16,7 @@ def login(test_client: requests.Session, user: UserCreate) -> LoginResponse:
     return LoginResponse(**response.json())
 
 
-def authenticate(test_client: requests.Session) -> LoginResponse:
+def authenticate(test_client: requests.Session) -> User:
     response = test_client.post("/api/authenticate/")
     assert response.status_code == 200
     return User(**response.json())

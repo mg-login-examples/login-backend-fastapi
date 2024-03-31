@@ -1,6 +1,6 @@
 import logging
 
-import requests
+import requests  # type: ignore
 
 from rest_endpoints.admin.resources import resources_configurations
 

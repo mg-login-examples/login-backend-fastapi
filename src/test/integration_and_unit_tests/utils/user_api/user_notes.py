@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore
 from fastapi.encoders import jsonable_encoder
 
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate

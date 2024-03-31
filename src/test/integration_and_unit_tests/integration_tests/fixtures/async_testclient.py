@@ -1,6 +1,7 @@
 from asyncio import AbstractEventLoop
-
 import pytest
+from typing import AsyncIterator
+
 from fastapi import FastAPI
 from httpx import AsyncClient
 from asgi_lifespan import LifespanManager
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
-async def async_test_client(app: FastAPI, app_pubsub: PubSub) -> AsyncClient:
+async def async_test_client(app: FastAPI, app_pubsub: PubSub) -> AsyncIterator[AsyncClient]:
     logger.debug("Create fixture async_test_client")
     # async with LifespanManager(app):
     async with AsyncClient(app=app, base_url="http://test") as client:

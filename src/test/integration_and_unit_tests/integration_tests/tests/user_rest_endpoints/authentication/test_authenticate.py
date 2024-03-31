@@ -1,8 +1,6 @@
 import logging
-import random
-import string
 
-import requests
+import requests  # type: ignore
 
 from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.users.user import User

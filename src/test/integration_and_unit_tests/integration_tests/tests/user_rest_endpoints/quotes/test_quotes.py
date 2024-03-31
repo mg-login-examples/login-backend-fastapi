@@ -1,7 +1,7 @@
 
 import logging
 
-import requests
+import requests  # type: ignore
 import pytest
 
 from data.schemas.users.user import User
@@ -241,7 +241,7 @@ def test_unlike_quote(
 # Test that a logged in user cannot unlike a quote as a different user
 
 
-def test_like_quote_fails_when_quote_like_user_different_from_logged_in(
+def test_unlike_quote_fails_when_quote_like_user_different_from_logged_in(
     test_client_logged_in: requests.Session,
     test_client_admin_logged_in: requests.Session,
     logged_in_user: User,

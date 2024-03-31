@@ -1,7 +1,7 @@
 import logging
 from unittest.mock import MagicMock, patch, ANY
 
-import requests
+import requests  # type: ignore
 
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from data.schemas.users.user import User

@@ -1,7 +1,7 @@
 import logging
 
 import pytest
-import requests
+import requests  # type: ignore
 
 from data.mongo_schemas.user_notes.user_note import UserNote
 from data.schemas.users.userDeep import User as UserDeep

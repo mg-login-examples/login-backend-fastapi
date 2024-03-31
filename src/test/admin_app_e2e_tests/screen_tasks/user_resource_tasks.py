@@ -1,6 +1,6 @@
 import logging
 
-import allure
+import allure  # type: ignore
 
 from data.schemas.users.user import User
 

@@ -1,7 +1,7 @@
 import logging
 
 import pytest
-import requests
+import requests  # type: ignore
 
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.users.userDeep import User as UserDeep

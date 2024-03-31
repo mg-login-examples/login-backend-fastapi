@@ -1,5 +1,5 @@
 import pytest
-import requests
+import requests  # type: ignore
 import logging
 
 from data.schemas.admin_login.admin_login_response import AdminLoginResponse
@@ -29,4 +29,5 @@ def admin_login_response(test_client: requests.Session,
 def logged_in_admin_user(
         test_client_admin_logged_in: requests.Session) -> AdminUser:
     logger.debug("Create fixture logged_in_admin_user")
-    return admin_authentication_api.authenticate(test_client_admin_logged_in)
+    admin_authentication_api.authenticate(test_client_admin_logged_in)
+    return test_client_admin_logged_in

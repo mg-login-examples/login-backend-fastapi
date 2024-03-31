@@ -1,7 +1,7 @@
 
 import logging
 
-import requests
+import requests  # type: ignore
 import pytest
 from fastapi.encoders import jsonable_encoder
 

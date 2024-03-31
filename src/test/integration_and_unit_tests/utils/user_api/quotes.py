@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore
 
 from data.schemas.quotes.quote import Quote
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep

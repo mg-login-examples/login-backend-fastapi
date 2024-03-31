@@ -1,6 +1,6 @@
 import logging
 
-import allure
+import allure  # type: ignore
 
 logger = logging.getLogger(__name__)
 

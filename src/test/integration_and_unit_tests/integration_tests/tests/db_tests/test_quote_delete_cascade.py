@@ -26,9 +26,9 @@ def test_quote_delete_cascade_quote_likes(app_db_manager: SQLAlchemyDBManager):
         db_session, UserModel, user_password_hashed)
     user = UserDeep.model_validate(user_db)
     quote_to_create = generate_random_quote_to_create(user)
-    quote_to_create = quoteCreateSchemaToDbSchema(quote_to_create)
+    quote_to_create_for_db = quoteCreateSchemaToDbSchema(quote_to_create)
     quote_db = crud_base.create_resource_item(
-        db_session, QuoteModel, quote_to_create)
+        db_session, QuoteModel, quote_to_create_for_db)
     quote = QuoteDeep.model_validate(quote_db)
     # create user 2 and quote like
     user_2_login = generate_random_user_to_create()

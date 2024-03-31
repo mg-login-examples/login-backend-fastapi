@@ -2,7 +2,7 @@
 import pytest
 import logging
 
-import requests
+import requests  # type: ignore
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 

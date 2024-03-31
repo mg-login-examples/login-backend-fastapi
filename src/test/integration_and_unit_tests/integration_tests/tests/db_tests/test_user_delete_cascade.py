@@ -34,9 +34,9 @@ def test_user_delete_cascade_quotes(app_db_manager: SQLAlchemyDBManager):
     user = UserDeep.model_validate(user_db)
     # create user quote
     quote_to_create = generate_random_quote_to_create(user)
-    quote_to_create = quoteCreateSchemaToDbSchema(quote_to_create)
+    quote_to_create_for_db = quoteCreateSchemaToDbSchema(quote_to_create)
     quote_db = crud_base.create_resource_item(
-        db_session, QuoteModel, quote_to_create)
+        db_session, QuoteModel, quote_to_create_for_db)
     quote = QuoteDeep.model_validate(quote_db)
     # given a user with quotes
     user_db = crud_base.get_resource_item(db_session, UserModel, user.id)
@@ -160,9 +160,9 @@ def test_user_delete_cascade_quote_likes(app_db_manager: SQLAlchemyDBManager):
         db_session, UserModel, user_2_password_hashed)
     user_2 = UserDeep.model_validate(user_2_db)
     quote_to_create = generate_random_quote_to_create(user_2)
-    quote_to_create = quoteCreateSchemaToDbSchema(quote_to_create)
+    quote_to_create_for_db = quoteCreateSchemaToDbSchema(quote_to_create)
     quote_db = crud_base.create_resource_item(
-        db_session, QuoteModel, quote_to_create)
+        db_session, QuoteModel, quote_to_create_for_db)
     quote = QuoteDeep.model_validate(quote_db)
     # create user quote like
     user_quote_like = UserQuoteLike(user_id=user.id, quote_id=quote.id)

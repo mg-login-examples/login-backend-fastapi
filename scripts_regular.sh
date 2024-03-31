@@ -33,6 +33,10 @@ then
     # run db migrations and create test admin users
     run_db_migrations && create_admin_users $BACKEND_ADMIN_USER_EMAIL $BACKEND_ADMIN_USER_PASSWORD
     poetry run python main.py
+elif [ $case = "lint-backend" ]
+then
+    cd backend
+    poetry run mypy . --exclude 'alembic_sqlite/*' --exclude 'alembic/*'
 elif [ $case = "run-api-tests" ]
 then
     cd src

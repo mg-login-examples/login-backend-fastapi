@@ -1,6 +1,6 @@
 import logging
 
-import requests
+import requests  # type: ignore
 
 from data.schemas.users.userDeep import User as UserDeep
 from data.schemas.users.userCreate import UserCreate

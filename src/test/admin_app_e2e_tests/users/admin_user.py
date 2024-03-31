@@ -2,7 +2,7 @@ import logging
 
 from playwright.sync_api._generated import Page
 from playwright.sync_api import Page
-import allure
+import allure  # type: ignore
 
 from test.admin_app_e2e_tests.screen_tasks.resource_list_tasks import ResourceListTasks
 from test.admin_app_e2e_tests.screen_tasks.user_resource_tasks import UserResourceTasks
