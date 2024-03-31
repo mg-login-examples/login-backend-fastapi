@@ -1,5 +1,6 @@
 from typing import AsyncGenerator
 import asyncio
+from asyncio import Queue
 
 from .event import Event
 
@@ -10,9 +11,9 @@ class Unsubscribed(Exception):
 
 class Subscriber:
     def __init__(self):
-        self._queue = asyncio.Queue()
+        self._queue: Queue = asyncio.Queue()
 
-    async def __aiter__(self) -> AsyncGenerator | None:
+    async def __aiter__(self) -> AsyncGenerator:
         try:
             while True:
                 event = await self.get()
@@ -32,7 +33,7 @@ class Subscriber:
         except asyncio.TimeoutError:
             raise TimeoutError() from None
 
-    async def put(self, event: Event):
+    async def put(self, event: Event | None):
         await self._queue.put(event)
 
     async def __aenter__(self) -> 'Subscriber':

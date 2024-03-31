@@ -37,4 +37,4 @@ class RedisCacheManager():
             logger.info("Test redis connection established successfully")
         except Exception as e:
             logger.error("Error pinging to Redis")
-            raise e
+            raise e from None

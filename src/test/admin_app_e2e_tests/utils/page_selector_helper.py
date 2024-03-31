@@ -59,15 +59,14 @@ class PageSelectorHelper:
                 text, delay=delay, timeout=timeout)
         step_wrapper()
 
-    def clear(self, delay: int | None = None, timeout: int | None = None):
+    def clear(self, timeout: int | None = None):
         step_desc = f"User '{self.user_name}' clear field '{
             self.selector_desc}'"
 
         @allure.step(step_desc)
         def step_wrapper():
             logger.info(step_desc)
-            self.page.locator(self.selector).clear(
-                delay=delay, timeout=timeout)
+            self.page.locator(self.selector).clear(timeout=timeout)
         step_wrapper()
 
     def check_if_visible(self, timeout: int | None = None):

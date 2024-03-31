@@ -25,8 +25,13 @@ def get_access_token_store_as_fastapi_dependency(
                 redis_session, redis_token_prefix=redis_token_prefix)
             return redis_store
         return Depends(get_redis_based_token_store)
-    else:
+    elif store_type == 'file':
+        if file_name is None:
+            raise Exception('Filename cannot be none is store_type is file')
+
         def get_file_based_token_store():
             file_store = AccessTokenFileStore(file_name)
             return file_store
         return Depends(get_file_based_token_store)
+
+    raise Exception(f'Unexpected store_type provided "{store_type}"')

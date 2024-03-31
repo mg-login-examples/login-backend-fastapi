@@ -103,7 +103,7 @@ class SQLAlchemyDBManager():
             logger.info("Test sql db connection established successfully")
         except Exception as e:
             logger.error("Error pinging to mysql")
-            raise e
+            raise e from None
 
     def enable_sqlite_foreign_keys(self):
         # https://stackoverflow.com/questions/5033547/sqlalchemy-cascade-delete/62327279#62327279

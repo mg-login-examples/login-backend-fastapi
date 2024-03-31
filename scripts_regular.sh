@@ -35,8 +35,8 @@ then
     poetry run python main.py
 elif [ $case = "lint-backend" ]
 then
-    cd backend
-    poetry run mypy . --exclude 'alembic_sqlite/*' --exclude 'alembic/*'
+    cd src
+    poetry run mypy . --exclude 'alembic_sqlite/*' --exclude 'alembic/*' --check-untyped-defs
 elif [ $case = "run-api-tests" ]
 then
     cd src
@@ -59,7 +59,9 @@ else
    echo "no option passed"
    echo "available options are:
     - launch-api-local
-    - launch-tdd
+    - launch-api-externaldb
+    - lint-backend
     - run-api-tests
+    - run-admin-app-tests
     "
 fi

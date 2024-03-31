@@ -82,7 +82,7 @@ async def test_subscriber_async_for_loop():
     await subscriber.put(event2)
     await subscriber.put(event3)
 
-    subscriber_emitted_events = []
+    subscriber_emitted_events: list[Event] = []
 
     async def run_subscriber_async_loop(events_catcher):
         async for event in subscriber:
@@ -109,7 +109,7 @@ async def test_subscriber_async_for_loop_exit_by_passing_None():
     await subscriber.put(event2)
     await subscriber.put(None)
 
-    subscriber_emitted_events = []
+    subscriber_emitted_events: list[Event] = []
 
     async def run_subscriber_async_loop(events_catcher):
         async for event in subscriber:
@@ -125,7 +125,7 @@ async def test_subscriber_async_for_loop_exit_by_passing_None():
 async def test_subscriber_exit_async_for_loop():
     # init subscriber
     subscriber = Subscriber()
-    subscriber_emitted_events = []
+    subscriber_emitted_events: list[Event] = []
 
     async def run_subscriber_async_loop(events_catcher):
         async for _ in subscriber:

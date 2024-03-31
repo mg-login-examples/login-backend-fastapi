@@ -1,5 +1,5 @@
-from typing import Any
 import asyncio
+from asyncio import Queue
 import logging
 
 from .Backend import PubSubBackendAbstract
@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class InMemoryBackend(PubSubBackendAbstract):
     def __init__(self):
-        self._published_events = asyncio.Queue()
+        self._published_events: Queue = asyncio.Queue()
 
     async def connect(self):
         pass

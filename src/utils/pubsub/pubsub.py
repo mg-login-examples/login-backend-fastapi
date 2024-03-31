@@ -1,5 +1,6 @@
 from typing import Dict, Any
 import asyncio
+from asyncio import Task
 from contextlib import asynccontextmanager
 import logging
 
@@ -18,7 +19,7 @@ class PubSub:
             self._backend: InMemoryBackend | RedisBackend = InMemoryBackend()
         elif "redis://" in backend_url:
             self._backend = RedisBackend(backend_url)
-        self._listener_task = None
+        self._listener_task: Task | None = None
 
         self._channel_to_subscribers: Dict[str, list[Subscriber]] = {}
 
@@ -28,17 +29,18 @@ class PubSub:
         except Exception as e:
             logger.error(f"Error while trying to connect to pubsub backend:")
             raise e
-        if not self._listener_task or self._listener_task.done:
+        if not self._listener_task or self._listener_task.done():
             self._listener_task = asyncio.create_task(self._listener())
 
     async def ping(self):
         await self._backend.ping()
 
     async def disconnect(self):
-        if self._listener_task.done():
-            self._listener_task.result()
-        else:
-            self._listener_task.cancel()
+        if self._listener_task:
+            if self._listener_task.done():
+                self._listener_task.result()
+            else:
+                self._listener_task.cancel()
         await self._backend.disconnect()
 
     async def publish(self, channel: str, message: Any) -> None:
