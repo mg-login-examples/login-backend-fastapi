@@ -19,4 +19,5 @@ class TopbarScreen:
     @property
     def home_link(self):
         return PageSelectorHelper(
-            self.page, self.home_link_selector, self.home_link_desc)
+            self.page, self.home_link_selector, self.home_link_desc
+        )

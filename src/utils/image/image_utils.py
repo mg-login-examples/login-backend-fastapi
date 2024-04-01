@@ -12,10 +12,13 @@ logger = logging.getLogger(__name__)
 
 
 def check_fastapi_request_uploaded_image_valid(image: UploadFile):
-    if image.content_type and image.content_type.startswith(
-            "image/") and image.filename:
-        file_extension = image.filename.split('.')[-1]
-        if file_extension.lower() in ['png', 'jpeg', 'jpg']:
+    if (
+        image.content_type
+        and image.content_type.startswith("image/")
+        and image.filename
+    ):
+        file_extension = image.filename.split(".")[-1]
+        if file_extension.lower() in ["png", "jpeg", "jpg"]:
             try:
                 img = Image.open(BytesIO(image.file.read()))
                 img.verify()
@@ -37,13 +40,12 @@ def generate_safe_image_file_name(file_extension=""):
 
 async def save_image_to_uploads(image: UploadFile):
     if not image.filename:
-        raise Exception(
-            'Could not determine file extension as image.filename is None')
-    file_extension = image.filename.split('.')[-1].lower()
+        raise Exception("Could not determine file extension as image.filename is None")
+    file_extension = image.filename.split(".")[-1].lower()
     filename = generate_safe_image_file_name(file_extension=file_extension)
     filepath = Path(os.getcwd()).parent.joinpath("image_uploads", filename)
     image.file.seek(0)
-    async with aiofiles.open(filepath, 'wb') as out_file:
+    async with aiofiles.open(filepath, "wb") as out_file:
         await out_file.write(await image.read())
     return f"/uploads/{filename}"
 

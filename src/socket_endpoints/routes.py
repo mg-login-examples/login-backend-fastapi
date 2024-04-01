@@ -12,7 +12,8 @@ def get_router(
     api_router = APIRouter(prefix="/ws")
 
     main_socket_router = main_socket_routes.get_router(
-        socket_route_dependencies, pubsub_subscribers_async_tasks)
+        socket_route_dependencies, pubsub_subscribers_async_tasks
+    )
     api_router.include_router(main_socket_router)
 
     return api_router

@@ -10,5 +10,5 @@ class SPAStaticFiles(StaticFiles):
         except Exception as error_response:
             raise error_response
         if response.status_code == 404:
-            response = await super().get_response('.', scope)
+            response = await super().get_response(".", scope)
         return response

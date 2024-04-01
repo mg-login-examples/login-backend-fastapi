@@ -15,17 +15,17 @@ def generate_sql_endpoint(
     dependencies: list[Any],
     sql_db_session_as_dependency: Session,
     ResourceModel: Type[DeclarativeMeta],
-    ResourceSchema: Type[BaseSchema]
+    ResourceSchema: Type[BaseSchema],
 ):
-    @router.get("/{item_id}/", response_model=ResourceSchema,
-                dependencies=dependencies)
+    @router.get("/{item_id}/", response_model=ResourceSchema, dependencies=dependencies)
     def get_resource_item(
-            item_id: int, sql_db_session: Session = sql_db_session_as_dependency):
-        item = sql_crud_base.get_resource_item(
-            sql_db_session, ResourceModel, item_id)
+        item_id: int, sql_db_session: Session = sql_db_session_as_dependency
+    ):
+        item = sql_crud_base.get_resource_item(sql_db_session, ResourceModel, item_id)
         if not item:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+                status_code=status.HTTP_404_NOT_FOUND, detail="Item not found"
+            )
         return item
 
 
@@ -34,12 +34,15 @@ def generate_mongo_endpoint(
     dependencies: list[Any],
     mongo_db_as_dependency: Database,
     db_table: str,
-    ResourceSchema: Type[BaseSchema]
+    ResourceSchema: Type[BaseSchema],
 ):
-    @router.get("/{item_id}/", response_model=ResourceSchema,
-                response_model_by_alias=False, dependencies=dependencies)
-    def get_resource_item(
-            item_id: str, mongo_db: Database = mongo_db_as_dependency):
+    @router.get(
+        "/{item_id}/",
+        response_model=ResourceSchema,
+        response_model_by_alias=False,
+        dependencies=dependencies,
+    )
+    def get_resource_item(item_id: str, mongo_db: Database = mongo_db_as_dependency):
         item = mongo_crud_base.get_resource_item_by_id(
             mongo_db,
             db_table,
@@ -47,5 +50,6 @@ def generate_mongo_endpoint(
         )
         if not item:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
+                status_code=status.HTTP_404_NOT_FOUND, detail="Item not found"
+            )
         return item

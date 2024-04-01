@@ -36,7 +36,7 @@ class Subscriber:
     async def put(self, event: Event | None):
         await self._queue.put(event)
 
-    async def __aenter__(self) -> 'Subscriber':
+    async def __aenter__(self) -> "Subscriber":
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:

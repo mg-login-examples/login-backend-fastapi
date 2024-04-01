@@ -10,11 +10,15 @@ from data.mongo_schemas.user_notes.user_note import UserNote
 def generate_endpoint(
     router: APIRouter,
     sql_db_session_as_dependency: Database,
-    restrict_endpoint_to_own_resources_param_user_id: Any
+    restrict_endpoint_to_own_resources_param_user_id: Any,
 ):
 
-    @router.get('/{user_id}/user-notes', response_model=list[UserNote], response_model_by_alias=False, dependencies=[
-                restrict_endpoint_to_own_resources_param_user_id])
+    @router.get(
+        "/{user_id}/user-notes",
+        response_model=list[UserNote],
+        response_model_by_alias=False,
+        dependencies=[restrict_endpoint_to_own_resources_param_user_id],
+    )
     async def get_user_notes_of_user(
         user_id: int,
         skip: int = 0,

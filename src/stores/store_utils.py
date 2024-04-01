@@ -3,13 +3,10 @@ from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager
 
 
-def get_db_manager(database_url: str, database_user: str,
-                   database_password: str) -> SQLAlchemyDBManager:
-    db_manager = SQLAlchemyDBManager(
-        database_url,
-        database_user,
-        database_password
-    )
+def get_db_manager(
+    database_url: str, database_user: str, database_password: str
+) -> SQLAlchemyDBManager:
+    db_manager = SQLAlchemyDBManager(database_url, database_user, database_password)
     return db_manager
 
 
@@ -32,10 +29,6 @@ def get_nosql_db_manager(
     return nosql_db_manager
 
 
-def get_cache_manager(redis_url: str,
-                      redis_password: str) -> RedisCacheManager:
-    cache_manager = RedisCacheManager(
-        redis_url,
-        redis_password
-    )
+def get_cache_manager(redis_url: str, redis_password: str) -> RedisCacheManager:
+    cache_manager = RedisCacheManager(redis_url, redis_password)
     return cache_manager

@@ -5,7 +5,14 @@ from sqlalchemy.orm import Session
 from pymongo.database import Database
 
 from helpers_classes.custom_api_router import APIRouter
-from .endpoints import get_items_count, get_items, get_item, post_item, put_item, delete_item
+from .endpoints import (
+    get_items_count,
+    get_items,
+    get_item,
+    post_item,
+    put_item,
+    delete_item,
+)
 from .endpoints_configs import EndpointsConfigs
 from .resource_configurations import ResourceConfigurations
 
@@ -21,8 +28,7 @@ def generate_router_with_resource_endpoints(
 ):
     if route_dependencies is None:
         route_dependencies = []
-    router = APIRouter(
-        prefix=f"/{resource_configs.resource_endpoints_url_prefix}")
+    router = APIRouter(prefix=f"/{resource_configs.resource_endpoints_url_prefix}")
 
     # GET count
     if endpoints_configs.get_items_count.add:
@@ -33,7 +39,7 @@ def generate_router_with_resource_endpoints(
                 sql_db_session_as_dependency,
                 # TODO See Types.1 in TODO.md
                 resource_configs.ResourceModel,  # type: ignore
-                resource_configs.ResourceSchema
+                resource_configs.ResourceSchema,
             )
         else:
             get_items_count.generate_mongo_endpoint(
@@ -42,7 +48,7 @@ def generate_router_with_resource_endpoints(
                 mongo_db_as_dependency,
                 # TODO See Types.1 in TODO.md
                 resource_configs.MongoDBTable,  # type: ignore
-                resource_configs.ResourceSchema
+                resource_configs.ResourceSchema,
             )
     # GET items
     if endpoints_configs.get_items.add:
@@ -53,7 +59,7 @@ def generate_router_with_resource_endpoints(
                 sql_db_session_as_dependency,
                 # TODO See Types.1 in TODO.md
                 resource_configs.ResourceModel,  # type: ignore
-                resource_configs.ResourceSchema
+                resource_configs.ResourceSchema,
             )
         else:
             get_items.generate_mongo_endpoint(
@@ -62,7 +68,7 @@ def generate_router_with_resource_endpoints(
                 mongo_db_as_dependency,
                 # TODO See Types.1 in TODO.md
                 resource_configs.MongoDBTable,  # type: ignore
-                resource_configs.ResourceSchema
+                resource_configs.ResourceSchema,
             )
     # GET item
     if endpoints_configs.get_item.add:
@@ -73,7 +79,7 @@ def generate_router_with_resource_endpoints(
                 sql_db_session_as_dependency,
                 # TODO See Types.1 in TODO.md
                 resource_configs.ResourceModel,  # type: ignore
-                resource_configs.ResourceSchema
+                resource_configs.ResourceSchema,
             )
         else:
             get_item.generate_mongo_endpoint(
@@ -82,7 +88,7 @@ def generate_router_with_resource_endpoints(
                 mongo_db_as_dependency,
                 # TODO See Types.1 in TODO.md
                 resource_configs.MongoDBTable,  # type: ignore
-                resource_configs.ResourceSchema
+                resource_configs.ResourceSchema,
             )
     # POST item
     if endpoints_configs.post_item.add:
@@ -95,7 +101,7 @@ def generate_router_with_resource_endpoints(
                 resource_configs.ResourceModel,  # type: ignore
                 resource_configs.ResourceSchema,
                 resource_configs.ResourceCreateSchema,
-                resource_configs.customEndUserCreateSchemaToDbSchema
+                resource_configs.customEndUserCreateSchemaToDbSchema,
             )
         else:
             post_item.generate_mongo_endpoint(
@@ -106,7 +112,7 @@ def generate_router_with_resource_endpoints(
                 resource_configs.MongoDBTable,  # type: ignore
                 resource_configs.ResourceSchema,
                 resource_configs.ResourceCreateSchema,
-                resource_configs.customEndUserCreateSchemaToDbSchema
+                resource_configs.customEndUserCreateSchemaToDbSchema,
             )
     # PUT item
     if endpoints_configs.put_item.add:
@@ -138,7 +144,7 @@ def generate_router_with_resource_endpoints(
                 route_dependencies + endpoints_configs.delete_item.dependencies,
                 sql_db_session_as_dependency,
                 # TODO See Types.1 in TODO.md
-                resource_configs.ResourceModel  # type: ignore
+                resource_configs.ResourceModel,  # type: ignore
             )
         else:
             delete_item.generate_mongo_endpoint(
@@ -146,7 +152,7 @@ def generate_router_with_resource_endpoints(
                 route_dependencies + endpoints_configs.delete_item.dependencies,
                 mongo_db_as_dependency,
                 # TODO See Types.1 in TODO.md
-                resource_configs.MongoDBTable  # type: ignore
+                resource_configs.MongoDBTable,  # type: ignore
             )
 
     return router

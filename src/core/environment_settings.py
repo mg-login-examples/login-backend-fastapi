@@ -25,7 +25,7 @@ def get_environment_settings(dot_env_file: str = ".env"):
         logger.info("****************** ENV Vars ******************")
         settings_dict = settings.model_dump()
         for setting in settings_dict:
-            logger.info(f'{setting}={settings_dict[setting]}')
+            logger.info(f"{setting}={settings_dict[setting]}")
         logger.info("**********************************************")
 
     return settings

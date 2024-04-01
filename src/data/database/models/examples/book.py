@@ -13,10 +13,6 @@ class Book(Base):
     summary = Column(String)
     number_of_pages = Column(Integer)
     movies = relationship("Movie", back_populates="book")
-    users = relationship(
-        "User",
-        secondary=user_book_table,
-        back_populates="books"
-    )
+    users = relationship("User", secondary=user_book_table, back_populates="books")
     author_id = Column(Integer, ForeignKey("authors.id"))
     author = relationship("Author", back_populates="books")

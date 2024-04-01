@@ -12,12 +12,24 @@ from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager
 from utils.pubsub.pubsub import PubSub
 from stores.access_tokens_store.access_token_store import AccessTokenStore
-from api_dependencies.dependencies.access_token_store import get_access_token_store_as_fastapi_dependency
-from api_dependencies.dependencies.socket_authorization_token_extractor import get_socket_authorization_token_as_fastapi_dependency
-from api_dependencies.dependencies.socket_validated_access_token import get_socket_validated_access_token_as_fastapi_dependency
-from api_dependencies.dependencies.current_user import get_current_user_as_fastapi_dependency
-from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_item_id_dependency import get_restrict_endpoint_to_own_resources_param_item_id_as_fastapi_dependency
-from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_user_id_dependency import get_restrict_endpoint_to_own_resources_param_user_id_as_fastapi_dependency
+from api_dependencies.dependencies.access_token_store import (
+    get_access_token_store_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.socket_authorization_token_extractor import (
+    get_socket_authorization_token_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.socket_validated_access_token import (
+    get_socket_validated_access_token_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.current_user import (
+    get_current_user_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_item_id_dependency import (
+    get_restrict_endpoint_to_own_resources_param_item_id_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_user_id_dependency import (
+    get_restrict_endpoint_to_own_resources_param_user_id_as_fastapi_dependency,
+)
 
 
 class SocketRouteDependencies:
@@ -40,8 +52,12 @@ class SocketRouteDependencies:
         self.access_token_store = access_token_store_as_dependency
         self.validated_access_token = validated_access_token_as_dependency
         self.current_user = current_user_as_dependency
-        self.restrict_endpoint_to_own_resources_param_item_id = restrict_endpoint_to_own_resources_param_item_id_as_dependency
-        self.restrict_endpoint_to_own_resources_param_user_id = restrict_endpoint_to_own_resources_param_user_id_as_dependency
+        self.restrict_endpoint_to_own_resources_param_item_id = (
+            restrict_endpoint_to_own_resources_param_item_id_as_dependency
+        )
+        self.restrict_endpoint_to_own_resources_param_user_id = (
+            restrict_endpoint_to_own_resources_param_user_id_as_dependency
+        )
 
 
 def get_socket_routes_dependencies(
@@ -53,23 +69,34 @@ def get_socket_routes_dependencies(
 ):
     db_session_as_dependency = Depends(app_db_manager.db_session)
     mongo_database_as_dependency = Depends(app_mongo_db_manager.get_db)
-    redis_cache_session_as_dependency = Depends(
-        app_cache_manager.redis_session)
-    token_extractor_as_dependency = get_socket_authorization_token_as_fastapi_dependency()
+    redis_cache_session_as_dependency = Depends(app_cache_manager.redis_session)
+    token_extractor_as_dependency = (
+        get_socket_authorization_token_as_fastapi_dependency()
+    )
     access_token_store_as_dependency = get_access_token_store_as_fastapi_dependency(
         store_type=settings.access_tokens_store_type,
         redis_session_as_fastapi_dependency=redis_cache_session_as_dependency,
         redis_token_prefix="user",
         file_name="user_access_tokens.txt",
     )
-    validated_access_token_as_dependency = get_socket_validated_access_token_as_fastapi_dependency(
-        token_extractor_as_dependency, access_token_store_as_dependency)
+    validated_access_token_as_dependency = (
+        get_socket_validated_access_token_as_fastapi_dependency(
+            token_extractor_as_dependency, access_token_store_as_dependency
+        )
+    )
     current_user_as_dependency = get_current_user_as_fastapi_dependency(
-        validated_access_token_as_dependency, db_session_as_dependency)
-    restrict_endpoint_to_own_resources_param_item_id_as_dependency = get_restrict_endpoint_to_own_resources_param_item_id_as_fastapi_dependency(
-        current_user_as_dependency)
-    restrict_endpoint_to_own_resources_param_user_id_as_dependency = get_restrict_endpoint_to_own_resources_param_user_id_as_fastapi_dependency(
-        current_user_as_dependency)
+        validated_access_token_as_dependency, db_session_as_dependency
+    )
+    restrict_endpoint_to_own_resources_param_item_id_as_dependency = (
+        get_restrict_endpoint_to_own_resources_param_item_id_as_fastapi_dependency(
+            current_user_as_dependency
+        )
+    )
+    restrict_endpoint_to_own_resources_param_user_id_as_dependency = (
+        get_restrict_endpoint_to_own_resources_param_user_id_as_fastapi_dependency(
+            current_user_as_dependency
+        )
+    )
 
     return SocketRouteDependencies(
         db_session_as_dependency=db_session_as_dependency,

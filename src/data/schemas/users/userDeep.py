@@ -15,4 +15,4 @@ class User(UserShallow):
             return Quote
         if field == "liked_quotes":
             return Quote
-        raise Exception(f'Unknown field provided {field}')
+        raise Exception(f"Unknown field provided {field}")

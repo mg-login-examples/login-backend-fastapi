@@ -21,7 +21,7 @@ def app_db_manager(app_settings: Settings):
     app_db_manager = get_db_manager(
         app_settings.database_url,
         app_settings.database_user,
-        app_settings.database_password
+        app_settings.database_password,
     )
     return app_db_manager
 
@@ -44,8 +44,7 @@ def app_nosql_db_manager(app_settings: Settings):
 def app_cache_manager(app_settings: Settings):
     logger.debug("Create fixture app_cache_manager")
     app_cache_manager = get_cache_manager(
-        app_settings.redis_url,
-        app_settings.redis_password
+        app_settings.redis_url, app_settings.redis_password
     )
     return app_cache_manager
 
@@ -54,8 +53,7 @@ def app_cache_manager(app_settings: Settings):
 def app_pubsub(app_settings: Settings):
     logger.debug("Create fixture app_pubsub")
     return pubsub_utils.get_pubsub(
-        pubsub_url=app_settings.pubsub_url,
-        redis_pass=app_settings.redis_password
+        pubsub_url=app_settings.pubsub_url, redis_pass=app_settings.redis_password
     )
 
 
@@ -71,7 +69,7 @@ def app(
     app_db_manager: SQLAlchemyDBManager,
     app_nosql_db_manager: PyMongoManager,
     app_cache_manager: RedisCacheManager,
-    app_pubsub: PubSub
+    app_pubsub: PubSub,
 ) -> FastAPI:
     logger.debug("Create fixture app")
     app = app_factory.create_app(
@@ -79,6 +77,6 @@ def app(
         app_nosql_db_manager,
         app_cache_manager,
         app_pubsub,
-        app_settings
+        app_settings,
     )
     return app

@@ -22,11 +22,11 @@ def get_router(
 
     if add_admin_app:
         admin_router = admin_routes.get_router(
-            admin_routes_dependencies, admin_user_auth_cookie_type)
+            admin_routes_dependencies, admin_user_auth_cookie_type
+        )
         api_router.include_router(admin_router)
 
-    user_router = user_routes.get_router(
-        user_route_dependencies, user_auth_cookie_type)
+    user_router = user_routes.get_router(user_route_dependencies, user_auth_cookie_type)
     api_router.include_router(user_router)
 
     return api_router

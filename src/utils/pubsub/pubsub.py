@@ -70,8 +70,7 @@ class PubSub:
         while True:
             try:
                 event = await self._backend.get_next_event()
-                for subscriber in self._channel_to_subscribers.get(
-                        event.channel, []):
+                for subscriber in self._channel_to_subscribers.get(event.channel, []):
                     await subscriber.put(event)
             except Exception as e:
                 logger.error("Error in PubSub listener for backend events:")
@@ -82,4 +81,5 @@ class PubSub:
     def get_pubsub_as_fastapi_dependency(self):
         def get_self():
             return self
+
         return Depends(get_self)

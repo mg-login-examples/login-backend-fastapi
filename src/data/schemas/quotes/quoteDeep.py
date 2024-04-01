@@ -14,4 +14,4 @@ class Quote(QuoteShallow):
             return User
         if field == "liked_by_users":
             return User
-        raise Exception(f'Unknown field provided {field}')
+        raise Exception(f"Unknown field provided {field}")

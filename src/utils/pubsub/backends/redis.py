@@ -19,8 +19,9 @@ class RedisBackend(PubSubBackendAbstract):
         self.pubsub = self.redis.pubsub()
         # next line is required for redis - subscribe to any channel before
         # starting to listen to published messages
-        dummy_channel = ''.join(random.choices(
-            string.ascii_lowercase + string.digits, k=20))
+        dummy_channel = "".join(
+            random.choices(string.ascii_lowercase + string.digits, k=20)
+        )
         await self.pubsub.subscribe(dummy_channel)
 
     async def disconnect(self):
@@ -42,9 +43,10 @@ class RedisBackend(PubSubBackendAbstract):
         while True:
             try:
                 # event = next(await self.pubsub.listen())
-                response = await self.pubsub.get_message(ignore_subscribe_messages=True, timeout=None)
-                if response and ("channel" in response) and (
-                        "data" in response):
+                response = await self.pubsub.get_message(
+                    ignore_subscribe_messages=True, timeout=None
+                )
+                if response and ("channel" in response) and ("data" in response):
                     event = Event(
                         channel=response["channel"].decode("utf-8"),
                         message=response["data"].decode("utf-8"),

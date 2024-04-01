@@ -89,7 +89,8 @@ async def test_subscriber_async_for_loop():
             events_catcher.append(event)
 
     subscriber_task = asyncio.create_task(
-        run_subscriber_async_loop(subscriber_emitted_events))
+        run_subscriber_async_loop(subscriber_emitted_events)
+    )
 
     with pytest.raises(asyncio.TimeoutError):
         await asyncio.wait_for(subscriber_task, timeout=1)
@@ -116,7 +117,8 @@ async def test_subscriber_async_for_loop_exit_by_passing_None():
             events_catcher.append(event)
 
     subscriber_task = asyncio.create_task(
-        run_subscriber_async_loop(subscriber_emitted_events))
+        run_subscriber_async_loop(subscriber_emitted_events)
+    )
 
     await subscriber_task
     assert subscriber_emitted_events == [event1, event2]
@@ -130,8 +132,10 @@ async def test_subscriber_exit_async_for_loop():
     async def run_subscriber_async_loop(events_catcher):
         async for _ in subscriber:
             pass
+
     subscriber_task = asyncio.create_task(
-        run_subscriber_async_loop(subscriber_emitted_events))
+        run_subscriber_async_loop(subscriber_emitted_events)
+    )
 
     # async for loop continues (indefintely)
     with pytest.raises(asyncio.TimeoutError):
@@ -147,7 +151,7 @@ async def test_subscriber_exit_async_for_loop():
 
 
 async def test_subscriber_aenter_aexit():
-    with patch.object(Subscriber, 'exit_async_iter') as mock_exit_async_iter:
+    with patch.object(Subscriber, "exit_async_iter") as mock_exit_async_iter:
         async with Subscriber() as _:
             mock_exit_async_iter.assert_not_called()
         mock_exit_async_iter.assert_called_once()

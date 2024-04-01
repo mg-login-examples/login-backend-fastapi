@@ -2,6 +2,7 @@ import logging
 import pytest
 
 from core.helper_classes.settings import Settings
+
 # from core import logging_settings
 
 logger = logging.getLogger(__name__)

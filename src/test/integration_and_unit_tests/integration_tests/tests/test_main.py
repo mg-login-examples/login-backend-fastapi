@@ -8,4 +8,4 @@ logger = logging.getLogger(__name__)
 
 
 def test_app():
-    assert (isinstance(app, FastAPI))
+    assert isinstance(app, FastAPI)

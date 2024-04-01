@@ -12,8 +12,4 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
-    books = relationship(
-        "Book",
-        secondary=user_book_table,
-        back_populates="users"
-    )
+    books = relationship("Book", secondary=user_book_table, back_populates="users")

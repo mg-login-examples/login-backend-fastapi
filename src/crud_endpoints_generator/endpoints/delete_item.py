@@ -15,12 +15,13 @@ def generate_sql_endpoint(
     sql_db_session_as_dependency: Session,
     ResourceModel: Type[DeclarativeMeta],
 ):
-    @router.delete("/{item_id}/", status_code=status.HTTP_204_NO_CONTENT,
-                   dependencies=dependencies)
-    def delete_item(item_id: int,
-                    sql_db_session: Session = sql_db_session_as_dependency):
-        sql_crud_base.delete_resource_item(
-            sql_db_session, ResourceModel, item_id)
+    @router.delete(
+        "/{item_id}/", status_code=status.HTTP_204_NO_CONTENT, dependencies=dependencies
+    )
+    def delete_item(
+        item_id: int, sql_db_session: Session = sql_db_session_as_dependency
+    ):
+        sql_crud_base.delete_resource_item(sql_db_session, ResourceModel, item_id)
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
@@ -30,12 +31,9 @@ def generate_mongo_endpoint(
     mongo_db_as_dependency: Database,
     db_table: str,
 ):
-    @router.delete("/{item_id}/", status_code=status.HTTP_204_NO_CONTENT,
-                   dependencies=dependencies)
+    @router.delete(
+        "/{item_id}/", status_code=status.HTTP_204_NO_CONTENT, dependencies=dependencies
+    )
     def delete_item(item_id: str, mongo_db: Database = mongo_db_as_dependency):
-        mongo_crud_base.delete_resource_item_by_id(
-            mongo_db,
-            db_table,
-            item_id
-        )
+        mongo_crud_base.delete_resource_item_by_id(mongo_db, db_table, item_id)
         return Response(status_code=status.HTTP_204_NO_CONTENT)

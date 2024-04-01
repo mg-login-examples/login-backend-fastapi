@@ -19,16 +19,16 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     hashed_password = Column(String(128), nullable=True)
 
-    quotes = relationship(
-        "Quote", back_populates="author", passive_deletes=True)
+    quotes = relationship("Quote", back_populates="author", passive_deletes=True)
     liked_quotes = relationship(
-        "Quote",
-        secondary="user_quote_likes",
-        back_populates="liked_by_users"
+        "Quote", secondary="user_quote_likes", back_populates="liked_by_users"
     )
     email_verifications = relationship(
-        "UserEmailVerification", back_populates="user", passive_deletes=True)
+        "UserEmailVerification", back_populates="user", passive_deletes=True
+    )
     user_sessions = relationship(
-        "UserSession", back_populates="user", passive_deletes=True)
+        "UserSession", back_populates="user", passive_deletes=True
+    )
     user_password_reset_tokens = relationship(
-        "UserPasswordResetToken", back_populates="user", passive_deletes=True)
+        "UserPasswordResetToken", back_populates="user", passive_deletes=True
+    )

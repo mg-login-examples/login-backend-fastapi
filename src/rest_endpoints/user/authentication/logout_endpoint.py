@@ -27,7 +27,11 @@ def generate_endpoint(
     ):
         user_id = parse_access_token(validated_access_token, "user_id")
         crud_base.delete_resource_item_by_attribute(
-            sql_db_session, UserSessionModel, UserSessionModel.token, validated_access_token)
+            sql_db_session,
+            UserSessionModel,
+            UserSessionModel.token,
+            validated_access_token,
+        )
         await access_token_store.remove_access_token(user_id, validated_access_token)
 
         response.delete_cookie("Authorization")

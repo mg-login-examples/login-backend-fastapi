@@ -34,7 +34,8 @@ def get_resource_items_pydantized(
     skip=0,
 ):
     items_db = get_resource_items(
-        mongo_db, db_table, filter=filter, limit=limit, skip=skip)
+        mongo_db, db_table, filter=filter, limit=limit, skip=skip
+    )
     items: list[BaseModel] = []
     for item_db in items_db:
         items.append(ItemSchema(**item_db))
@@ -65,10 +66,13 @@ def create_resource_item(
     db_table: str,
     item_to_create: dict | BaseModel,
 ) -> dict[str, Any]:
-    item_dict: dict[str, Any] = item_to_create.model_dump() if isinstance(
-        item_to_create, BaseModel) else item_to_create
+    item_dict: dict[str, Any] = (
+        item_to_create.model_dump()
+        if isinstance(item_to_create, BaseModel)
+        else item_to_create
+    )
     result = mongo_db[db_table].insert_one(item_dict)
-    item_dict['id'] = str(result.inserted_id)
+    item_dict["id"] = str(result.inserted_id)
     return item_dict
 
 
@@ -79,8 +83,11 @@ def update_item_by_id(
     item_fields_to_update: dict | BaseModel,
 ):
     id_filter = {"_id": ObjectId(item_id)}
-    item_fields_to_update = item_fields_to_update.model_dump() if isinstance(
-        item_fields_to_update, BaseModel) else item_fields_to_update
+    item_fields_to_update = (
+        item_fields_to_update.model_dump()
+        if isinstance(item_fields_to_update, BaseModel)
+        else item_fields_to_update
+    )
     mongo_db[db_table].update_one(id_filter, {"$set": item_fields_to_update})
     return
 
@@ -95,11 +102,7 @@ def update_item_by_filter(
     return
 
 
-def delete_resource_item_by_id(
-    mongo_db: Database,
-    db_table: str,
-    item_id: str
-):
+def delete_resource_item_by_id(mongo_db: Database, db_table: str, item_id: str):
     id_filter = {"_id": ObjectId(item_id)}
     mongo_db[db_table].delete_one(id_filter)
     return

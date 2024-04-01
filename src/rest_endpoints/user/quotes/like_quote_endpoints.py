@@ -16,34 +16,42 @@ logger = logging.getLogger(__name__)
 def generate_endpoints(
     router: APIRouter,
     sql_db_session_as_dependency: Session,
-    restrict_endpoint_to_own_resources_param_user_id_as_dependency: Any
+    restrict_endpoint_to_own_resources_param_user_id_as_dependency: Any,
 ):
-    @router.put("/{quote_id}/users/{user_id}/like/", status_code=status.HTTP_204_NO_CONTENT,
-                dependencies=[restrict_endpoint_to_own_resources_param_user_id_as_dependency])
+    @router.put(
+        "/{quote_id}/users/{user_id}/like/",
+        status_code=status.HTTP_204_NO_CONTENT,
+        dependencies=[restrict_endpoint_to_own_resources_param_user_id_as_dependency],
+    )
     def like_quote(
         quote_id: int,
         user_id: int,
-        sql_db_session: Session = sql_db_session_as_dependency
+        sql_db_session: Session = sql_db_session_as_dependency,
     ):
         user_quote_like = UserQuoteLike(user_id=user_id, quote_id=quote_id)
         try:
             user_quote_like = crud_base.create_resource_item(
-                sql_db_session, UserQuoteLikesModel, user_quote_like)
+                sql_db_session, UserQuoteLikesModel, user_quote_like
+            )
         except IntegrityError as _:
             pass
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-    @router.delete("/{quote_id}/users/{user_id}/like/", status_code=status.HTTP_204_NO_CONTENT,
-                   dependencies=[restrict_endpoint_to_own_resources_param_user_id_as_dependency])
+    @router.delete(
+        "/{quote_id}/users/{user_id}/like/",
+        status_code=status.HTTP_204_NO_CONTENT,
+        dependencies=[restrict_endpoint_to_own_resources_param_user_id_as_dependency],
+    )
     def unlike_quote(
         quote_id: int,
         user_id: int,
-        sql_db_session: Session = sql_db_session_as_dependency
+        sql_db_session: Session = sql_db_session_as_dependency,
     ):
         attributes_and_values = [
             (UserQuoteLikesModel.quote_id, quote_id),
             (UserQuoteLikesModel.user_id, user_id),
         ]
         crud_base.delete_resource_item_by_attributes(
-            sql_db_session, UserQuoteLikesModel, attributes_and_values)
+            sql_db_session, UserQuoteLikesModel, attributes_and_values
+        )
         return Response(status_code=status.HTTP_204_NO_CONTENT)
