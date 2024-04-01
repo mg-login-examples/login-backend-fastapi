@@ -1,8 +1,8 @@
-from typing import Tuple, Any, Type
+from typing import Any, Tuple, Type
 
-from sqlalchemy.orm import Session
-from sqlalchemy.ext.declarative import DeclarativeMeta
 from pydantic import BaseModel as BaseSchema
+from sqlalchemy.ext.declarative import DeclarativeMeta
+from sqlalchemy.orm import Session
 
 
 def get_resource_items_count(

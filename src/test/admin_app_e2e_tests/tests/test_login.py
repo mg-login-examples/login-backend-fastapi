@@ -1,6 +1,6 @@
-from playwright.sync_api import expect
-
 from test.admin_app_e2e_tests.users.admin_user import AdminUser
+
+from playwright.sync_api import expect
 
 # Test admin login
 

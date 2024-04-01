@@ -1,10 +1,9 @@
+from api_dependencies.admin_route_dependencies import AdminRouteDependencies
+from crud_endpoints_generator.crud_endpoints_generator import \
+    generate_router_with_resource_endpoints
+from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 from helpers_classes.custom_api_router import APIRouter
 from rest_endpoints.admin.resources import resources_configurations
-from api_dependencies.admin_route_dependencies import AdminRouteDependencies
-from crud_endpoints_generator.crud_endpoints_generator import (
-    generate_router_with_resource_endpoints,
-)
-from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
 
 
 def generate_endpoints(

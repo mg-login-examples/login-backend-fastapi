@@ -1,8 +1,8 @@
-import pytest
 import logging
 import os
-
 from test.env_settings_test import EnvSettingsTest
+
+import pytest
 
 logger = logging.getLogger(__name__)
 

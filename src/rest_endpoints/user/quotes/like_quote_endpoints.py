@@ -1,14 +1,15 @@
 import logging
+from sqlite3 import IntegrityError
 from typing import Any
 
-from fastapi import status, Response
+from fastapi import Response, status
 from sqlalchemy.orm import Session
-from sqlite3 import IntegrityError
 
+from data.database.models.user_quote_like import \
+    UserQuoteLike as UserQuoteLikesModel
+from data.schemas.user_quote_like.user_quote_like import UserQuoteLike
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base
-from data.database.models.user_quote_like import UserQuoteLike as UserQuoteLikesModel
-from data.schemas.user_quote_like.user_quote_like import UserQuoteLike
 
 logger = logging.getLogger(__name__)
 

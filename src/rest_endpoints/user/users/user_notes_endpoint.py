@@ -2,9 +2,9 @@ from typing import Any
 
 from pymongo.database import Database
 
+from data.mongo_schemas.user_notes.user_note import UserNote
 from helpers_classes.custom_api_router import APIRouter
 from stores.nosql_db_store import crud_base
-from data.mongo_schemas.user_notes.user_note import UserNote
 
 
 def generate_endpoint(

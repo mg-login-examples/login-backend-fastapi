@@ -3,12 +3,11 @@ import asyncio
 from fastapi import WebSocket
 from pymongo.database import Database
 
-from helpers_classes.custom_api_router import APIRouter
 from api_dependencies.socket_route_dependencies import SocketRouteDependencies
 from data.schemas.users.user import User
-from socket_endpoints.main_socket.socket_channel_subscriptions_manager import (
-    handle_websocket_traffic,
-)
+from helpers_classes.custom_api_router import APIRouter
+from socket_endpoints.main_socket.socket_channel_subscriptions_manager import \
+    handle_websocket_traffic
 from utils.pubsub.pubsub import PubSub
 
 

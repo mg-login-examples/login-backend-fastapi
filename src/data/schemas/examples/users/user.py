@@ -1,5 +1,6 @@
-from data.schemas.examples.users.userBase import UserBase
 from pydantic import ConfigDict
+
+from data.schemas.examples.users.userBase import UserBase
 
 
 class User(UserBase):

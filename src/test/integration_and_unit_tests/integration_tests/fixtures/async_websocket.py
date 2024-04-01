@@ -1,11 +1,11 @@
 import logging
 from typing import AsyncIterator
 
+import httpx
 import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
-import httpx
-from httpx_ws import aconnect_ws, AsyncWebSocketSession
+from httpx_ws import AsyncWebSocketSession, aconnect_ws
 from httpx_ws.transport import ASGIWebSocketTransport
 
 logger = logging.getLogger(__name__)

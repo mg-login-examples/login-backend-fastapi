@@ -1,10 +1,10 @@
 import logging
 
-from fastapi import WebSocket, Depends
+from fastapi import Depends, WebSocket
 from fastapi.security.utils import get_authorization_scheme_param
-from data.schemas.http_error_exceptions.http_403_exceptions import (
-    HTTP_403_NOT_AUTHENTICATED_EXCEPTION,
-)
+
+from data.schemas.http_error_exceptions.http_403_exceptions import \
+    HTTP_403_NOT_AUTHENTICATED_EXCEPTION
 
 logger = logging.getLogger(__name__)
 

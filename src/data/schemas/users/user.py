@@ -1,7 +1,8 @@
 from typing import Optional
 
-from data.schemas.users.userBase import UserBase
 from pydantic import ConfigDict
+
+from data.schemas.users.userBase import UserBase
 
 
 class User(UserBase):

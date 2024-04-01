@@ -2,9 +2,9 @@ import logging
 
 from redis.asyncio.client import Redis
 
+from stores.access_tokens_store.access_token_store import AccessTokenStore
 from utils.redis import redis_utils
 from utils.security.access_token_utils import parse_access_token
-from stores.access_tokens_store.access_token_store import AccessTokenStore
 
 logger = logging.getLogger(__name__)
 

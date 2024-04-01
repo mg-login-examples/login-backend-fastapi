@@ -4,8 +4,8 @@ import pytest
 from httpx import AsyncClient
 
 from data.schemas.authentication.login_response import LoginResponse
-from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.user import User
+from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.userDeep import User as UserDeep
 
 logger = logging.getLogger(__name__)

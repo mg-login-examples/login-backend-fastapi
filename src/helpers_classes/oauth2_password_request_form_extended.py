@@ -1,5 +1,5 @@
-from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.param_functions import Form
+from fastapi.security import OAuth2PasswordRequestForm
 
 
 class OAuth2PasswordRequestFormExtended(OAuth2PasswordRequestForm):

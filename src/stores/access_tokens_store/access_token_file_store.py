@@ -1,11 +1,9 @@
-import os
 import logging
+import os
 
-from utils.security.access_token_utils import (
-    parse_access_token,
-    check_access_tokens_are_equal,
-)
 from stores.access_tokens_store.access_token_store import AccessTokenStore
+from utils.security.access_token_utils import (check_access_tokens_are_equal,
+                                               parse_access_token)
 
 logger = logging.getLogger(__name__)
 

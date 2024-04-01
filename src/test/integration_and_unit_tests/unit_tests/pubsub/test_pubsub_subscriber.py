@@ -1,10 +1,11 @@
-import pytest
 import asyncio
 import time
 from unittest.mock import patch
 
-from utils.pubsub.subscriber import Subscriber, Unsubscribed
+import pytest
+
 from utils.pubsub.event import Event
+from utils.pubsub.subscriber import Subscriber, Unsubscribed
 
 
 async def test_subscriber_put():

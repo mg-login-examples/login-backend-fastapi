@@ -1,4 +1,4 @@
-from starlette.staticfiles import StaticFiles, Scope, Response
+from starlette.staticfiles import Response, Scope, StaticFiles
 
 
 class SPAStaticFiles(StaticFiles):

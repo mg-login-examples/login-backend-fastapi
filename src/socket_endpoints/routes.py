@@ -1,8 +1,8 @@
 import asyncio
 
-from socket_endpoints.main_socket import routes as main_socket_routes
-from helpers_classes.custom_api_router import APIRouter
 from api_dependencies.socket_route_dependencies import SocketRouteDependencies
+from helpers_classes.custom_api_router import APIRouter
+from socket_endpoints.main_socket import routes as main_socket_routes
 
 
 def get_router(

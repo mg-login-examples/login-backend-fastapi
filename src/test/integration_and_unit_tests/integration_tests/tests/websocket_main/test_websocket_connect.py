@@ -1,9 +1,9 @@
 import logging
-import pytest
 import time
 
-from fastapi.testclient import TestClient
+import pytest
 from fastapi.exceptions import HTTPException
+from fastapi.testclient import TestClient
 
 from data.schemas.users.user import User
 

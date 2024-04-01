@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from data.schemas.users.user import User
 
 

@@ -1,12 +1,11 @@
-import logging
 import json
-import pytest
+import logging
 import time
 
-from starlette.testclient import WebSocketTestSession
-
+import pytest
 # from test.integration_and_unit_tests.integration_tests.utils.async_testclient_for_websockets import AsyncioWebSocketTestSession
 from httpx_ws import AsyncWebSocketSession
+from starlette.testclient import WebSocketTestSession
 
 from utils.pubsub.pubsub import PubSub
 

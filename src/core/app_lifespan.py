@@ -1,11 +1,11 @@
-import logging
 import asyncio
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from utils.pubsub.pubsub import PubSub
 from utils.pubsub import utils as pubsub_utils
+from utils.pubsub.pubsub import PubSub
 
 logger = logging.getLogger(__name__)
 

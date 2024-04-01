@@ -1,6 +1,6 @@
-import pytest
 import logging
 
+import pytest
 from playwright.sync_api._generated import Browser
 
 logger = logging.getLogger(__name__)

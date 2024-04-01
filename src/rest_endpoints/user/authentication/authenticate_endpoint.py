@@ -2,8 +2,8 @@ import logging
 
 from fastapi import Response
 
-from helpers_classes.custom_api_router import APIRouter
 from data.schemas.users.user import User
+from helpers_classes.custom_api_router import APIRouter
 
 logger = logging.getLogger(__name__)
 

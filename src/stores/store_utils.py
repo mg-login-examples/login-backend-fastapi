@@ -1,6 +1,6 @@
-from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 
 
 def get_db_manager(

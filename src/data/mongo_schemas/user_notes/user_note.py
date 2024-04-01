@@ -1,5 +1,4 @@
 from bson import ObjectId
-
 from pydantic import ConfigDict, Field
 from pydantic_mongo import ObjectIdField
 

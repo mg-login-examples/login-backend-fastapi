@@ -3,22 +3,20 @@ from datetime import datetime
 from fastapi import BackgroundTasks, Response
 from sqlalchemy.orm import Session
 
-from helpers_classes.custom_api_router import APIRouter
-from stores.sql_db_store import crud_base
 from data.database.models.user import User as UserModel
-from data.schemas.users.userCreate import UserCreate
-from data.endUserSchemasToDbSchemas.user import (
-    createSchemaToDbSchema as userCreateSchemaToDbSchema,
-)
-from utils.security.access_token_utils import generate_access_token
-from stores.access_tokens_store.access_token_store import AccessTokenStore
-from data.schemas.authentication.login_response import LoginResponse
-from data.schemas.users.user import User
 from data.database.models.user_session import UserSession as UserSessionModel
+from data.endUserSchemasToDbSchemas.user import \
+    createSchemaToDbSchema as userCreateSchemaToDbSchema
+from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
-from rest_endpoints.user.email_verification.email_verification_task import (
-    create_verification_code_and_send_email,
-)
+from data.schemas.users.user import User
+from data.schemas.users.userCreate import UserCreate
+from helpers_classes.custom_api_router import APIRouter
+from rest_endpoints.user.email_verification.email_verification_task import \
+    create_verification_code_and_send_email
+from stores.access_tokens_store.access_token_store import AccessTokenStore
+from stores.sql_db_store import crud_base
+from utils.security.access_token_utils import generate_access_token
 from utils.security.auth_cookies import add_authorization_cookie_to_response
 
 

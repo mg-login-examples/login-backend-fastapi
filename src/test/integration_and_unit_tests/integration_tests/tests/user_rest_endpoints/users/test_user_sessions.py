@@ -1,12 +1,12 @@
 import logging
-from unittest.mock import MagicMock, patch, ANY
+from test.integration_and_unit_tests.integration_tests.utils import asserts
+from test.integration_and_unit_tests.utils.user_api import users as users_api
+from unittest.mock import ANY, MagicMock, patch
 
 import requests  # type: ignore
 
-from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from data.schemas.users.user import User
-from test.integration_and_unit_tests.utils.user_api import users as users_api
-from test.integration_and_unit_tests.integration_tests.utils import asserts
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 from mimesis import Text
 
-from data.schemas.users.user import User
 from data.schemas.quotes.quoteCreate import QuoteCreate
+from data.schemas.users.user import User
 
 text = Text("en")
 

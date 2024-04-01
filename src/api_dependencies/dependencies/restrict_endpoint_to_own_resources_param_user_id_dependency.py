@@ -2,10 +2,9 @@ import logging
 
 from fastapi import Depends
 
+from data.schemas.http_error_exceptions.http_403_exceptions import \
+    HTTP_403_NOT_AUTHORIZED_EXCEPTION
 from data.schemas.users.user import User
-from data.schemas.http_error_exceptions.http_403_exceptions import (
-    HTTP_403_NOT_AUTHORIZED_EXCEPTION,
-)
 
 logger = logging.getLogger(__name__)
 

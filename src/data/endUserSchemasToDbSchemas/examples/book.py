@@ -1,5 +1,6 @@
+from data.schemas.examples.books.bookAsModel import \
+    BookAsModel as BookAsModelSchema
 from data.schemas.examples.books.bookDeep import Book as BookDeepSchema
-from data.schemas.examples.books.bookAsModel import BookAsModel as BookAsModelSchema
 
 
 def updateSchemaToDbSchema(book: BookDeepSchema) -> BookAsModelSchema:

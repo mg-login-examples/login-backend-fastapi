@@ -1,8 +1,8 @@
-from bson import ObjectId
 from typing import Any, Type
 
-from pymongo.database import Database
+from bson import ObjectId
 from pydantic import BaseModel
+from pymongo.database import Database
 
 
 def get_resource_items_count(

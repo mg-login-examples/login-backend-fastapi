@@ -1,8 +1,8 @@
 import requests  # type: ignore
 
 from data.schemas.admin_login.admin_login_response import AdminLoginResponse
-from data.schemas.admin_users.admin_user_create import AdminUserCreate
 from data.schemas.admin_users.admin_user import AdminUser
+from data.schemas.admin_users.admin_user_create import AdminUserCreate
 
 
 def login(

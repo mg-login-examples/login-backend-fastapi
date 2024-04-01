@@ -1,11 +1,11 @@
 import logging
 
+from api_dependencies.admin_route_dependencies import AdminRouteDependencies
+from api_dependencies.user_route_dependencies import UserRouteDependencies
 from helpers_classes.custom_api_router import APIRouter
+from rest_endpoints import health_check
 from rest_endpoints.admin import routes as admin_routes
 from rest_endpoints.user import routes as user_routes
-from rest_endpoints import health_check
-from api_dependencies.user_route_dependencies import UserRouteDependencies
-from api_dependencies.admin_route_dependencies import AdminRouteDependencies
 
 logger = logging.getLogger(__name__)
 

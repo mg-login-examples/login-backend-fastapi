@@ -4,8 +4,8 @@ import string
 
 from redis import asyncio as asyncio_redis
 
-from .Backend import PubSubBackendAbstract
 from ..event import Event
+from .Backend import PubSubBackendAbstract
 
 logger = logging.getLogger(__name__)
 

@@ -1,8 +1,9 @@
+from test.integration_and_unit_tests.integration_tests.utils import asserts
+
 import requests  # type: ignore
 
-from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.quotes.quoteCreate import QuoteCreate
-from test.integration_and_unit_tests.integration_tests.utils import asserts
+from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 
 
 def get_quote(test_client: requests.Session, quote_id: int) -> QuoteDeep:

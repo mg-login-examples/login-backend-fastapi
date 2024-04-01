@@ -1,6 +1,6 @@
-from typing import AsyncGenerator
 import asyncio
 from asyncio import Queue
+from typing import AsyncGenerator
 
 from .event import Event
 

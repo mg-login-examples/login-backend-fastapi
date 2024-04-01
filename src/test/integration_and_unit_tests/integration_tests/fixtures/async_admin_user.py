@@ -1,6 +1,6 @@
-import pytest
 import logging
 
+import pytest
 from httpx import AsyncClient
 
 from data.schemas.admin_login.admin_login_response import AdminLoginResponse

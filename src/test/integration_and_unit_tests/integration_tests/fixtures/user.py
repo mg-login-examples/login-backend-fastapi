@@ -1,19 +1,18 @@
 import logging
+from test.integration_and_unit_tests.integration_tests.utils.fake_user import \
+    generate_random_user_to_create
+from test.integration_and_unit_tests.utils.admin_api import \
+    users as users_admin_api
+from test.integration_and_unit_tests.utils.user_api import \
+    authentication as authentication_api
 
 import pytest
 import requests  # type: ignore
 
 from data.schemas.authentication.login_response import LoginResponse
-from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.user import User
+from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.userDeep import User as UserDeep
-from test.integration_and_unit_tests.integration_tests.utils.fake_user import (
-    generate_random_user_to_create,
-)
-from test.integration_and_unit_tests.utils.admin_api import users as users_admin_api
-from test.integration_and_unit_tests.utils.user_api import (
-    authentication as authentication_api,
-)
 
 logger = logging.getLogger(__name__)
 

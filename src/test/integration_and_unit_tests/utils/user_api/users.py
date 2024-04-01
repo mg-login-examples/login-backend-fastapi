@@ -1,9 +1,9 @@
 import requests  # type: ignore
 
-from data.schemas.users.user import User
 from data.schemas.authentication.login_response import LoginResponse
-from data.schemas.users.userCreate import UserCreate
 from data.schemas.user_sessions.userSession import UserSession
+from data.schemas.users.user import User
+from data.schemas.users.userCreate import UserCreate
 
 
 def get_user(test_client: requests.Session, user_id: int) -> User:

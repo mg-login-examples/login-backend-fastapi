@@ -1,37 +1,33 @@
 import logging
-
-from playwright.sync_api._generated import Page
-from playwright.sync_api import Page
-import allure  # type: ignore
-
-from test.admin_app_e2e_tests.screen_tasks.resource_list_tasks import ResourceListTasks
-from test.admin_app_e2e_tests.screen_tasks.user_resource_tasks import UserResourceTasks
-from test.admin_app_e2e_tests.screens.login_view_screen import LoginViewScreen
-from test.admin_app_e2e_tests.screens.quotes_resource.quotes_list_view_screen import (
-    QuotesListViewScreen,
-)
-from test.admin_app_e2e_tests.screens.resource_list_screen import ResourceListViewScreen
-from test.admin_app_e2e_tests.screens.resources_dashboard_screen import (
-    ResourcesDashboardScreen,
-)
-from test.admin_app_e2e_tests.screens.topbar_screen import TopbarScreen
-from test.admin_app_e2e_tests.screens.user_notes_resource.user_notes_list_view_screen import (
-    UserNotesListViewScreen,
-)
-from test.admin_app_e2e_tests.screens.users_resource.user_create_dialog_screen import (
-    UserCreateDialogScreen,
-)
-from test.admin_app_e2e_tests.screens.users_resource.user_delete_dialog_screen import (
-    UserDeleteDialogScreen,
-)
-from test.admin_app_e2e_tests.screens.users_resource.user_edit_dialog_screen import (
-    UserUpdateDialogScreen,
-)
-from test.admin_app_e2e_tests.screens.users_resource.users_list_view_screen import (
-    UsersListViewScreen,
-)
 from test.admin_app_e2e_tests.screen_tasks.login_tasks import LoginTasks
-from test.admin_app_e2e_tests.utils.playwright_screenshots import save_screenshot
+from test.admin_app_e2e_tests.screen_tasks.resource_list_tasks import \
+    ResourceListTasks
+from test.admin_app_e2e_tests.screen_tasks.user_resource_tasks import \
+    UserResourceTasks
+from test.admin_app_e2e_tests.screens.login_view_screen import LoginViewScreen
+from test.admin_app_e2e_tests.screens.quotes_resource.quotes_list_view_screen import \
+    QuotesListViewScreen
+from test.admin_app_e2e_tests.screens.resource_list_screen import \
+    ResourceListViewScreen
+from test.admin_app_e2e_tests.screens.resources_dashboard_screen import \
+    ResourcesDashboardScreen
+from test.admin_app_e2e_tests.screens.topbar_screen import TopbarScreen
+from test.admin_app_e2e_tests.screens.user_notes_resource.user_notes_list_view_screen import \
+    UserNotesListViewScreen
+from test.admin_app_e2e_tests.screens.users_resource.user_create_dialog_screen import \
+    UserCreateDialogScreen
+from test.admin_app_e2e_tests.screens.users_resource.user_delete_dialog_screen import \
+    UserDeleteDialogScreen
+from test.admin_app_e2e_tests.screens.users_resource.user_edit_dialog_screen import \
+    UserUpdateDialogScreen
+from test.admin_app_e2e_tests.screens.users_resource.users_list_view_screen import \
+    UsersListViewScreen
+from test.admin_app_e2e_tests.utils.playwright_screenshots import \
+    save_screenshot
+
+import allure  # type: ignore
+from playwright.sync_api import Page
+from playwright.sync_api._generated import Page
 
 logger = logging.getLogger(__name__)
 

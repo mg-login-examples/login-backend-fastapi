@@ -1,10 +1,10 @@
 import logging
 import os
-from pathlib import Path
-from io import BytesIO
-import aiofiles  # type: ignore
 import secrets
+from io import BytesIO
+from pathlib import Path
 
+import aiofiles  # type: ignore
 from fastapi import UploadFile
 from PIL import Image  # type: ignore
 

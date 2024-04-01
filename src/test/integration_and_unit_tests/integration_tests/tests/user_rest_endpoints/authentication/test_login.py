@@ -1,12 +1,11 @@
 import logging
+from test.integration_and_unit_tests.utils.user_api import \
+    authentication as authentication_api
 
 import requests  # type: ignore
 
-from data.schemas.users.userDeep import User as UserDeep
 from data.schemas.users.userCreate import UserCreate
-from test.integration_and_unit_tests.utils.user_api import (
-    authentication as authentication_api,
-)
+from data.schemas.users.userDeep import User as UserDeep
 
 logger = logging.getLogger(__name__)
 

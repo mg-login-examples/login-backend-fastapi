@@ -1,6 +1,5 @@
 import json
 
-
 from data.schemas.users.user import User
 from group_chat.group_chat_message_data import GroupChatMessageData
 from utils.pubsub.pubsub import PubSub

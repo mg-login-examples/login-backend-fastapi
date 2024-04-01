@@ -1,10 +1,9 @@
 import logging
 from sqlite3 import Connection as SQLite3Connection
 
-from sqlalchemy import create_engine, pool, event
-from sqlalchemy.engine import make_url, URL, Engine
+from sqlalchemy import create_engine, event, pool
+from sqlalchemy.engine import URL, Engine, make_url
 from sqlalchemy.orm import sessionmaker
-
 
 logger = logging.getLogger(__name__)
 

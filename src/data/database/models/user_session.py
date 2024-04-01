@@ -1,6 +1,6 @@
-from sqlalchemy import Integer, Column, ForeignKey, String, DateTime, Index
-from sqlalchemy.sql import func
+from sqlalchemy import Column, DateTime, ForeignKey, Index, Integer, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 from data.database.models.base import Base
 from data.database.models.user import User

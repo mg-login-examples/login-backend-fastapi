@@ -1,14 +1,14 @@
 import logging
+from test.integration_and_unit_tests.integration_tests.utils.fake_quote import \
+    generate_random_quote_to_create
+from test.integration_and_unit_tests.utils.admin_api import \
+    quotes as quotes_admin_api
 
 import pytest
 import requests  # type: ignore
 
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.users.userDeep import User as UserDeep
-from test.integration_and_unit_tests.integration_tests.utils.fake_quote import (
-    generate_random_quote_to_create,
-)
-from test.integration_and_unit_tests.utils.admin_api import quotes as quotes_admin_api
 
 logger = logging.getLogger(__name__)
 

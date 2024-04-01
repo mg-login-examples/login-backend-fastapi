@@ -1,9 +1,9 @@
+import logging
+from test.integration_and_unit_tests.integration_tests.utils import asserts
+
 import requests  # type: ignore
 
 from data.schemas.users.user import User
-from test.integration_and_unit_tests.integration_tests.utils import asserts
-
-import logging
 
 logger = logging.getLogger(__name__)
 

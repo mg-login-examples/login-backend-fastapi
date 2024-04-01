@@ -1,14 +1,14 @@
 import logging
+from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import \
+    generate_random_user_note_to_create
+from test.integration_and_unit_tests.utils.user_api import \
+    user_notes as user_notes_api
 
 import pytest
 import requests  # type: ignore
 
 from data.mongo_schemas.user_notes.user_note import UserNote
 from data.schemas.users.user import User
-from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import (
-    generate_random_user_note_to_create,
-)
-from test.integration_and_unit_tests.utils.user_api import user_notes as user_notes_api
 
 logger = logging.getLogger(__name__)
 

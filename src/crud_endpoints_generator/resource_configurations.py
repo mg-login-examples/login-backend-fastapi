@@ -1,6 +1,6 @@
 from typing import Callable, Type
-from pydantic import BaseModel as BaseSchema
 
+from pydantic import BaseModel as BaseSchema
 from sqlalchemy.ext.declarative import DeclarativeMeta
 
 

@@ -1,8 +1,8 @@
 import requests  # type: ignore
 from fastapi.encoders import jsonable_encoder
 
-from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate
 from data.mongo_schemas.user_notes.user_note import UserNote
+from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate
 
 
 def get_user_note(test_client: requests.Session, user_note_id: str) -> UserNote:

@@ -1,9 +1,9 @@
-from sqlalchemy import Integer, Column, ForeignKey, UniqueConstraint, DateTime
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.sql import func
 
 from data.database.models.base import Base
-from data.database.models.user import User
 from data.database.models.quote import Quote
+from data.database.models.user import User
 
 
 class UserQuoteLike(Base):

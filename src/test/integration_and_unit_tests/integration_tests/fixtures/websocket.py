@@ -1,7 +1,7 @@
 import logging
-import pytest
 from typing import Iterator
 
+import pytest
 from fastapi.testclient import TestClient
 from starlette.testclient import WebSocketTestSession
 

@@ -3,15 +3,13 @@ import logging
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from stores.sql_db_store import crud_base
 from data.database.models.admin_user import AdminUser as AdminUserModel
-from data.schemas.admin_users.admin_user_create_as_model import (
-    AdminUserCreateAsModel as AdminUserCreateAsModelSchema,
-)
 from data.schemas.admin_users.admin_user import AdminUser as AdminUserSchema
-from data.schemas.admin_users.admin_user_with_password import (
-    AdminUserWithPassword as AdminUserWithPasswordSchema,
-)
+from data.schemas.admin_users.admin_user_create_as_model import \
+    AdminUserCreateAsModel as AdminUserCreateAsModelSchema
+from data.schemas.admin_users.admin_user_with_password import \
+    AdminUserWithPassword as AdminUserWithPasswordSchema
+from stores.sql_db_store import crud_base
 from utils.security.password_utils import get_password_hash
 
 logger = logging.getLogger(__name__)

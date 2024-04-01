@@ -1,17 +1,15 @@
-from random import randint
 from datetime import datetime, timedelta
+from random import randint
 
 from fastapi import BackgroundTasks
 from sqlalchemy.orm import Session
 
+from data.database.models.user_email_verification import \
+    UserEmailVerification as UserEmailVerificationModel
+from data.schemas.user_email_verifications.userEmailVerificationBase import \
+    UserEmailVerificationBase as UserEmailVerificationSchema
 from data.schemas.users.user import User
 from stores.sql_db_store import crud_base
-from data.database.models.user_email_verification import (
-    UserEmailVerification as UserEmailVerificationModel,
-)
-from data.schemas.user_email_verifications.userEmailVerificationBase import (
-    UserEmailVerificationBase as UserEmailVerificationSchema,
-)
 from utils.email.email_utils import send_email
 
 

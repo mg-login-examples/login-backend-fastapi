@@ -1,27 +1,27 @@
-import logging
 import asyncio
+import logging
 
 from fastapi import FastAPI
 
-from core.cors_settings import add_cors
+from admin_app import app_mounter as admin_app_mounter
+from api_dependencies.admin_route_dependencies import \
+    get_admin_routes_dependencies
+from api_dependencies.socket_route_dependencies import \
+    get_socket_routes_dependencies
+from api_dependencies.user_route_dependencies import \
+    get_user_routes_dependencies
 from core.app_lifespan import get_lifespan
+from core.cors_settings import add_cors
+from core.helper_classes.settings import Settings
+from core.swagger_docs import (create_swagger_docs_for_admin_endpoints,
+                               create_swagger_docs_for_user_endpoints)
+from password_reset_app import app_mounter as password_reset_app_mounter
 from rest_endpoints import routes as api_routes
 from socket_endpoints import routes as socket_routes
-from admin_app import app_mounter as admin_app_mounter
-from password_reset_app import app_mounter as password_reset_app_mounter
-from core.helper_classes.settings import Settings
-from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager
-from api_dependencies.user_route_dependencies import get_user_routes_dependencies
-from api_dependencies.admin_route_dependencies import get_admin_routes_dependencies
-from api_dependencies.socket_route_dependencies import get_socket_routes_dependencies
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from utils.pubsub.pubsub import PubSub
-
-from core.swagger_docs import (
-    create_swagger_docs_for_user_endpoints,
-    create_swagger_docs_for_admin_endpoints,
-)
 
 logger = logging.getLogger(__name__)
 

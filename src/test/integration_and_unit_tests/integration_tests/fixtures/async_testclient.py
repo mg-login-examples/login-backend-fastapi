@@ -1,16 +1,15 @@
+import logging
 from asyncio import AbstractEventLoop
-import pytest
 from typing import AsyncIterator
 
+import pytest
+from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
 from httpx import AsyncClient
-from asgi_lifespan import LifespanManager
 
-from utils.pubsub.pubsub import PubSub
 from data.schemas.admin_login.admin_login_response import AdminLoginResponse
 from data.schemas.authentication.login_response import LoginResponse
-
-import logging
+from utils.pubsub.pubsub import PubSub
 
 logger = logging.getLogger(__name__)
 

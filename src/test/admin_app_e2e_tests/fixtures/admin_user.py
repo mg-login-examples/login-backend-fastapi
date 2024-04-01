@@ -1,12 +1,11 @@
-import pytest
-from _pytest.fixtures import FixtureRequest
 import logging
-
-from playwright.sync_api._generated import Page
-from playwright.sync_api import expect
-
 from test.admin_app_e2e_tests.users.admin_user import AdminUser
 from test.env_settings_test import EnvSettingsTest
+
+import pytest
+from _pytest.fixtures import FixtureRequest
+from playwright.sync_api import expect
+from playwright.sync_api._generated import Page
 
 logger = logging.getLogger(__name__)
 

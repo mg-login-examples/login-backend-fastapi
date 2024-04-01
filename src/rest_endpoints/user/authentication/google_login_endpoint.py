@@ -4,26 +4,26 @@ from datetime import datetime
 from fastapi import APIRouter, Response
 from fastapi.requests import Request
 from fastapi.security.utils import get_authorization_scheme_param
-from sqlalchemy.orm import Session
-from google.oauth2 import id_token  # type: ignore
 from google.auth.transport import requests  # type: ignore
+from google.oauth2 import id_token  # type: ignore
+from sqlalchemy.orm import Session
 
+from data.database.models.user import User as UserModel
+from data.database.models.user_session import UserSession as UserSessionModel
+from data.schemas.authentication.google_sign_in_payload import \
+    GoogleSignInPayload
+from data.schemas.authentication.login_response import LoginResponse
+from data.schemas.http_error_exceptions.http_401_exceptions import (
+    HTTP_401_GOOGLE_LOGIN_UNVERIFIED_EMAIL_EXCEPTION,
+    HTTP_401_INVALID_LOGIN_EXCEPTION)
+from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
+from data.schemas.users.user import User
+from data.schemas.users.userBase import UserBase
 from helpers_classes.custom_api_router import APIRouter
 from stores.access_tokens_store.access_token_store import AccessTokenStore
-from data.schemas.authentication.google_sign_in_payload import GoogleSignInPayload
-from data.schemas.authentication.login_response import LoginResponse
 from stores.sql_db_store import crud_base
-from data.database.models.user import User as UserModel
-from data.schemas.users.userBase import UserBase
-from data.schemas.users.user import User
-from data.database.models.user_session import UserSession as UserSessionModel
-from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from utils.security.access_token_utils import generate_access_token
 from utils.security.auth_cookies import add_authorization_cookie_to_response
-from data.schemas.http_error_exceptions.http_401_exceptions import (
-    HTTP_401_INVALID_LOGIN_EXCEPTION,
-    HTTP_401_GOOGLE_LOGIN_UNVERIFIED_EMAIL_EXCEPTION,
-)
 
 logger = logging.getLogger(__name__)
 

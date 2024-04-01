@@ -1,7 +1,7 @@
 import logging
 
-from playwright.sync_api import expect, Page
 import allure  # type: ignore
+from playwright.sync_api import Page, expect
 
 logger = logging.getLogger(__name__)
 

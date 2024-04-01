@@ -1,9 +1,9 @@
 import asyncio
-from asyncio import Queue
 import logging
+from asyncio import Queue
 
-from .Backend import PubSubBackendAbstract
 from ..event import Event
+from .Backend import PubSubBackendAbstract
 
 logger = logging.getLogger(__name__)
 

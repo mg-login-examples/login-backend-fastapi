@@ -1,7 +1,7 @@
 from typing import Optional
 
-from data.schemas.examples.books.book import Book as BookShallow
 from data.schemas.examples.authors.author import Author
+from data.schemas.examples.books.book import Book as BookShallow
 from data.schemas.examples.movies.movie import Movie
 from data.schemas.examples.users.user import User
 

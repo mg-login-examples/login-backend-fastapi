@@ -1,13 +1,13 @@
 from typing import Any, Callable, Type
 
-from sqlalchemy.orm import Session
-from sqlalchemy.ext.declarative import DeclarativeMeta
-from pymongo.database import Database
 from pydantic import BaseModel as BaseSchema
+from pymongo.database import Database
+from sqlalchemy.ext.declarative import DeclarativeMeta
+from sqlalchemy.orm import Session
 
 from helpers_classes.custom_api_router import APIRouter
-from stores.sql_db_store import crud_base as sql_crud_base
 from stores.nosql_db_store import crud_base as mongo_crud_base
+from stores.sql_db_store import crud_base as sql_crud_base
 
 
 def generate_sql_endpoint(

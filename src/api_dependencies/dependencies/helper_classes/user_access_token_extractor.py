@@ -1,11 +1,11 @@
 import logging
 
+from fastapi.requests import Request
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.security.utils import get_authorization_scheme_param
-from fastapi.requests import Request
-from data.schemas.http_error_exceptions.http_403_exceptions import (
-    HTTP_403_NOT_AUTHENTICATED_EXCEPTION,
-)
+
+from data.schemas.http_error_exceptions.http_403_exceptions import \
+    HTTP_403_NOT_AUTHENTICATED_EXCEPTION
 
 logger = logging.getLogger(__name__)
 

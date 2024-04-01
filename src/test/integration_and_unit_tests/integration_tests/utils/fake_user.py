@@ -1,6 +1,6 @@
+import logging
 import random
 import string
-import logging
 
 from mimesis import Person
 

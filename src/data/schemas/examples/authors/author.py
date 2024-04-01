@@ -1,5 +1,6 @@
-from data.schemas.examples.authors.authorBase import AuthorBase
 from pydantic import ConfigDict
+
+from data.schemas.examples.authors.authorBase import AuthorBase
 
 
 class Author(AuthorBase):

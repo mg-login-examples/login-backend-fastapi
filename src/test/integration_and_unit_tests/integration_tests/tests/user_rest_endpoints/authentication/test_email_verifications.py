@@ -1,18 +1,17 @@
 import logging
-from unittest.mock import MagicMock, patch, ANY
+from test.integration_and_unit_tests.utils.admin_api import \
+    users as users_admin_api
+from test.integration_and_unit_tests.utils.user_api import \
+    email_verifications as email_verifications_api
+from unittest.mock import ANY, MagicMock, patch
 
 import requests  # type: ignore
 
-from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
-from stores.sql_db_store import crud_base
-from data.database.models.user_email_verification import (
-    UserEmailVerification as UserEmailVerificationModel,
-)
+from data.database.models.user_email_verification import \
+    UserEmailVerification as UserEmailVerificationModel
 from data.schemas.users.user import User
-from test.integration_and_unit_tests.utils.admin_api import users as users_admin_api
-from test.integration_and_unit_tests.utils.user_api import (
-    email_verifications as email_verifications_api,
-)
+from stores.sql_db_store import crud_base
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from utils.email.email_utils import send_email
 
 logger = logging.getLogger(__name__)

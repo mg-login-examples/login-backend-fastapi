@@ -1,20 +1,17 @@
-from datetime import datetime, timedelta
+import logging
 import secrets
+from datetime import datetime, timedelta
 
 from fastapi import BackgroundTasks
 from sqlalchemy.orm import Session
 
+from data.database.models.user_password_reset_token import \
+    UserPasswordResetToken as UserPasswordResetTokenModel
+from data.schemas.user_password_reset_tokens.userPasswordResetTokenBase import \
+    UserPasswordResetTokenBase as UserPasswordResetTokenSchema
 from data.schemas.users.user import User
 from stores.sql_db_store import crud_base
-from data.database.models.user_password_reset_token import (
-    UserPasswordResetToken as UserPasswordResetTokenModel,
-)
-from data.schemas.user_password_reset_tokens.userPasswordResetTokenBase import (
-    UserPasswordResetTokenBase as UserPasswordResetTokenSchema,
-)
 from utils.email.email_utils import send_email
-
-import logging
 
 logger = logging.getLogger(__name__)
 

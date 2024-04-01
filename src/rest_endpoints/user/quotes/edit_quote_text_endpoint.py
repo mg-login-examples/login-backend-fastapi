@@ -1,18 +1,16 @@
 from typing import Any
 
-from fastapi import status, Response
+from fastapi import Response, status
 from sqlalchemy.orm import Session
 
+from data.database.models.quote import Quote as QuoteModel
+from data.schemas.http_error_exceptions.http_400_exceptions import \
+    HTTP_400_ITEM_ID_MISMATCH_EXCEPTION
+from data.schemas.http_error_exceptions.http_404_exceptions import \
+    HTTP_404_ITEM_NOT_FOUND_EXCEPTION
+from data.schemas.quotes.quoteEditText import Quote as QuoteEditText
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base
-from data.database.models.quote import Quote as QuoteModel
-from data.schemas.quotes.quoteEditText import Quote as QuoteEditText
-from data.schemas.http_error_exceptions.http_400_exceptions import (
-    HTTP_400_ITEM_ID_MISMATCH_EXCEPTION,
-)
-from data.schemas.http_error_exceptions.http_404_exceptions import (
-    HTTP_404_ITEM_NOT_FOUND_EXCEPTION,
-)
 
 
 def generate_endpoint(

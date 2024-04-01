@@ -1,12 +1,12 @@
-from fastapi import FastAPI, APIRouter
-from fastapi.responses import JSONResponse
-from fastapi.openapi.utils import get_openapi
+from fastapi import APIRouter, FastAPI
 from fastapi.openapi.docs import get_swagger_ui_html
+from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
 
+from api_dependencies.admin_route_dependencies import AdminRouteDependencies
+from api_dependencies.user_route_dependencies import UserRouteDependencies
 from rest_endpoints.admin import routes as admin_routes
 from rest_endpoints.user import routes as user_routes
-from api_dependencies.user_route_dependencies import UserRouteDependencies
-from api_dependencies.admin_route_dependencies import AdminRouteDependencies
 
 
 def create_swagger_docs_for_user_endpoints(

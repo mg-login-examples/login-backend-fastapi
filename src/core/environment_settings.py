@@ -1,5 +1,6 @@
-import sec  # type: ignore
 import logging
+
+import sec  # type: ignore
 
 from core.helper_classes.settings import Settings
 

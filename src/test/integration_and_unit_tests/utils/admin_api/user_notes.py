@@ -1,11 +1,11 @@
 import logging
+from test.integration_and_unit_tests.integration_tests.utils import asserts
 
 import requests  # type: ignore
 from fastapi.encoders import jsonable_encoder
 
 from data.mongo_schemas.user_notes.user_note import UserNote
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate
-from test.integration_and_unit_tests.integration_tests.utils import asserts
 
 logger = logging.getLogger(__name__)
 

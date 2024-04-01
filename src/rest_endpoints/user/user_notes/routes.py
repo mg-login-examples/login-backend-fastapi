@@ -1,24 +1,21 @@
+from fastapi import Response, status
 from pymongo.database import Database
-from fastapi import status, Response
 
-from helpers_classes.custom_api_router import APIRouter
 from api_dependencies.user_route_dependencies import UserRouteDependencies
 from data.mongo_schemas.user_notes.user_note import UserNote
-from data.mongo_schemas.user_notes.user_note_db_table import UserNoteDBTable
-from data.mongo_schemas.user_notes.user_note_edit_text_title import (
-    UserNote as UserNoteEditTitleText,
-)
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate
+from data.mongo_schemas.user_notes.user_note_db_table import UserNoteDBTable
+from data.mongo_schemas.user_notes.user_note_edit_text_title import \
+    UserNote as UserNoteEditTitleText
+from helpers_classes.custom_api_router import APIRouter
 from stores.nosql_db_store import crud_base
-from .verify_create_user_note_owner_dependency import (
-    get_verify_create_user_note_owner_as_fastapi_dependency,
-)
-from .verify_edit_user_note_owner_dependency import (
-    get_verify_edit_user_note_owner_as_fastapi_dependency,
-)
-from .verify_delete_user_note_owner_dependency import (
-    get_verify_delete_user_note_owner_as_fastapi_dependency,
-)
+
+from .verify_create_user_note_owner_dependency import \
+    get_verify_create_user_note_owner_as_fastapi_dependency
+from .verify_delete_user_note_owner_dependency import \
+    get_verify_delete_user_note_owner_as_fastapi_dependency
+from .verify_edit_user_note_owner_dependency import \
+    get_verify_edit_user_note_owner_as_fastapi_dependency
 
 
 def get_router(user_route_dependencies: UserRouteDependencies) -> APIRouter:

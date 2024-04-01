@@ -1,24 +1,28 @@
-from helpers_classes.custom_api_router import APIRouter
-from crud_endpoints_generator.crud_endpoints_generator import (
-    generate_router_with_resource_endpoints,
-)
-from crud_endpoints_generator.resource_configurations import ResourceConfigurations
+from api_dependencies.user_route_dependencies import UserRouteDependencies
+from crud_endpoints_generator.crud_endpoints_generator import \
+    generate_router_with_resource_endpoints
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
+from crud_endpoints_generator.resource_configurations import \
+    ResourceConfigurations
+from data.database.models.user import User as UserModel
 from data.schemas.users.user import User as UserSchema
 from data.schemas.users.userCreate import UserCreate as UserCreateSchema
-from data.database.models.user import User as UserModel
-from api_dependencies.user_route_dependencies import UserRouteDependencies
-from .create_user_endpoint import generate_endpoint as generate_create_user_endpoint
-from .get_users_endpoint import generate_endpoint as generate_get_users_endpoint
-from .get_users_by_ids_endpoint import (
-    generate_endpoint as generate_get_users_by_ids_endpoint,
-)
-from .user_profile_endpoints import (
-    generate_endpoints as generate_user_profile_endpoints,
-)
-from .user_quotes_endpoint import generate_endpoint as generate_user_quotes_endpoint
-from .user_sessions_endpoint import generate_endpoint as generate_user_sessions_endpoint
-from .user_notes_endpoint import generate_endpoint as generate_user_notes_endpoint
+from helpers_classes.custom_api_router import APIRouter
+
+from .create_user_endpoint import \
+    generate_endpoint as generate_create_user_endpoint
+from .get_users_by_ids_endpoint import \
+    generate_endpoint as generate_get_users_by_ids_endpoint
+from .get_users_endpoint import \
+    generate_endpoint as generate_get_users_endpoint
+from .user_notes_endpoint import \
+    generate_endpoint as generate_user_notes_endpoint
+from .user_profile_endpoints import \
+    generate_endpoints as generate_user_profile_endpoints
+from .user_quotes_endpoint import \
+    generate_endpoint as generate_user_quotes_endpoint
+from .user_sessions_endpoint import \
+    generate_endpoint as generate_user_sessions_endpoint
 
 
 def get_router(

@@ -1,16 +1,12 @@
+import asyncio
+import logging
 import os
 import sys
-import logging
-import asyncio
 
 import uvicorn
 
-from core import (
-    environment_settings,
-    logging_settings,
-    app_factory,
-    admin_users_manager,
-)
+from core import (admin_users_manager, app_factory, environment_settings,
+                  logging_settings)
 from stores import store_utils
 from stores.sql_db_store import db_utils
 from utils.pubsub import utils as pubsub_utils

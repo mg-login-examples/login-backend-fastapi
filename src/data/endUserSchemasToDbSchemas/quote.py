@@ -1,11 +1,9 @@
 from data.schemas.quotes.quoteCreate import QuoteCreate as QuoteCreateSchema
-from data.schemas.quotes.quoteCreateAsModel import (
-    QuoteCreateAsModel as QuoteCreateAsModelSchema,
-)
+from data.schemas.quotes.quoteCreateAsModel import \
+    QuoteCreateAsModel as QuoteCreateAsModelSchema
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeepSchema
-from data.schemas.quotes.quoteUpdateAsModel import (
-    QuoteUpdateAsModel as QuoteUpdateAsModelSchema,
-)
+from data.schemas.quotes.quoteUpdateAsModel import \
+    QuoteUpdateAsModel as QuoteUpdateAsModelSchema
 
 
 def createSchemaToDbSchema(quote: QuoteCreateSchema) -> QuoteCreateAsModelSchema:

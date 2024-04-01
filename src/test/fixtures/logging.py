@@ -1,4 +1,5 @@
 import logging
+
 import pytest
 
 from core.helper_classes.settings import Settings

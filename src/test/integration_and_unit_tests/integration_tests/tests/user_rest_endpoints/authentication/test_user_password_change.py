@@ -1,6 +1,8 @@
 import logging
 import random
 import string
+from test.integration_and_unit_tests.utils.user_api import \
+    authentication as authentication_api
 
 import requests  # type: ignore
 
@@ -8,9 +10,6 @@ from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.authentication.user_password_change import UserPasswordChange
 from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.userDeep import User as UserDeep
-from test.integration_and_unit_tests.utils.user_api import (
-    authentication as authentication_api,
-)
 
 logger = logging.getLogger(__name__)
 

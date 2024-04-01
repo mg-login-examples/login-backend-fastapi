@@ -4,12 +4,11 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from data.database.models.quote import Quote as QuoteModel
+from data.schemas.http_error_exceptions.http_403_exceptions import \
+    HTTP_403_NOT_AUTHORIZED_EXCEPTION
 from data.schemas.quotes.quoteEditText import Quote as QuoteEditText
 from data.schemas.users.user import User
 from stores.sql_db_store import crud_base
-from data.schemas.http_error_exceptions.http_403_exceptions import (
-    HTTP_403_NOT_AUTHORIZED_EXCEPTION,
-)
 
 logger = logging.getLogger(__name__)
 

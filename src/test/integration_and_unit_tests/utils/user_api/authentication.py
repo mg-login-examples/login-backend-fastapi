@@ -1,10 +1,11 @@
+from test.integration_and_unit_tests.integration_tests.utils import asserts
+
 import requests  # type: ignore
 
 from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.authentication.user_password_change import UserPasswordChange
-from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.user import User
-from test.integration_and_unit_tests.integration_tests.utils import asserts
+from data.schemas.users.userCreate import UserCreate
 
 
 def login(test_client: requests.Session, user: UserCreate) -> LoginResponse:

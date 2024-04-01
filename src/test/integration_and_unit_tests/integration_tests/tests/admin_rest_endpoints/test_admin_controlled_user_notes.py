@@ -1,18 +1,16 @@
 import logging
+from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import \
+    generate_random_user_note_to_create
+from test.integration_and_unit_tests.utils.admin_api import \
+    user_notes as user_notes_admin_api
 
-import requests  # type: ignore
 import pytest
+import requests  # type: ignore
 from mimesis import Text
 
 from data.mongo_schemas.user_notes.user_note import UserNote
-from data.schemas.users.userDeep import User as UserDeep
 from data.schemas.users.user import User
-from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import (
-    generate_random_user_note_to_create,
-)
-from test.integration_and_unit_tests.utils.admin_api import (
-    user_notes as user_notes_admin_api,
-)
+from data.schemas.users.userDeep import User as UserDeep
 
 logger = logging.getLogger(__name__)
 

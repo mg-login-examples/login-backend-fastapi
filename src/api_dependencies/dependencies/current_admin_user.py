@@ -1,10 +1,9 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from utils.security.access_token_utils import parse_access_token
 from data.database.models.admin_user import AdminUser as AdminUserModel
-
 from stores.sql_db_store import crud_base
+from utils.security.access_token_utils import parse_access_token
 
 
 def get_current_admin_user_as_fastapi_dependency(

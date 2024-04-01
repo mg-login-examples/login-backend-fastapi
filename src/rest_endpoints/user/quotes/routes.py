@@ -1,30 +1,28 @@
-from helpers_classes.custom_api_router import APIRouter
 from api_dependencies.user_route_dependencies import UserRouteDependencies
-from crud_endpoints_generator.crud_endpoints_generator import (
-    generate_router_with_resource_endpoints,
-)
-from crud_endpoints_generator.resource_configurations import ResourceConfigurations
+from crud_endpoints_generator.crud_endpoints_generator import \
+    generate_router_with_resource_endpoints
 from crud_endpoints_generator.endpoints_configs import EndpointsConfigs
-from data.schemas.quotes.quoteDeep import Quote as QuoteSchema
-from data.schemas.quotes.quoteCreate import QuoteCreate as QuoteCreateSchema
+from crud_endpoints_generator.resource_configurations import \
+    ResourceConfigurations
 from data.database.models.quote import Quote as QuoteModel
-from data.endUserSchemasToDbSchemas.quote import (
-    updateSchemaToDbSchema as quoteUpdateSchemaToDbSchema,
-)
-from data.endUserSchemasToDbSchemas.quote import (
-    createSchemaToDbSchema as quoteCreateSchemaToDbSchema,
-)
-from .edit_quote_text_endpoint import generate_endpoint as generate_edit_quote_endpoint
-from .like_quote_endpoints import generate_endpoints as generate_like_quote_endpoints
-from .verify_delete_quote_owner_dependency import (
-    get_verify_delete_quote_owner_as_fastapi_dependency,
-)
-from .verify_create_quote_owner_dependency import (
-    get_verify_create_quote_owner_as_fastapi_dependency,
-)
-from .verify_edit_quote_owner_dependency import (
-    get_verify_edit_quote_owner_as_fastapi_dependency,
-)
+from data.endUserSchemasToDbSchemas.quote import \
+    createSchemaToDbSchema as quoteCreateSchemaToDbSchema
+from data.endUserSchemasToDbSchemas.quote import \
+    updateSchemaToDbSchema as quoteUpdateSchemaToDbSchema
+from data.schemas.quotes.quoteCreate import QuoteCreate as QuoteCreateSchema
+from data.schemas.quotes.quoteDeep import Quote as QuoteSchema
+from helpers_classes.custom_api_router import APIRouter
+
+from .edit_quote_text_endpoint import \
+    generate_endpoint as generate_edit_quote_endpoint
+from .like_quote_endpoints import \
+    generate_endpoints as generate_like_quote_endpoints
+from .verify_create_quote_owner_dependency import \
+    get_verify_create_quote_owner_as_fastapi_dependency
+from .verify_delete_quote_owner_dependency import \
+    get_verify_delete_quote_owner_as_fastapi_dependency
+from .verify_edit_quote_owner_dependency import \
+    get_verify_edit_quote_owner_as_fastapi_dependency
 
 
 def get_router(user_route_dependencies: UserRouteDependencies) -> APIRouter:

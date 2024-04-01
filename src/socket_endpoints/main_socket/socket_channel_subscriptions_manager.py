@@ -1,17 +1,19 @@
-from typing import Any
-import logging
 import asyncio
 import json
+import logging
+from typing import Any
 
 from fastapi import WebSocket
 from pymongo.database import Database
 
-from .websocket_payload import WebSocketPayload
-from .websocket_actions import WebSocketActions
 from data.schemas.users.user import User
-from group_chat import socket_message_handler as group_chat_socket_message_handler
+from group_chat import \
+    socket_message_handler as group_chat_socket_message_handler
 from utils.pubsub.pubsub import PubSub
 from utils.pubsub.subscriber import Subscriber
+
+from .websocket_actions import WebSocketActions
+from .websocket_payload import WebSocketPayload
 
 logger = logging.getLogger(__name__)
 
