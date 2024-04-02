@@ -1,16 +1,19 @@
-from crud_endpoints_generator.resource_configurations import \
-    ResourceConfigurations
+from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 from data.database.models.quote import Quote as QuoteModel
 from data.database.models.user import User as UserModel
-from data.endUserSchemasToDbSchemas.quote import \
-    createSchemaToDbSchema as quoteCreateSchemaToDbSchema
-from data.endUserSchemasToDbSchemas.quote import \
-    updateSchemaToDbSchema as quoteUpdateSchemaToDbSchema
-from data.endUserSchemasToDbSchemas.user import \
-    createSchemaToDbSchema as userCreateSchemaToDbSchema
+from data.endUserSchemasToDbSchemas.quote import (
+    createSchemaToDbSchema as quoteCreateSchemaToDbSchema,
+)
+from data.endUserSchemasToDbSchemas.quote import (
+    updateSchemaToDbSchema as quoteUpdateSchemaToDbSchema,
+)
+from data.endUserSchemasToDbSchemas.user import (
+    createSchemaToDbSchema as userCreateSchemaToDbSchema,
+)
 from data.mongo_schemas.user_notes.user_note import UserNote as UserNoteSchema
-from data.mongo_schemas.user_notes.user_note_create import \
-    UserNoteCreate as UserNoteCreateSchema
+from data.mongo_schemas.user_notes.user_note_create import (
+    UserNoteCreate as UserNoteCreateSchema,
+)
 from data.mongo_schemas.user_notes.user_note_db_table import UserNoteDBTable
 from data.schemas.quotes.quoteCreate import QuoteCreate as QuoteCreateSchema
 from data.schemas.quotes.quoteDeep import Quote as QuoteSchema

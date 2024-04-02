@@ -1,14 +1,17 @@
 import logging
-from test.integration_and_unit_tests.utils.user_api import \
-    authentication as authentication_api
-from test.integration_and_unit_tests.utils.user_api import \
-    password_reset as password_reset_api
+from test.integration_and_unit_tests.utils.user_api import (
+    authentication as authentication_api,
+)
+from test.integration_and_unit_tests.utils.user_api import (
+    password_reset as password_reset_api,
+)
 from unittest.mock import ANY, MagicMock, patch
 
 import requests  # type: ignore
 
-from data.database.models.user_password_reset_token import \
-    UserPasswordResetToken as UserPasswordResetTokenModel
+from data.database.models.user_password_reset_token import (
+    UserPasswordResetToken as UserPasswordResetTokenModel,
+)
 from data.schemas.users.userCreate import UserCreate
 from data.schemas.users.userDeep import User as UserDeep
 from stores.sql_db_store import crud_base

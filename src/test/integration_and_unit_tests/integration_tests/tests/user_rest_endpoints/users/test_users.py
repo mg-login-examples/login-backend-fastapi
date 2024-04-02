@@ -1,14 +1,16 @@
 import logging
 from test.integration_and_unit_tests.integration_tests.utils import asserts
-from test.integration_and_unit_tests.integration_tests.utils.fake_user import \
-    generate_random_user_to_create
+from test.integration_and_unit_tests.integration_tests.utils.fake_user import (
+    generate_random_user_to_create,
+)
 from test.integration_and_unit_tests.utils.user_api import users as users_api
 from unittest.mock import ANY, MagicMock, patch
 
 import requests  # type: ignore
 
-from data.database.models.user_email_verification import \
-    UserEmailVerification as UserEmailVerificationModel
+from data.database.models.user_email_verification import (
+    UserEmailVerification as UserEmailVerificationModel,
+)
 from data.schemas.users.user import User
 from stores.sql_db_store import crud_base
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager

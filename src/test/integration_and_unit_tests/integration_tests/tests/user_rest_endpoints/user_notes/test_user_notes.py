@@ -1,11 +1,12 @@
 import logging
 from test.integration_and_unit_tests.integration_tests.utils import asserts
-from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import \
-    generate_random_user_note_to_create
-from test.integration_and_unit_tests.utils.admin_api import \
-    user_notes as user_notes_admin_api
-from test.integration_and_unit_tests.utils.user_api import \
-    user_notes as user_notes_api
+from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import (
+    generate_random_user_note_to_create,
+)
+from test.integration_and_unit_tests.utils.admin_api import (
+    user_notes as user_notes_admin_api,
+)
+from test.integration_and_unit_tests.utils.user_api import user_notes as user_notes_api
 
 import pytest
 import requests  # type: ignore

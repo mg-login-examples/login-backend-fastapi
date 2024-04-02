@@ -5,8 +5,7 @@ from typing import Any
 from fastapi import Response, status
 from sqlalchemy.orm import Session
 
-from data.database.models.user_quote_like import \
-    UserQuoteLike as UserQuoteLikesModel
+from data.database.models.user_quote_like import UserQuoteLike as UserQuoteLikesModel
 from data.schemas.user_quote_like.user_quote_like import UserQuoteLike
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base

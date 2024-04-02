@@ -2,7 +2,9 @@ import logging
 from abc import ABC, abstractmethod
 
 from utils.security.access_token_utils import (
-    check_access_token_in_valid_format, check_access_token_is_expired)
+    check_access_token_in_valid_format,
+    check_access_token_is_expired,
+)
 
 logger = logging.getLogger(__name__)
 

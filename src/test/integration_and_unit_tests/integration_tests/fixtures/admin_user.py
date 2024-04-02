@@ -1,7 +1,8 @@
 import logging
 from test.env_settings_test import EnvSettingsTest
-from test.integration_and_unit_tests.utils.admin_api import \
-    authentication as admin_authentication_api
+from test.integration_and_unit_tests.utils.admin_api import (
+    authentication as admin_authentication_api,
+)
 
 import pytest
 import requests  # type: ignore

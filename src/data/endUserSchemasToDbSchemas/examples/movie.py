@@ -1,5 +1,4 @@
-from data.schemas.examples.movies.movieAsModel import \
-    MovieAsModel as MovieAsModelSchema
+from data.schemas.examples.movies.movieAsModel import MovieAsModel as MovieAsModelSchema
 from data.schemas.examples.movies.movieDeep import Movie as MovieDeepSchema
 
 

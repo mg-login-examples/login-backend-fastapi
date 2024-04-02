@@ -1,6 +1,7 @@
 import logging
-from test.integration_and_unit_tests.utils.user_api import \
-    authentication as authentication_api
+from test.integration_and_unit_tests.utils.user_api import (
+    authentication as authentication_api,
+)
 
 import requests  # type: ignore
 

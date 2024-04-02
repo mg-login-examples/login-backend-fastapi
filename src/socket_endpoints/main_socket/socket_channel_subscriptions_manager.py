@@ -7,8 +7,7 @@ from fastapi import WebSocket
 from pymongo.database import Database
 
 from data.schemas.users.user import User
-from group_chat import \
-    socket_message_handler as group_chat_socket_message_handler
+from group_chat import socket_message_handler as group_chat_socket_message_handler
 from utils.pubsub.pubsub import PubSub
 from utils.pubsub.subscriber import Subscriber
 

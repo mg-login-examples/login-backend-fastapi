@@ -1,8 +1,7 @@
 from api_dependencies.user_route_dependencies import UserRouteDependencies
 from helpers_classes.custom_api_router import APIRouter
 from rest_endpoints.user.authentication import routes as authentication_routes
-from rest_endpoints.user.email_verification import \
-    routes as email_verifications_routes
+from rest_endpoints.user.email_verification import routes as email_verifications_routes
 from rest_endpoints.user.quotes import routes as quotes_routes
 from rest_endpoints.user.user_notes import routes as user_notes_routes
 from rest_endpoints.user.users import routes as users_routes

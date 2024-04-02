@@ -3,8 +3,9 @@ import logging
 from fastapi import Depends
 
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate
-from data.schemas.http_error_exceptions.http_403_exceptions import \
-    HTTP_403_NOT_AUTHORIZED_EXCEPTION
+from data.schemas.http_error_exceptions.http_403_exceptions import (
+    HTTP_403_NOT_AUTHORIZED_EXCEPTION,
+)
 from data.schemas.users.user import User
 
 logger = logging.getLogger(__name__)

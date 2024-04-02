@@ -1,6 +1,7 @@
 from data.schemas.users.userCreate import UserCreate as UserCreateSchema
-from data.schemas.users.userCreateAsModel import \
-    UserCreateAsModel as UserCreateAsModelSchema
+from data.schemas.users.userCreateAsModel import (
+    UserCreateAsModel as UserCreateAsModelSchema,
+)
 from utils.security.password_utils import get_password_hash
 
 

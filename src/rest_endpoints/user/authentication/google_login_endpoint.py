@@ -10,12 +10,12 @@ from sqlalchemy.orm import Session
 
 from data.database.models.user import User as UserModel
 from data.database.models.user_session import UserSession as UserSessionModel
-from data.schemas.authentication.google_sign_in_payload import \
-    GoogleSignInPayload
+from data.schemas.authentication.google_sign_in_payload import GoogleSignInPayload
 from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.http_error_exceptions.http_401_exceptions import (
     HTTP_401_GOOGLE_LOGIN_UNVERIFIED_EMAIL_EXCEPTION,
-    HTTP_401_INVALID_LOGIN_EXCEPTION)
+    HTTP_401_INVALID_LOGIN_EXCEPTION,
+)
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from data.schemas.users.user import User
 from data.schemas.users.userBase import UserBase

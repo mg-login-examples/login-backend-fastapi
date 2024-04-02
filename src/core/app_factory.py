@@ -4,17 +4,16 @@ import logging
 from fastapi import FastAPI
 
 from admin_app import app_mounter as admin_app_mounter
-from api_dependencies.admin_route_dependencies import \
-    get_admin_routes_dependencies
-from api_dependencies.socket_route_dependencies import \
-    get_socket_routes_dependencies
-from api_dependencies.user_route_dependencies import \
-    get_user_routes_dependencies
+from api_dependencies.admin_route_dependencies import get_admin_routes_dependencies
+from api_dependencies.socket_route_dependencies import get_socket_routes_dependencies
+from api_dependencies.user_route_dependencies import get_user_routes_dependencies
 from core.app_lifespan import get_lifespan
 from core.cors_settings import add_cors
 from core.helper_classes.settings import Settings
-from core.swagger_docs import (create_swagger_docs_for_admin_endpoints,
-                               create_swagger_docs_for_user_endpoints)
+from core.swagger_docs import (
+    create_swagger_docs_for_admin_endpoints,
+    create_swagger_docs_for_user_endpoints,
+)
 from password_reset_app import app_mounter as password_reset_app_mounter
 from rest_endpoints import routes as api_routes
 from socket_endpoints import routes as socket_routes

@@ -4,8 +4,9 @@ from fastapi import File, Response, UploadFile, status
 from sqlalchemy.orm import Session
 
 from data.database.models.user import User as UserModel
-from data.schemas.http_error_exceptions.http_400_exceptions import \
-    HTTP_400_INVALID_IMAGE_TYPE_EXCEPTION
+from data.schemas.http_error_exceptions.http_400_exceptions import (
+    HTTP_400_INVALID_IMAGE_TYPE_EXCEPTION,
+)
 from data.schemas.users.user import User
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base

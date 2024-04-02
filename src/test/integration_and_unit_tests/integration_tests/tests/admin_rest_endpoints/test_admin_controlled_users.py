@@ -1,8 +1,8 @@
 import logging
-from test.integration_and_unit_tests.integration_tests.utils.fake_user import \
-    generate_random_user_to_create
-from test.integration_and_unit_tests.utils.admin_api import \
-    users as users_admin_api
+from test.integration_and_unit_tests.integration_tests.utils.fake_user import (
+    generate_random_user_to_create,
+)
+from test.integration_and_unit_tests.utils.admin_api import users as users_admin_api
 
 import pytest
 import requests  # type: ignore

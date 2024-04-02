@@ -6,11 +6,13 @@ from sqlalchemy.orm import Session
 
 from data.database.models.admin_user import AdminUser as AdminUserModel
 from data.schemas.admin_login.admin_login_response import AdminLoginResponse
-from data.schemas.http_error_exceptions.http_401_exceptions import \
-    HTTP_401_INVALID_LOGIN_EXCEPTION
+from data.schemas.http_error_exceptions.http_401_exceptions import (
+    HTTP_401_INVALID_LOGIN_EXCEPTION,
+)
 from helpers_classes.custom_api_router import APIRouter
-from helpers_classes.oauth2_password_request_form_extended import \
-    OAuth2PasswordRequestFormExtended
+from helpers_classes.oauth2_password_request_form_extended import (
+    OAuth2PasswordRequestFormExtended,
+)
 from stores.access_tokens_store.access_token_store import AccessTokenStore
 from stores.sql_db_store import crud_base
 from utils.security.access_token_utils import generate_access_token

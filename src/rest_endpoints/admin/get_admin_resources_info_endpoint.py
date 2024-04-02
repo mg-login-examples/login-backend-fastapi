@@ -2,8 +2,7 @@ from typing import Any
 
 from api_dependencies.admin_route_dependencies import AdminRouteDependencies
 from helpers_classes.custom_api_router import APIRouter
-from rest_endpoints.admin.enhance_resource_schemas import \
-    enhance_resource_schemas
+from rest_endpoints.admin.enhance_resource_schemas import enhance_resource_schemas
 from rest_endpoints.admin.resources import resources_configurations
 from utils.pydantic import pydantic_utils
 

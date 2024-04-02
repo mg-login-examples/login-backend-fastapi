@@ -8,8 +8,7 @@ from core.helper_classes.settings import Settings
 from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager
 from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
-from stores.store_utils import (get_cache_manager, get_db_manager,
-                                get_nosql_db_manager)
+from stores.store_utils import get_cache_manager, get_db_manager, get_nosql_db_manager
 from utils.pubsub import utils as pubsub_utils
 from utils.pubsub.pubsub import PubSub
 

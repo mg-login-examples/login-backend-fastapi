@@ -1,17 +1,20 @@
 import logging
-from test.integration_and_unit_tests.integration_tests.utils.fake_quote import \
-    generate_random_quote_to_create
-from test.integration_and_unit_tests.integration_tests.utils.fake_user import \
-    generate_random_user_to_create
+from test.integration_and_unit_tests.integration_tests.utils.fake_quote import (
+    generate_random_quote_to_create,
+)
+from test.integration_and_unit_tests.integration_tests.utils.fake_user import (
+    generate_random_user_to_create,
+)
 
 from data.database.models.quote import Quote as QuoteModel
 from data.database.models.user import User as UserModel
-from data.database.models.user_quote_like import \
-    UserQuoteLike as UserQuoteLikeModel
-from data.endUserSchemasToDbSchemas.quote import \
-    createSchemaToDbSchema as quoteCreateSchemaToDbSchema
-from data.endUserSchemasToDbSchemas.user import \
-    createSchemaToDbSchema as userCreateSchemaToDbSchema
+from data.database.models.user_quote_like import UserQuoteLike as UserQuoteLikeModel
+from data.endUserSchemasToDbSchemas.quote import (
+    createSchemaToDbSchema as quoteCreateSchemaToDbSchema,
+)
+from data.endUserSchemasToDbSchemas.user import (
+    createSchemaToDbSchema as userCreateSchemaToDbSchema,
+)
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
 from data.schemas.user_quote_like.user_quote_like import UserQuoteLike
 from data.schemas.users.userDeep import User as UserDeep

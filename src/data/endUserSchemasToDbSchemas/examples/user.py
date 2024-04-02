@@ -1,7 +1,7 @@
-from data.schemas.examples.users.userCreate import \
-    UserCreate as UserCreateSchema
-from data.schemas.examples.users.userCreateAsModel import \
-    UserCreateAsModel as UserCreateAsModelSchema
+from data.schemas.examples.users.userCreate import UserCreate as UserCreateSchema
+from data.schemas.examples.users.userCreateAsModel import (
+    UserCreateAsModel as UserCreateAsModelSchema,
+)
 
 
 def createSchemaToDbSchema(user: UserCreateSchema) -> UserCreateAsModelSchema:

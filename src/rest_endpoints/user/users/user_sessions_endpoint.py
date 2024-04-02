@@ -3,8 +3,7 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from data.database.models.user_session import UserSession as UserSessionModel
-from data.schemas.user_sessions.userSession import \
-    UserSession as UserSessionSchema
+from data.schemas.user_sessions.userSession import UserSession as UserSessionSchema
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base
 

@@ -5,12 +5,15 @@ from fastapi import Response, status
 from sqlalchemy.orm import Session
 
 from data.database.models.user import User as UserModel
-from data.database.models.user_email_verification import \
-    UserEmailVerification as UserEmailVerificationModel
-from data.schemas.http_error_exceptions.http_401_exceptions import \
-    HTTP_401_INCORRECT_VERIFICATION_CODE_EXCEPTION
-from data.schemas.http_error_exceptions.http_500_exceptions import \
-    HTTP_500_UNEXPECTED_EXCEPTION
+from data.database.models.user_email_verification import (
+    UserEmailVerification as UserEmailVerificationModel,
+)
+from data.schemas.http_error_exceptions.http_401_exceptions import (
+    HTTP_401_INCORRECT_VERIFICATION_CODE_EXCEPTION,
+)
+from data.schemas.http_error_exceptions.http_500_exceptions import (
+    HTTP_500_UNEXPECTED_EXCEPTION,
+)
 from data.schemas.users.user import User
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base

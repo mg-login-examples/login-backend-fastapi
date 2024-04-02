@@ -1,7 +1,6 @@
 from random import randint
 from test.admin_app_e2e_tests.users.admin_user import AdminUser
-from test.admin_app_e2e_tests.utils.mock_data.mock_user_data import \
-    get_mock_user_login
+from test.admin_app_e2e_tests.utils.mock_data.mock_user_data import get_mock_user_login
 
 import pytest
 

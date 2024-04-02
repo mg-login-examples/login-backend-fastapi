@@ -1,7 +1,5 @@
-from test.admin_app_e2e_tests.screens.resource_list_screen import \
-    ResourceListViewScreen
-from test.admin_app_e2e_tests.utils.page_selector_helper import \
-    PageSelectorHelper
+from test.admin_app_e2e_tests.screens.resource_list_screen import ResourceListViewScreen
+from test.admin_app_e2e_tests.utils.page_selector_helper import PageSelectorHelper
 from test.admin_app_e2e_tests.utils.view_url_helper import ViewUrlHelper
 
 from playwright.sync_api import Page

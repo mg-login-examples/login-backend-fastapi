@@ -6,8 +6,14 @@ from sqlalchemy.orm import Session
 
 from helpers_classes.custom_api_router import APIRouter
 
-from .endpoints import (delete_item, get_item, get_items, get_items_count,
-                        post_item, put_item)
+from .endpoints import (
+    delete_item,
+    get_item,
+    get_items,
+    get_items_count,
+    post_item,
+    put_item,
+)
 from .endpoints_configs import EndpointsConfigs
 from .resource_configurations import ResourceConfigurations
 

@@ -1,5 +1,4 @@
-from crud_endpoints_generator.resource_configurations import \
-    ResourceConfigurations
+from crud_endpoints_generator.resource_configurations import ResourceConfigurations
 
 
 def enhance_resource_schemas(

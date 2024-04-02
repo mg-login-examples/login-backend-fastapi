@@ -9,13 +9,18 @@ from data.database.models.user_session import UserSession as UserSessionModel
 from data.schemas.authentication.login_response import LoginResponse
 from data.schemas.authentication.user_password_change import UserPasswordChange
 from data.schemas.http_error_exceptions.http_400_exceptions import (
-    HTTP_400_BAD_REQUEST_EXCEPTION, HTTP_400_INVALID_PASSWORD_EXCEPTION)
-from data.schemas.http_error_exceptions.http_401_exceptions import \
-    HTTP_401_INVALID_CREDENTIALS_EXCEPTION
-from data.schemas.http_error_exceptions.http_403_exceptions import \
-    HTTP_403_NOT_AUTHORIZED_EXCEPTION
-from data.schemas.http_error_exceptions.http_500_exceptions import \
-    HTTP_500_UNEXPECTED_EXCEPTION
+    HTTP_400_BAD_REQUEST_EXCEPTION,
+    HTTP_400_INVALID_PASSWORD_EXCEPTION,
+)
+from data.schemas.http_error_exceptions.http_401_exceptions import (
+    HTTP_401_INVALID_CREDENTIALS_EXCEPTION,
+)
+from data.schemas.http_error_exceptions.http_403_exceptions import (
+    HTTP_403_NOT_AUTHORIZED_EXCEPTION,
+)
+from data.schemas.http_error_exceptions.http_500_exceptions import (
+    HTTP_500_UNEXPECTED_EXCEPTION,
+)
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from data.schemas.users.user import User as UserSchema
 from helpers_classes.custom_api_router import APIRouter

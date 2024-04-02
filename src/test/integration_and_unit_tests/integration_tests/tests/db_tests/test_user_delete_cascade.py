@@ -1,28 +1,35 @@
 import logging
 from datetime import datetime
-from test.integration_and_unit_tests.integration_tests.utils.fake_quote import \
-    generate_random_quote_to_create
-from test.integration_and_unit_tests.integration_tests.utils.fake_user import \
-    generate_random_user_to_create
+from test.integration_and_unit_tests.integration_tests.utils.fake_quote import (
+    generate_random_quote_to_create,
+)
+from test.integration_and_unit_tests.integration_tests.utils.fake_user import (
+    generate_random_user_to_create,
+)
 
 from data.database.models.quote import Quote as QuoteModel
 from data.database.models.user import User as UserModel
-from data.database.models.user_email_verification import \
-    UserEmailVerification as UserEmailVerificationModel
-from data.database.models.user_password_reset_token import \
-    UserPasswordResetToken as UserPasswordResetTokenModel
-from data.database.models.user_quote_like import \
-    UserQuoteLike as UserQuoteLikeModel
+from data.database.models.user_email_verification import (
+    UserEmailVerification as UserEmailVerificationModel,
+)
+from data.database.models.user_password_reset_token import (
+    UserPasswordResetToken as UserPasswordResetTokenModel,
+)
+from data.database.models.user_quote_like import UserQuoteLike as UserQuoteLikeModel
 from data.database.models.user_session import UserSession as UserSessionModel
-from data.endUserSchemasToDbSchemas.quote import \
-    createSchemaToDbSchema as quoteCreateSchemaToDbSchema
-from data.endUserSchemasToDbSchemas.user import \
-    createSchemaToDbSchema as userCreateSchemaToDbSchema
+from data.endUserSchemasToDbSchemas.quote import (
+    createSchemaToDbSchema as quoteCreateSchemaToDbSchema,
+)
+from data.endUserSchemasToDbSchemas.user import (
+    createSchemaToDbSchema as userCreateSchemaToDbSchema,
+)
 from data.schemas.quotes.quoteDeep import Quote as QuoteDeep
-from data.schemas.user_email_verifications.userEmailVerificationBase import \
-    UserEmailVerificationBase
-from data.schemas.user_password_reset_tokens.userPasswordResetTokenBase import \
-    UserPasswordResetTokenBase
+from data.schemas.user_email_verifications.userEmailVerificationBase import (
+    UserEmailVerificationBase,
+)
+from data.schemas.user_password_reset_tokens.userPasswordResetTokenBase import (
+    UserPasswordResetTokenBase,
+)
 from data.schemas.user_quote_like.user_quote_like import UserQuoteLike
 from data.schemas.user_sessions.userSessionCreate import UserSessionCreate
 from data.schemas.users.userDeep import User as UserDeep

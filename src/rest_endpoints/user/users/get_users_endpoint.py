@@ -12,8 +12,8 @@ def generate_endpoint(
     current_user_dependency: User,
 ):
     @router.get(
-        "/", response_model=list[User], dependencies=[current_user_dependency]
-    )  # type: ignore
+        "/", response_model=list[User], dependencies=[current_user_dependency]  # type: ignore
+    )
     def get_users(
         filter_users_text: str,
         skip: int = 0,

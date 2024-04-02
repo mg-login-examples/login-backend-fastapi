@@ -14,8 +14,8 @@ def generate_endpoint(
     current_user_dependency: User,
 ):
     @router.post(
-        "/ids", response_model=list[User], dependencies=[current_user_dependency]
-    )  # type: ignore
+        "/ids", response_model=list[User], dependencies=[current_user_dependency]  # type: ignore
+    )
     def get_users_by_ids(
         user_ids: list[int],
         skip: int = 0,

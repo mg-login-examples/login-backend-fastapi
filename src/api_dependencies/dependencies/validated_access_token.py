@@ -3,8 +3,9 @@ import logging
 from fastapi import Depends
 from fastapi.requests import Request
 
-from data.schemas.http_error_exceptions.http_403_exceptions import \
-    HTTP_403_INVALID_TOKEN_EXCEPTION
+from data.schemas.http_error_exceptions.http_403_exceptions import (
+    HTTP_403_INVALID_TOKEN_EXCEPTION,
+)
 from stores.access_tokens_store.access_token_store import AccessTokenStore
 
 logger = logging.getLogger(__name__)

@@ -5,8 +5,12 @@ import sys
 
 import uvicorn
 
-from core import (admin_users_manager, app_factory, environment_settings,
-                  logging_settings)
+from core import (
+    admin_users_manager,
+    app_factory,
+    environment_settings,
+    logging_settings,
+)
 from stores import store_utils
 from stores.sql_db_store import db_utils
 from utils.pubsub import utils as pubsub_utils

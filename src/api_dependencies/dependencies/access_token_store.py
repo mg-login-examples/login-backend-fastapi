@@ -3,10 +3,8 @@ import logging
 from fastapi import Depends
 from redis.asyncio.client import Redis
 
-from stores.access_tokens_store.access_token_file_store import \
-    AccessTokenFileStore
-from stores.access_tokens_store.access_token_redis_store import \
-    AccessTokenRedisStore
+from stores.access_tokens_store.access_token_file_store import AccessTokenFileStore
+from stores.access_tokens_store.access_token_redis_store import AccessTokenRedisStore
 
 logger = logging.getLogger(__name__)
 

@@ -1,8 +1,7 @@
 from api_dependencies.admin_route_dependencies import AdminRouteDependencies
 from helpers_classes.custom_api_router import APIRouter
 
-from .authenticate_endpoint import \
-    generate_endpoint as generate_authentication_endpoint
+from .authenticate_endpoint import generate_endpoint as generate_authentication_endpoint
 from .login_endpoint import generate_endpoint as generate_login_endpoint
 from .logout_endpoint import generate_endpoint as generate_logout_endpoint
 

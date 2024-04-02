@@ -4,15 +4,19 @@ from fastapi import BackgroundTasks, Request, Response, status
 from sqlalchemy.orm import Session
 
 from data.database.models.user import User as UserModel
-from data.database.models.user_password_reset_token import \
-    UserPasswordResetToken as UserPasswordResetTokenModel
+from data.database.models.user_password_reset_token import (
+    UserPasswordResetToken as UserPasswordResetTokenModel,
+)
 from data.schemas.authentication.user_password_reset import UserPasswordReset
-from data.schemas.http_error_exceptions.http_400_exceptions import \
-    HTTP_400_BAD_REQUEST_EXCEPTION
-from data.schemas.http_error_exceptions.http_410_exceptions import \
-    HTTP_410_EXPIRED_OR_INACTIVE_CODE_EXCEPTION
-from data.schemas.user_password_reset_tokens.userPasswordResetToken import \
-    UserPasswordResetToken as UserPasswordResetTokenSchema
+from data.schemas.http_error_exceptions.http_400_exceptions import (
+    HTTP_400_BAD_REQUEST_EXCEPTION,
+)
+from data.schemas.http_error_exceptions.http_410_exceptions import (
+    HTTP_410_EXPIRED_OR_INACTIVE_CODE_EXCEPTION,
+)
+from data.schemas.user_password_reset_tokens.userPasswordResetToken import (
+    UserPasswordResetToken as UserPasswordResetTokenSchema,
+)
 from helpers_classes.custom_api_router import APIRouter
 from stores.sql_db_store import crud_base
 from utils.security.password_utils import get_password_hash

@@ -1,9 +1,9 @@
 import logging
 from test.integration_and_unit_tests.integration_tests.utils import asserts
-from test.integration_and_unit_tests.integration_tests.utils.fake_quote import \
-    generate_random_quote_to_create
-from test.integration_and_unit_tests.utils.admin_api import \
-    quotes as quotes_admin_api
+from test.integration_and_unit_tests.integration_tests.utils.fake_quote import (
+    generate_random_quote_to_create,
+)
+from test.integration_and_unit_tests.utils.admin_api import quotes as quotes_admin_api
 from test.integration_and_unit_tests.utils.user_api import quotes as quotes_api
 
 import pytest

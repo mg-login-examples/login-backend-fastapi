@@ -5,18 +5,24 @@ from pymongo.database import Database as NoSQLDatabase
 from redis.asyncio.client import Redis
 from sqlalchemy.orm import Session
 
-from api_dependencies.dependencies.access_token_store import \
-    get_access_token_store_as_fastapi_dependency
-from api_dependencies.dependencies.current_user import \
-    get_current_user_as_fastapi_dependency
-from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_item_id_dependency import \
-    get_restrict_endpoint_to_own_resources_param_item_id_as_fastapi_dependency
-from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_user_id_dependency import \
-    get_restrict_endpoint_to_own_resources_param_user_id_as_fastapi_dependency
-from api_dependencies.dependencies.socket_authorization_token_extractor import \
-    get_socket_authorization_token_as_fastapi_dependency
-from api_dependencies.dependencies.socket_validated_access_token import \
-    get_socket_validated_access_token_as_fastapi_dependency
+from api_dependencies.dependencies.access_token_store import (
+    get_access_token_store_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.current_user import (
+    get_current_user_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_item_id_dependency import (
+    get_restrict_endpoint_to_own_resources_param_item_id_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_user_id_dependency import (
+    get_restrict_endpoint_to_own_resources_param_user_id_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.socket_authorization_token_extractor import (
+    get_socket_authorization_token_as_fastapi_dependency,
+)
+from api_dependencies.dependencies.socket_validated_access_token import (
+    get_socket_validated_access_token_as_fastapi_dependency,
+)
 from core.helper_classes.settings import Settings
 from data.schemas.users.user import User
 from stores.access_tokens_store.access_token_store import AccessTokenStore
