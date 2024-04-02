@@ -8,7 +8,10 @@ class SPAStaticFiles(StaticFiles):
         try:
             response = await super().get_response(path, scope)
         except Exception as error_response:
-            if error_response.status_code == 404:
+            if (
+                hasattr(error_response, "status_code")
+                and error_response.status_code == 404
+            ):
                 response = await super().get_response(".", scope)
             else:
                 raise error_response
