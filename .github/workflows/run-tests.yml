@@ -1,10 +1,7 @@
-name: Push-to-EC2
+name: Run Tests
 
-# Trigger deployment only on push to main branch
 on:
   push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:

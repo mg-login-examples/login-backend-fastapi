@@ -1,0 +1,24 @@
+name: Lint Check
+
+on:
+  push:
+  workflow_dispatch:
+
+
+jobs:
+  backend-typecheck:
+    name: Do typecheck for backend code with mypy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the files
+      uses: actions/checkout@v3
+    - name: Run mypy check
+      run: sudo ./scripts_docker.sh lint-backend-typecheck
+  backend-format:
+    name: Do format check for backend code with black
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the files
+      uses: actions/checkout@v3
+    - name: Run mypy check
+      run: sudo ./scripts_docker.sh lint-backend-format
