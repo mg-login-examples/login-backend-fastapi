@@ -2,6 +2,8 @@ import logging
 
 import coloredlogs  # type: ignore
 
+from core.helper_classes.settings import Settings
+
 logger = logging.getLogger(__name__)
 
 
@@ -23,3 +25,12 @@ def filter_out_healthcheck_logs():
 
     # Filter out /endpoint
     logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+
+
+def log_env_vars(settings: Settings):
+    if settings.log_env_vars_on_app_start:
+        logger.info("****************** ENV Vars ******************")
+        settings_dict = settings.model_dump()
+        for setting in settings_dict:
+            logger.info(f"{setting}={settings_dict[setting]}")
+        logger.info("**********************************************")

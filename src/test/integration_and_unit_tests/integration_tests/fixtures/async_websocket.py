@@ -18,7 +18,6 @@ async def async_test_client_for_websocket(app: FastAPI) -> AsyncIterator[AsyncCl
         transport=ASGIWebSocketTransport(app), base_url="http://testserver"
     ) as client:
         yield client
-        logger.debug("Destroy fixture async_test_client_for_websocket")
 
 
 @pytest.fixture
@@ -34,4 +33,3 @@ async def async_websocket_session(
         "http://testserver/ws/main", async_test_client_for_websocket, cookies=cookies
     ) as websocket_test_session:
         yield websocket_test_session
-        logger.debug("Destroy fixture async_websocket_session")

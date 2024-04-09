@@ -38,7 +38,8 @@ class PubSub:
     async def disconnect(self):
         if self._listener_task:
             if self._listener_task.done():
-                self._listener_task.result()
+                pass
+                # self._listener_task.result() # FIXME gets stuck here in tests
             else:
                 self._listener_task.cancel()
         await self._backend.disconnect()

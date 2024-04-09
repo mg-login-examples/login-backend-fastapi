@@ -1,8 +1,12 @@
 import asyncio
+import logging
 from asyncio import Queue
+from random import randint
 from typing import AsyncGenerator
 
 from .event import Event
+
+logger = logging.getLogger(__name__)
 
 
 class Unsubscribed(Exception):
@@ -12,13 +16,16 @@ class Unsubscribed(Exception):
 class Subscriber:
     def __init__(self):
         self._queue: Queue = asyncio.Queue()
+        self._queue_name = randint(100000, 999999)
 
     async def __aiter__(self) -> AsyncGenerator:
+        logger.debug(f"Entering subscriber queue {self._queue_name}")
         try:
             while True:
                 event = await self.get()
                 yield event
         except Unsubscribed:
+            logger.debug(f"Exiting subscriber queue {self._queue_name}")
             pass
 
     async def exit_async_iter(self) -> None:

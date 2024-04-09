@@ -22,11 +22,4 @@ def get_environment_settings(dot_env_file: str = ".env"):
     if redis_secret:
         settings.redis_password = redis_secret
 
-    if settings.log_env_vars_on_app_start:
-        logger.info("****************** ENV Vars ******************")
-        settings_dict = settings.model_dump()
-        for setting in settings_dict:
-            logger.info(f"{setting}={settings_dict[setting]}")
-        logger.info("**********************************************")
-
     return settings

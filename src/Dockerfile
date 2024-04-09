@@ -15,7 +15,7 @@ RUN pipx install poetry
 ENV PATH="${PATH}:/root/.local/bin"
 # copy dependency files and install dependencies
 COPY poetry.lock pyproject.toml ./
-RUN poetry install --no-root
+RUN poetry install
 # copy app code
 COPY . .
 # launch app stage

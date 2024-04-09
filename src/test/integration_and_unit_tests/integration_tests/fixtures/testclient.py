@@ -1,4 +1,5 @@
 import logging
+from typing import Iterator
 
 import pytest
 import requests  # type: ignore
@@ -34,8 +35,10 @@ def test_client_logged_in(
 
 
 @pytest.fixture
-def test_client_after_app_start(test_client: requests.Session) -> requests.Session:
+def test_client_after_app_start(
+    test_client: requests.Session,
+) -> Iterator[requests.Session]:
     logger.debug("Create fixture test_client_after_app_start")
-    with test_client as test_client:
-        yield test_client
+    with test_client as test_client_with_lifespan:
+        yield test_client_with_lifespan
         logger.debug("Destroy fixture test_client_after_app_start")

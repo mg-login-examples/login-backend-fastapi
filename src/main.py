@@ -1,3 +1,27 @@
+"""
+Main module for running the application.
+
+This module initializes the application environment, sets up logging,
+creates database, NoSQL, and cache managers, initializes the pubsub,
+and starts the FastAPI web app using uvicorn.
+
+Usage:
+    python main.py [option] [arguments]
+
+Options:
+    - `create_db_tables`: Creates all tables in the SQL database.
+    - `add_admin_user`: Adds an admin user to the database. Requires username and password arguments.
+    - `update_admin_user_password`: Updates the password of an admin user in the database. Requires username and new password arguments.
+    - `delete_admin_user`: Deletes an admin user from the database. Requires username argument.
+
+If no option is provided, the application starts the FastAPI web app.
+
+Environment variables:
+    - `ENV_FILE`: Path to the environment file. Default is `.env`.
+
+The application settings are configured through environment variables defined in the environment file.
+"""
+
 import asyncio
 import logging
 import os
@@ -14,7 +38,6 @@ from core import (
 from stores import store_utils
 from stores.sql_db_store import db_utils
 from utils.pubsub import utils as pubsub_utils
-from utils.pubsub.pubsub import PubSub
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +50,7 @@ logging_settings.set_logging_settings(
     SETTINGS.log_level, SETTINGS.log_to_file, SETTINGS.log_filename
 )
 logger.info(f"Environment file selected: {dot_env_file}")
+logging_settings.log_env_vars(SETTINGS)
 logging_settings.filter_out_healthcheck_logs()
 
 # Create db manager

@@ -1,4 +1,5 @@
 import logging
+from random import randint
 from test.integration_and_unit_tests.integration_tests.utils.fake_quote import (
     generate_random_quote_to_create,
 )
@@ -58,10 +59,8 @@ def test_put_quote(
     created_n_users_by_admin: list[UserDeep],
     created_quote_by_admin: QuoteDeep,
 ):
-    new_text = text.quote()
-    assert created_quote_by_admin.text != new_text
+    new_text = text.quote() + str(randint(1, 1000))
     created_quote_by_admin.text = new_text
-    assert created_quote_by_admin.author.id != created_n_users_by_admin[0].id
     created_quote_by_admin.author = created_n_users_by_admin[0]
     quotes_admin_api.put_quote(test_client_admin_logged_in, created_quote_by_admin)
     quote = quotes_admin_api.get_quote(

@@ -1,4 +1,5 @@
 import logging
+from random import randint
 from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import (
     generate_random_user_note_to_create,
 )
@@ -66,11 +67,9 @@ def test_put_user_note(
     created_n_users_by_admin: list[UserDeep],
     created_user_note_by_admin: UserNote,
 ):
-    new_text = text.sentence()
-    assert created_user_note_by_admin.text != new_text
+    new_text = text.sentence() + str(randint(1, 1000))
     created_user_note_by_admin.text = new_text
-    new_title = text.title()
-    assert created_user_note_by_admin.title != new_title
+    new_title = text.title() + str(randint(1, 1000))
     created_user_note_by_admin.title = new_title
     assert created_user_note_by_admin.user_id != created_n_users_by_admin[0].id
     created_user_note_by_admin.user_id = created_n_users_by_admin[0].id

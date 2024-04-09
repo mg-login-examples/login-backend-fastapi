@@ -61,6 +61,9 @@ def app_pubsub(app_settings: Settings):
 async def app_pubsub_connected(app_pubsub: PubSub):
     logger.debug("Create fixture app_pubsub_connected")
     await app_pubsub.connect()
+    yield
+    await app_pubsub.disconnect()
+    logger.debug("Destroyed fixture app_pubsub_connected")
 
 
 @pytest.fixture

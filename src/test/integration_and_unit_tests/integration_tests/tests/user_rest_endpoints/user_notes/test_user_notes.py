@@ -1,4 +1,5 @@
 import logging
+from random import randint
 from test.integration_and_unit_tests.integration_tests.utils import asserts
 from test.integration_and_unit_tests.integration_tests.utils.fake_user_note import (
     generate_random_user_note_to_create,
@@ -95,16 +96,16 @@ def test_get_user_notes_of_user_fails_when_getting_user_notes_of_different_user_
 def test_edit_user_note_title_and_text(
     test_client_logged_in: requests.Session, created_user_note: UserNote
 ):
-    assert created_user_note.title != "note title changed"
-    created_user_note.title = "note title changed"
-    assert created_user_note.text != "note text changed"
-    created_user_note.text = "note text changed"
+    new_title = "note title changed" + str(randint(0, 1000))
+    created_user_note.title = new_title
+    new_text = "note text changed" + str(randint(0, 1000))
+    created_user_note.text = new_text
     user_notes_api.edit_user_note(test_client_logged_in, created_user_note)
     edited_user_note = user_notes_api.get_user_note(
         test_client_logged_in, str(created_user_note.id)
     )
-    assert edited_user_note.title == "note title changed"
-    assert edited_user_note.text == "note text changed"
+    assert edited_user_note.title == new_title
+    assert edited_user_note.text == new_text
 
 
 # Test that when calling endpoint to edit a user note's title and text,

@@ -1,4 +1,5 @@
 import logging
+from random import randint
 from test.integration_and_unit_tests.integration_tests.utils import asserts
 from test.integration_and_unit_tests.integration_tests.utils.fake_quote import (
     generate_random_quote_to_create,
@@ -97,11 +98,11 @@ def test_get_user_quotes_fails_when_getting_quotes_of_different_user_than_logged
 def test_edit_quote_text(
     test_client_logged_in: requests.Session, created_quote: QuoteDeep
 ):
-    assert created_quote.text != "quote text changed"
-    created_quote.text = "quote text changed"
+    new_text = "quote text changed" + str(randint(0, 1000))
+    created_quote.text = new_text
     quotes_api.edit_quote(test_client_logged_in, created_quote)
     edited_quote = quotes_admin_api.get_quote(test_client_logged_in, created_quote.id)
-    assert edited_quote.text == "quote text changed"
+    assert edited_quote.text == new_text
 
 
 # Test that when calling endpoint to edit a quote's text, changes in other

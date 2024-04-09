@@ -188,14 +188,14 @@ async def _subscribe_to_channel(
                     await websocket.send_json(websocket_payload)
                 except Exception as e:
                     logger.error(
-                        "Error in _subscribe_to_channel stream for channel {channel}"
+                        f"Error in _subscribe_to_channel stream for channel '{channel}' for user '{current_user.email}'"
                     )
                     logger.error(e)
     except Exception as e:
         logger.error(
-            f"Error in _subscribe_to_channel for channel {channel} for user '{current_user.email}'"
+            f"Error in _subscribe_to_channel for channel '{channel}' for user '{current_user.email}'"
         )
-        logger.error(str(e))
+        logger.error(e)
 
 
 async def _handle_action_unsubscribe_from_channel(
