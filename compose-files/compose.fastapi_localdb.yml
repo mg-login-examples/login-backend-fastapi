@@ -1,7 +1,7 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  fastapi_localdb:
+  fastapi:
     restart: always
     tty: true # enables colored log # docker run -t
     stdin_open: false # enables colored log # docker run -i
@@ -21,6 +21,7 @@ services:
     volumes:
       - ./src:/app
       - ./app.log:/app.log
+      - ./app-tests.log:/app-tests.log
     secrets:
       - mongo-password
       - redis-pass
