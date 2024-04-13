@@ -21,10 +21,13 @@ then
     FINAL_COMMAND="poetry run pytest test/admin_app_e2e_tests --alluredir=test/allure-results"
   elif [ $test_case = "type-check" ]
   then
-    FINAL_COMMAND="poetry run mypy . --exclude alembic_sqlite/* --exclude alembic/* --check-untyped-defs"
+    FINAL_COMMAND="poetry run mypy . --exclude alembic_sqlite/ --exclude alembic/ --check-untyped-defs"
   elif [ $test_case = "format-check" ]
   then
     FINAL_COMMAND="poetry run black . --check --diff --color"
+  elif [ $test_case = "format-all" ]
+  then
+    FINAL_COMMAND="poetry run black . --verbose"
   elif [ $test_case = "custom" ]
   then
     FINAL_COMMAND=${3}
@@ -66,13 +69,6 @@ then
   else
     echo "Unknown option passed for backend-localdb <option>
     <option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, custom <your_custom_command>
-    "
-    exit 1
-  fi
-  $FINAL_COMMAND
-  else
-    echo "Unknown option passed for frontend <option>
-    <option> one of: build-dev, build-prod, unit-tests, tdd, lint-check, type-check, custom <your_custom_command>
     "
     exit 1
   fi
