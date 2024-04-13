@@ -4,7 +4,7 @@ from typing import AsyncIterator
 import httpx
 import pytest
 from fastapi import FastAPI
-from httpx import AsyncClient
+from httpx import ASGITransport, AsyncClient
 from httpx_ws import AsyncWebSocketSession, aconnect_ws
 from httpx_ws.transport import ASGIWebSocketTransport
 
@@ -29,7 +29,16 @@ async def async_websocket_session(
     cookies = {
         "Authorization": async_test_client_logged_in.cookies.get("Authorization")
     }
-    async with aconnect_ws(
-        "http://testserver/ws/main", async_test_client_for_websocket, cookies=cookies
-    ) as websocket_test_session:
-        yield websocket_test_session
+    try:
+        async with aconnect_ws(
+            "http://testserver/ws/main",
+            async_test_client_for_websocket,
+            cookies=cookies,
+        ) as websocket_test_session:
+            yield websocket_test_session
+            logger.info("---------")
+    except RuntimeError as e:
+        if not "Attempted to exit cancel scope in a different task" in str(e):
+            raise e
+        else:
+            logger.error("Ignore error. Caused by httpx_ws")

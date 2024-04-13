@@ -5,7 +5,7 @@ from typing import AsyncIterator
 import pytest
 from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
-from httpx import AsyncClient
+from httpx import ASGITransport, AsyncClient
 
 from data.schemas.admin_login.admin_login_response import AdminLoginResponse
 from data.schemas.authentication.login_response import LoginResponse
@@ -20,7 +20,9 @@ async def async_test_client(
 ) -> AsyncIterator[AsyncClient]:
     logger.debug("Create fixture async_test_client")
     # async with LifespanManager(app):
-    async with AsyncClient(app=app, base_url="http://test") as client:
+    async with AsyncClient(
+        transport=ASGITransport(app), base_url="http://test"
+    ) as client:
         yield client
 
 
