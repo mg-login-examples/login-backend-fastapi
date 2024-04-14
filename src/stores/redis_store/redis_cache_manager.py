@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 
 
 class RedisCacheManager:
-
     def __init__(self, redis_url: str, redis_password: str):
         logger.debug("Setting up SQLAlchemy")
 

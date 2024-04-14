@@ -36,9 +36,9 @@ def enhance_resource_schemas(
         if field in update_resource_schema_dict["properties"].keys()
     ]
     if len(update_schema_designation_fields) > 0:
-        update_resource_schema_dict["designation_fields"] = (
-            update_schema_designation_fields
-        )
+        update_resource_schema_dict[
+            "designation_fields"
+        ] = update_schema_designation_fields
     # create schemas
     create_schema_readonly_fields = [
         field
@@ -53,9 +53,9 @@ def enhance_resource_schemas(
         if field in create_resource_schema_dict["properties"].keys()
     ]
     if len(create_schema_designation_fields) > 0:
-        create_resource_schema_dict["designation_fields"] = (
-            create_schema_designation_fields
-        )
+        create_resource_schema_dict[
+            "designation_fields"
+        ] = create_schema_designation_fields
 
 
 # Move this function to pydantic utils if possible, or part of it
@@ -89,6 +89,6 @@ def _add_resource_url_ids_to_schema_properties(
                         == resource_schema_property_type
                     )
                 ):
-                    schema_property["resourceUrlId"] = (
-                        one_of_all_resource_configurations.resource_endpoints_url_prefix
-                    )
+                    schema_property[
+                        "resourceUrlId"
+                    ] = one_of_all_resource_configurations.resource_endpoints_url_prefix

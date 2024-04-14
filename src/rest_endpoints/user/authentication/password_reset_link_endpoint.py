@@ -10,7 +10,6 @@ from .password_reset_link_task import create_password_reset_link_and_send_email
 
 
 def generate_endpoint(router: APIRouter, sql_db_session_as_dependency: Session):
-
     class UserEmail(BaseModel):
         email: EmailStr
 

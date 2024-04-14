@@ -9,7 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 class SQLAlchemyDBManager:
-
     def __init__(self, database_url: str, database_user: str, database_password: str):
         logger.debug("Setting up SQLAlchemy")
         self.database_url = database_url

@@ -12,7 +12,6 @@ def generate_endpoint(
     sql_db_session_as_dependency: Database,
     restrict_endpoint_to_own_resources_param_user_id: Any,
 ):
-
     @router.get(
         "/{user_id}/user-notes",
         response_model=list[UserNote],

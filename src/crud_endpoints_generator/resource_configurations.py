@@ -5,7 +5,6 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 
 
 class ResourceConfigurations:
-
     def __init__(
         self,
         resource_endpoints_url_prefix,

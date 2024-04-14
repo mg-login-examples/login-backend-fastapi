@@ -33,9 +33,9 @@ class Settings(BaseSettings):
     add_admin_app: bool = True
     add_password_reset_app: bool = True
 
-    cors_origins_set: Literal["Development", "Cloud-Development", "Production"] = (
-        "Development"
-    )
+    cors_origins_set: Literal[
+        "Development", "Cloud-Development", "Production"
+    ] = "Development"
     user_auth_cookie_type: Literal[
         "cross_site_secure",
         "same_site_secure",
