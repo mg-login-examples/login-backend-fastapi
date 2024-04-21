@@ -80,8 +80,5 @@ else
     <option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, custom <your_custom_command>
   - backend-localdb <option>
     <option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, custom <your_custom_command>
-  - frontend <option>
-    <option> one of: build-dev, build-prod, unit-tests, tdd, lint-check, type-check
-  - down
   "
 fi

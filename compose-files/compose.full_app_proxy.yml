@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   full_app_proxy:
@@ -25,4 +25,4 @@ services:
       timeout: 10s
       retries: 10
     logging:
-      driver: none 
+      driver: none
