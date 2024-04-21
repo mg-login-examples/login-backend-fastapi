@@ -1,7 +1,9 @@
 from datetime import datetime
 
-from data.schemas.user_sessions.userSessionBase import UserSessionBase
 from pydantic import ConfigDict
+
+from data.schemas.user_sessions.userSessionBase import UserSessionBase
+
 
 class UserSession(UserSessionBase):
     id: int

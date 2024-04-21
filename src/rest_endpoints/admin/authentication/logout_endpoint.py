@@ -8,6 +8,7 @@ from utils.security.access_token_utils import parse_access_token
 
 logger = logging.getLogger(__name__)
 
+
 def generate_endpoint(
     router: APIRouter,
     validated_access_token_as_fastapi_dependency: str,

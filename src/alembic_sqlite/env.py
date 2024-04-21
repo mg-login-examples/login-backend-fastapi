@@ -2,10 +2,9 @@ import os
 from logging.config import fileConfig
 
 from alembic import context
-
 from core.environment_settings import get_environment_settings
-from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 from data.database.models.base import Base
+from stores.sql_db_store.sql_alchemy_db_manager import SQLAlchemyDBManager
 
 # Init settings for database url
 dot_env_file = os.getenv("ENV_FILE", ".env")
@@ -79,9 +78,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

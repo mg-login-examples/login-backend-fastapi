@@ -1,104 +1,126 @@
-from bson import ObjectId
+from typing import Any, Type
 
-from pymongo.database import Database
+from bson import ObjectId
 from pydantic import BaseModel
+from pymongo.database import Database
+
 
 def get_resource_items_count(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
-    filter: dict = {},
+    filter: dict[str, Any] = {},
 ) -> int:
-    items_count = db[db_table].count_documents(filter)
+    items_count = mongo_db[db_table].count_documents(filter)
     return items_count
 
+
 def get_resource_items(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
-    filter: dict = {},
-    ItemSchema: BaseModel = None,
-    limit = 0,
-    skip = 0,
-) -> list[BaseModel] | list[dict]:
-    items = []
-    items_db = db[db_table].find(filter, limit=limit, skip=skip)
-    if ItemSchema:
-        for item_db in items_db:
-            items.append(ItemSchema(**item_db))
+    filter: dict[str, Any] = {},
+    limit=0,
+    skip=0,
+):
+    items_db = mongo_db[db_table].find(filter, limit=limit, skip=skip)
+    return items_db
+
+
+def get_resource_items_pydantized(
+    mongo_db: Database,
+    db_table: str,
+    ItemSchema: Type[BaseModel],
+    filter: dict[str, Any] = {},
+    limit=0,
+    skip=0,
+):
+    items_db = get_resource_items(
+        mongo_db, db_table, filter=filter, limit=limit, skip=skip
+    )
+    items: list[BaseModel] = []
+    for item_db in items_db:
+        items.append(ItemSchema(**item_db))
     return items
 
+
 def get_resource_item_by_filter(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
-    filter: dict = {},
-    ItemSchema: BaseModel = None
-) -> BaseModel | dict:
-    item_db = db[db_table].find_one(filter)
-    item = ItemSchema(**item_db) if ItemSchema and item_db else item_db
-    return item
+    filter: dict[str, Any] = {},
+) -> dict | None:
+    item_db = mongo_db[db_table].find_one(filter)
+    return item_db
+
 
 def get_resource_item_by_id(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
     item_id: str,
-    ItemSchema: BaseModel = None
-) -> BaseModel | dict:
-    id_filter = { "_id": ObjectId(item_id) }
-    item_db = db[db_table].find_one(id_filter)
-    item = ItemSchema(**item_db) if ItemSchema and item_db else item_db
-    return item
+) -> dict | None:
+    id_filter = {"_id": ObjectId(item_id)}
+    item_db = mongo_db[db_table].find_one(id_filter)
+    return item_db
+
 
 def create_resource_item(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
     item_to_create: dict | BaseModel,
-    ItemSchema: BaseModel = None
-) -> BaseModel | dict:
-    item_dict = item_to_create.model_dump() if isinstance(item_to_create, BaseModel) else item_to_create
-    db[db_table].insert_one(item_dict)
-    item_created = ItemSchema(**item_dict) if ItemSchema else item_dict
-    return item_created
+) -> dict[str, Any]:
+    item_dict: dict[str, Any] = (
+        item_to_create.model_dump()
+        if isinstance(item_to_create, BaseModel)
+        else item_to_create
+    )
+    result = mongo_db[db_table].insert_one(item_dict)
+    item_dict["id"] = str(result.inserted_id)
+    return item_dict
+
 
 def update_item_by_id(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
     item_id: str,
     item_fields_to_update: dict | BaseModel,
 ):
-    id_filter = { "_id": ObjectId(item_id) }
-    item_fields_to_update = item_fields_to_update.model_dump() if isinstance(item_fields_to_update, BaseModel) else item_fields_to_update
-    db[db_table].update_one(id_filter, { "$set": item_fields_to_update })
+    id_filter = {"_id": ObjectId(item_id)}
+    item_fields_to_update = (
+        item_fields_to_update.model_dump()
+        if isinstance(item_fields_to_update, BaseModel)
+        else item_fields_to_update
+    )
+    mongo_db[db_table].update_one(id_filter, {"$set": item_fields_to_update})
     return
 
+
 def update_item_by_filter(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
     filter: dict,
     item_fields_to_update: dict | BaseModel,
 ):
-    db[db_table].update_one(filter, { "$set": item_fields_to_update })
+    mongo_db[db_table].update_one(filter, {"$set": item_fields_to_update})
     return
 
-def delete_resource_item_by_id(
-    db: Database,
-    db_table: str,
-    item_id: str
-):
-    id_filter = { "_id": ObjectId(item_id) }
-    db[db_table].delete_one(id_filter)
+
+def delete_resource_item_by_id(mongo_db: Database, db_table: str, item_id: str):
+    id_filter = {"_id": ObjectId(item_id)}
+    mongo_db[db_table].delete_one(id_filter)
     return
+
 
 def delete_resource_item_by_filter(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
-    filter: dict = {},
+    filter: dict[str, Any] = {},
 ):
-    db[db_table].delete_one(filter)
+    mongo_db[db_table].delete_one(filter)
     return
 
+
 def delete_resource_items_by_filter(
-    db: Database,
+    mongo_db: Database,
     db_table: str,
-    filter: dict = {},
+    filter: dict[str, Any] = {},
 ):
-    db[db_table].delete_many(filter)
+    mongo_db[db_table].delete_many(filter)
     return

@@ -1,27 +1,37 @@
-from typing import Optional, AsyncGenerator
 import asyncio
+import logging
+from asyncio import Queue
+from random import randint
+from typing import AsyncGenerator
 
 from .event import Event
+
+logger = logging.getLogger(__name__)
+
 
 class Unsubscribed(Exception):
     pass
 
+
 class Subscriber:
     def __init__(self):
-        self._queue = asyncio.Queue()
+        self._queue: Queue = asyncio.Queue()
+        self._queue_name = randint(100000, 999999)
 
-    async def __aiter__(self) -> Optional[AsyncGenerator]:
+    async def __aiter__(self) -> AsyncGenerator:
+        logger.debug(f"Entering subscriber queue {self._queue_name}")
         try:
             while True:
                 event = await self.get()
                 yield event
         except Unsubscribed:
+            logger.debug(f"Exiting subscriber queue {self._queue_name}")
             pass
 
     async def exit_async_iter(self) -> None:
         await self._queue.put(None)
-    
-    async def get(self, timeout: Optional[float] = None) -> Event:
+
+    async def get(self, timeout: float | None = None) -> Event:
         try:
             item = await asyncio.wait_for(self._queue.get(), timeout=timeout)
             if item is None:
@@ -30,10 +40,10 @@ class Subscriber:
         except asyncio.TimeoutError:
             raise TimeoutError() from None
 
-    async def put(self, event: Event):
+    async def put(self, event: Event | None):
         await self._queue.put(event)
 
-    async def __aenter__(self) -> 'Subscriber':
+    async def __aenter__(self) -> "Subscriber":
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:

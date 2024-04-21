@@ -1,5 +1,7 @@
-from data.schemas.quotes.quoteBase import QuoteBase
 from pydantic import ConfigDict
+
+from data.schemas.quotes.quoteBase import QuoteBase
+
 
 class Quote(QuoteBase):
     id: int

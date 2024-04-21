@@ -1,11 +1,13 @@
-import pytest
 import logging
 import os
+
+import pytest
 
 from core.environment_settings import get_environment_settings
 from core.helper_classes.settings import Settings
 
 logger = logging.getLogger(__name__)
+
 
 @pytest.fixture(scope="session")
 def app_settings() -> Settings:

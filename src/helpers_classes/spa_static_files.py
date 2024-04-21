@@ -1,4 +1,5 @@
-from starlette.staticfiles import StaticFiles, Scope, Response
+from starlette.staticfiles import Response, Scope, StaticFiles
+
 
 class SPAStaticFiles(StaticFiles):
     async def get_response(self, path: str, scope: Scope) -> Response:
@@ -7,7 +8,13 @@ class SPAStaticFiles(StaticFiles):
         try:
             response = await super().get_response(path, scope)
         except Exception as error_response:
-            response = error_response
+            if (
+                hasattr(error_response, "status_code")
+                and error_response.status_code == 404
+            ):
+                response = await super().get_response(".", scope)
+            else:
+                raise error_response
         if response.status_code == 404:
-            response = await super().get_response('.', scope)
+            response = await super().get_response(".", scope)
         return response

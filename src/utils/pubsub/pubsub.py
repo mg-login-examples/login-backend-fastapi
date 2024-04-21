@@ -1,23 +1,25 @@
-from typing import Dict, Any
 import asyncio
-from contextlib import asynccontextmanager
 import logging
+from asyncio import Task
+from contextlib import asynccontextmanager
+from typing import Any, Dict
 
 from fastapi import Depends
 
-from .subscriber import Subscriber
 from .backends.in_memory import InMemoryBackend
 from .backends.redis import RedisBackend
+from .subscriber import Subscriber
 
 logger = logging.getLogger(__name__)
+
 
 class PubSub:
     def __init__(self, backend_url: str = ""):
         if backend_url == "memory://":
-            self._backend = InMemoryBackend()
+            self._backend: InMemoryBackend | RedisBackend = InMemoryBackend()
         elif "redis://" in backend_url:
             self._backend = RedisBackend(backend_url)
-        self._listener_task = None
+        self._listener_task: Task | None = None
 
         self._channel_to_subscribers: Dict[str, list[Subscriber]] = {}
 
@@ -27,17 +29,19 @@ class PubSub:
         except Exception as e:
             logger.error(f"Error while trying to connect to pubsub backend:")
             raise e
-        if not self._listener_task or self._listener_task.done:
+        if not self._listener_task or self._listener_task.done():
             self._listener_task = asyncio.create_task(self._listener())
 
     async def ping(self):
         await self._backend.ping()
 
     async def disconnect(self):
-        if self._listener_task.done():
-            self._listener_task.result()
-        else:
-            self._listener_task.cancel()
+        if self._listener_task:
+            if self._listener_task.done():
+                pass
+                # self._listener_task.result() # FIXME gets stuck here in tests
+            else:
+                self._listener_task.cancel()
         await self._backend.disconnect()
 
     async def publish(self, channel: str, message: Any) -> None:
@@ -68,7 +72,7 @@ class PubSub:
             try:
                 event = await self._backend.get_next_event()
                 for subscriber in self._channel_to_subscribers.get(event.channel, []):
-                        await subscriber.put(event)
+                    await subscriber.put(event)
             except Exception as e:
                 logger.error("Error in PubSub listener for backend events:")
                 logger.error(e)
@@ -78,4 +82,5 @@ class PubSub:
     def get_pubsub_as_fastapi_dependency(self):
         def get_self():
             return self
+
         return Depends(get_self)

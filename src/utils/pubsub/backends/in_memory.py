@@ -1,14 +1,16 @@
-from typing import Any
 import asyncio
 import logging
+from asyncio import Queue
 
 from ..event import Event
+from .Backend import PubSubBackendAbstract
 
 logger = logging.getLogger(__name__)
 
-class InMemoryBackend:
+
+class InMemoryBackend(PubSubBackendAbstract):
     def __init__(self):
-        self._published_events = asyncio.Queue()
+        self._published_events: Queue = asyncio.Queue()
 
     async def connect(self):
         pass
@@ -19,7 +21,7 @@ class InMemoryBackend:
     async def ping(self):
         pass
 
-    async def publish(self, channel: str, message: Any):
+    async def publish(self, channel: str, message: str):
         await self._published_events.put(Event(channel=channel, message=message))
 
     async def subscribe(self, channel: str):

@@ -2,9 +2,10 @@ import logging
 
 from pymongo import MongoClient
 from pymongo.database import Database
-from pymongo_inmemory import MongoClient as MongoClientInMemory
+from pymongo_inmemory import MongoClient as MongoClientInMemory  # type: ignore
 
 logger = logging.getLogger(__name__)
+
 
 class PyMongoManager:
     def __init__(
@@ -14,7 +15,7 @@ class PyMongoManager:
         mongo_username: str,
         mongo_password: str,
         mongo_database: str,
-        use_in_memory_mongo_db: bool = False
+        use_in_memory_mongo_db: bool = False,
     ):
         self.mongo_host = mongo_host
         self.mongo_port = mongo_port
@@ -22,10 +23,10 @@ class PyMongoManager:
         self.mongo_password = mongo_password
         self.mongo_database = mongo_database
         self.use_in_memory_mongo_db = use_in_memory_mongo_db
-        self.client = None
-        self.db = None
+        self.client: MongoClient | MongoClientInMemory | None = None
+        self.db: Database | None = None
 
-    def get_db(self) -> Database:
+    def get_db(self) -> Database | None:
         if self.db is None:
             self.init_mongodb_client()
         return self.db
@@ -34,17 +35,22 @@ class PyMongoManager:
         try:
             if self.client is None:
                 self.init_mongodb_client()
+            assert self.client is not None
             self.client.server_info()
             logger.info("Test mongo db connection established successfully")
         except Exception as e:
             logger.error("Error pinging to mongo")
-            raise e
+            raise Exception(
+                "Mongo connection refused. You may need to launch a mongo db. Run `./scripts_docker.sh launch-databases`"
+            ) from None
 
     def init_mongodb_client(self):
         # TODO Check if new client / db should be generated for each request, or same can be used
-        # Note: When using pymongo_inmemory, same client & db should be used otherwise new local mongodb instance is created everytime MongoClientInMemory() is called
+        # Note: When using pymongo_inmemory, same client & db should be used
+        # otherwise new local mongodb instance is created everytime
+        # MongoClientInMemory() is called
         if not self.use_in_memory_mongo_db:
-            client = MongoClient(
+            client: MongoClient | MongoClientInMemory = MongoClient(
                 self.mongo_host,
                 self.mongo_port,
                 username=self.mongo_username,

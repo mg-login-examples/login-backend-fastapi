@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class AdminLoginResponse(BaseModel):
     id: int
     email: str

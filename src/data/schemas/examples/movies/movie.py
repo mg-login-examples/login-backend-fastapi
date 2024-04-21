@@ -1,5 +1,7 @@
-from data.schemas.examples.movies.movieBase import MovieBase
 from pydantic import ConfigDict
+
+from data.schemas.examples.movies.movieBase import MovieBase
+
 
 class Movie(MovieBase):
     id: int

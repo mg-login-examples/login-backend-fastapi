@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from data.database.models.base import Base
 
+
 class Movie(Base):
     __tablename__ = "movies"
 

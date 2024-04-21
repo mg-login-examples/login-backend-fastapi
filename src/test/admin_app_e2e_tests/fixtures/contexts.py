@@ -1,9 +1,10 @@
-import pytest
 import logging
 
+import pytest
 from playwright.sync_api._generated import Browser
 
 logger = logging.getLogger(__name__)
+
 
 @pytest.fixture
 def my_playwright_context(browser: Browser):

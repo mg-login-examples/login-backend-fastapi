@@ -1,5 +1,6 @@
-from data.schemas.examples.users.user import User as UserShallow
 from data.schemas.examples.books.book import Book
+from data.schemas.examples.users.user import User as UserShallow
+
 
 class User(UserShallow):
     books: list[Book]

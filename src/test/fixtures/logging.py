@@ -1,10 +1,13 @@
 import logging
+
 import pytest
 
 from core.helper_classes.settings import Settings
+
 # from core import logging_settings
 
 logger = logging.getLogger(__name__)
+
 
 @pytest.fixture(scope="session", autouse=True)
 def set_logging_level(app_settings: Settings):

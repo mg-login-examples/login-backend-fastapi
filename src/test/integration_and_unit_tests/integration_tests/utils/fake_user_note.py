@@ -2,7 +2,8 @@ from mimesis import Text
 
 from data.mongo_schemas.user_notes.user_note_create import UserNoteCreate
 
-text = Text('en')
+text = Text("en")
+
 
 def generate_random_user_note_to_create(user_id: int) -> UserNoteCreate:
     note_title = text.title()

@@ -1,5 +1,6 @@
-from data.schemas.users.user import User as UserShallow
 from data.schemas.quotes.quote import Quote
+from data.schemas.users.user import User as UserShallow
+
 
 class User(UserShallow):
     quotes: list[Quote]
@@ -14,4 +15,4 @@ class User(UserShallow):
             return Quote
         if field == "liked_quotes":
             return Quote
-        raise Exception(f'Unknown field provided {field}')
+        raise Exception(f"Unknown field provided {field}")

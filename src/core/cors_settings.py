@@ -17,12 +17,13 @@ cloud_development_origins = [
     "https://frontend.login-example.duckdns.org",
 ]
 
-production_origins = []
+production_origins: list[str] = []
+
 
 def add_cors(app: FastAPI, cors_origins_set: str):
     origins = []
     if cors_origins_set == "Development":
-        origins = development_origins    
+        origins = development_origins
     elif cors_origins_set == "Cloud-Development":
         origins = cloud_development_origins
     elif cors_origins_set == "Production":
@@ -32,6 +33,6 @@ def add_cors(app: FastAPI, cors_origins_set: str):
         CORSMiddleware,
         allow_origins=origins,
         allow_credentials=True,
-        allow_methods=['*'],
-        allow_headers=['*'],
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
