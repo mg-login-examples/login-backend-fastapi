@@ -3,8 +3,9 @@ from typing import AsyncIterator
 
 import httpx
 import pytest
+from asgi_lifespan import LifespanManager
 from fastapi import FastAPI
-from httpx import ASGITransport, AsyncClient
+from httpx import AsyncClient
 from httpx_ws import AsyncWebSocketSession, aconnect_ws
 from httpx_ws.transport import ASGIWebSocketTransport
 
@@ -14,10 +15,11 @@ logger = logging.getLogger(__name__)
 @pytest.fixture
 async def async_test_client_for_websocket(app: FastAPI) -> AsyncIterator[AsyncClient]:
     logger.debug("Create fixture async_test_client_for_websocket")
-    async with httpx.AsyncClient(
-        transport=ASGIWebSocketTransport(app), base_url="http://testserver"
-    ) as client:
-        yield client
+    async with LifespanManager(app):
+        async with httpx.AsyncClient(
+            transport=ASGIWebSocketTransport(app), base_url="http://testserver"
+        ) as client:
+            yield client
 
 
 @pytest.fixture

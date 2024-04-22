@@ -1,0 +1,40 @@
+name: Run Tests With Docker
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Some
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do not deploy
+        run: echo "Do Not Deploy"
+
+  # deploy:
+  #   name: Deploy to EC2
+  #   runs-on: ubuntu-latest
+  #   needs: [api-tests-with-deps, e2e-tests-cypress, e2e-tests-playwright]
+  #   steps:
+  #     - name: Do not deploy
+  #       run: echo "Do Not Deploy"
+  #     # - name: Restart app - build new containers
+  #     #   uses: appleboy/ssh-action@master
+  #     #   with:
+  #     #     host: ${{ secrets.HOST_DNS }}
+  #     #     username: ${{ secrets.USERNAME }}
+  #     #     key: ${{ secrets.EC2_SSH_KEY }}
+  #     #     port: 22
+  #     #     script: >-
+  #     #       cd /home/ubuntu &&
+  #     #       sudo rm -rf backend-fastapi-old &&
+  #     #       mv backend-fastapi backend-fastapi-old &&
+  #     #       git clone -b main https://github.com/mg-login-examples/login-backend-fastapi.git backend-fastapi &&
+  #     #       cp backend-fastapi-old/docker_secrets/mysql_pwd.txt backend-fastapi/docker_secrets/ &&
+  #     #       cp backend-fastapi-old/docker_secrets/mongo_pwd.txt backend-fastapi/docker_secrets/ &&
+  #     #       cp backend-fastapi-old/docker_secrets/redis_pwd.txt backend-fastapi/docker_secrets/ &&
+  #     #       sudo rm -rf backend-fastapi-old &&
+  #     #       cd backend-fastapi &&
+  #     #       git clone -b main https://github.com/mg-login-examples/login-frontend-vue-vite.git frontend &&
+  #     #       ./scripts_docker.sh launch-api-cloud-dev

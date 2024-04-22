@@ -16,7 +16,7 @@ class RedisBackend(PubSubBackendAbstract):
         self.url = url
 
     async def connect(self) -> None:
-        logger.debug("PubSub RedisBackend trying to connect")
+        logger.debug("PubSub backend RedisBackend trying to connect")
         try:
             self.redis = asyncio_redis.from_url(self.url)
             self.pubsub = self.redis.pubsub()
@@ -26,7 +26,7 @@ class RedisBackend(PubSubBackendAbstract):
                 random.choices(string.ascii_lowercase + string.digits, k=20)
             )
             await self.pubsub.subscribe(dummy_channel)
-            logger.debug("PubSub RedisBackend connected successfully")
+            logger.debug("PubSub backend RedisBackend connected successfully")
         except Exception as e:
             logger.error("Error in pubsub backend RedisBackend connect")
             logger.error(e)
@@ -49,26 +49,31 @@ class RedisBackend(PubSubBackendAbstract):
         await self.redis.publish(channel, message)
 
     async def subscribe(self, channel):
-        logger.debug("PubSub RedisBackend trying to subscribe")
+        logger.debug(f"PubSub RedisBackend trying to subscribe to channel {channel}")
         if not hasattr(self, "pubsub") or not self.pubsub:
             await self.connect()
         try:
             await self.pubsub.subscribe(channel)
-            logger.debug("PubSub RedisBackend subscribed successfully")
+            logger.debug(
+                f"PubSub RedisBackend subscribed successfully to channel '{channel}'"
+            )
         except Exception as e:
             logger.error(
-                f"Error when RedisBackend trying to subscribe to channel {channel}"
+                f"Error when RedisBackend trying to subscribe to channel '{channel}'"
             )
             logger.error(e)
             raise e
 
     async def unsubscribe(self, channel):
-        logger.debug("PubSub RedisBackend trying to unsubscribe")
+        logger.debug(
+            f"PubSub RedisBackend trying to unsubscribe from channel '{channel}'"
+        )
         if not hasattr(self, "pubsub") or not self.pubsub:
             await self.connect()
-        logger.debug("PubSub RedisBackend trying to unsubscribe 2")
         await self.pubsub.unsubscribe(channel)
-        logger.debug("PubSub RedisBackend unsubscribed successfully")
+        logger.debug(
+            f"PubSub RedisBackend unsubscribed successfully from channel '{channel}'"
+        )
 
     async def get_next_event(self) -> Event:
         while True:

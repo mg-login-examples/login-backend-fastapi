@@ -14,26 +14,35 @@ class Unsubscribed(Exception):
 
 
 class Subscriber:
-    def __init__(self):
+    def __init__(self, name: str | None = None):
         self._queue: Queue = asyncio.Queue()
-        self._queue_name = randint(100000, 999999)
+        self._name = name if name else str(randint(100000, 999999))
 
     async def __aiter__(self) -> AsyncGenerator:
-        logger.debug(f"Entering subscriber queue {self._queue_name}")
+        logger.debug(f"Entering subscriber '{self._name}' events' asynchronous context")
         try:
             while True:
                 event = await self.get()
                 yield event
         except Unsubscribed:
-            logger.debug(f"Exiting subscriber queue {self._queue_name}")
+            logger.debug(
+                f"Exiting subscriber '{self._name}' events' asynchronous context"
+            )
             pass
 
     async def exit_async_iter(self) -> None:
+        logger.debug(
+            f"Trigger exit for subscriber '{self._name}' events' asynchronous context"
+        )
         await self._queue.put(None)
 
     async def get(self, timeout: float | None = None) -> Event:
         try:
+            # logger.debug(
+            #     f"Wait to receive next event from queue {self._queue_name}"
+            # )
             item = await asyncio.wait_for(self._queue.get(), timeout=timeout)
+            # logger.debug(f"Subscriber received in queue {self._queue_name} item {item}")
             if item is None:
                 raise Unsubscribed()
             return item
@@ -44,7 +53,9 @@ class Subscriber:
         await self._queue.put(event)
 
     async def __aenter__(self) -> "Subscriber":
+        logger.debug(f"Entering subscriber '{self._name}'")
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
+        logger.debug(f"Exiting subscriber '{self._name}'")
         await self.exit_async_iter()

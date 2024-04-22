@@ -22,3 +22,5 @@ def get_lifespan(pubsub: PubSub, pubsub_subscribers_async_tasks: list[asyncio.Ta
             pubsub, pubsub_subscribers_async_tasks
         )
         logger.debug("app lifespan on destroy - end")
+
+    return lifespan

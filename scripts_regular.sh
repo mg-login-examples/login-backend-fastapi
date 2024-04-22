@@ -59,7 +59,7 @@ then
     FINAL_COMMAND="poetry run pytest test/admin_app_e2e_tests --alluredir=test/allure-results"
   elif [ $test_case = "type-check" ]
   then
-    FINAL_COMMAND="poetry run mypy . --exclude alembic_sqlite/* --exclude alembic/* --check-untyped-defs"
+    FINAL_COMMAND="poetry run mypy . --exclude alembic_sqlite/ --exclude alembic/ --check-untyped-defs"
   elif [ $test_case = "format-check" ]
   then
     FINAL_COMMAND="poetry run black . --check --diff --color"

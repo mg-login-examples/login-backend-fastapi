@@ -1,8 +1,6 @@
 import asyncio
 import logging
 
-from fastapi import FastAPI
-
 from utils.pubsub.pubsub import PubSub
 
 logger = logging.getLogger(__name__)

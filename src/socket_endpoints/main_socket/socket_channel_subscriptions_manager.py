@@ -53,7 +53,6 @@ async def handle_websocket_traffic(
                 f"Error in handle_websocket_traffic for user {current_user.email}"
             )
             logger.error(e)
-    logger.debug(f"Ending websocket session for user '{current_user.email}'")
     await _handle_socket_connection_close(channel_to_subscriber, current_user)
     logger.debug(f"Ended websocket session for user '{current_user.email}'")
 
@@ -66,10 +65,10 @@ async def _handle_socket_connection_close(
     logger.debug(f"Closing all channel subscriptions for user f{current_user.email}")
     for channel in channel_to_subscriber:
         subscriber = channel_to_subscriber[channel]
-        logger.debug(
-            f"Closing channel '{channel}' subscription for user f{current_user.email}"
-        )
         await subscriber.exit_async_iter()
+        logger.debug(
+            f"Closed channel '{channel}' subscription for user f{current_user.email}"
+        )
 
 
 async def _handle_websocket_incomming_message(
@@ -128,11 +127,11 @@ async def _handle_action_subscribe_to_channel(
     pubsub_subscribers_async_tasks: list[asyncio.Task],
 ):
     try:
-        logger.debug(
-            f"Handle subscribe action to channel '{channel}' for user {current_user.email}"
-        )
         # TODO User permission check before subscribing
         if channel not in channel_to_subscriber:
+            logger.debug(
+                f"Creating subscriber async task for user {current_user.email} for channel '{channel}'"
+            )
             subscriber_task = asyncio.create_task(
                 _subscribe_to_channel(
                     channel,
@@ -145,10 +144,14 @@ async def _handle_action_subscribe_to_channel(
             # Collect task to gather during shutdown and ensure task is
             # completed for a graceful shutdown
             pubsub_subscribers_async_tasks.append(subscriber_task)
+        else:
+            logger.debug(
+                f"Skipping creating subscriber task for user {current_user.email} for channel '{channel}'"
+            )
         websocket_payload = {"channel": channel, "subscribed": True}
         await websocket.send_json(websocket_payload)
         logger.debug(
-            f"Finished handling subscribe action to channel '{channel}' for user {current_user.email}"
+            f"Handled subscribe action to channel '{channel}' for user {current_user.email}"
         )
     except Exception as e:
         logger.error(
@@ -165,35 +168,45 @@ async def _subscribe_to_channel(
     channel_to_subscriber: dict,
 ):
     try:
-        logger.debug(
-            f"Subscribing to channel '{channel}' for user {current_user.email}"
-        )
-        async with pubsub.subscribe(channel=channel) as subscriber:
+        subscriber_name = f"user-{current_user.email}-channel-{channel}"
+        async with pubsub.subscribe(
+            channel=channel, subscriber_name=subscriber_name
+        ) as subscriber:
+            # since _subscribe_to_channel is an async task, check again if user already subscribed to channel (possibly by a parallel task), if so exit
             if channel in channel_to_subscriber:
                 logger.debug(
-                    f"Already subscribed to channel '{channel}' for user {current_user.email}"
+                    f"Exiting subscriber's asynchronous context as user {current_user.email} is already subscribed to channel '{channel}'"
                 )
                 return
             # store subscriber to be able to later stop subscriber listen task
             channel_to_subscriber[channel] = subscriber
             logger.debug(
-                f"Subscribed to channel '{channel}' for user {current_user.email}"
+                f"Now inside subscriber's asynchronous context for user {current_user.email} and channel '{channel}'. Start listening to subscriber events"
             )
-            # start listening to subscriber (indefinite async loop until
-            # subscriber.exit_async_iter is called)
+            # start listening to subscriber
+            # indefinite async loop until subscriber.exit_async_iter is called externally from _handle_action_unsubscribe_from_channel
             async for event in subscriber:
                 try:
+                    # logger.debug(
+                    #     f"Channel '{channel}' subscriber user '{current_user.email}' received event {event}"
+                    # )
                     message_dict = json.loads(event.message)
                     websocket_payload = {"channel": channel, "message": message_dict}
                     await websocket.send_json(websocket_payload)
                 except Exception as e:
                     logger.error(
-                        f"Error in _subscribe_to_channel stream for channel '{channel}' for user '{current_user.email}'"
+                        f"Error in subscriber events'asynchronous iteration for user {current_user.email} for channel '{channel}':"
                     )
                     logger.error(e)
+            logger.debug(
+                f"Exited subscriber events' asynchronous iteration for user {current_user.email} and channel '{channel}'"
+            )
+        logger.debug(
+            f"Exited subscriber's asynchronous context for user {current_user.email} and channel '{channel}'"
+        )
     except Exception as e:
         logger.error(
-            f"Error in _subscribe_to_channel for channel '{channel}' for user '{current_user.email}'"
+            f"Error in subscriber's asynchronous context for user {current_user.email} for channel '{channel}':"
         )
         logger.error(e)
 
@@ -205,23 +218,18 @@ async def _handle_action_unsubscribe_from_channel(
     channel_to_subscriber: dict[str, Subscriber],
 ):
     try:
-        logger.debug(
-            f"Unsubscribing from channel '{channel}' for user {current_user.email}"
-        )
         if channel in channel_to_subscriber:
             subscriber = channel_to_subscriber[channel]
             await subscriber.exit_async_iter()
             channel_to_subscriber.pop(channel)
         websocket_payload = {"channel": channel, "subscribed": False}
         await websocket.send_json(websocket_payload)
-        logger.debug(
-            f"Unsubscribed from channel '{channel}' for user {current_user.email}"
-        )
+        logger.debug(f"User {current_user.email} unsubscribed from channel '{channel}'")
     except Exception as e:
         logger.error(
             f"Error in _handle_action_unsubscribe_from_channel for channel {channel} for user '{current_user.email}'"
         )
-        logger.error(str(e))
+        logger.error(e)
 
 
 async def _handle_channel_message(
@@ -246,4 +254,4 @@ async def _handle_channel_message(
         logger.error(
             f"Error in _handle_channel_message for channel {channel} for user '{current_user.email}'"
         )
-        logger.error(str(e))
+        logger.error(e)

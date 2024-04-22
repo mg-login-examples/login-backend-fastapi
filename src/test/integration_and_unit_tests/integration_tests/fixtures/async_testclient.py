@@ -29,12 +29,12 @@ async def async_test_client(
     app: FastAPI, app_pubsub: PubSub
 ) -> AsyncIterator[AsyncClient]:
     logger.debug("Create fixture async_test_client")
-    # async with LifespanManager(app):
-    app_asgi = cast(_ASGIApp, app)
-    async with AsyncClient(
-        transport=ASGITransport(app_asgi), base_url="http://test"
-    ) as client:
-        yield client
+    async with LifespanManager(app):
+        app_asgi = cast(_ASGIApp, app)
+        async with AsyncClient(
+            transport=ASGITransport(app_asgi), base_url="http://test"
+        ) as client:
+            yield client
 
 
 @pytest.fixture

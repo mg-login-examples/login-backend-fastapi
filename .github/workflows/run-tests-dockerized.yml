@@ -19,34 +19,6 @@ jobs:
         run: echo "password_redis" > docker_secrets/redis_pwd.txt
       - name: Run backend tests
         run: sudo ./scripts_docker.sh backend api-tests
-      # - name: Zip allure reports
-      #   if: success() || failure()
-      #   run: cd src/test && mv allure-results results && zip -r results.zip results
-      # - name: Copy zipped reports to allure server
-      #   if: success() || failure()
-      #   uses: appleboy/scp-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     source: "src/test/results.zip"
-      #     target: "/home/ubuntu/allure-docker/projects/backend/"
-      #     strip_components: 2
-      # - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
-      #   if: success() || failure()
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     script: >-
-      #       cd /home/ubuntu/allure-docker/projects/backend &&
-      #       sudo rm -rf results &&
-      #       unzip results.zip &&
-      #       rm results.zip &&
-      #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=backend
 
   e2e-tests-cypress:
     name: Run Cypress E2E Tests
@@ -72,34 +44,6 @@ jobs:
           MAILSLURP_API_KEY: ${{secrets.MAILSLURP_API_KEY}}
       - name: Run cypress e2e tests
         run: ./scripts_docker.sh run-e2e-tests-cypress
-      # - name: Zip allure reports
-      #   if: success() || failure()
-      #   run: cd frontend/cypress && mv allure-results results && zip -r results.zip results
-      # - name: Copy zipped reports to allure server
-      #   if: success() || failure()
-      #   uses: appleboy/scp-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     source: "frontend/cypress/results.zip"
-      #     target: "/home/ubuntu/allure-docker/projects/frontend-e2e-cypress/"
-      #     strip_components: 2
-      # - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
-      #   if: success() || failure()
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     script: >-
-      #       cd /home/ubuntu/allure-docker/projects/frontend-e2e-cypress &&
-      #       sudo rm -rf results &&
-      #       unzip results.zip &&
-      #       rm results.zip &&
-      #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e-cypress
 
   e2e-tests-playwright:
     name: Run Playwright E2E Tests
@@ -120,34 +64,6 @@ jobs:
           path: frontend
       - name: Run playwright e2e tests
         run: ./scripts_docker.sh run-e2e-tests-playwright
-      # - name: Zip allure reports
-      #   if: success() || failure()
-      #   run: cd frontend/playwright && mv allure-results results && zip -r results.zip results
-      # - name: Copy zipped reports to allure server
-      #   if: success() || failure()
-      #   uses: appleboy/scp-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     source: "frontend/playwright/results.zip"
-      #     target: "/home/ubuntu/allure-docker/projects/frontend-e2e-playwright/"
-      #     strip_components: 2
-      # - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
-      #   if: success() || failure()
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     script: >-
-      #       cd /home/ubuntu/allure-docker/projects/frontend-e2e-playwright &&
-      #       sudo rm -rf results &&
-      #       unzip results.zip &&
-      #       rm results.zip &&
-      #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=frontend-e2e-playwright
 
   admin-app-e2e-tests-with-deps:
     name: Run Admin App E2E Tests
@@ -163,58 +79,3 @@ jobs:
         run: echo "password_redis" > docker_secrets/redis_pwd.txt
       - name: Run admin app e2e tests
         run: sudo ./scripts_docker.sh run-admin-app-e2e-tests
-      # - name: Zip allure reports
-      #   if: success() || failure()
-      #   run: cd src/test && mv allure-results results && zip -r results.zip results
-      # - name: Copy zipped reports to allure server
-      #   if: success() || failure()
-      #   uses: appleboy/scp-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     source: "src/test/results.zip"
-      #     target: "/home/ubuntu/allure-docker/projects/admin-app-e2e/"
-      #     strip_components: 2
-      # - name: Delete previous allure-results folder, unzip new results and delete zipped results, and generate report
-      #   if: success() || failure()
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     script: >-
-      #       cd /home/ubuntu/allure-docker/projects/admin-app-e2e &&
-      #       sudo rm -rf results &&
-      #       unzip results.zip &&
-      #       rm results.zip &&
-      #       curl http://localhost:5050/allure-docker-service/generate-report?project_id=admin-app-e2e
-
-  deploy:
-    name: Deploy to EC2
-    runs-on: ubuntu-latest
-    needs: [api-tests-with-deps, e2e-tests-cypress, e2e-tests-playwright]
-    steps:
-      - name: Do not deploy
-        run: echo "Do Not Deploy"
-      # - name: Restart app - build new containers
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST_DNS }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     port: 22
-      #     script: >-
-      #       cd /home/ubuntu &&
-      #       sudo rm -rf backend-fastapi-old &&
-      #       mv backend-fastapi backend-fastapi-old &&
-      #       git clone -b main https://github.com/mg-login-examples/login-backend-fastapi.git backend-fastapi &&
-      #       cp backend-fastapi-old/docker_secrets/mysql_pwd.txt backend-fastapi/docker_secrets/ &&
-      #       cp backend-fastapi-old/docker_secrets/mongo_pwd.txt backend-fastapi/docker_secrets/ &&
-      #       cp backend-fastapi-old/docker_secrets/redis_pwd.txt backend-fastapi/docker_secrets/ &&
-      #       sudo rm -rf backend-fastapi-old &&
-      #       cd backend-fastapi &&
-      #       git clone -b main https://github.com/mg-login-examples/login-frontend-vue-vite.git frontend &&
-      #       ./scripts_docker.sh launch-api-cloud-dev
