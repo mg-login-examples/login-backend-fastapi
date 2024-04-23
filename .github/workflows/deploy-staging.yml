@@ -1,5 +1,4 @@
-name: Run Tests With Docker
-
+name: Deploy
 on:
   push:
   workflow_dispatch:

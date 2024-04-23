@@ -1,9 +1,7 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 
 class BookBase(BaseModel):
     title: str
-    summary: Optional[str] = None
-    number_of_pages: Optional[int] = None
+    summary: str | None = None
+    number_of_pages: int | None = None

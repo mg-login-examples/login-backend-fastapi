@@ -18,8 +18,10 @@ def test_socket_connect(
     logged_in_user: User,
     test_client_after_app_start: TestClient,
 ):
-    with test_client_after_app_start.websocket_connect("/ws/main") as websocket_session:
-        websocket_session: WebSocketTestSession = websocket_session
+    with test_client_after_app_start.websocket_connect(
+        "/ws/main"
+    ) as websocket_session_untyped:
+        websocket_session: WebSocketTestSession = websocket_session_untyped
         dummy_channel = "dummy_channel"
         websocket_session.send_json(
             data={"action": "subscribe", "channel": dummy_channel}
