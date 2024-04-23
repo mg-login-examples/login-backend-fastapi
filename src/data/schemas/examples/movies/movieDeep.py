@@ -4,7 +4,7 @@ from data.schemas.examples.movies.movie import Movie as MovieShallow
 
 class Movie(MovieShallow):
     id: int
-    book: Book = None
+    book: Book | None = None
 
     def get_class_by_field(field):
         if field == "book":
