@@ -1,10 +1,10 @@
-version: '3.8'
+version: "3.8"
 
 services:
   vueapp_dev:
     build:
       context: ./frontend
-      target: serve-local-stage
+      target: serve-stage
       args:
         VITE_MODE: ${VITE_MODE}
         VITE_APP_BACKEND_URL: ${VITE_APP_BACKEND_URL}
@@ -14,7 +14,7 @@ services:
       - VITE_LOG_ENV_VARS=${VITE_LOG_ENV_VARS-false} # Pass env directly to container for unit tests
     restart: always
     volumes:
-      - ./frontend/src:/app/src # live reload
+      - ./frontend/src:/app/src
     ports:
       - 8019:5173
     networks:

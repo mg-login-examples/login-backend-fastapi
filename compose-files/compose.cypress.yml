@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   vueapp_test_e2e_cypress:
@@ -14,7 +14,6 @@ services:
       - CYPRESS_VIDEO=${CYPRESS_VIDEO-true}
       - CYPRESS_TAGS=${CYPRESS_TAGS}
       - CYPRESS_VERIFY_TIMEOUT=${CYPRESS_VERIFY_TIMEOUT}
-      # - CYPRESS_MAILSLURP_API_KEY=${CYPRESS_MAILSLURP_API_KEY}
       - CYPRESS_apiUrl=${CYPRESS_apiUrl}
       - CYPRESS_adminApiUrl=${CYPRESS_adminApiUrl}
       - CYPRESS_adminApiLoginUsername=${CYPRESS_adminApiLoginUsername}

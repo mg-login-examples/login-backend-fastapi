@@ -1,4 +1,5 @@
-version: '3.8'
+# docker-compose.yml
+version: "3.8"
 
 services:
   vueapp_test_e2e_playwright:
@@ -23,5 +24,6 @@ services:
       full_app_proxy:
         condition: service_healthy
     volumes:
+      # - /tmp/.X11-unix:/tmp/.X11-unix
       - ./frontend/src:/app/src
       - ./frontend/playwright:/app/playwright
