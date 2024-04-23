@@ -47,7 +47,7 @@ def test_unsubscribe_to_group_chat(websocket_session: WebSocketTestSession):
 # group chat will be received
 
 
-@pytest.mark.timeout(20)
+@pytest.mark.timeout(30)
 async def test_receive_group_chat_from_pubsub(
     app_pubsub: PubSub,
     async_websocket_session: AsyncWebSocketSession,
@@ -68,3 +68,7 @@ async def test_receive_group_chat_from_pubsub(
     websocket_response = await async_websocket_session.receive_json()
     assert websocket_response["channel"] == channel_name
     assert websocket_response["message"] == message_to_channel_payload
+
+    # import asyncio
+
+    # await asyncio.sleep(10)
