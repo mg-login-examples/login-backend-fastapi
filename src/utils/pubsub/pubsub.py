@@ -59,7 +59,7 @@ class PubSub:
             await self._backend.subscribe(channel)
             async with Subscriber(name=subscriber_name) as subscriber:
                 subscriber_reference = subscriber
-                logger.debug(f"Pubsub created subscriber for channel {channel}")
+                logger.debug(f"Pubsub created subscriber {subscriber_name}")
                 self._store_channel_subscriber(channel, subscriber_reference)
                 yield subscriber
         except Exception as e:

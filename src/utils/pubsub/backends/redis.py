@@ -14,8 +14,12 @@ logger = logging.getLogger(__name__)
 class RedisBackend(PubSubBackendAbstract):
     def __init__(self, url: str):
         self.url = url
+        self._pubsub_connected = False
 
     async def connect(self) -> None:
+        if self._pubsub_connected:
+            logger.debug("PubSub Redis backend is already connected")
+            return
         logger.debug("PubSub backend RedisBackend trying to connect")
         try:
             self.redis = asyncio_redis.from_url(self.url)
@@ -26,6 +30,7 @@ class RedisBackend(PubSubBackendAbstract):
                 random.choices(string.ascii_lowercase + string.digits, k=20)
             )
             await self.pubsub.subscribe(dummy_channel)
+            self._pubsub_connected = True
             logger.debug("PubSub backend RedisBackend connected successfully")
         except Exception as e:
             logger.error("Error in pubsub backend RedisBackend connect")
@@ -36,6 +41,7 @@ class RedisBackend(PubSubBackendAbstract):
         logger.debug("PubSub RedisBackend trying to disconnect")
         if hasattr(self, "redis") and self.redis:
             await self.redis.aclose()
+        self._pubsub_connected = False
         logger.debug("PubSub RedisBackend disconnected successfully")
 
     async def ping(self):
@@ -46,7 +52,9 @@ class RedisBackend(PubSubBackendAbstract):
     async def publish(self, channel: str, message: str):
         if not hasattr(self, "pubsub") or not self.pubsub:
             await self.connect()
+        # logger.debug(f"Publish message: {message} to channel {channel}")
         await self.redis.publish(channel, message)
+        # logger.debug(f"Published message: {message} to channel {channel}")
 
     async def subscribe(self, channel):
         logger.debug(f"PubSub RedisBackend trying to subscribe to channel {channel}")
@@ -81,16 +89,23 @@ class RedisBackend(PubSubBackendAbstract):
                 await self.connect()
             try:
                 # event = next(await self.pubsub.listen())
+                # logger.debug(
+                #     f"Redis start wait for next event at self.pubsub.get_message"
+                # )
                 response = await self.pubsub.get_message(
                     ignore_subscribe_messages=True, timeout=None
                 )
+                # logger.debug(
+                #     f"Redis received next event at self.pubsub.get_message {response}"
+                # )
                 if response and ("channel" in response) and ("data" in response):
                     event = Event(
                         channel=response["channel"].decode("utf-8"),
                         message=response["data"].decode("utf-8"),
                     )
+                    # logger.debug(f"Redis received event message: {event.message}")
                     return event
             except Exception as e:
-                logger.info("Error in pubsub redis backend get_next_event():")
-                logger.info(e)
+                logger.error("Error in pubsub redis backend get_next_event():")
+                logger.error(e)
                 await asyncio.sleep(0.1)  # To avoid infinite blocking loop

@@ -20,7 +20,7 @@ async def assert_pubsub_is_able_to_connect_to_backend(pubsub: PubSub):
         await asyncio.wait_for(pubsub.ping(), 5)
         logger.info("Test pubsub connection to backend established successfully")
     except Exception as e:
-        logger.info("Error connecting to pubsub backend")
+        logger.error("Error connecting to pubsub backend")
         raise e
     finally:
         try:

@@ -38,11 +38,9 @@ class Subscriber:
 
     async def get(self, timeout: float | None = None) -> Event:
         try:
-            # logger.debug(
-            #     f"Wait to receive next event from queue {self._queue_name}"
-            # )
+            logger.debug(f"Wait to receive next event from queue {self._name}")
             item = await asyncio.wait_for(self._queue.get(), timeout=timeout)
-            # logger.debug(f"Subscriber received in queue {self._queue_name} item {item}")
+            logger.debug(f"Subscriber received in queue {self._name} item {item}")
             if item is None:
                 raise Unsubscribed()
             return item
