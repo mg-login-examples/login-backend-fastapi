@@ -2,7 +2,7 @@ import logging
 
 import coloredlogs  # type: ignore
 
-from core.helper_classes.settings import Settings
+from env_settings.settings import Settings
 
 logger = logging.getLogger(__name__)
 

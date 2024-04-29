@@ -25,9 +25,9 @@ services:
       - ./app.log:/app.log
       - ./app-tests.log:/app-tests.log
     secrets:
-      - mysql-password
-      - mongo-password
-      - redis-pass
+      - mysql_pwd
+      - mongo_pwd
+      - redis_pwd
     environment:
       - DATABASE_URL=${DATABASE_URL:-mysql+pymysql://root@mysql_db/login}
       - DATABASE_USER

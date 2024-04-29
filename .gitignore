@@ -29,6 +29,7 @@ archive.zip
 /frontend
 /docker_secrets/*.txt
 sql_app.db
+.env
 image_uploads/*.jpg
 image_uploads/*.jpeg
 image_uploads/*.png

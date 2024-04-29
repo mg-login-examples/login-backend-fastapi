@@ -23,8 +23,8 @@ from api_dependencies.dependencies.restrict_endpoint_to_own_resources_param_user
 from api_dependencies.dependencies.validated_access_token import (
     get_validated_access_token_as_fastapi_dependency,
 )
-from core.helper_classes.settings import Settings
 from data.schemas.admin_users.admin_user import AdminUser
+from env_settings.settings import Settings
 from stores.access_tokens_store.access_token_store import AccessTokenStore
 from stores.nosql_db_store.pymongo_manager import PyMongoManager
 from stores.redis_store.redis_cache_manager import RedisCacheManager

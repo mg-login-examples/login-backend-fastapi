@@ -4,7 +4,7 @@ import os
 import pytest
 
 from core.environment_settings import get_environment_settings
-from core.helper_classes.settings import Settings
+from env_settings.settings import Settings
 
 logger = logging.getLogger(__name__)
 
