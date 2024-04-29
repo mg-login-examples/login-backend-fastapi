@@ -68,7 +68,3 @@ async def test_receive_group_chat_from_pubsub(
     websocket_response = await async_websocket_session.receive_json()
     assert websocket_response["channel"] == channel_name
     assert websocket_response["message"] == message_to_channel_payload
-
-    # import asyncio
-
-    # await asyncio.sleep(10)
