@@ -1,4 +1,8 @@
 #!/bin/sh
+
+backend_options="<option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, format-all, custom <your_custom_command>"
+backend_localbdb_options="<option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, format-all, custom <your_custom_command>"
+
 case=${1:-default}
 if [ $case = "backend" ]
 then
@@ -27,13 +31,13 @@ then
     FINAL_COMMAND="poetry run black . --check --diff --color"
   elif [ $test_case = "format-all" ]
   then
-    FINAL_COMMAND="poetry run black . --verbose"
+    FINAL_COMMAND="poetry run black ."
   elif [ $test_case = "custom" ]
   then
     FINAL_COMMAND=${3}
   else
     echo "Unknown option passed for backend <option>
-    <option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, custom <your_custom_command>
+    $backend_options
     "
     exit 1
   fi
@@ -63,12 +67,15 @@ then
   elif [ $test_case = "format-check" ]
   then
     FINAL_COMMAND="poetry run black . --check --diff --color"
+  elif [ $test_case = "format-all" ]
+  then
+    FINAL_COMMAND="poetry run black ."
   elif [ $test_case = "custom" ]
   then
     FINAL_COMMAND=${3}
   else
     echo "Unknown option passed for backend-localdb <option>
-    <option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, custom <your_custom_command>
+    $backend_localdb_options
     "
     exit 1
   fi
@@ -77,8 +84,8 @@ else
   echo "no option passed"
   echo "available options are:
   - backend <option>
-    <option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, custom <your_custom_command>
+    $backend_options
   - backend-localdb <option>
-    <option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, custom <your_custom_command>
+    $backend_localdb_options
   "
 fi
