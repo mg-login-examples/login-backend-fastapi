@@ -1,0 +1,32 @@
+repos:
+  # - repo: https://github.com/pre-commit/pre-commit-hooks
+  #   rev: v3.2.0
+  #   hooks:
+  #     - id: trailing-whitespace
+  #     - id: end-of-file-fixer
+  #     - id: check-yaml
+  #     - id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: type-check
+        name: type check
+        language: system
+        entry: bash
+        args: ["scripts_regular.sh", "precommit", "type-check"]
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: format-check
+        name: format check
+        language: system
+        entry: bash
+        args: ["scripts_regular.sh", "precommit", "format-check"]
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: sort-imports
+        name: sort imports
+        language: system
+        entry: bash
+        args: ["scripts_regular.sh", "precommit", "sort-imports"]
+        pass_filenames: false

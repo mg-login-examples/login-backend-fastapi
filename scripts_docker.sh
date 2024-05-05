@@ -17,8 +17,8 @@ setup_backend() {
   build_backend_stack_docker_images && run_db_migrations && create_admin_users $1 $2
 }
 
-backend_options="<option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, format-all, custom <your_custom_command>"
-backend_localbdb_options="<option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, format-all, custom <your_custom_command>"
+backend_options="<option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, format, sort-imports, custom <your_custom_command>"
+backend_localbdb_options="<option> one of: launch, api-tests, tdd, admin-app-tests, type-check, format-check, format-all, sort-imports, custom <your_custom_command>"
 
 case=${1:-default}
 if [ $case = "launch-app-local" ]
@@ -81,14 +81,17 @@ then
   elif [ $test_case = "format-check" ]
   then
     FINAL_COMMAND="run fastapi poetry run black . --check --diff --color"
-  elif [ $test_case = "format-all" ]
+  elif [ $test_case = "format" ]
   then
     FINAL_COMMAND="run fastapi poetry run black ."
+  elif [ $test_case = "sort-imports" ]
+  then
+    FINAL_COMMAND="run fastapi poetry run isort --profile black ."
   elif [ $test_case = "custom" ]
   then
     FINAL_COMMAND=${3}
   else
-    echo "Unknown option passed for backend <option>
+    echo "Unknown option passed for backend <option>: $test_case
     $backend_options
     "
     exit 1
@@ -134,14 +137,17 @@ then
   elif [ $test_case = "format-check" ]
   then
     FINAL_COMMAND="run fastapi poetry run black . --check --diff --color"
-  elif [ $test_case = "format-all" ]
+  elif [ $test_case = "format" ]
   then
     FINAL_COMMAND="run fastapi poetry run black ."
+  elif [ $test_case = "sort-imports" ]
+  then
+    FINAL_COMMAND="run fastapi poetry run isort --profile black ."
   elif [ $test_case = "custom" ]
   then
     FINAL_COMMAND=${3}
   else
-    echo "Unknown option passed for backend-localdb <option>
+    echo "Unknown option passed for backend-localdb <option>: $test_case
     $backend_localdb_options
     "
     exit 1
@@ -228,8 +234,8 @@ elif [ $case = "down" ]
 then
   docker_down_all_containers
 else
-  echo "no option or invalid option passed"
-  echo "available options are:
+  echo "unsupported command passed '$case'"
+  echo "available commands are:
     - launch-backend-local
     - launch-app-local
     - launch-app-local-with-proxy
